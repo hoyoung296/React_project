@@ -1,7 +1,7 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
-import Header from './components/Header';
-import Footer from './components/Footer';
 import routes from './routes';
+import HeaderCon from './containers/common/HeaderCon';
+import FooterCon from './containers/common/FooterCon';
 
 function App() {
   const location = useLocation();
@@ -9,13 +9,13 @@ function App() {
   const hideHeaderFooter = hideHeaderFooterPaths.includes(location.pathname);
   return (
     <div>
-      {!hideHeaderFooter && <Header/>}
+      {!hideHeaderFooter && <HeaderCon />}
       <Routes>
         {routes.map((route) => (
           <Route key={route.path} path={route.path} element={route.element} />
         ))}
       </Routes>
-      {!hideHeaderFooter && <Footer/>}
+      {!hideHeaderFooter && <FooterCon />}
     </div>
   );
 }

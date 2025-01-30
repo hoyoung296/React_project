@@ -1,12 +1,9 @@
-import React from 'react';
-import '../css/main.css';
+import SearchCon from '../containers/review/SearchCon';
 
 function Search() {
-    return (
-    <div>
-        검색결과 페이지
-    </div>
-)
+    return<>
+       <SearchCon />
+    </>
 };
 
 export default Search;
