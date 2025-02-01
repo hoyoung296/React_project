@@ -1,4 +1,11 @@
 const SearchCom = ({ list }) => {
+    if(list.length===0){
+        return<>
+            <div>
+                <h1>검색 결과가 없습니다.</h1>
+            </div>
+        </>
+    }
     return <>
         {list.map((data) => (
             <div key={data.movieId}>

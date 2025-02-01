@@ -1,4 +1,11 @@
 const MyReviewCom = ({ list }) => {
+    if(list.dto.length===0){
+        return<>
+            <div>
+                <h1>작성한 리뷰가 없습니다.</h1>
+            </div>
+        </>
+    }
     return <>
         {list.dto.map((data) => (
             <div key={data.reviewNo}>
