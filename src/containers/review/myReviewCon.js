@@ -21,7 +21,7 @@ const MyReviewCon = () => {
             }
         };
         getData();
-    }, [id, start]); // 의존성 배열에 id와 start 추가
+    }, [params]); // 의존성 배열에 id와 start 추가
 
     return (
         <>
