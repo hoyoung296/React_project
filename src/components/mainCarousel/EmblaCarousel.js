@@ -1,28 +1,69 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import EmblaCarousel from 'embla-carousel';
 import Autoplay from 'embla-carousel-autoplay';
 import '../../css/main.css';
 
 const EmblaCarouselComponent = () => {
+    const emblaRef = useRef(null);
+
     useEffect(() => {
-        const emblaNode = document.querySelector('.embla');
-        const options = { loop: false };
-        const plugins = [Autoplay()];
+        const emblaNode = emblaRef.current;
+        if (!emblaNode) return;
+        const options = { loop: true };
+        const plugins = [Autoplay({ delay: 6000, stopOnInteraction: false })];
         const emblaApi = EmblaCarousel(emblaNode, options, plugins);
 
-        return () => {
-            emblaApi.destroy();
-        };
+        return () => emblaApi.destroy();
     }, []);
 
     return (
-        <div className="embla">
+        <div className="embla" ref={emblaRef}>
             <div className="embla__container">
-                <div className="embla__slide">포스터1</div>
-                <div className="embla__slide">포스터2</div>
-                <div className="embla__slide">포스터3</div>
-                <div className="embla__slide">포스터4</div>
-                <div className="embla__slide">포스터5</div>
+                <div className="embla__slide">
+                    <div className='main_movie_info'>
+                        <div className='main_movie_title'>말할 수 없는 비밀</div>
+                        <div className='main_movie_titleE'>Secret: Untold Melody</div>
+                        <div className='main_movie_director'>감독 : 서유민</div>
+                        <div className='main_movie_actors'>배우 : 도경수, 원진아, 신예은 외</div>
+                    </div>
+                    <img src='/img/movie1.jpg'/>
+                </div>
+                <div className="embla__slide">
+                    <div className='main_movie_info'>
+                        <div className='main_movie_title'>말할 수 없는 비밀</div>
+                        <div className='main_movie_titleE'>Secret: Untold Melody</div>
+                        <div className='main_movie_director'>감독 : 서유민</div>
+                        <div className='main_movie_actors'>배우 : 도경수, 원진아, 신예은 외</div>
+                    </div>
+                    <img src='/img/movie2.jpg'/>
+                </div>
+                <div className="embla__slide">
+                    <div className='main_movie_info'>
+                        <div className='main_movie_title'>말할 수 없는 비밀</div>
+                        <div className='main_movie_titleE'>Secret: Untold Melody</div>
+                        <div className='main_movie_director'>감독 : 서유민</div>
+                        <div className='main_movie_actors'>배우 : 도경수, 원진아, 신예은 외</div>
+                    </div>
+                    <img src='/img/movie3.jpg'/>
+                </div>
+                <div className="embla__slide">
+                    <div className='main_movie_info'>
+                        <div className='main_movie_title'>말할 수 없는 비밀</div>
+                        <div className='main_movie_titleE'>Secret: Untold Melody</div>
+                        <div className='main_movie_director'>감독 : 서유민</div>
+                        <div className='main_movie_actors'>배우 : 도경수, 원진아, 신예은 외</div>
+                    </div>
+                    <img src='/img/movie4.jpg'/>
+                </div>
+                <div className="embla__slide">
+                    <div className='main_movie_info'>
+                        <div className='main_movie_title'>말할 수 없는 비밀</div>
+                        <div className='main_movie_titleE'>Secret: Untold Melody</div>
+                        <div className='main_movie_director'>감독 : 서유민</div>
+                        <div className='main_movie_actors'>배우 : 도경수, 원진아, 신예은 외</div>
+                    </div>
+                    <img src='/img/movie5.jpg'/>
+                </div>
             </div>
         </div>
     );
