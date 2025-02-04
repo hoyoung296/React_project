@@ -19,7 +19,7 @@ const SearchCon = () => {
     },[params.get("id")])
 
     return<>
-       <SearchCom list={list} id={params.get("id")}/>
+        <SearchCom list={list} id={params.get("id")}/>
     </>
 }
 
