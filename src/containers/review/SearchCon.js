@@ -25,8 +25,8 @@ const SearchCon = () => {
         getData()
     }, [params]) // params가 변경될 때마다 다시 실행
 
-    return <>
-        <SearchCom list={list} id={params.get("id")} />
+    return<>
+       <SearchCom list={list} id={params.get("id")}/>
     </>
 }
 
