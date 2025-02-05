@@ -1,26 +1,33 @@
-import { useSearchParams } from "react-router-dom"
-import MyReviewCom from "../../components/review/myReviewCom"
-import { useEffect, useState } from "react"
-import { getReviewList } from "../../service/review"
+import { useSearchParams } from "react-router-dom";
+import MyReviewCom from "../../components/review/myReviewCom";
+import { useEffect, useState } from "react";
+import { getReviewList } from "../../service/review";
 
 const MyReviewCon = () => {
-    const [params] = useSearchParams()
-    const [list, setList] = useState({ dto: [], page: 0 })
+    const [params] = useSearchParams();
+    const [list, setList] = useState({ dto: [], page: 0 });
+
+    // params.get("id")와 params.get("start")를 변수로 추출
+    const id = params.get("id");
+    const start = params.get("start");
+
     useEffect(() => {
         const getData = async () => {
             try {
-                const data = await getReviewList(params.get("id"),params.get("start"))
-                setList(data)
+                const data = await getReviewList(id, start);
+                setList(data);
             } catch (error) {
-                console.error("데이터 가져오기 오류:", error)
+                console.error("데이터 가져오기 오류:", error);
             }
-        }
-        getData()
-    },[params.get("id"),params.get("start")])
+        };
+        getData();
+    }, [params]); // 의존성 배열에 id와 start 추가
 
-    return<>
-        <MyReviewCom list={list} />
-    </>
-}
+    return (
+        <>
+            <MyReviewCom list={list} />
+        </>
+    );
+};
 
-export default MyReviewCon
+export default MyReviewCon;
