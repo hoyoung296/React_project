@@ -1,10 +1,5 @@
 const MyReviewCom = ({ list }) => {
     
-
-
-
-
-
     if(list.dto.length===0){
         return<>
             <div>
