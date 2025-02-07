@@ -58,7 +58,7 @@ const ModalButton = styled.button`.
     border: none;
     border-radius:5px;
     cursor: pointer;
-    &:hover{background:red;}
+    &:hover{background:red; color:black;}
 `
 
 const Button1 = styled(ModalButton)`

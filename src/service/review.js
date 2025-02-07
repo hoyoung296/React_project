@@ -6,37 +6,50 @@ const BASE_URL = "http://localhost:8080/root/review"; // API 기본 URL 설정
 // 검색 결과 가져오기
 const getSearchList = async (id) => {
     try {
-        const res = await axios.get(`${BASE_URL}/search/${id}`);
-        return res.data;
+        const res = await axios.get(`${BASE_URL}/search/${id}`)
+        return res.data
     } catch (error) {
-        console.error("검색 리스트 가져오기 오류:", error);
-        throw error;
+        console.error("검색 리스트 가져오기 오류:", error)
+        throw error
     }
-};
+}
+
+// 영화 상세 정보 가져오기
+const getInfoList = async (id) => {
+    try {
+        const res = await axios.get(`${BASE_URL}/searchinfo/${id}`)
+        return res.data
+    } catch (error) {
+        console.error("영화 정보 가져오기 오류:", error)
+        throw error
+    }
+}
 
 // 리뷰 리스트 가져오기
 const getReviewList = async (id, start) => {
     try {
         const res = await axios.get(`${BASE_URL}/info`, {
             params: { id, start },
-        });
-        return res.data;
+        })
+        return res.data
     } catch (error) {
-        console.error("리뷰 리스트 가져오기 오류:", error);
-        throw error;
+        console.error("리뷰 리스트 가져오기 오류:", error)
+        throw error
     }
-};
+}
 
-// 영화 상세 정보 가져오기
-const getInfoList = async (id) => {
+// 예매 내역 가져오기
+const getReserveList = async (id, start) => {
     try {
-        const res = await axios.get(`${BASE_URL}/searchinfo/${id}`);
-        return res.data;
+        const res = await axios.get(`${BASE_URL}/reserve`,{
+            params : { id, start},
+        })
+        return res.data
     } catch (error) {
-        console.error("영화 정보 가져오기 오류:", error);
-        throw error;
+        console.error("예매 내역 가져오기 오류:", error)
+        throw error
     }
-};
+}
 
 // 번역 API 호출
 const translateText = async (text, targetLang = "en") => {
@@ -52,7 +65,7 @@ const translateText = async (text, targetLang = "en") => {
             {
                 headers: { "Content-Type": "application/json" },
             }
-        );
+        )
 
         if (res.data.data && res.data.data.translations.length > 0) {
             return res.data.data.translations[0].translatedText;
@@ -60,9 +73,9 @@ const translateText = async (text, targetLang = "en") => {
             throw new Error("번역 데이터를 가져오지 못했습니다.");
         }
     } catch (error) {
-        console.error("번역 오류:", error);
+        console.error("번역 오류:", error)
         return text; // 오류 발생 시 원본 텍스트 반환
     }
-};
+}
 
-export { getSearchList, getReviewList, getInfoList, translateText };
+export { getSearchList, getInfoList, getReviewList, getReserveList, translateText };

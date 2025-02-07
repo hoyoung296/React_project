@@ -55,6 +55,7 @@ const ReviewinfoDiv = styled.div`
     transform: translate(-50%, -50%);
     margin-bottom:10px;
 `
+
 const PagingButton = styled.button`
     color: white;
     margin: 0 5px;
@@ -91,10 +92,10 @@ const MyReviewCom = ({ list, start, handlePageChange }) => {
     const paramId = params.get("id") 
 
     const customLinks = [
-        {to: userId ? `/myTicket?id=${userId}` : `/myTicket?id=${paramId}`, text: "내 예매내역",},
+        {to: userId ? `/myTicket?id=${userId}&start=` : `/myTicket?id=${paramId}&start=`, text: "내 예매내역",},
         {to: "/myReview",text: "내 리뷰",},
         {to: userId ? `/info_pwd?id=${userId}` : `/info_pwd?id=${paramId}`,text: "회원정보 수정",},
-    ];
+    ]
 
     return <>
         <TotalDiv>
@@ -107,7 +108,7 @@ const MyReviewCom = ({ list, start, handlePageChange }) => {
                             <ReviewImg src={`/img/${data.posterUrl}`} alt="영화 포스터 이미지" />
                             <ReviewinfoDiv>
                                 <p><b>{data.title}</b></p><br />
-                                <img src="/img/bloom.png" alt="말풍선" style={{ width: '30px', height: '30px', marginTop: "-10px" }} />&nbsp;&nbsp;&nbsp;
+                                <img src="/img/review/bloom.png" alt="말풍선" style={{ width: '30px', height: '30px', marginTop: "-10px" }} />&nbsp;&nbsp;&nbsp;
                                 <b style={{ fontSize: "20px", display: "inline-block", position: "relative", top: "-7px" }}>{data.content}</b>
                             </ReviewinfoDiv>
                         </ReviewDiv>

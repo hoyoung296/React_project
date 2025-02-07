@@ -9,7 +9,7 @@ const SearchCon = () => {
     const [params] = useSearchParams() // URL 쿼리 파라미터 가져오기
     const [list, setList] = useState([])
     const [Infolist, setInfolist] = useState([])
-    const [infoId, setInfoId] = useState(); // 상태 추가
+    const [infoId, setInfoId] = useState() // 상태 추가
     const id = params.get("id") // URL에서 id 값 가져오기
 
     useEffect(() => {
@@ -19,7 +19,7 @@ const SearchCon = () => {
         // }
         const getData = async () => {
             try {
-                const data = await getSearchList(id || ""); // id를 전달하여 데이터 가져오기
+                const data = await getSearchList(id || "") // id를 전달하여 데이터 가져오기
                 setList(data)
             } catch (error) {
                 console.error("데이터 가져오기 오류:", error)
@@ -47,26 +47,26 @@ const SearchCon = () => {
     }
 
     const showModal = (movieId) => {
-        const elements = document.getElementsByClassName(`modal-${movieId}`);
+        const elements = document.getElementsByClassName(`modal-${movieId}`)
         if (elements.length > 0)
             elements[0].style.display = "block"
     }
 
     const hideModal = (movieId) => {
-        const elements = document.getElementsByClassName(`modal-${movieId}`);
+        const elements = document.getElementsByClassName(`modal-${movieId}`)
         if (elements.length > 0)
             elements[0].style.display = "none"
     }
 
     const showInfo = (movieId) => {
-        const elements = document.getElementsByClassName("info");
+        const elements = document.getElementsByClassName("info")
         if (elements.length > 0)
             elements[0].style.display = "block"
         setInfoId(movieId);
     }
 
     const hideInfo = () => {
-        const elements = document.getElementsByClassName("info");
+        const elements = document.getElementsByClassName("info")
         if (elements.length > 0)
             elements[0].style.display = "none"
     }
