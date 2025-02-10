@@ -91,7 +91,6 @@ const Infodiv = styled.div`
     color:white;
     border-radius:10px;
     left:30%;
-    // top:15%;
     display:flex;
     flex-wrap: wrap;
     align-items: stretch;

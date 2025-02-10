@@ -58,7 +58,7 @@ const InfoPart1Div = styled(InfoPartDiv)`
     display: flex;
     align-items: center;
 `
-const reserveButton = styled.button`.
+const ReserveButton = styled.button`
     display:none;
     position: relative;
     width: 30%;
@@ -73,12 +73,12 @@ const reserveButton = styled.button`.
     &:hover{background:red; color:black;}
 `
 
-const Button1 = styled(reserveButton)`
+const Button1 = styled(ReserveButton)`
     top: 60%;
     left: 20%;
 `
 
-const Button2 = styled(reserveButton)`
+const Button2 = styled(ReserveButton)`
     top: 60%;
     left: 30%;
 `
@@ -99,6 +99,32 @@ const PagingDiv = styled.div`
     text-align: center;
     width: 100%;
     z-index: 1;
+`
+
+const Modal1 = styled.div`
+    display:none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 9999;
+`
+
+const Modal2 = styled.div`
+    position: fixed;
+    width: 40%;
+    height:100%;
+    font-size: 12px;
+    background-color: #171717;
+    color:white;
+    border-radius:10px;
+    left:30%;
+    display:flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    overflow-y: auto;
 `
 
 const MyReserveCom = ({ list, start, handlePageChange, del }) => {
@@ -147,7 +173,7 @@ const MyReserveCom = ({ list, start, handlePageChange, del }) => {
                                 <InfoPartDiv>
                                     {/* {hasReview === 0 && <Button1>리뷰 쓰기</Button1>} */}
                                     <Button1 onClick>리뷰 쓰기</Button1>
-                                    <Button2 onClick={()=>del(data.reservationId)}>예매 취소</Button2>
+                                    <Button2 onClick={() => del(data.reservationId)}>예매 취소</Button2>
                                 </InfoPartDiv>
                             </ReserveDiv>
                         </>
@@ -169,6 +195,14 @@ const MyReserveCom = ({ list, start, handlePageChange, del }) => {
                     )}
                 </PagingDiv>
             </Wrapdiv>
+            <Modal1>
+                <Modal2>
+                    <h1>확인</h1>
+                </Modal2>
+            </Modal1>
+
+
+
         </TotalDiv>
     </>
 }
