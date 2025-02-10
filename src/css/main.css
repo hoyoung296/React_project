@@ -1,16 +1,41 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-8ExtraBold.woff2');
+
 *{
     margin: 0;
     padding: 0;
-    box-sizing: border-box;   
+    box-sizing: border-box;
+}
+.appBody {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #171717;
+    position: relative; 
+}
+
+.mainContent {
+    flex: 1;
+    padding: 20px;
+}
+
+.footerContent {
+    color: white;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    height: 300px;
 }
 .header_body {
-    background-color: #171717;
     color: white;
     display: flex;
     height: 80px;
     position: relative;
     z-index: 10;
+    background-color: #171717;
 }
 
 .homepage_header {
@@ -21,18 +46,6 @@
     display: flex;
 }
 
-.main_body{
-    background-color: #171717;
-    color: white;
-    width: 100%;
-    height: 800px;
-    margin: 0;
-    padding: 0;
-}
-.footer_body{
-    background-color: #171717;
-    color: white;
-}
 .logo{
     margin: 15px;
     font-family: "Bebas Neue", serif;
@@ -47,6 +60,7 @@
     align-items: center;
     justify-content: flex-end;
     margin-right: 20px;
+    position: relative;
 }
 .search{
     width: 250px;
@@ -62,8 +76,18 @@
     height: 20px;
     border: 0;
     background-color: transparent;
+    margin-left: 10px;
 }
-.search_btn:hover{
+.searchClear {
+    position: absolute;
+    right: 33px;
+    top: 45%;
+    border: 0;
+    background-color: transparent;
+    color: #ffffff;
+    cursor: pointer;
+}
+.searchClear:hover{
     cursor: pointer;
 }
 .profile_img{
@@ -88,7 +112,7 @@
     position: relative;
     flex: 0 0 100%;
     min-width: 0;
-    width: 100vh;
+    width: 100%;
     height: 70vh;
     display: flex;
 }
@@ -109,10 +133,12 @@
     linear-gradient(to top, rgba(23, 23, 23, 0.0), rgba(23, 23, 23, 0.1), rgba(23, 23, 23, 0.2), rgba(23, 23, 23, 0.3), rgba(23, 23, 23, 0.5));
 }
 .main_movie_info {
+    font-family: 'Paperlogy-8ExtraBold';
     position: absolute;
     z-index: 3;
     padding: 30px;
-    top: 300px;
+    margin-left: 20px;
+    top: 270px;
     color: #ffffff;
 }
 .main_movie_title{
@@ -124,4 +150,140 @@
 }
 .main_movie_director, .main_movie_actors{
     font-weight: bold;
+}
+.mainBtn{
+    margin-top: 20px;
+    display: flex;
+    gap: 15px;
+}
+.mainBtn button{
+    width: 100px;
+    height: 33px;
+    background-color: #381E72;
+    border-radius: 10px;
+    border-style: none;
+    color: #ffffff;
+    font-size: small;
+    line-height: 33px;
+}
+.mainBtn button:hover{
+    cursor: pointer;
+    background-color: #7857bd;
+}
+
+.embla-wrapper {
+    position: relative;
+    width: 100%;
+    margin: auto;
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 3;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.carousel-btn img {
+    width: 30px;
+    height: 30px;
+    pointer-events: auto;
+}
+
+.prev {
+    left: 20px;
+}
+
+.next {
+    right: 20px;
+}
+
+.carousel-indicator {
+    position: absolute;
+    bottom: 20px;
+    left: 85%;
+    display: flex;
+    gap: 0.5px;
+}
+
+.indicator-bar {
+    width: 25px;
+    height: 2px;
+    background-color: #ffffff;
+    opacity: 0.5;
+    transition: background-color 0.3s, opacity 0.3s;
+}
+
+.indicator-bar.active {
+    background-color: #7857bd;
+    opacity: 1;
+}
+.movieList{
+    padding: 0 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 15px;
+    max-width: calc(150px * 9 + 15px * 8);
+    margin: 0 auto;
+}
+
+.poster {
+    position: relative;
+    flex: 1 1 calc(100% / 9 - 20px);
+    margin-bottom: 20px;
+    margin-right: 20px;
+    max-width: 150px;
+    transition: filter 0.3s ease;
+    cursor: pointer;
+}
+
+.poster .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.poster:hover .overlay {
+    opacity: 1;
+}
+
+.overlay button {
+    background-color: #381E72;
+    border: none;
+    margin: 10px 7px;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 10px;
+    width: 55px;
+    height: 20px;
+}
+
+.overlay button:hover {
+    background-color: #7857bd;
+}
+
+.movieList {
+    padding: 0 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 15px;
+    max-width: calc(150px * 9 + 15px * 8);
+    margin: 0 auto;
 }

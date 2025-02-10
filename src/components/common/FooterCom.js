@@ -2,9 +2,10 @@ import '../../css/main.css';
 
 function FooterCom() {
     return(
-    <footer className='footer_body'>
+    <footer>
         <p>
             Movie footer
+            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
         </p>
     </footer>
     )
