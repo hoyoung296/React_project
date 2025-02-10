@@ -50,7 +50,7 @@ const ModalButton = styled.button`.
     display:none;
     position: absolute;
     width: 30%;
-    min-height: 10%;
+    min-height: 20%;
     font-size: 12px;
     background-color: blueviolet;
     font-weight : bold;
@@ -79,18 +79,19 @@ const InfoWrap = styled.div`
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.6);
+    z-index: 9999;
 `
 
 const Infodiv = styled.div`
     position: fixed;
     width: 40%;
-    height:80%;
+    height:100%;
     font-size: 12px;
     background-color: #171717;
     color:white;
     border-radius:10px;
     left:30%;
-    top:15%;
+    // top:15%;
     display:flex;
     flex-wrap: wrap;
     align-items: stretch;
@@ -207,10 +208,11 @@ const SearchCom = ({ list, Infolist, id, infoId, onClick, showModal, hideModal, 
                                         <h1 style={{ transform: "translateX(30px)" }}>REVIEW</h1>
                                         {Infolist.map((data, index) => (
                                             <div key={`info-${data.movieId}-${data.reviewDate}-${index}`} style={{ marginBottom: "10px", marginLeft: "30px" }}>
+                                                {data.content != null &&
                                                 <p>
-                                                    <img src="#" alt="프로필사진" style={{ width: "20px", height: "20px" }} />&nbsp;&nbsp;&nbsp;
+                                                    <img src="/img/movie1.jpg" alt="프로필사진" style={{ width: "20px", height: "20px",borderRadius:"10px" }} />&nbsp;&nbsp;&nbsp;
                                                     {data.userId} {data.reviewDate}
-                                                </p>
+                                                </p>}
                                                 <p>{data.content}</p>
                                             </div>
                                         ))}

@@ -101,7 +101,7 @@ const MyReviewCom = ({ list, start, handlePageChange }) => {
         <TotalDiv>
             <Sidebar list={list} customLinks={customLinks} activeLink="내 리뷰" userId={userId} paramId={paramId} />
             <Wrapdiv>
-                <h1>내 리뷰</h1>
+                <h1>내 리뷰</h1><br />
                 {list.dto.length === 0 ? (<Noreviewh2>작성한 리뷰가 없습니다.</Noreviewh2>) :
                     (list.dto.map((data) => (
                         <ReviewDiv key={data.reviewNo}>

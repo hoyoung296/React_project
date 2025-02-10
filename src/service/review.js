@@ -9,7 +9,7 @@ const getSearchList = async (id) => {
         const res = await axios.get(`${BASE_URL}/search/${id}`)
         return res.data
     } catch (error) {
-        console.error("검색 리스트 가져오기 오류:", error)
+        console.error("검색 리스트 가져오기 오류 : ", error)
         throw error
     }
 }
@@ -17,10 +17,10 @@ const getSearchList = async (id) => {
 // 영화 상세 정보 가져오기
 const getInfoList = async (id) => {
     try {
-        const res = await axios.get(`${BASE_URL}/searchinfo/${id}`)
+        const res = await axios.get(`${BASE_URL}/searchInfo/${id}`)
         return res.data
     } catch (error) {
-        console.error("영화 정보 가져오기 오류:", error)
+        console.error("영화 정보 가져오기 오류 : ", error)
         throw error
     }
 }
@@ -33,7 +33,7 @@ const getReviewList = async (id, start) => {
         })
         return res.data
     } catch (error) {
-        console.error("리뷰 리스트 가져오기 오류:", error)
+        console.error("리뷰 리스트 가져오기 오류 : ", error)
         throw error
     }
 }
@@ -41,12 +41,49 @@ const getReviewList = async (id, start) => {
 // 예매 내역 가져오기
 const getReserveList = async (id, start) => {
     try {
-        const res = await axios.get(`${BASE_URL}/reserve`,{
-            params : { id, start},
+        const res = await axios.get(`${BASE_URL}/reserve`, {
+            params: { id, start },
         })
         return res.data
     } catch (error) {
-        console.error("예매 내역 가져오기 오류:", error)
+        console.error("예매 내역 가져오기 오류 : ", error)
+        throw error
+    }
+}
+
+// 예매 내역 리뷰쓰기 버튼 관련 리뷰 있는지 없는지 확인
+const checkReview = async (id, movieid) => {
+    try {
+        const res = await axios.get(`${BASE_URL}/reviewCheck`, {
+            params: { id, movieid },
+        })
+        return res.data
+    } catch (error) {
+        console.error("리뷰 확인 실패 : ", error)
+        throw error
+    }
+}
+
+// 리뷰 작성
+const writeReview = async (id) => {
+    try {
+        const res = await axios.get(`${BASE_URL}/writeReview`, {
+            params: { id },
+        })
+        return res.data
+    } catch (error) {
+        console.error("리뷰 작성 실패 : ", error)
+        throw error
+    }
+}
+
+// 예매 취소
+const delReserve = async (id) => {
+    try {
+        const res = await axios.delete(`${BASE_URL}/del/${id}`)
+        return res.data
+    } catch (error) {
+        console.error("예매 취소 실패 : ", error)
         throw error
     }
 }
@@ -78,4 +115,4 @@ const translateText = async (text, targetLang = "en") => {
     }
 }
 
-export { getSearchList, getInfoList, getReviewList, getReserveList, translateText };
+export { getSearchList, getInfoList, getReviewList, getReserveList, checkReview, writeReview, delReserve, translateText };
