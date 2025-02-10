@@ -208,10 +208,10 @@ const SearchCom = ({ list, Infolist, id, infoId, onClick, showModal, hideModal, 
                                         {Infolist.map((data, index) => (
                                             <div key={`info-${data.movieId}-${data.reviewDate}-${index}`} style={{ marginBottom: "10px", marginLeft: "30px" }}>
                                                 {data.content != null &&
-                                                <p>
-                                                    <img src="/img/movie1.jpg" alt="프로필사진" style={{ width: "20px", height: "20px",borderRadius:"10px" }} />&nbsp;&nbsp;&nbsp;
-                                                    {data.userId} {data.reviewDate}
-                                                </p>}
+                                                    <p>
+                                                        <img src="/img/movie1.jpg" alt="프로필사진" style={{ width: "20px", height: "20px", borderRadius: "10px" }} />&nbsp;&nbsp;&nbsp;
+                                                        {data.userId} {data.reviewDate}
+                                                    </p>}
                                                 <p>{data.content}</p>
                                             </div>
                                         ))}

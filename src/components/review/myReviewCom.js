@@ -62,7 +62,7 @@ const PagingButton = styled.button`
     cursor: pointer;
     border: none;
     background: none;
-` 
+`
 
 const PagingDiv = styled.div`
     position: absolute;
@@ -79,7 +79,7 @@ const MyReviewCom = ({ list, start, handlePageChange }) => {
         const pageNumbers = []
         for (let i = 1; i <= list.page; i++) {
             pageNumbers.push(
-                <PagingButton key={i} onClick={() => {handlePageChange(i)}}>
+                <PagingButton key={i} onClick={() => { handlePageChange(i) }}>
                     [{i}]
                 </PagingButton>
             )
@@ -89,12 +89,12 @@ const MyReviewCom = ({ list, start, handlePageChange }) => {
 
     const userId = list?.dto?.[0]?.userId;
     const [params] = useSearchParams()
-    const paramId = params.get("id") 
+    const paramId = params.get("id")
 
     const customLinks = [
-        {to: userId ? `/myTicket?id=${userId}&start=` : `/myTicket?id=${paramId}&start=`, text: "내 예매내역",},
-        {to: "/myReview",text: "내 리뷰",},
-        {to: userId ? `/info_pwd?id=${userId}` : `/info_pwd?id=${paramId}`,text: "회원정보 수정",},
+        { to: userId ? `/myTicket?id=${userId}&start=` : `/myTicket?id=${paramId}&start=`, text: "내 예매내역", },
+        { to: "/myReview", text: "내 리뷰", },
+        { to: userId ? `/info_pwd?id=${userId}` : `/info_pwd?id=${paramId}`, text: "회원정보 수정", },
     ]
 
     return <>

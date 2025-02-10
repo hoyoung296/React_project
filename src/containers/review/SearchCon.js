@@ -26,7 +26,7 @@ const SearchCon = () => {
             }
         }
         getData()
-    }, [params]) // params가 변경될 때마다 다시 실행
+    }, [id]) // params가 변경될 때마다 다시 실행
 
     useEffect(() => {
         if (!infoId)
