@@ -51,6 +51,7 @@ const MovieList = () => {
     }, []);
 */
     return(
+        <div className='moviePosterList'>
         <div className='movieList'>
             {posters.map((poster, index) => (
                 <div className="poster" key={index}>
@@ -61,6 +62,7 @@ const MovieList = () => {
                     </div>
                 </div>
             ))}
+        </div>
         </div>
     )
 }

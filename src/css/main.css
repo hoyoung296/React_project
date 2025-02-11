@@ -1,17 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
-/* @import url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-8ExtraBold.woff2'); 에러원인(기존 코드)*/ 
-/* 나호영 수정(수정 코드) */
 @font-face {
-    font-family: 'Paperlogy-8ExtraBold';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-8ExtraBold.woff2') format('woff2');
-    font-weight: normal;
+    font-family: 'Pretendard-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
     font-style: normal;
-  }
+}
 
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Pretendard-Regular';
 }
 .appBody {
     display: flex;
@@ -140,7 +139,7 @@
     linear-gradient(to top, rgba(23, 23, 23, 0.0), rgba(23, 23, 23, 0.1), rgba(23, 23, 23, 0.2), rgba(23, 23, 23, 0.3), rgba(23, 23, 23, 0.5));
 }
 .main_movie_info {
-    font-family: 'Paperlogy-8ExtraBold';
+    font-family: 'Pretendard-Regular';
     position: absolute;
     z-index: 3;
     padding: 30px;
@@ -155,9 +154,7 @@
 .main_movie_titleE{
     padding-bottom: 20px;
 }
-.main_movie_director, .main_movie_actors{
-    font-weight: bold;
-}
+
 .mainBtn{
     margin-top: 20px;
     display: flex;
@@ -284,13 +281,18 @@
 .overlay button:hover {
     background-color: #7857bd;
 }
-
 .movieList {
-    padding: 0 30px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: flex-start; /* 기본적으로 왼쪽 정렬 */
     gap: 15px;
     max-width: calc(150px * 9 + 15px * 8);
     margin: 0 auto;
 }
+
+@media (max-width: 1400px) { /* 특정 너비 이하에서 정렬 변경 */
+    .movieList {
+        justify-content: center;
+    }
+}
+
