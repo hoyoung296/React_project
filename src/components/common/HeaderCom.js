@@ -17,7 +17,13 @@ function HeaderCom({ onChange, mySubmit, input}) {
                 </button>
                 
             </form>
-            <div className='profile_img'></div>
+            <div className='dropDownMenu'>
+                <div className='profile_img'><img src='/img/img.png'/></div>
+                <ul className='dropDown'>
+                    <li className='dropDownBtn'><a href='/myTicket'>마이페이지</a></li>
+                    <li className='dropDownBtn'><a href='/'>로그아웃</a></li>
+                </ul>
+            </div>
         </header>
     </>
 };

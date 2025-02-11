@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import EmblaCarousel from 'embla-carousel';
 import Autoplay from 'embla-carousel-autoplay';
+import Modal from './Modal';
+import { useNavigate } from 'react-router-dom';
 import '../../css/main.css';
 
 const movies = [
@@ -12,6 +14,16 @@ const movies = [
 ];
 
 const EmblaCarouselComponent = () => {
+    const navigate = useNavigate();
+    const [modalOpen, setModalOpen] = useState(false);
+    const [modalType, setModalType] = useState('');
+    const [selectedMovie, setSelectedMovie] = useState('');
+    const openModal = (type, title = '') => {
+        console.log('모달 열기', type, title);
+        setSelectedMovie(title);
+        setModalType(type);
+        setModalOpen(true);
+    };
     const emblaRef = useRef(null);
     const [selectedIndex, setSelectedIndex] = useState(0);
     const emblaApiRef = useRef(null);
@@ -56,8 +68,8 @@ const EmblaCarouselComponent = () => {
                             <div className='main_movie_director'>연출 : {movie.director}</div>
                             <div className='main_movie_actors'>배우 : {movie.actors}</div>
                             <div className='mainBtn'>
-                                <button>상세보기</button>
-                                <button>예매하기</button>
+                            <button onClick={() => openModal('detail', movie.title)}>상세보기</button>
+                                <a href='/ticket_date'><button>예매하기</button></a>
                             </div>
                         </div>
                         <img src={movie.imgSrc} alt={movie.title} />
@@ -77,6 +89,12 @@ const EmblaCarouselComponent = () => {
                 />
             ))}
         </div>
+        <Modal
+            isOpen={modalOpen}
+            onClose={() => setModalOpen(false)}
+            type={modalType}
+            content={selectedMovie}
+        />
     </div>
     );
 };

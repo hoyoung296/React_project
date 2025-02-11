@@ -1,8 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
+import Modal from './Modal';
+import { useNavigate } from 'react-router-dom';
 import '../../css/main.css';
 
+
 const posters = [
-    { imgSrc: '/img/poster/poster1.jpg' },
+    { imgSrc: '/img/poster/poster1.jpg', title: '영화제목1'  },
     { imgSrc: '/img/poster/poster2.jpg' },
     { imgSrc: '/img/poster/poster3.jpg' },
     { imgSrc: '/img/poster/poster4.jpg' },
@@ -33,6 +36,16 @@ const posters = [
 ];
 
 const MovieList = () => {
+    const navigate = useNavigate();
+    const [modalOpen, setModalOpen] = useState(false);
+    const [modalType, setModalType] = useState('');
+    const [selectedMovie, setSelectedMovie] = useState('');
+    const openModal = (type, title = '') => {
+        console.log('모달 열기', type, title);
+        setSelectedMovie(title);
+        setModalType(type);
+        setModalOpen(true);
+    };
 /*
     const [posters, setPosters] = useState([]);
 
@@ -51,16 +64,24 @@ const MovieList = () => {
     }, []);
 */
     return(
+        <div className='moviePosterList'>
         <div className='movieList'>
             {posters.map((poster, index) => (
                 <div className="poster" key={index}>
                     <img src={poster.imgSrc} alt={`Movie Poster ${index}`} />
                     <div className="overlay">
-                        <button>상세보기</button>
-                        <button>예매하기</button>
+                        <button onClick={() => openModal('detail', poster.title)}>상세보기</button>
+                        <button onClick={() => navigate('/ticket_date')}>예매하기</button>
                     </div>
                 </div>
             ))}
+        </div>
+        <Modal
+            isOpen={modalOpen}
+            onClose={() => setModalOpen(false)}
+            type={modalType}
+            content={selectedMovie}
+        />
         </div>
     )
 }
