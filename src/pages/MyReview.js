@@ -1,10 +1,10 @@
 import '../css/main.css';
-import ReviewCon from '../containers/review/ReviewCon'
+import MyReviewCon from '../containers/review/MyReviewCon'
 
 function MyReview() {
     return<>
-        <ReviewCon />
+        <MyReviewCon />
     </>
-};
+}
 
 export default MyReview;

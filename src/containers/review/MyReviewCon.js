@@ -1,9 +1,9 @@
 import { useNavigate, useSearchParams } from "react-router-dom"
-import ReviewCom from "../../components/review/ReviewCom"
+import MyReviewCom from "../../components/review/MyReviewCom"
 import { useEffect, useState } from "react"
 import { getReviewList } from "../../service/review"
 
-const ReviewCon = () => {
+const MyReviewCon = () => {
     const [params] = useSearchParams()
     const [list, setList] = useState({ dto: [], page: 0 })
     const [start, setStart] = useState(params.get("start") || 1)
@@ -30,9 +30,9 @@ const ReviewCon = () => {
 
     return (
         <>
-            <ReviewCom list={list} start={start} handlePageChange={handlePageChange} />
+            <MyReviewCom list={list} start={start} handlePageChange={handlePageChange} />
         </>
     )
 }
 
-export default ReviewCon
+export default MyReviewCon
