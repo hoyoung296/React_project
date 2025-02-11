@@ -1,5 +1,5 @@
 import '../css/main.css';
-import MyReviewCon from '../containers/review/myReviewCon';
+import MyReviewCon from '../containers/review/MyReviewCon';
 
 function MyReview() {
     return<>

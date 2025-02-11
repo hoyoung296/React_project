@@ -1,7 +1,7 @@
 import { useNavigate, useSearchParams } from "react-router-dom"
 import MyReserveCom from "../../components/review/MyReserveCom"
 import { useEffect, useState } from "react"
-import { delReserve, getReserveList, writeReview } from "../../service/review"
+import { checkReview, delReserve, getReserveList, writeReview } from "../../service/review"
 
 const MyReserveCon = () => {
     const [params] = useSearchParams()
@@ -10,6 +10,7 @@ const MyReserveCon = () => {
     const id = params.get("id")
     const [modalData, setModalData] = useState(null)
     const [input, setInput] = useState({ review: "" })
+    const [reviewStatus, setReviewStatus] = useState({})
 
     const navigate = useNavigate()
 
@@ -34,6 +35,21 @@ const MyReserveCon = () => {
         }
     }, [modalData])
 
+    useEffect(() => {
+        const fetchReviewStatus = async () => {
+            const status = {}
+            for (const data of list.dto) {
+                const review = await checkReview(data.userId, data.movieId);
+                status[data.reservationId] = review;
+            }
+            setReviewStatus(status)
+        }
+
+        if (list.dto.length > 0) {
+            fetchReviewStatus()
+        }
+    }, [list])
+
     const handlePageChange = (page) => {
         setStart(page)
         navigate(`/myTicket?id=${id}&start=${page}`)
@@ -54,7 +70,7 @@ const MyReserveCon = () => {
         try {
             const response = await writeReview(dto)
             alert(response.message)
-            setStart(prev => prev === 1 ? 0 : 1);
+            setStart(prev => prev === 1 ? 0 : 1)
             navigate(`/myTicket?id=${id}&start=1`)
             hideModal()
         } catch (error) {
@@ -66,7 +82,7 @@ const MyReserveCon = () => {
         try {
             const response = await delReserve(rsv)
             alert(response.message)
-            setStart(prev => prev === 1 ? 0 : 1);
+            setStart(prev => prev === 1 ? 0 : 1)
             navigate(`/myTicket?id=${id}&start=1`)
         } catch (error) {
             alert("오류 발생: " + (error.response?.data?.message || "알 수 없는 오류"))
@@ -84,10 +100,10 @@ const MyReserveCon = () => {
         setModalData(null)
     }
 
-    return <>
-        <MyReserveCom list={list} start={start} modalData={modalData}
-            handlePageChange={handlePageChange} del={del} showModal={showModal} hideModal={hideModal} mySubmit={mySubmit} onChange={onChange} />
-    </>
+    return <MyReserveCom
+        list={list} start={start} reviewStatus={reviewStatus} modalData={modalData}
+        handlePageChange={handlePageChange} del={del} showModal={showModal} hideModal={hideModal} mySubmit={mySubmit} onChange={onChange}
+    />
 }
 
 export default MyReserveCon

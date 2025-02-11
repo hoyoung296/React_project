@@ -1,7 +1,7 @@
-import axios from "axios";
+import axios from "axios"
 
-const API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
-const BASE_URL = "http://localhost:8080/root/review"; // API 기본 URL 설정
+const API_KEY = process.env.REACT_APP_GOOGLE_API_KEY
+const BASE_URL = "http://localhost:8080/root/review"
 
 // 검색 결과 가져오기
 const getSearchList = async (id) => {
@@ -76,10 +76,10 @@ const writeReview = async (id) => {
                 "Content-Type": "application/json",
             },
         })
-        return res.data;
+        return res.data
     } catch (error) {
-        console.error("리뷰 작성 실패 : ", error);
-        throw error;
+        console.error("리뷰 작성 실패 : ", error)
+        throw error
     }
 }
 
@@ -104,7 +104,7 @@ const translateText = async (text, targetLang = "en") => {
             {
                 q: text,
                 target: targetLang,
-                source: "ko", // 한글에서 변환
+                source: "ko",
                 format: "text",
             },
             {
@@ -113,14 +113,14 @@ const translateText = async (text, targetLang = "en") => {
         )
 
         if (res.data.data && res.data.data.translations.length > 0) {
-            return res.data.data.translations[0].translatedText;
+            return res.data.data.translations[0].translatedText
         } else {
-            throw new Error("번역 데이터를 가져오지 못했습니다.");
+            throw new Error("번역 데이터를 가져오지 못했습니다.")
         }
     } catch (error) {
         console.error("번역 오류:", error)
-        return text; // 오류 발생 시 원본 텍스트 반환
+        return text
     }
 }
 
-export { getSearchList, getInfoList, getReviewList, getReserveList, checkReview, writeReview, delReserve, translateText };
+export { getSearchList, getInfoList, getReviewList, getReserveList, checkReview, writeReview, delReserve, translateText }

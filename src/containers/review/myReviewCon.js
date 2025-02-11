@@ -1,5 +1,5 @@
 import { useNavigate, useSearchParams } from "react-router-dom"
-import MyReviewCom from "../../components/review/myReviewCom"
+import MyReviewCom from "../../components/review/MyReviewCom"
 import { useEffect, useState } from "react"
 import { getReviewList } from "../../service/review"
 
