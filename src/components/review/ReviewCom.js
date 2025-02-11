@@ -73,7 +73,7 @@ const PagingDiv = styled.div`
     z-index: 1;
 `
 
-const MyReviewCom = ({ list, start, handlePageChange }) => {
+const ReviewCom = ({ list, start, handlePageChange }) => {
     const renderPageNumbers = () => {
         const pageNumbers = []
         for (let i = 1; i <= list.page; i++) {
@@ -133,4 +133,4 @@ const MyReviewCom = ({ list, start, handlePageChange }) => {
     </>
 }
 
-export default MyReviewCom
+export default ReviewCom

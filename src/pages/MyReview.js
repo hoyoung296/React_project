@@ -1,9 +1,9 @@
 import '../css/main.css';
-import MyReviewCon from '../containers/review/MyReviewCon';
+import ReviewCon from '../containers/review/ReviewCon'
 
 function MyReview() {
     return<>
-        <MyReviewCon />
+        <ReviewCon />
     </>
 };
 
