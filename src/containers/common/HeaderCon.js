@@ -10,8 +10,8 @@ const HeaderCon = () => {
     }
 
     const mySubmit = (e) => {
-        e.preventDefault();
-        navigate("/search?id=" + input.search )
+        e.preventDefault()
+        navigate(input.search ? `/search?id=${input.search}` : "/search")
     }
 
     return<>

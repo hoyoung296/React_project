@@ -1,11 +1,13 @@
 import React from 'react';
 import '../css/main.css';
-import EmblaCarouselComponent from '../components/mainCarousel/EmblaCarousel';
+import EmblaCarouselComponent from '../components/mainPage/EmblaCarousel';
+import MovieList from '../components/mainPage/MovieList';
 
 function HomePage() {
     return (
-    <div className='main_body'>
+    <div>
         <EmblaCarouselComponent />
+        <MovieList />
     </div>
 )
 };
