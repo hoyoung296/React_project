@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
-const BASE_URL = "http://localhost:8080/root/review"; // API 기본 URL 설정
+const BASE_URL = "http://192.168.52.39:8080/root/review"; // API 기본 URL 설정
 
 // 검색 결과 가져오기
 const getSearchList = async (id) => {
