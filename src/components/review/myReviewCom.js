@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import Sidebar from "../common/Sidebar"
+import MypageSidebar from "../common/MypageSidebar"
 import { useSearchParams } from "react-router-dom"
 
 const TotalDiv = styled.div`
@@ -29,7 +29,7 @@ const Noreviewh2 = styled.h1`
 
 const ReviewDiv = styled.div`
     width:95%;
-    height:15%;
+    height:20%;
     border-radius : 5px;
     display:flex;
     border : 1px solid white;
@@ -39,8 +39,7 @@ const ReviewDiv = styled.div`
 
 const ReviewImg = styled.img`
     width : 10%;
-    height : 80%;
-    border-radius : 5px;
+    height : 85%;
     margin-left: 2%;
     margin-top: 1%;
 `
@@ -99,7 +98,7 @@ const MyReviewCom = ({ list, start, handlePageChange }) => {
 
     return <>
         <TotalDiv>
-            <Sidebar list={list} customLinks={customLinks} activeLink="내 리뷰" userId={userId} paramId={paramId} />
+            <MypageSidebar list={list} customLinks={customLinks} activeLink="내 리뷰" userId={userId} paramId={paramId} />
             <Wrapdiv>
                 <h1>내 리뷰</h1><br />
                 {list.dto.length === 0 ? (<Noreviewh2>작성한 리뷰가 없습니다.</Noreviewh2>) :
@@ -107,7 +106,7 @@ const MyReviewCom = ({ list, start, handlePageChange }) => {
                         <ReviewDiv key={data.reviewNo}>
                             <ReviewImg src={`/img/${data.posterUrl}`} alt="영화 포스터 이미지" />
                             <ReviewinfoDiv>
-                                <p><b>{data.title}</b></p><br />
+                                <p style={{ marginTop: "3%" }}><b>{data.title}</b></p><br /><br />
                                 <img src="/img/review/bloom.png" alt="말풍선" style={{ width: '30px', height: '30px', marginTop: "-10px" }} />&nbsp;&nbsp;&nbsp;
                                 <b style={{ fontSize: "20px", display: "inline-block", position: "relative", top: "-7px" }}>{data.content}</b>
                             </ReviewinfoDiv>

@@ -16,15 +16,16 @@ const Nolisth2 = styled.h1`
 `
 
 const ListDiv = styled.div`
-    width:100%;
+    width:98%;
     min-height:600px;
+    margin : 0 auto;
     display:flex;
     flex-wrap: wrap;
 `
 
 const ImgDiv = styled.div`
-    width : 16%;
-    height: 200px;
+    width : 10%;
+    height: 270px;
     margin-right:5%;
     margin-top : 20px;
     background-image: ${(props) => `url("${props.$bgImage}")`};
@@ -32,43 +33,34 @@ const ImgDiv = styled.div`
     background-position: center;
     background-repeat: no-repeat;
     position:relative;
-    border-radius:10px;
-    &:nth-child(5n) { margin-right: 0; }
+    &:nth-child(7n) { margin-right: 0; }
 `
 
 const ModalWrap = styled.div`
     display:none;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 10px;
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.5);
 `
 
-const ModalButton = styled.button`.
-    display:none;
-    position: absolute;
-    width: 30%;
-    min-height: 20%;
+const ModalButton = styled.button`
+    width: 60px;
+    min-height: 28px;
     font-size: 12px;
-    background-color: blueviolet;
-    font-weight : bold;
+    background-color: #381E72;
     color:white;
     border: none;
     border-radius:5px;
     cursor: pointer;
-    &:hover{background:red; color:black;}
-`
-
-const Button1 = styled(ModalButton)`
-    top: 70%;
-    left: 15%;
-`
-
-const Button2 = styled(ModalButton)`
-    top: 70%;
-    left: 55%;
+    &:hover{background: #7857bd;}
+    bottom : 10px;
+    margin-bottom:10px;
 `
 
 const InfoWrap = styled.div`
@@ -78,19 +70,19 @@ const InfoWrap = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.5);
     z-index: 9999;
 `
 
 const Infodiv = styled.div`
     position: fixed;
-    width: 40%;
+    width: 50%;
     height:100%;
     font-size: 12px;
     background-color: #171717;
     color:white;
     border-radius:10px;
-    left:30%;
+    left:25%;
     display:flex;
     flex-wrap: wrap;
     align-items: stretch;
@@ -114,16 +106,15 @@ const Info2 = styled.div`
 `
 
 const InfoButton = styled.button`
-    width: 70px;
-    height: 30px;
+    width: 80px;
+    min-height: 28px;
     font-size: 12px;
-    background-color: blueviolet;
-    font-weight : bold;
+    background-color: #381E72;
     color:white;
     border: none;
     border-radius:5px;
     cursor: pointer;
-    &:hover{background:red;}
+    &:hover{background: #7857bd;}
 `
 
 const SearchCom = ({ list, Infolist, id, infoId, onClick, showModal, hideModal, showInfo, hideInfo }) => {
@@ -140,7 +131,7 @@ const SearchCom = ({ list, Infolist, id, infoId, onClick, showModal, hideModal, 
     return (
         <>
             <Wrapdiv>
-                <h1>'{id}'에 대한 검색 결과</h1><br />
+                <h1 style={{ width: "98%", margin: "0 auto" }}>'{id}'에 대한 검색 결과</h1><br />
                 {list.length === 0 ? (
                     <Nolisth2>검색 결과가 없습니다.</Nolisth2>
                 ) : (
@@ -153,8 +144,8 @@ const SearchCom = ({ list, Infolist, id, infoId, onClick, showModal, hideModal, 
                                 onMouseLeave={() => hideModal(data.movieId)}
                             >
                                 <ModalWrap className={`modal-${data.movieId}`}>
-                                    <Button1 onClick={() => showInfo(data.movieId)}>상세보기</Button1>
-                                    <Button2 onClick={() => onClick()}>예매하기</Button2>
+                                    <ModalButton onClick={() => showInfo(data.movieId)}>상세보기</ModalButton>
+                                    <ModalButton onClick={() => onClick()}>예매하기</ModalButton>
                                 </ModalWrap>
                             </ImgDiv>
                         ))}
@@ -168,9 +159,9 @@ const SearchCom = ({ list, Infolist, id, infoId, onClick, showModal, hideModal, 
                                 <>
                                     <Info>
                                         <Infospan onClick={() => hideInfo()}>X</Infospan>
-                                        <div style={{ marginLeft: "10%", marginTop: "25%" }}>
-                                            <h1>{Infolist[0].title}</h1>
-                                            <h2>{translatedTitle || Infolist[0].title}</h2>
+                                        <div style={{ marginLeft: "10%", marginTop: "50%" }}>
+                                            <h1>{Infolist[0].title}</h1><br />
+                                            <h2>{translatedTitle || Infolist[0].title}</h2><br />
                                             <h3>감독 : {Infolist[0].director}</h3>
                                             <h3>배우 : {Infolist[0].actors}</h3><br />
                                             <InfoButton onClick={() => onClick()}>예매하기</InfoButton>
@@ -178,27 +169,11 @@ const SearchCom = ({ list, Infolist, id, infoId, onClick, showModal, hideModal, 
                                     </Info>
 
                                     <Info style={{ textAlign: 'center' }}>
-                                        <img
-                                            src={`/img/${Infolist[0].posterUrl}`}
-                                            alt="영화 포스터 이미지"
-                                            style={{
-                                                width: '80%',
-                                                height: '80%',
-                                                marginTop: "40px",
-                                                borderRadius: "10px"
-                                            }}
-                                        />
+                                        <img src={`/img/${Infolist[0].posterUrl}`} alt="영화 포스터 이미지" style={{width: '310px', height: '350px', marginTop: "40px"}}/>
                                     </Info>
 
                                     <Info style={{ position: 'relative' }}>
-                                        <div
-                                            style={{
-                                                position: 'absolute',
-                                                top: '50%',
-                                                left: '50%',
-                                                transform: 'translate(-50%, -50%)'
-                                            }}
-                                        >
+                                        <div style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)'}}>
                                             {Infolist[0].synopsis}
                                         </div>
                                     </Info>
@@ -219,7 +194,7 @@ const SearchCom = ({ list, Infolist, id, infoId, onClick, showModal, hideModal, 
 
                                     <Info2>
                                         <h1>관련컨텐츠</h1>
-                                        <ListDiv>
+                                        <ListDiv style={{width:"100%"}}>
                                             {list
                                                 .filter((data) => data.movieId !== Infolist[0].movieId)
                                                 .map((data, index) => (

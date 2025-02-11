@@ -1,6 +1,6 @@
 import { useSearchParams } from "react-router-dom"
 import styled from "styled-components"
-import Sidebar from "../common/Sidebar"
+import MypageSidebar from "../common/MypageSidebar"
 
 const TotalDiv = styled.div`
     width:100%;
@@ -62,27 +62,23 @@ const InfoPart1Div = styled(InfoPartDiv)`
 
 const InfoPart2Div = styled(InfoPartDiv)`
     display: flex;
-    flex-direction: column; /* 버튼을 위아래 정렬 */
-    align-items: center; /* 가로 가운데 정렬 */
-    justify-content: center; /* 세로 가운데 정렬 */
-    gap: 10px; /* 버튼 간격 조정 */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; 
 `
 
 const ReserveButton = styled.button`
-    width: 30%;
+    width: 80px;
+    min-height : 28px
     font-size: 12px;
-    background-color: blueviolet;
-    font-weight: bold;
+    background-color: #381E72;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     padding: 10px;
-
-    &:hover {
-        background: red;
-        color: black;
-    }
+    &:hover {background: #7857bd;}
 `
 
 const PagingButton = styled.button`
@@ -152,18 +148,15 @@ const ReviewInput = styled.input`
 
 const SubmitButton = styled.button`
     margin-top: 20px;
-    background-color: blueviolet;
+    width:80px;
+    min-height:28px;
+    background-color: #381E72;
     color: white;
     border: none;
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
-    font-weight: bold;
-
-    &:hover {
-        background: red;
-        color: black;
-    }
+    &:hover {background: #7857bd;}
 `
 
 const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showModal, hideModal, modalData, mySubmit, onChange }) => {
@@ -192,7 +185,7 @@ const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showMo
     ]
 
     return <TotalDiv>
-        <Sidebar list={list} customLinks={customLinks} activeLink="내 예매내역" userId={userId} paramId={paramId} />
+        <MypageSidebar list={list} customLinks={customLinks} activeLink="내 예매내역" userId={userId} paramId={paramId} />
         <Wrapdiv>
             <h1>내 예매내역</h1><br />
             {list.dto.length === 0 ? (<Noreserveh2>예매 내역이 없습니다.</Noreserveh2>) :
@@ -212,7 +205,7 @@ const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showMo
                                 <b style={{ marginLeft: "10%", marginTop: "10%" }}>{data.title}</b>
                             </InfoPart1Div>
                             <InfoPartDiv>
-                                <p><b>예매번호 : {data.reservationId}</b>&nbsp;&nbsp;&nbsp;&nbsp;</p><br />
+                                <p style={{ marginTop: "3%" }}><b>예매번호 : {data.reservationId}</b>&nbsp;&nbsp;&nbsp;&nbsp;</p><br />
                                 <p><b>상영관 : {data.screenName}</b></p><br />
                                 <p><b>관람일 : {data.startDateTime}</b>&nbsp;&nbsp;&nbsp;&nbsp;<b>좌석 : {data.seatRow}{data.seatNumber}</b></p>
                             </InfoPartDiv>

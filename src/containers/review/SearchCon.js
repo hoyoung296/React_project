@@ -49,7 +49,7 @@ const SearchCon = () => {
     const showModal = (movieId) => {
         const elements = document.getElementsByClassName(`modal-${movieId}`)
         if (elements.length > 0)
-            elements[0].style.display = "block"
+            elements[0].style.display = "flex"
     }
 
     const hideModal = (movieId) => {
