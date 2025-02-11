@@ -6,11 +6,11 @@ import { getInfoList } from "../../service/review"
 
 const SearchCon = () => {
     const navigate = useNavigate()
-    const [params] = useSearchParams() // URL 쿼리 파라미터 가져오기
+    const [params] = useSearchParams()
     const [list, setList] = useState([])
     const [Infolist, setInfolist] = useState([])
-    const [infoId, setInfoId] = useState() // 상태 추가
-    const id = params.get("id") // URL에서 id 값 가져오기
+    const [infoId, setInfoId] = useState()
+    const id = params.get("id")
 
     useEffect(() => {
         // if (!id) {
@@ -19,18 +19,18 @@ const SearchCon = () => {
         // }
         const getData = async () => {
             try {
-                const data = await getSearchList(id || "") // id를 전달하여 데이터 가져오기
+                const data = await getSearchList(id || "")
                 setList(data)
             } catch (error) {
                 console.error("데이터 가져오기 오류:", error)
             }
         }
         getData()
-    }, [id]) // params가 변경될 때마다 다시 실행
+    }, [id])
 
     useEffect(() => {
         if (!infoId)
-            return; // infoId가 없으면 실행 안 함
+            return
         const getInfo = async () => {
             try {
                 const data = await getInfoList(infoId)

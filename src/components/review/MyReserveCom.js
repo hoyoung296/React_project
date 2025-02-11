@@ -1,10 +1,9 @@
 import { useSearchParams } from "react-router-dom"
 import styled from "styled-components"
 import Sidebar from "../common/Sidebar"
-import { checkReview } from "../../service/review"
 
 const TotalDiv = styled.div`
-    width:100%
+    width:100%;
     height:100%;
     background:#171717;
     display:flex;
@@ -53,33 +52,37 @@ const InfoPartDiv = styled.div`
     width:30%;
     margin-right:5%;
     &:nth-child(3n) { margin-right: 0; }
+    position: relative;
 `
+
 const InfoPart1Div = styled(InfoPartDiv)`
     display: flex;
     align-items: center;
 `
+
+const InfoPart2Div = styled(InfoPartDiv)`
+    display: flex;
+    flex-direction: column; /* 버튼을 위아래 정렬 */
+    align-items: center; /* 가로 가운데 정렬 */
+    justify-content: center; /* 세로 가운데 정렬 */
+    gap: 10px; /* 버튼 간격 조정 */
+`
+
 const ReserveButton = styled.button`
-    position: relative;
     width: 30%;
-    min-height: 30%;
     font-size: 12px;
     background-color: blueviolet;
-    font-weight : bold;
-    color:white;
+    font-weight: bold;
+    color: white;
     border: none;
-    border-radius:5px;
+    border-radius: 5px;
     cursor: pointer;
-    &:hover{background:red; color:black;}
-`
+    padding: 10px;
 
-const Button1 = styled(ReserveButton)`
-    top: 60%;
-    left: 20%;
-`
-
-const Button2 = styled(ReserveButton)`
-    top: 60%;
-    left: 30%;
+    &:hover {
+        background: red;
+        color: black;
+    }
 `
 
 const PagingButton = styled.button`
@@ -129,9 +132,9 @@ const ReviewForm = styled.form`
     margin-top: 10%;
     height: 40%;
     display: flex;
-    flex-direction: column; /* 세로 정렬 */
-    align-items: center; /* 가운데 정렬 */
-    justify-content: center; /* 위아래 중앙 정렬 */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 `
 
 const ReviewInput = styled.input`
@@ -163,7 +166,9 @@ const SubmitButton = styled.button`
     }
 `
 
-const MyReserveCom = ({ list, start, handlePageChange, del, showModal, hideModal, modalData, mySubmit, onChange }) => {
+const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showModal, hideModal, modalData, mySubmit, onChange }) => {
+    const now = new Date()
+
     const renderPageNumbers = () => {
         const pageNumbers = []
         for (let i = 1; i <= list.page; i++) {
@@ -176,7 +181,7 @@ const MyReserveCom = ({ list, start, handlePageChange, del, showModal, hideModal
         return pageNumbers
     }
 
-    const userId = list?.dto?.[0]?.userId;
+    const userId = list?.dto?.[0]?.userId
     const [params] = useSearchParams()
     const paramId = params.get("id")
 
@@ -186,77 +191,77 @@ const MyReserveCom = ({ list, start, handlePageChange, del, showModal, hideModal
         { to: userId ? `/info_pwd?id=${userId}` : `/info_pwd?id=${paramId}`, text: "회원정보 수정", },
     ]
 
-    return <>
-        <TotalDiv>
-            <Sidebar list={list} customLinks={customLinks} activeLink="내 예매내역" userId={userId} paramId={paramId} />
-            <Wrapdiv>
-                <h1>내 예매내역</h1><br />
-                {list.dto.length === 0 ? (<Noreserveh2>예매 내역이 없습니다.</Noreserveh2>) :
-                    (list.dto.map((data) => {
-                        const hasReview = checkReview(data.userId, data.movieId)
+    return <TotalDiv>
+        <Sidebar list={list} customLinks={customLinks} activeLink="내 예매내역" userId={userId} paramId={paramId} />
+        <Wrapdiv>
+            <h1>내 예매내역</h1><br />
+            {list.dto.length === 0 ? (<Noreserveh2>예매 내역이 없습니다.</Noreserveh2>) :
+                list.dto.map((data) => {
+                    const endDateTime = new Date(data.endDateTime);
+                    const startDateTime = new Date(
+                        data.startDateTime.replace(/(\d{4})년 (\d{2})월 (\d{2})일/, "$1-$2-$3")
+                    )
+                    const showReviewButton = now > endDateTime
+                    const showCancelButton = now < new Date(startDateTime.getTime() - 30 * 60 * 1000)
 
-                        return (
-                            <ReserveDiv key={data.reservationId}>
-                                <InfoPart1Div>
-                                    <ReserveImg src={`/img/${data.posterUrl}`} alt="영화 포스터 이미지" />
-                                    <b style={{ marginLeft: "10%", marginTop: "10%" }}>{data.title}</b>
-                                </InfoPart1Div>
-                                <InfoPartDiv>
-                                    <p><b>끝나는 시간 : {data.endDateTime}</b></p><br />
-                                    <p><b>예매번호 : {data.reservationId}</b>&nbsp;&nbsp;&nbsp;&nbsp;<b>상영관 : {data.screenName}</b></p><br />
-                                    <p><b>관람일 : {data.startDateTime}</b>&nbsp;&nbsp;&nbsp;&nbsp;<b>좌석 : {data.seatRow}{data.seatNumber}</b></p>
-                                </InfoPartDiv>
-                                <InfoPartDiv>
-                                    {/* {hasReview === 0 && <Button1>리뷰 쓰기</Button1>} */}
-                                    <Button1 onClick={() => showModal(data.title, data.posterUrl, data.director, data.actors, data.movieId)}>리뷰 쓰기</Button1>
-                                    <Button2 onClick={() => del(data.reservationId)}>예매 취소</Button2>
-                                </InfoPartDiv>
-                            </ReserveDiv>)
-                    })
-                    )}
-                <PagingDiv>
-                    {start > 1 && (
-                        <button onClick={() => handlePageChange(start - 1)}>
-                            이전
-                        </button>
-                    )}
+                    const hasReview = data.reservationId in reviewStatus && reviewStatus[data.reservationId] === 0
+                    return (
+                        <ReserveDiv key={data.reservationId}>
+                            <InfoPart1Div>
+                                <ReserveImg src={`/img/${data.posterUrl}`} alt="영화 포스터 이미지" />
+                                <b style={{ marginLeft: "10%", marginTop: "10%" }}>{data.title}</b>
+                            </InfoPart1Div>
+                            <InfoPartDiv>
+                                <p><b>예매번호 : {data.reservationId}</b>&nbsp;&nbsp;&nbsp;&nbsp;</p><br />
+                                <p><b>상영관 : {data.screenName}</b></p><br />
+                                <p><b>관람일 : {data.startDateTime}</b>&nbsp;&nbsp;&nbsp;&nbsp;<b>좌석 : {data.seatRow}{data.seatNumber}</b></p>
+                            </InfoPartDiv>
+                            {list != null && (
+                                <InfoPart2Div>
+                                    {showReviewButton && (
+                                        hasReview && <ReserveButton onClick={() => showModal(data.title, data.posterUrl, data.director, data.actors, data.movieId)}>리뷰 쓰기</ReserveButton>
+                                    )}
+                                    {showCancelButton && (
+                                        <ReserveButton onClick={() => del(data.reservationId)}>예매 취소</ReserveButton>
+                                    )}
+                                </InfoPart2Div>
+                            )}
+                        </ReserveDiv>
+                    )
+                })
+            }
+            <PagingDiv>
+                {start > 1 && <button onClick={() => handlePageChange(start - 1)}>이전</button>}
+                {renderPageNumbers()}
+                {start < list.page && <button onClick={() => handlePageChange(start + 1)}>다음</button>}
+            </PagingDiv>
+        </Wrapdiv>
 
-                    {renderPageNumbers()}
-
-                    {start < list.page && (
-                        <button onClick={() => handlePageChange(start + 1)}>
-                            다음
-                        </button>
-                    )}
-                </PagingDiv>
-            </Wrapdiv>
-
-            {modalData && (
-                <Modal1 className="modal">
-                    <Modal2>
-                        <div>
-                            <span onClick={hideModal} style={{ cursor: "pointer", marginLeft: "5px", fontSize: "30px" }}>X</span>
-                        </div>
-                        <div style={{ width: "80%", height: "80%", marginTop: "10%", marginLeft: "10%" }}>
-                            <h1 style={{ fontSize: "30px" }}>'{modalData.title}'의 리뷰를 작성해주세요.</h1>
-                            <div style={{ display: "flex", width: "100%", height: "40%", marginTop: "10%" }}>
-                                <img src={`/img/${modalData.posterUrl}`} alt="영화 포스터" style={{ width: "40%", height: "100%" }} />
-                                <div style={{ display: "inline", width: "60%", height: "40%", marginTop: "30%", marginLeft: "5%" }}>
-                                    <p><b>{modalData.title}</b></p><br />
-                                    <p><b>감독 : {modalData.director}</b></p><br />
-                                    <b>배우 : {modalData.actors}</b>
-                                </div>
+        {modalData && (
+            <Modal1 className="modal">
+                <Modal2>
+                    <div>
+                        <span onClick={hideModal} style={{ cursor: "pointer", marginLeft: "5px", fontSize: "30px" }}>X</span>
+                    </div>
+                    <div style={{ width: "80%", height: "80%", marginTop: "10%", marginLeft: "10%" }}>
+                        <h1 style={{ fontSize: "30px" }}>'{modalData.title}'의 리뷰를 작성해주세요.</h1>
+                        <div style={{ display: "flex", width: "100%", height: "40%", marginTop: "10%" }}>
+                            <img src={`/img/${modalData.posterUrl}`} alt="영화 포스터" style={{ width: "40%", height: "100%" }} />
+                            <div style={{ display: "inline", width: "60%", height: "40%", marginTop: "30%", marginLeft: "5%" }}>
+                                <p><b>{modalData.title}</b></p><br />
+                                <p><b>감독 : {modalData.director}</b></p><br />
+                                <b>배우 : {modalData.actors}</b>
                             </div>
-                            <ReviewForm onSubmit={mySubmit}>
-                                <ReviewInput name="review" placeholder="리뷰를 적어주세요." onChange={onChange} />
-                                <SubmitButton>게시</SubmitButton>
-                            </ReviewForm>
                         </div>
-                    </Modal2>
-                </Modal1>
-            )}
-        </TotalDiv>
-    </>
+                        <ReviewForm onSubmit={mySubmit}>
+                            <ReviewInput name="review" placeholder="리뷰를 적어주세요." onChange={onChange} />
+                            <SubmitButton>게시</SubmitButton>
+                        </ReviewForm>
+                    </div>
+                </Modal2>
+            </Modal1>
+        )}
+    </TotalDiv>
 }
 
 export default MyReserveCom
