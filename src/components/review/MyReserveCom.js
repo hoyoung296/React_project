@@ -59,7 +59,6 @@ const InfoPart1Div = styled(InfoPartDiv)`
     align-items: center;
 `
 const ReserveButton = styled.button`
-    display:none;
     position: relative;
     width: 30%;
     min-height: 30%;
@@ -121,13 +120,50 @@ const Modal2 = styled.div`
     color:white;
     border-radius:10px;
     left:30%;
-    display:flex;
-    flex-wrap: wrap;
-    align-items: stretch;
     overflow-y: auto;
 `
 
-const MyReserveCom = ({ list, start, handlePageChange, del }) => {
+const ReviewForm = styled.form`
+    background-color: #171717;
+    width: 100%;
+    margin-top: 10%;
+    height: 40%;
+    display: flex;
+    flex-direction: column; /* 세로 정렬 */
+    align-items: center; /* 가운데 정렬 */
+    justify-content: center; /* 위아래 중앙 정렬 */
+`
+
+const ReviewInput = styled.input`
+    background-color: #171717;
+    width: 100%;
+    height: 60%;
+    border: none;
+    padding-left: 10px;
+    padding-top: 5px;
+    color: white;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid white;
+`
+
+const SubmitButton = styled.button`
+    margin-top: 20px;
+    background-color: blueviolet;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+
+    &:hover {
+        background: red;
+        color: black;
+    }
+`
+
+const MyReserveCom = ({ list, start, handlePageChange, del, showModal, hideModal, modalData, mySubmit, onChange }) => {
     const renderPageNumbers = () => {
         const pageNumbers = []
         for (let i = 1; i <= list.page; i++) {
@@ -159,7 +195,7 @@ const MyReserveCom = ({ list, start, handlePageChange, del }) => {
                     (list.dto.map((data) => {
                         const hasReview = checkReview(data.userId, data.movieId)
 
-                        return <>
+                        return (
                             <ReserveDiv key={data.reservationId}>
                                 <InfoPart1Div>
                                     <ReserveImg src={`/img/${data.posterUrl}`} alt="영화 포스터 이미지" />
@@ -172,11 +208,10 @@ const MyReserveCom = ({ list, start, handlePageChange, del }) => {
                                 </InfoPartDiv>
                                 <InfoPartDiv>
                                     {/* {hasReview === 0 && <Button1>리뷰 쓰기</Button1>} */}
-                                    <Button1 onClick>리뷰 쓰기</Button1>
+                                    <Button1 onClick={() => showModal(data.title, data.posterUrl, data.director, data.actors, data.movieId)}>리뷰 쓰기</Button1>
                                     <Button2 onClick={() => del(data.reservationId)}>예매 취소</Button2>
                                 </InfoPartDiv>
-                            </ReserveDiv>
-                        </>
+                            </ReserveDiv>)
                     })
                     )}
                 <PagingDiv>
@@ -195,14 +230,31 @@ const MyReserveCom = ({ list, start, handlePageChange, del }) => {
                     )}
                 </PagingDiv>
             </Wrapdiv>
-            <Modal1>
-                <Modal2>
-                    <h1>확인</h1>
-                </Modal2>
-            </Modal1>
 
-
-
+            {modalData && (
+                <Modal1 className="modal">
+                    <Modal2>
+                        <div>
+                            <span onClick={hideModal} style={{ cursor: "pointer", marginLeft: "5px", fontSize: "30px" }}>X</span>
+                        </div>
+                        <div style={{ width: "80%", height: "80%", marginTop: "10%", marginLeft: "10%" }}>
+                            <h1 style={{ fontSize: "30px" }}>'{modalData.title}'의 리뷰를 작성해주세요.</h1>
+                            <div style={{ display: "flex", width: "100%", height: "40%", marginTop: "10%" }}>
+                                <img src={`/img/${modalData.posterUrl}`} alt="영화 포스터" style={{ width: "40%", height: "100%" }} />
+                                <div style={{ display: "inline", width: "60%", height: "40%", marginTop: "30%", marginLeft: "5%" }}>
+                                    <p><b>{modalData.title}</b></p><br />
+                                    <p><b>감독 : {modalData.director}</b></p><br />
+                                    <b>배우 : {modalData.actors}</b>
+                                </div>
+                            </div>
+                            <ReviewForm onSubmit={mySubmit}>
+                                <ReviewInput name="review" placeholder="리뷰를 적어주세요." onChange={onChange} />
+                                <SubmitButton>게시</SubmitButton>
+                            </ReviewForm>
+                        </div>
+                    </Modal2>
+                </Modal1>
+            )}
         </TotalDiv>
     </>
 }
