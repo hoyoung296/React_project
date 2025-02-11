@@ -35,4 +35,4 @@ const MyReviewCon = () => {
     )
 }
 
-export default MyReviewCon;
+export default MyReviewCon
