@@ -11,11 +11,13 @@ function App() {
   return (
     <div className="appBody">
       {!hideHeaderFooter && <HeaderCon />}
-      <Routes className="mainContent">
+      <div className="mainContent">
+      <Routes>
         {routes.map((route) => (
           <Route key={route.path} path={route.path} element={route.element} />
         ))}
       </Routes>
+      </div>
       {!hideHeaderFooter && <FooterCon className="footerContent" />}
     </div>
   );
