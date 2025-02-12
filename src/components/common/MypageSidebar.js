@@ -8,6 +8,8 @@ const SidebarDiv = styled.div`
 `;
 
 const MypageSidebar = ({ customLinks, activeLink, userId, paramId }) => {
+    console.log("activeLink:", activeLink); // 추가
+    console.log("customLinks:", customLinks); // 추가
 
     return (
         <SidebarDiv>
@@ -20,10 +22,7 @@ const MypageSidebar = ({ customLinks, activeLink, userId, paramId }) => {
                             <b>{link.text}</b>
                         </span>
                     ) : (
-                        <Link
-                            to={link.to}
-                            style={{ fontSize: "20px", color: "white", textDecoration: "none" }}
-                        >
+                        <Link to={link.to} style={{ fontSize: "20px", color: "white", textDecoration: "none" }}>
                             <b>{link.text}</b>
                         </Link>
                     )}
