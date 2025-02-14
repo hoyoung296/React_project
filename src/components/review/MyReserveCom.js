@@ -1,6 +1,7 @@
 import { useSearchParams } from "react-router-dom"
 import styled from "styled-components"
 import MypageSidebar from "../common/MypageSidebar"
+import "../../css/review/MyReserve.css"
 
 const TotalDiv = styled.div`
     width:100%;

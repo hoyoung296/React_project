@@ -1,0 +1,31 @@
+.SidebarDiv{
+    width: 20%;
+    height: 800px;
+    text-align: center;
+}
+
+.SidebarDiv img {
+    width: 30%;
+    height: 30%; 
+    border-radius: 50%; 
+    display: block; 
+    margin: 0 auto; 
+    margin-top: 20%;
+}
+
+.SidebarDiv p {
+    display: block;
+    margin-top: 15%;
+}
+
+
+.SidebarDiv span {
+    font-size: 20px; 
+    color: purple;
+}
+
+.SidebarDiv a {
+    font-size: 20px; 
+    color: white; 
+    text-decoration: none;
+}
