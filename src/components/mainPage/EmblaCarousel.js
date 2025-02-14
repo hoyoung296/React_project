@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import '../../css/main.css';
 
 const movies = [
-    { title: '말할 수 없는 비밀', titleE: 'Secret: Untold Melody', director: '서유민', actors: '도경수, 원진아, 신예은 외', imgSrc: '/img/movie1.jpg'},
+    { title: '말할수 없는 비밀', titleE: 'Secret: Untold Melody', director: '서유민', actors: '도경수, 원진아, 신예은 외', imgSrc: '/img/movie1.jpg'},
     { title: '하얼빈', titleE: 'HARBIN', director: '우민호', actors: '현빈, 박정민, 조우진, 전여빈 외', imgSrc: '/img/movie2.jpg'},
     { title: '위키드', titleE: 'Wicked', director: '존 추', actors: '신시아 에리보, 아리아나 그란데 외', imgSrc: '/img/movie3.jpg'},
     { title: '더 폴: 디렉터스 컷', titleE: 'The Fall', director: '타셈 싱', actors: '리 페이스, 카틴카 언타루 외', imgSrc: '/img/movie4.jpg'},
