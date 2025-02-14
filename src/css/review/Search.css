@@ -1,0 +1,150 @@
+.Wrapdiv {
+    width: 100%;
+    height: 800px;
+    background: #171717;
+    color: white;
+}
+
+.Wrapdiv>h1 {
+    width: 98%;
+    margin: 0 auto;
+}
+
+.Wrapdiv>h2 {
+    text-align: center;
+    margin-top: 200px;
+    color: white;
+}
+
+.ListDiv {
+    width: 98%;
+    min-height: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.ModalButton {
+    width: 60px;
+    min-height: 28px;
+    font-size: 12px;
+    background-color: #381E72;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    bottom: 10px;
+    margin-bottom: 10px;
+
+    &:hover {
+        background: #7857bd;
+    }
+}
+
+.info {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+}
+
+.Infodiv {
+    position: fixed;
+    width: 50%;
+    height: 100%;
+    font-size: 12px;
+    background-color: #171717;
+    color: white;
+    border-radius: 10px;
+    left: 25%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    overflow-y: auto;
+}
+
+.Info1 {
+    width: 50%;
+    min-height: 40%;
+
+    &>span {
+        cursor: pointer;
+        margin-left: 5px;
+        font-size: 30px;
+    }
+
+    &>div {
+        margin-left: 10%;
+        margin-top: 50%;
+    }
+}
+
+.Info1>div>button {
+    width: 80px;
+    min-height: 28px;
+    font-size: 12px;
+    background-color: #381E72;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &:hover {
+        background: #7857bd;
+    }
+}
+
+.Info2 {
+    width: 50%;
+    min-height: 40%;
+    text-align: center;
+
+    &>img {
+        width: 310px;
+        height: 350px;
+        margin-top: 40px;
+    }
+}
+
+.Info3 {
+    width: 50%;
+    min-height: 40%;
+    position: relative;
+
+    &>div {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+.Info4 {
+    width: 50%;
+    min-height: 40%;
+
+    &>h1 {
+        transform: translateX(30px);
+    }
+
+    &>div {
+        margin-bottom: 10px;
+        margin-left: 30px;
+    }
+}
+
+.Info4>div>p>img {
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+}
+
+
+.Info5 {
+    width: 100%;
+    min-height: 20%;
+}
