@@ -351,27 +351,3 @@
     overflow-y: auto;
     padding-right: 10px;
 }
-
-.ticketCon{
-    display: flex;
-    margin: 30px;
-    width: 100%;
-    justify-content: center;
-    gap: 50px;
-}
-.ticketCon > *{
-    border: 1px solid white;
-    border-radius: 5px;
-    height: 500px;
-}
-.ticketDate{
-    width: 300px;
-    overflow-y: auto;
-}
-.cinema{
-    width: 300px;
-    overflow-y: auto;
-}
-.buyTicket{
-    width: 500px;
-}

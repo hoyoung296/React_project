@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import '../../css/main.css';
 
 const Modal = ({ isOpen, onClose, type, content }) => {
-    const modalBackground = useRef();
+    /*const modalBackground = useRef();*/
 
     useEffect(() => {
         console.log('모달 상태 변경:', isOpen);
