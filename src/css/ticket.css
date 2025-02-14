@@ -1,0 +1,52 @@
+
+.ticketCon{
+    display: flex;
+    margin: 30px;
+    width: 100%;
+    justify-content: center;
+    gap: 50px;
+    color: #ffffff;
+}
+.ticketCon > *{
+    border: 1px solid white;
+    border-radius: 5px;
+    height: 500px;
+}
+.ticketDate{
+    width: 200px;
+    min-width: 200px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+.ticketDate button{
+    width: 150px;
+    height: 40px;
+    flex-shrink: 0;
+    background-color: transparent;
+    border-style: none;
+    color: #ffffff;
+    font-size: 18px;
+    cursor: pointer;
+}
+.ticketDate button:hover{
+    background-color: #381E72;
+    border-radius: 10px;
+}
+.ticketDate button.selected {
+    border: 1px solid #ffffff;
+    border-radius: 10px;
+    background-color: #381E72;
+}
+.cinema{
+    width: 250px;
+    min-width: 250px;
+    overflow-y: auto;
+}
+.buyTicket{
+    width: 500px;
+}

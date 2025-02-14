@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Axios from "axios";
 import { useSearchParams } from "react-router-dom";
-import "../../css/main.css";
+import "../../css/ticket.css";
 
 // TicketDateCom 컴포넌트: URL 쿼리에서 영화 제목(title)을 받아 해당 영화의 상영 날짜 데이터를 API로부터 불러와 표시합니다.
 const TicketDateCom = () => {
