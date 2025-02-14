@@ -13,12 +13,12 @@ function HeaderCom({ onChange, mySubmit, input}) {
             <form onSubmit={mySubmit} className='searchForm'>
                 <input type="text" className='search' value={input.search} name="search" onChange={onChange} />
                 <button className='search_btn'>
-                    <img className='search_btn' src='/img/search.png'/>
+                    <img className='search_btn' src='/img/search.png' alt='search'/>
                 </button>
                 
             </form>
             <div className='dropDownMenu'>
-                <div className='profile_img'><img src='/img/img.png'/></div>
+                <div className='profile_img'><img src='/img/img.png' alt='profile'/></div>
                 <ul className='dropDown'>
                     <li className='dropDownBtn'><a href={`/myTicket?id=&start=`}>마이페이지</a></li>
                     <li className='dropDownBtn'><a href='/'>로그아웃</a></li>

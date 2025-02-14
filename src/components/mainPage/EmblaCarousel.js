@@ -14,7 +14,7 @@ const movies = [
 ];
 
 const EmblaCarouselComponent = () => {
-    const navigate = useNavigate();
+    /*const navigate = useNavigate();*/
     const [modalOpen, setModalOpen] = useState(false);
     const [modalType, setModalType] = useState('');
     const [selectedMovie, setSelectedMovie] = useState('');
@@ -56,7 +56,7 @@ const EmblaCarouselComponent = () => {
     return (
     <div className="embla-wrapper">
         <button className="carousel-btn prev" onClick={scrollToPrev}>
-            <img src='/img/prev.png'/>
+            <img src='/img/prev.png' alt='prev'/>
         </button>
         <div className="embla" ref={emblaRef}>
             <div className="embla__container">
@@ -79,7 +79,7 @@ const EmblaCarouselComponent = () => {
             </div>
         </div>
         <button className="carousel-btn next" onClick={scrollToNext}>
-            <img src='/img/next.png'/>
+            <img src='/img/next.png' alt='next'/>
         </button>
 
         <div className="carousel-indicator">
