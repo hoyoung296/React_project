@@ -64,7 +64,17 @@ const TicketDateCom = () => {
                 ))}
             </div>
             {/* 추가 정보: 상영관 및 선택된 내용 표시 */}
-            <div className="cinema">상영관</div>
+            <div className="cinema">
+                <div className="cinemaA">
+                    상영관A
+                </div>
+                <div className="cinemaB">
+                    상영관B
+                </div>
+                <div className="cinemaC">
+                    상영관C
+                </div>
+            </div>
             <div className="buyTicket">선택내용</div>
         </div>
     );
