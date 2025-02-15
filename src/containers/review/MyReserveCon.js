@@ -28,7 +28,7 @@ const MyReserveCon = () => {
 
     useEffect(() => {
         if (modalData) {
-            const elements = document.getElementsByClassName("modal")
+            const elements = document.getElementsByClassName("Reservemodal")
             if (elements.length > 0) {
                 elements[0].style.display = "block"
             }
@@ -94,7 +94,7 @@ const MyReserveCon = () => {
     }
 
     const hideModal = () => {
-        const elements = document.getElementsByClassName("modal")
+        const elements = document.getElementsByClassName("Reservemodal")
         if (elements.length > 0)
             elements[0].style.display = "none"
         setModalData(null)

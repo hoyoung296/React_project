@@ -59,14 +59,14 @@ const SearchCon = () => {
     }
 
     const showInfo = (movieId) => {
-        const elements = document.getElementsByClassName("info")
+        const elements = document.getElementsByClassName("Searchinfo")
         if (elements.length > 0)
             elements[0].style.display = "block"
         setInfoId(movieId);
     }
 
     const hideInfo = () => {
-        const elements = document.getElementsByClassName("info")
+        const elements = document.getElementsByClassName("Searchinfo")
         if (elements.length > 0)
             elements[0].style.display = "none"
     }

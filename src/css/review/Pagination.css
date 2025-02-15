@@ -1,0 +1,17 @@
+.PagingDiv {
+    position: absolute;
+    bottom: 0;
+    background: #171717;
+    padding: 10px 0;
+    text-align: center;
+    width: 100%;
+    z-index: 1;
+}
+
+.PagingButton {
+    color: white;
+    margin: 0 5px;
+    cursor: pointer;
+    border: none;
+    background: none;
+}
