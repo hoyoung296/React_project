@@ -100,10 +100,12 @@ const MyReserveCon = () => {
         setModalData(null)
     }
 
-    return <MyReserveCom
-        list={list} start={start} reviewStatus={reviewStatus} modalData={modalData}
-        handlePageChange={handlePageChange} del={del} showModal={showModal} hideModal={hideModal} mySubmit={mySubmit} onChange={onChange}
-    />
+    return <>
+        <MyReserveCom
+            list={list} start={start} reviewStatus={reviewStatus} modalData={modalData}
+            handlePageChange={handlePageChange} del={del} showModal={showModal} hideModal={hideModal} mySubmit={mySubmit} onChange={onChange}
+        />
+    </>
 }
 
 export default MyReserveCon

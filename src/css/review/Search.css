@@ -3,16 +3,16 @@
     min-height: 800px;
     background: #171717;
     color: white;
-}
 
-.SearchWrapdiv>h1 {
-    width: 98%;
-    margin: 0 auto;
-}
+    &>h1 {
+        width: 98%;
+        margin: 0 auto;
+    }
 
-.SearchWrapdiv>h2 {
-    margin-top: 200px;
-    text-align: center;
+    &>h2 {
+        margin-top: 200px;
+        text-align: center;
+    }
 }
 
 .SearchListDiv {

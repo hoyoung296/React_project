@@ -20,10 +20,10 @@ const MypageSidebar = ({ activeLink }) => {
             [
                 { to: userId ? `/myTicket?id=${userId}&start=` : `/myTicket?id=${paramId}&start=`, text: "내 예매내역" },
                 { to: userId ? `/myReview?id=${userId}&start=` : `/myReview?id=${paramId}&start=`, text: "내 리뷰" },
-                { to: "/info_pwd", text: "회원 정보 수정" }
+                { to: "/info_pwd", text: "회원정보 수정" }
             ]
 
-    return (
+    return <>
         <div className="SidebarDiv">
             <img src="/img/movie1.jpg" alt="프사" /><br />
             <b>{userId || paramId}</b>
@@ -37,7 +37,7 @@ const MypageSidebar = ({ activeLink }) => {
                 </p>
             ))}
         </div>
-    )
+    </>
 }
 
 export default MypageSidebar

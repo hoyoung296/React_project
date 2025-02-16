@@ -18,7 +18,7 @@ const Pagination = ({ start, list, handlePageChange }) => {
         return pageNumbers
     }
 
-    return (
+    return <>
         <div className="PagingDiv">
             {start > 1 && (
                 <button onClick={() => handlePageChange(start - 1)}>이전</button>
@@ -30,7 +30,7 @@ const Pagination = ({ start, list, handlePageChange }) => {
                 <button onClick={() => handlePageChange(start + 1)}>다음</button>
             )}
         </div>
-    )
+    </>
 }
 
 export default Pagination
