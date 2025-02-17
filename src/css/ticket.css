@@ -70,7 +70,6 @@
 
 
 
-/* 티켓 좌석 선택 페이지 스타일 */
 .ticketSeat {
     display: flex;
     flex-direction: column;
@@ -92,18 +91,24 @@
     border-radius: 10px;
     border-color: #a0a0a0;
     border-style: solid;
+    border-width: 1px;
+    width: 900px;
 }
 
 /* 스크린 뷰 */
 .screenView {
     color: #ffffff;
-    width: 90%;
-    text-align: center;
-    background: #c5c5c5;
+    width: 70%;
+    height: 30px;
+    background: #999999;
     padding: 10px;
     font-weight: bold;
+    font-size: 14px;
     margin-bottom: 20px;
-    border-radius: 5px;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* 좌석 배치 */
@@ -121,78 +126,89 @@
     display: flex;
     gap: 5px;
 }
+/* 특정 좌석 위치에서 간격을 더 추가 */
+.seat:nth-child(2),
+.seat:nth-child(8) {
+    margin-right: 20px; /* 중간 간격 넓히기 */
+}
 
 /* 좌석 스타일 */
 .seat {
     color: #ffffff;
     width: 40px;
     height: 40px;
-    border-radius: 5px;
+    border-radius: 10px;
     border: none;
-    font-size: 14px;
-    font-weight: bold;
+    font-size: 13px;
     cursor: pointer;
     transition: 0.2s;
     background-color: transparent;
 }
 
-/* 선택 가능 좌석 */
+/* 예매 가능 좌석 */
 .possibleSeat {
     border-style: solid;
-    border-color: #ffffff;
+    border-width: 1px;
+    border-color: #D9D9D9;
 }
 
 .possibleSeat:hover {
     background: #f0f0f04b;
 }
 
-/* 선택 불가능 좌석 */
+/* 예매 완료 좌석 */
 .impossibleSeat {
     background: #888;
-    cursor: not-allowed;
+    cursor: default;
 }
 
-/* 선택한 좌석 */
+/* 선택 좌석 */
 .selectSeat {
-    background: #6a0dad;
+    border-style: solid;
+    border-color: #6a0dad;
+    background-color: #6a0dad6a;
+}
+.selectSeat:hover{
+    background-color: #6a0dadc1;
 }
 
-/* 좌석 설명 (가능, 불가, 선택됨) */
+/* 좌석 설명 (가능, 완료, 선택) */
 .seatEx {
-    color: #ffffff;
     display: flex;
-    gap: 10px;
-    margin-top: 10px;
+    align-items: center; /* 세로 중앙 정렬 */
+    justify-content: flex-start; /* 왼쪽 정렬 */
+    gap: 20px; /* 항목 간격 */
+    margin-top: 20px;
+    align-self: flex-start;
 }
 
 .seatEx div {
+    display: flex;
+    align-items: center; /* 텍스트와 박스를 수직 정렬 */
+    gap: 10px; /* 텍스트와 박스 간격 */
+    font-size: 12px;
+}
+
+.seatEx div div { /* 예시 좌석 스타일 */
     width: 20px;
     height: 20px;
-    border-radius: 3px;
+    border-radius: 5px;
 }
 
-
-.seatEx .possibleSeat { /*선택가능좌석 예시*/
+.seatEx .possibleSeat { /*예매가능좌석 예시*/
     border-style: solid;
     border-color: #c2c2c2;
-    width: 40px;
-    height: 40px;
+    pointer-events: none;
 }
 
-.seatEx .impossibleSeat { /*선택불가좌석 예시*/
-    border-style: solid;
-    border-color: #ffffff;
+.seatEx .impossibleSeat { /*예매완료좌석 예시*/
     background: #888;
-    width: 40px;
-    height: 40px;
 }
 
 .seatEx .selectSeat { /*선택좌석 예시*/
     border-style: solid;
-    border-color: #ffffff;
-    background: #6a0dad;
-    width: 40px;
-    height: 40px;
+    border-color: #6a0dad;
+    background-color: #6a0dad6a;
 }
 
 /* 구매 섹션 */
@@ -200,42 +216,45 @@
     border-style: solid;
     border-color: #ffffff;
     margin-top: 20px;
-    padding: 15px;
+    padding: 15px 50px;
     border-radius: 10px;
-    width: 90%;
-    max-width: 500px;
-    text-align: center;
+    width: 900px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 /* 구매 버튼 */
 .buySeatBtn {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
     margin-top: 15px;
+    gap: 20px;
 }
 
 .buySeatBtn button {
     padding: 10px 15px;
     border: none;
     border-radius: 5px;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: bold;
     cursor: pointer;
     transition: 0.2s;
 }
 
 .buySeatBtn button:first-child {
-    background: #5b5b5b;
+    background: #747474;
+    color: #ffffff;
 }
 
 .buySeatBtn button:first-child:hover {
-    background: #363636;
+    background: #5b5b5b;
 }
-
-.buySeatBtn button:last-child {
-    background: #838383;
+.selectDateInfo{
+    line-height: 30px;
 }
-
-.buySeatBtn button:last-child:hover {
-    background: #253025;
+.amount{
+    color: #6a0dad;
+    font-weight: bold;
 }
