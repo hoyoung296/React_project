@@ -33,7 +33,7 @@ const TicketSeatCom = () => {
     return (
         <div className="ticketSeat">
             <div className="ticketSeatBox">
-                <div className="screenView">스크린</div>
+                <div className="screenView">SCREEN</div>
 
                 {/* 좌석 배치 */}
                 <div className="seatBox">
@@ -67,18 +67,23 @@ const TicketSeatCom = () => {
 
                 {/* 좌석 설명 */}
                 <div className="seatEx">
-                    <div className="possibleSeat">선택 가능</div>
-                    <div className="impossibleSeat">선택 불가</div>
-                    <div className="selectSeat">선택됨</div>
+                    <div><div className="possibleSeat"/>예매 가능</div>
+                    <div><div className="impossibleSeat"/>예매 완료</div>
+                    <div><div className="selectSeat"/>선택 좌석</div>
                 </div>
             </div>
 
             {/* 예매 정보 */}
             <div className="buySeat">
-                <div className="selectMovieInfo">영화정보(포스터, 제목, 감독, 배우)</div>
+                <div className="selectMovieInfo">
+                    영화정보(포스터, 제목, 감독, 배우)
+                </div>
                 <div className="selectDateInfo">
-                    <div>상영일시(상영시간), 상영관</div>
-                    <div>인원: {selectedSeats.size}명, 좌석번호: {[...selectedSeats].join(", ")}</div>
+                    <div>일시 : (상영날짜, 상영시간)<br/>
+                        상영관 : (상영관이름)</div>
+                    <div>인원: {selectedSeats.size}명<br/>
+                        좌석번호: {[...selectedSeats].join(", ")}</div>
+                    <div>총 금액 : <span className="amount">00,000원</span></div>
                 </div>
 
                 <div className="buySeatBtn">
