@@ -1,12 +1,13 @@
 import React from 'react';
 import '../css/main.css';
+import TicketSeatCom from '../components/ticket/TicketSeatCom';
 
 function TicketSeat() {
     return (
     <div>
-        예매좌석 선택 페이지
+        <TicketSeatCom />
     </div>
-)
+);
 };
 
 export default TicketSeat;

@@ -28,11 +28,10 @@ const MyReviewCon = () => {
         navigate(`/myReview?id=${id}&start=${page}`)
     }
 
-    return (
-        <>
-            <MyReviewCom list={list} start={start} handlePageChange={handlePageChange} />
-        </>
-    )
+    return <>
+        <MyReviewCom list={list} start={start} handlePageChange={handlePageChange} />
+    </>
+
 }
 
 export default MyReviewCon

@@ -11,21 +11,22 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Pretendard-Regular';
-    /* color: #ffffff;  이거 sidebar에서 글자가 보라색으로 안 나와서 주석으로 처리했습니다 (나호영 작성)*/
 }
+
 .appBody {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     background-color: #171717;
-    position: relative; 
+    position: relative;
 }
 
 .mainContent {
-    flex: 1;
+    flex : 1;
     padding: 0;
     min-height: 600px;
     margin-bottom: 50px;
+    position: relative; 
 }
 
 .footerContent {

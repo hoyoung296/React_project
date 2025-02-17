@@ -63,4 +63,179 @@
 .buyTicket{
     width: 500px;
 }
+.buyTicket img{
+    width: 100px;
+}
 
+
+
+
+/* 티켓 좌석 선택 페이지 스타일 */
+.ticketSeat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+    color: #ffffff;
+}
+
+/* 좌석 박스 (스크린 + 좌석) */
+.ticketSeatBox {
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 10px;
+    border-color: #a0a0a0;
+    border-style: solid;
+}
+
+/* 스크린 뷰 */
+.screenView {
+    color: #ffffff;
+    width: 90%;
+    text-align: center;
+    background: #c5c5c5;
+    padding: 10px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+/* 좌석 배치 */
+.seatBox {
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    padding: 10px;
+}
+
+/* 한 줄(가로) 좌석 */
+.seatRow {
+    display: flex;
+    gap: 5px;
+}
+
+/* 좌석 스타일 */
+.seat {
+    color: #ffffff;
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    border: none;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+    background-color: transparent;
+}
+
+/* 선택 가능 좌석 */
+.possibleSeat {
+    border-style: solid;
+    border-color: #ffffff;
+}
+
+.possibleSeat:hover {
+    background: #f0f0f04b;
+}
+
+/* 선택 불가능 좌석 */
+.impossibleSeat {
+    background: #888;
+    cursor: not-allowed;
+}
+
+/* 선택한 좌석 */
+.selectSeat {
+    background: #6a0dad;
+}
+
+/* 좌석 설명 (가능, 불가, 선택됨) */
+.seatEx {
+    color: #ffffff;
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.seatEx div {
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+}
+
+
+.seatEx .possibleSeat { /*선택가능좌석 예시*/
+    border-style: solid;
+    border-color: #c2c2c2;
+    width: 40px;
+    height: 40px;
+}
+
+.seatEx .impossibleSeat { /*선택불가좌석 예시*/
+    border-style: solid;
+    border-color: #ffffff;
+    background: #888;
+    width: 40px;
+    height: 40px;
+}
+
+.seatEx .selectSeat { /*선택좌석 예시*/
+    border-style: solid;
+    border-color: #ffffff;
+    background: #6a0dad;
+    width: 40px;
+    height: 40px;
+}
+
+/* 구매 섹션 */
+.buySeat {
+    border-style: solid;
+    border-color: #ffffff;
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+}
+
+/* 구매 버튼 */
+.buySeatBtn {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.buySeatBtn button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.buySeatBtn button:first-child {
+    background: #5b5b5b;
+}
+
+.buySeatBtn button:first-child:hover {
+    background: #363636;
+}
+
+.buySeatBtn button:last-child {
+    background: #838383;
+}
+
+.buySeatBtn button:last-child:hover {
+    background: #253025;
+}

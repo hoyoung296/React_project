@@ -1,35 +1,43 @@
-import { Link } from "react-router-dom"
-import styled from "styled-components"
+import { Link, useLocation, useSearchParams } from "react-router-dom"
+import '../../css/review/MypageSidebar.css'
 
-const SidebarDiv = styled.div`
-    width: 20%;
-    height: 800px;
-    text-align: center;
-`;
+const MypageSidebar = ({ activeLink }) => {
+    const [params] = useSearchParams()
+    const paramId = params.get("id")
+    const location = useLocation()
+    const userId = paramId
+    const customLinks = location.pathname.includes("myReview")
+        ? [
+            { to: userId ? `/myTicket?id=${userId}&start=` : `/myTicket?id=${paramId}&start=`, text: "내 예매내역" },
+            { to: "/myReview", text: "내 리뷰" },
+            { to: userId ? `/info_pwd?id=${userId}` : `/info_pwd?id=${paramId}`, text: "회원정보 수정" }
+        ]
+        : location.pathname.includes("myTicekt") ? [
+            { to: "/myTicket", text: "내 예매내역" },
+            { to: userId ? `/myReview?id=${userId}&start=` : `/myReview?id=${paramId}&start=`, text: "내 리뷰" },
+            { to: userId ? `/info_pwd?id=${userId}` : `/info_pwd?id=${paramId}`, text: "회원정보 수정" }
+        ] :
+            [
+                { to: userId ? `/myTicket?id=${userId}&start=` : `/myTicket?id=${paramId}&start=`, text: "내 예매내역" },
+                { to: userId ? `/myReview?id=${userId}&start=` : `/myReview?id=${paramId}&start=`, text: "내 리뷰" },
+                { to: "/info_pwd", text: "회원정보 수정" }
+            ]
 
-const MypageSidebar = ({ customLinks, activeLink, userId, paramId }) => {
-    console.log("activeLink:", activeLink); // 추가
-    console.log("customLinks:", customLinks); // 추가
-
-    return (
-        <SidebarDiv>
-            <img src="/img/movie1.jpg" alt="프사" style={{ width: "30%", height: "30%", borderRadius: "50%", display: "block", margin: "0 auto", marginTop: "20%" }} />
-            {userId ? <b>{userId}</b> : <b>{paramId}</b>}
+    return <>
+        <div className="SidebarDiv">
+            <img src="/img/movie1.jpg" alt="프사" /><br />
+            <b>{userId || paramId}</b>
             {customLinks.map((link, index) => (
-                <p key={index} style={{ display: "block", marginTop: "15%" }}>
+                <p key={index}>
                     {activeLink === link.text ? (
-                        <span style={{ fontSize: "20px", color: "purple" }}>
-                            <b>{link.text}</b>
-                        </span>
+                        <span><b>{link.text}</b></span>
                     ) : (
-                        <Link to={link.to} style={{ fontSize: "20px", color: "white", textDecoration: "none" }}>
-                            <b>{link.text}</b>
-                        </Link>
+                        <Link to={link.to}><b>{link.text}</b></Link>
                     )}
                 </p>
             ))}
-        </SidebarDiv>
-    )
+        </div>
+    </>
 }
 
 export default MypageSidebar

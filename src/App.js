@@ -12,15 +12,15 @@ function App() {
     <div className="appBody">
       {!hideHeaderFooter && <HeaderCon />}
       <div className="mainContent">
-      <Routes>
-        {routes.map((route) => (
-          <Route key={route.path} path={route.path} element={route.element} />
-        ))}
-      </Routes>
+        <Routes>
+          {routes.map((route) => (
+            <Route key={route.path} path={route.path} element={route.element} />
+          ))}
+        </Routes>
       </div>
       {!hideHeaderFooter && <FooterCon className="footerContent" />}
     </div>
-  );
+  )
 }
 
 export default App;
