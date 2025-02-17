@@ -69,7 +69,12 @@ const MyReserveCon = () => {
 
         try {
             const response = await writeReview(dto)
-            alert(response.message)
+            if (response === 1) {
+                showResult()
+            }
+            else {
+                alert("리뷰 등록 실패")
+            }
             setStart(prev => prev === 1 ? 0 : 1)
             navigate(`/myTicket?id=${id}&start=1`)
             hideModal()
@@ -97,14 +102,30 @@ const MyReserveCon = () => {
         const elements = document.getElementsByClassName("Reservemodal")
         if (elements.length > 0)
             elements[0].style.display = "none"
+    }
+
+    const showResult = () => {
+        const elements = document.getElementsByClassName("Resultmodal")
+        if (elements.length > 0)
+            elements[0].style.display = "block"
+    }
+
+    const hideResult = () => {
+        const elements = document.getElementsByClassName("Resultemodal")
+        if (elements.length > 0)
+            elements[0].style.display = "none"
         setModalData(null)
+    }
+
+    const onClick = () => {
+        navigate(`/myReview?id=${id}&start=`)
     }
 
     return <>
         <MyReserveCom
-            list={list} start={start} reviewStatus={reviewStatus} modalData={modalData}
+            list={list} start={start} reviewStatus={reviewStatus} modalData={modalData} id={id}
             handlePageChange={handlePageChange} del={del} showModal={showModal} hideModal={hideModal} mySubmit={mySubmit} onChange={onChange}
-        />
+            showResult={showResult} hideResult={hideResult} onClick={onClick} />
     </>
 }
 

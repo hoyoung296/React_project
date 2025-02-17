@@ -1,18 +1,6 @@
-import { useEffect, useState } from "react"
-import { translateText } from "../../service/review"
 import "../../css/review/Search.css"
 
-const SearchCom = ({ list, Infolist, id, infoId, onClick, showModal, hideModal, showInfo, hideInfo }) => {
-    const [translatedTitle, setTranslatedTitle] = useState("")
-
-    useEffect(() => {
-        if (Infolist.length > 0) {
-            translateText(Infolist[0].title).then((translated) => {
-                setTranslatedTitle(translated);
-            })
-        }
-    }, [Infolist])
-
+const SearchCom = ({ list, Infolist, relatedList, translatedTitle, id, infoId, onClick, showModal, hideModal, showInfo, hideInfo }) => {
     return <>
         <div className="SearchWrapdiv">
             <h1>'{id}'에 대한 검색 결과</h1><br />
@@ -72,8 +60,8 @@ const SearchCom = ({ list, Infolist, id, infoId, onClick, showModal, hideModal, 
                                 <div className="SearchInfo5">
                                     <h1>관련컨텐츠</h1>
                                     <div className="SearchListDiv" style={{ width: "100%" }}>
-                                        {list
-                                            .filter((data) => data.movieId !== Infolist[0].movieId)
+                                        {relatedList
+                                            .filter(movie => movie.movieId !== Infolist[0].movieId)
                                             .map((data, index) => (
                                                 <div key={`related-${data.movieId}-${index}`} className="SearchImgDiv" style={{ backgroundImage: `url('/img/${data.posterUrl}')` }} />
                                             ))}

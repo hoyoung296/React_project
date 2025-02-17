@@ -2,7 +2,7 @@ import MypageSidebar from "../common/MypageSidebar"
 import "../../css/review/MyReserve.css"
 import Pagination from "../common/Pagination"
 
-const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showModal, hideModal, modalData, mySubmit, onChange }) => {
+const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showModal, hideModal, modalData, id, mySubmit, onChange, showResult, hideResult, onClick }) => {
     const now = new Date()
     return <>
         <div className="ReserveTotalDiv">
@@ -65,8 +65,24 @@ const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showMo
                             </div>
                             <form onSubmit={mySubmit}>
                                 <input name="review" placeholder="리뷰를 적어주세요." onChange={onChange} />
-                                <button>게시</button>
+                                <button onClick={()=>showResult()}>게시</button>
                             </form>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {modalData && (
+                <div className="Resultmodal">
+                    <div>
+                        <div>
+                            <span onClick={hideResult}>X</span>
+                        </div>
+                        <div className="Resultmodal-1">
+                            <img src={`/img/${modalData.posterUrl}`} alt="영화 포스터" /><br /><br />
+                            <h1>리뷰 작성이 완료되었습니다.</h1>
+                            <br /><br /><br /><br /><br /><br /><br /><br /><br />
+                            <button onClick={()=>onClick(id)}>리뷰 보러가기</button>
                         </div>
                     </div>
                 </div>
