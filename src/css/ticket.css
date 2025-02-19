@@ -213,11 +213,8 @@
 
 /* 구매 섹션 */
 .buySeat {
-    border-style: solid;
-    border-color: #ffffff;
     margin-top: 20px;
     padding: 15px 50px;
-    border-radius: 10px;
     width: 900px;
     display: flex;
     align-items: center;
