@@ -7,7 +7,7 @@ const SearchCom = ({ list, Infolist, relatedList = [], translatedTitle, id, info
             {list.length === 0 ? (<h2>검색 결과가 없습니다.</h2>) : (
                 <div className="SearchListDiv">
                     {list.map((data, index) => (
-                        <div key={`list-${data.movieId}-${index}`} className="SearchImgDiv" style={{ backgroundImage: `url('/img/${data.posterUrl}')` }} onMouseEnter={() => showModal(data.movieId)} onMouseLeave={() => hideModal(data.movieId)}>
+                        <div key={`list-${data.movieId}-${index}`} className="SearchImgDiv" style={{ backgroundImage: `url('${data.posterUrl}')` }} onMouseEnter={() => showModal(data.movieId)} onMouseLeave={() => hideModal(data.movieId)}>
                             <div className={`SearchModalWrap modal-${data.movieId}`}>
                                 <button className="SearchModalButton" onClick={() => showInfo(data.movieId)}>상세보기</button>
                                 <button className="SearchModalButton" onClick={() => onClick()}>예매하기</button>
@@ -34,7 +34,7 @@ const SearchCom = ({ list, Infolist, relatedList = [], translatedTitle, id, info
                                 </div>
 
                                 <div className="SearchInfo2">
-                                    <img src={`/img/${Infolist[0].posterUrl}`} alt="영화 포스터 이미지" />
+                                    <img src={`${Infolist[0].posterUrl}`} alt="영화 포스터 이미지" />
                                 </div>
 
                                 <div className="SearchInfo3">
@@ -63,7 +63,7 @@ const SearchCom = ({ list, Infolist, relatedList = [], translatedTitle, id, info
                                         {relatedList
                                             .filter(movie => movie.movieId !== Infolist[0].movieId)
                                             .map((data, index) => (
-                                                <div key={`related-${data.movieId}-${index}`} className="SearchImgDiv" style={{ backgroundImage: `url('/img/${data.posterUrl}')` }} />
+                                                <div key={`related-${data.movieId}-${index}`} className="SearchImgDiv" style={{ backgroundImage: `url('${data.posterUrl}')` }} />
                                             ))}
                                     </div>
                                 </div>

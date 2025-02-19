@@ -21,7 +21,7 @@ const MovieList = ({ list }) => {
             <div className='movieList'>
                 {list.map((movie, index) => (
                     <div className="poster" key={index}>
-                        <img src={`/img/${movie.posterUrl}`} alt={`Movie Poster ${movie.movieId}`} />
+                        <img src={`${movie.posterUrl}`} alt={`Movie Poster ${movie.movieId}`} />
                         <div className="overlay">
                             <button onClick={() => openModal('detail', movie.title)}>상세보기</button>
                             <button onClick={() => navigate(`/ticket_date?title=${encodeURIComponent(movie.title)}`)}>
