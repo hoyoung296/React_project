@@ -1,8 +1,9 @@
 import MypageSidebar from "../common/MypageSidebar"
 import "../../css/review/MyReserve.css"
 import Pagination from "../common/Pagination"
+import Modal from "../mainPage/Modal"
 
-const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showModal, hideModal, modalData, id, mySubmit, onChange, showResult, hideResult, onClick }) => {
+const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showModal, hideModal, modalData, id, mySubmit, onChange, showResult, hideResult, onClick, isModalOpen, modalType }) => {
     const now = new Date()
     return <>
         <div className="ReserveTotalDiv">
@@ -47,45 +48,26 @@ const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showMo
                 <Pagination start={start} list={list} handlePageChange={handlePageChange} />
             </div>
 
-            {modalData && (
-                <div className="Reservemodal">
-                    <div>
-                        <div>
-                            <span onClick={hideModal}>X</span>
-                        </div>
-                        <div className="Reservemodal-1">
-                            <h1>'{modalData.title}'의 리뷰를 작성해주세요.</h1>
-                            <div className="Reservemodal-2">
-                                <img src={`${modalData.posterUrl}`} alt="영화 포스터" />
-                                <div>
-                                    <p><b>{modalData.title}</b></p><br />
-                                    <p><b>감독 : {modalData.director}</b></p><br />
-                                    <b>배우 : {modalData.actors}</b>
-                                </div>
-                            </div>
-                            <form onSubmit={mySubmit}>
-                                <input name="review" placeholder="리뷰를 적어주세요." onChange={onChange} />
-                                <button onClick={()=>showResult()}>게시</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+            {modalData && ( 
+                <Modal isOpen={isModalOpen} onClose={hideModal} type={modalType} modalData={modalData} mySubmit={mySubmit}
+                onChange={onChange} showResult={showResult} />
             )}
 
             {modalData && (
-                <div className="Resultmodal">
-                    <div>
-                        <div>
-                            <span onClick={hideResult}>X</span>
-                        </div>
-                        <div className="Resultmodal-1">
-                            <img src={`${modalData.posterUrl}`} alt="영화 포스터" /><br /><br />
-                            <h1>리뷰 작성이 완료되었습니다.</h1>
-                            <br /><br /><br /><br /><br /><br /><br /><br /><br />
-                            <button onClick={()=>onClick(id)}>리뷰 보러가기</button>
-                        </div>
-                    </div>
-                </div>
+                <Modal />
+                // <div className="Resultmodal">
+                //     <div>
+                //         <div>
+                //             <span onClick={hideResult}>X</span>
+                //         </div>
+                //         <div className="Resultmodal-1">
+                //             <img src={`${modalData.posterUrl}`} alt="영화 포스터" /><br /><br />
+                //             <h1>리뷰 작성이 완료되었습니다.</h1>
+                //             <br /><br /><br /><br /><br /><br /><br /><br /><br />
+                //             <button onClick={()=>onClick(id)}>리뷰 보러가기</button>
+                //         </div>
+                //     </div>
+                // </div>
             )}
         </div>
     </>
