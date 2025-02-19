@@ -1,33 +1,35 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";  // 🔹 useNavigate 추가
 import "../../css/ticket.css";
 
-const ROWS = 7;  // 세로 줄 수
-const COLS = 10;  // 가로 좌석 수
+const ROWS = 7;
+const COLS = 10;
+const SEAT_PRICE = 15000;
 
 const TicketSeatCom = () => {
-    // 선택 불가능한 좌석 예제 데이터 (랜덤 배치 가능)
-    const disabledSeats = new Set(["2-3", "5-6", "10-1", "14-7"]); 
-
-    // 선택된 좌석 목록을 저장
+    const navigate = useNavigate();  // 🔹 useNavigate 사용
+    const disabledSeats = new Set(["B-3", "E-6", "G-1", "G-2"]); 
     const [selectedSeats, setSelectedSeats] = useState(new Set());
 
     // 좌석 클릭 핸들러
     const handleSeatClick = (row, col) => {
-        const seatId = `${row}-${col}`;
-
-        // 선택 불가능한 좌석이면 클릭 무시
+        const seatId = `${String.fromCharCode(65 + row)}-${col}`;
         if (disabledSeats.has(seatId)) return;
 
-        // 좌석 선택/해제
         setSelectedSeats((prev) => {
             const newSelected = new Set(prev);
-            if (newSelected.has(seatId)) {
-                newSelected.delete(seatId); // 이미 선택한 좌석이면 해제
-            } else {
-                newSelected.add(seatId); // 새 좌석 선택
-            }
+            newSelected.has(seatId) ? newSelected.delete(seatId) : newSelected.add(seatId);
             return newSelected;
         });
+    };
+
+    const totalAmount = selectedSeats.size > 0 ? selectedSeats.size * SEAT_PRICE : "";
+    const selectedSeatsList = [...selectedSeats].join(", ");
+
+    // 🔹 결제 버튼 클릭 시 결제 페이지로 이동
+    const handleSubmit = (e) => {
+        e.preventDefault(); // 🔹 기본 폼 제출 방지 (페이지 새로고침 방지)
+        navigate("/payment", { state: { selectedSeats: [...selectedSeats] } });  // 🔹 선택한 좌석 정보를 state로 전달
     };
 
     return (
@@ -40,7 +42,7 @@ const TicketSeatCom = () => {
                     {Array.from({ length: ROWS }, (_, row) => (
                         <div key={row} className="seatRow">
                             {Array.from({ length: COLS }, (_, col) => {
-                                const seatId = `${row + 1}-${col + 1}`;
+                                const seatId = `${String.fromCharCode(65 + row)}-${col + 1}`;
                                 const isDisabled = disabledSeats.has(seatId);
                                 const isSelected = selectedSeats.has(seatId);
 
@@ -54,7 +56,7 @@ const TicketSeatCom = () => {
                                                 ? "selectSeat"
                                                 : "possibleSeat"
                                         }`}
-                                        onClick={() => handleSeatClick(row + 1, col + 1)}
+                                        onClick={() => handleSeatClick(row, col + 1)}
                                         disabled={isDisabled}
                                     >
                                         {seatId}
@@ -76,19 +78,30 @@ const TicketSeatCom = () => {
             {/* 예매 정보 */}
             <div className="buySeat">
                 <div className="selectMovieInfo">
-                    영화정보(포스터, 제목, 감독, 배우)
+                    <img src="../../img//poster/poster1.jpg"/>
+                    <div>
+                        <div>미키 17</div>
+                        <div>Mickey 17</div>
+                        <div>감독 : <span>봉준호</span></div>
+                        <div>배우 : <span>로버트 패틴슨, 나오미 아키에</span></div>
+                    </div>
                 </div>
                 <div className="selectDateInfo">
-                    <div>일시 : (상영날짜, 상영시간)<br/>
-                        상영관 : (상영관이름)</div>
-                    <div>인원: {selectedSeats.size}명<br/>
-                        좌석번호: {[...selectedSeats].join(", ")}</div>
-                    <div>총 금액 : <span className="amount">00,000원</span></div>
+                    <div>
+                        일시 : <span>상영날짜</span> <span>상영시간</span><br/>
+                        상영관 : (상영관이름)
+                    </div>
+                    <div>인원 : {selectedSeats.size > 0 ? `${selectedSeats.size}명` : ""}</div>
+                    <div>좌석번호 : {selectedSeats.size > 0 ? selectedSeatsList : ""}</div>
+                    <div>총 금액 : <span className="amount">{selectedSeats.size > 0 ? `${totalAmount.toLocaleString()}원` : ""}</span></div>
                 </div>
 
+                {/* 🔹 결제 버튼 클릭 시 handleSubmit 실행 */}
                 <div className="buySeatBtn">
-                    <button onClick={() => setSelectedSeats(new Set())}>좌석 선택 초기화</button>
-                    <from>결제하기</from>
+                    <button className="resetbtn" onClick={() => setSelectedSeats(new Set())}>좌석 선택 초기화</button>
+                    <form onSubmit={handleSubmit}>  {/* 🔹 폼을 통해 handleSubmit 실행 */}
+                        <button className="ticketBuyBtn" type="submit">결제하기</button>
+                    </form>
                 </div>
             </div>
         </div>

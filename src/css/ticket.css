@@ -117,14 +117,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5px;
+    gap: 13px;
     padding: 10px;
 }
 
 /* 한 줄(가로) 좌석 */
 .seatRow {
     display: flex;
-    gap: 5px;
+    gap: 10px;
 }
 /* 특정 좌석 위치에서 간격을 더 추가 */
 .seat:nth-child(2),
@@ -222,6 +222,10 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    font-size: 14px;
+}
+.selectDateInfo{
+    max-width: 200px;
 }
 
 /* 구매 버튼 */
@@ -233,28 +237,63 @@
     gap: 20px;
 }
 
-.buySeatBtn button {
+.resetbtn {
     padding: 10px 15px;
     border: none;
     border-radius: 5px;
-    font-size: 13px;
     font-weight: bold;
     cursor: pointer;
     transition: 0.2s;
-}
-
-.buySeatBtn button:first-child {
+    width: 120px;
+    height: 35px;
     background: #747474;
     color: #ffffff;
 }
-
-.buySeatBtn button:first-child:hover {
+.resetbtn:hover {
     background: #5b5b5b;
 }
+.ticketBuyBtn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+    width: 120px;
+    height: 35px;
+    background: #381E72; /* 보라색 */
+    color: #ffffff;
+}
+
+.ticketBuyBtn:hover {
+    background: #6a0dad; /* 보라색을 어두운 보라색으로 변경 */
+}
+
 .selectDateInfo{
     line-height: 30px;
+}
+.selectMovieInfo{
+    display: flex;
+    max-width: 350px;
+}
+.selectMovieInfo > div:last-child {
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+    gap: 10px;
+}
+.selectMovieInfo > div:last-child >  div:nth-of-type(2){
+    margin-bottom: 10px;
+}
+.selectMovieInfo img{
+    width: 100px;
+    margin-right: 20px;
 }
 .amount{
     color: #6a0dad;
     font-weight: bold;
+}
+
+.payMentPage{
+    color: #ffffff;
 }

@@ -1,10 +1,11 @@
 import React from 'react';
 import '../css/main.css';
+import PayMentCom from '../components/payMent/PayMentCom';
 
 function PayMent() {
     return (
     <div>
-        결제 페이지
+        <PayMentCom />
     </div>
 )
 };

@@ -1,6 +1,6 @@
 import "../../css/review/Search.css"
 
-const SearchCom = ({ list, Infolist, relatedList, translatedTitle, id, infoId, onClick, showModal, hideModal, showInfo, hideInfo }) => {
+const SearchCom = ({ list, Infolist, relatedList = [], translatedTitle, id, infoId, onClick, showModal, hideModal, showInfo, hideInfo }) => {
     return <>
         <div className="SearchWrapdiv">
             <h1>'{id}'에 대한 검색 결과</h1><br />
