@@ -1,16 +1,9 @@
-import React from 'react';
-import '../css/main.css';
-import EmblaCarouselComponent from '../components/mainPage/EmblaCarousel';
-import MovieList from '../components/mainPage/MovieList';
+import HomePageCon from "../containers/common/HomePageCon"
 
 function HomePage() {
-    return (
-    <div>
-        <EmblaCarouselComponent />
-        <MovieList />
-    </div>
-)
-};
+    return <>
+        <HomePageCon />
+    </>
+}
 
-
-export default HomePage;
+export default HomePage
