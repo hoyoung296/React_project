@@ -85,7 +85,7 @@ const TicketDateCom = () => {
     const cinemaA = cinemaInfo.filter(cinema => cinema.SCREENNAME === "1관");
     const cinemaB = cinemaInfo.filter(cinema => cinema.SCREENNAME === "2관");
     const cinemaC = cinemaInfo.filter(cinema => cinema.SCREENNAME === "3관");
-    console.log("1관 : " ,cinemaA);
+    console.log("1관 : ", cinemaInfo);
 
     return (
         <div className="ticketCon">
