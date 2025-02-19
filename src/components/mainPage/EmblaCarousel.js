@@ -68,7 +68,9 @@ const EmblaCarouselComponent = ({ list, translatedTitles }) => {
                                     </a>
                                 </div>
                             </div>
-                            <img src={`/img/${movie.posterUrl}`} alt={movie.title} />
+                            <img src={`${movie.posterUrl}`} alt={movie.title} />
+                            {/* 나호영 작성 */}
+                            {/* <img src={`/img/movie1.jpg`} alt={movie.title} /> */}
                         </div>
                     ))}
                 </div>

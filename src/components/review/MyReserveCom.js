@@ -22,7 +22,7 @@ const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showMo
                         return (
                             <div className="ReserveDiv" key={data.reservationId}>
                                 <div className="ReserveInfoPart1Div">
-                                    <img src={`/img/${data.posterUrl}`} alt="영화 포스터 이미지" />
+                                    <img src={`${data.posterUrl}`} alt="영화 포스터 이미지" />
                                     <b>{data.title}</b>
                                 </div>
                                 <div className="ReserveInfoPart2Div">
@@ -56,7 +56,7 @@ const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showMo
                         <div className="Reservemodal-1">
                             <h1>'{modalData.title}'의 리뷰를 작성해주세요.</h1>
                             <div className="Reservemodal-2">
-                                <img src={`/img/${modalData.posterUrl}`} alt="영화 포스터" />
+                                <img src={`${modalData.posterUrl}`} alt="영화 포스터" />
                                 <div>
                                     <p><b>{modalData.title}</b></p><br />
                                     <p><b>감독 : {modalData.director}</b></p><br />
@@ -79,7 +79,7 @@ const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showMo
                             <span onClick={hideResult}>X</span>
                         </div>
                         <div className="Resultmodal-1">
-                            <img src={`/img/${modalData.posterUrl}`} alt="영화 포스터" /><br /><br />
+                            <img src={`${modalData.posterUrl}`} alt="영화 포스터" /><br /><br />
                             <h1>리뷰 작성이 완료되었습니다.</h1>
                             <br /><br /><br /><br /><br /><br /><br /><br /><br />
                             <button onClick={()=>onClick(id)}>리뷰 보러가기</button>
