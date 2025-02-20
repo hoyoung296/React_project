@@ -7,10 +7,12 @@ const MyReserveCon = () => {
     const [params] = useSearchParams()
     const [list, setList] = useState({ dto: [], page: 0 })
     const [start, setStart] = useState(params.get("start") || 1)
-    const id = params.get("id")
     const [modalData, setModalData] = useState(null)
     const [input, setInput] = useState({ review: "" })
     const [reviewStatus, setReviewStatus] = useState({})
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [modalType, setModalType] = useState(null)
+    const id = params.get("id")
 
     const navigate = useNavigate()
 
@@ -96,12 +98,13 @@ const MyReserveCon = () => {
 
     const showModal = (title, posterUrl, director, actors, movieId) => {
         setModalData({ title, posterUrl, director, actors, movieId })
+        setModalType("review")
+        setIsModalOpen(true)
     }
 
     const hideModal = () => {
-        const elements = document.getElementsByClassName("Reservemodal")
-        if (elements.length > 0)
-            elements[0].style.display = "none"
+        setIsModalOpen(false)
+        setModalType(null)
     }
 
     const showResult = () => {
@@ -125,7 +128,7 @@ const MyReserveCon = () => {
         <MyReserveCom
             list={list} start={start} reviewStatus={reviewStatus} modalData={modalData} id={id}
             handlePageChange={handlePageChange} del={del} showModal={showModal} hideModal={hideModal} mySubmit={mySubmit} onChange={onChange}
-            showResult={showResult} hideResult={hideResult} onClick={onClick} />
+            showResult={showResult} hideResult={hideResult} onClick={onClick} isModalOpen={isModalOpen} modalType={modalType}  />
     </>
 }
 

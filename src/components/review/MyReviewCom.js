@@ -11,7 +11,7 @@ const MyReviewCom = ({ list, start, handlePageChange }) => {
                 {list.dto.length === 0 ? (<h2>작성한 리뷰가 없습니다.</h2>) :
                     (list.dto.map((data) => (
                         <div className="ReviewDiv" key={data.reviewNo}>
-                            <img src={`/img/${data.posterUrl}`} alt="영화 포스터 이미지" />
+                            <img src={`${data.posterUrl}`} alt="영화 포스터 이미지" />
                             <div>
                                 <p><b>{data.title}</b></p><br /><br />
                                 <img src="/img/review/bloom.png" alt="말풍선" />&nbsp;&nbsp;&nbsp;
