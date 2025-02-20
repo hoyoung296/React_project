@@ -13,6 +13,7 @@ const TicketSeatCom = () => {
     const scheduleId = searchParams.get("scheduleId"); // URL에서 가져옴
     const { movieDetails, selectedDate, selectedCinema, selectedStartTime } = location.state || {}; // state에서 가져옴
 
+    console.log(JSON.stringify(location.state, null, 2));
     // 상태 변수 정의
     const [movieDetailsState, setMovieDetails] = useState(movieDetails || {});  // 영화 정보 상태
     const [selectedDateState, setSelectedDate] = useState(selectedDate || "");  // 선택된 날짜 상태
@@ -148,7 +149,7 @@ const TicketSeatCom = () => {
             {/* 예매 정보 */}
             <div className="buySeat">
                 <div className="selectMovieInfo">
-                    {movieDetailsState.posterurl && <img src={movieDetailsState?.posterurl} alt={movieDetailsState?.title} />}
+                    {movieDetailsState.posterurl && <img src={`/img/${movieDetailsState?.posterurl}`} alt={movieDetailsState?.title} />}
                     <div>
                         <div>{movieDetailsState?.title || "정보 없음"}</div>
                         <div>감독 : <span>{movieDetailsState?.director || "정보 없음"}</span></div>
