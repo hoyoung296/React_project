@@ -18,7 +18,7 @@ function App() {
           ))}
         </Routes>
       </div>
-      {!hideHeaderFooter && <FooterCon className="footerContent" />}
+      {/* {!hideHeaderFooter && <FooterCon className="footerContent" />} */}
     </div>
   )
 }
