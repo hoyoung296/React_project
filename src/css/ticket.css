@@ -292,5 +292,67 @@
 }
 
 .payMentPage{
+    width: 90%;
+    height: 600px;
     color: #ffffff;
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    gap: 50px;
+    margin: 20px 40px;
+}
+
+.payMent{
+    width: 80%;
+    height: 100%;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 10px;
+    border-color: #a0a0a0;
+    padding: 30px;
+    min-width: 900px;
+    max-width: 900px;
+}
+.payInfo{
+    width: 20%;
+    height: 90%;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 10px;
+    border-color: #a0a0a0;
+    padding: 30px;
+}
+
+.selectMovieInfoPayMent{
+    display: flex;
+    max-width: 600px;
+}
+.selectMovieInfoPayMent > div:last-child {
+    display: flex;
+    flex-direction: column;
+    margin-top: 120px;
+    gap: 10px;
+}
+.selectMovieInfoPayMent > div:last-child >  div:first-child{
+    margin-bottom: 20px;
+}
+.selectMovieInfoPayMent img{
+    width: 150px;
+    margin-right: 40px;
+}
+.movieInfo{
+    display: flex;
+    justify-content: space-between;
+}
+.movieInfo > div:last-child{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+    width: 300px;
+    height: 100%;
+    line-height: 35px;
+    margin-right: 30px;
+}
+.payMent > div:last-child{
+    margin-top: 35px;
 }
