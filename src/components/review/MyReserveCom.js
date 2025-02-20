@@ -48,13 +48,14 @@ const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showMo
                 <Pagination start={start} list={list} handlePageChange={handlePageChange} />
             </div>
 
-            {modalData && ( 
+            {modalData && (
                 <Modal isOpen={isModalOpen} onClose={hideModal} type={modalType} modalData={modalData} mySubmit={mySubmit}
-                onChange={onChange} showResult={showResult} />
+                    onChange={onChange} showResult={showResult} />
             )}
 
             {modalData && (
-                <Modal />
+                <Modal isOpen={isModalOpen} onClose={hideModal} type={modalType} modalData={modalData} id={id}/>
+
                 // <div className="Resultmodal">
                 //     <div>
                 //         <div>
@@ -64,7 +65,7 @@ const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showMo
                 //             <img src={`${modalData.posterUrl}`} alt="영화 포스터" /><br /><br />
                 //             <h1>리뷰 작성이 완료되었습니다.</h1>
                 //             <br /><br /><br /><br /><br /><br /><br /><br /><br />
-                //             <button onClick={()=>onClick(id)}>리뷰 보러가기</button>
+                //             <button onClick={() => onClick(id)}>리뷰 보러가기</button>
                 //         </div>
                 //     </div>
                 // </div>
