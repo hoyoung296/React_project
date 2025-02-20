@@ -160,7 +160,7 @@ const TicketDateCom = () => {
             </div>
 
             <div className="buyTicket">
-                <div>영화 포스터<img src={movieDetails.posterurl} alt={movieDetails.title} /></div>
+                <div>영화 포스터<img src={`/img/${movieDetails.posterurl}`} alt={movieDetails.title} /></div>
                 <div>영화 제목: {movieDetails.title}</div> {/* 영화 제목 */}
                 <div>감독: {movieDetails.director}</div> {/* 감독 */}
                 <div>배우: {movieDetails.actors}</div> {/* 배우 */}
