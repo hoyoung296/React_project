@@ -96,21 +96,7 @@ const Modal = ({ isOpen, onClose, type, content, infoData, translatedTitle, onCl
                         </div>
                     </div>)
             case 'complete':
-                return (
-                    <div className="Reservemodal">
-                        <div>
-                            <div>
-                                <span onClick={() => onClose()}>X</span>
-                            </div>
-                            <div className="Resultmodal-1">
-                                <img src={`${modalData.posterUrl}`} alt="영화 포스터" /><br /><br />
-                                <h1>리뷰 작성이 완료되었습니다.</h1>
-                                <br /><br /><br /><br /><br /><br /><br /><br /><br />
-                                <button onClick={() => onClick(id)}>리뷰 보러가기</button>
-                            </div>
-                        </div>
-                    </div>
-                )
+                return 
             default:
                 return null
         }
