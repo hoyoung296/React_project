@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import HomePageCom from "../../components/mainPage/HomePageCom";
-import { getSearchList, translateText } from "../../service/review";
+import { getSearchList} from "../../service/review";
 
 const HomePageCon = () => {
     const [list, setList] = useState([]);
-    const [translatedTitles, setTranslatedTitles] = useState({}); // 🔹 번역된 제목들을 저장할 객체
 
     useEffect(() => {
         const getData = async () => {
@@ -17,25 +16,6 @@ const HomePageCon = () => {
         };
         getData();
     }, []);
-
-    useEffect(() => {
-        if (list.length > 0) {
-            const translateAllTitles = async () => {
-                const translations = {};
-                for (const movie of list) {
-                    try {
-                        const translated = await translateText(movie.title);
-                        translations[movie.movieId] = translated; // 🔹 movieId를 키로 저장
-                    } catch (error) {
-                        console.error(`번역 오류 (${movie.title}):`, error);
-                        translations[movie.movieId] = movie.title; // 🔹 오류 발생 시 원본 제목 사용
-                    }
-                }
-                setTranslatedTitles(translations)
-            };
-            translateAllTitles()
-        }
-    }, [list]);
 
     // rank를 기준으로 필터링 및 날짜와 순위를 분리하여 처리
     const today = new Date()
@@ -76,7 +56,7 @@ const HomePageCon = () => {
         })
 
     return (
-        <HomePageCom TopMovies={TopMovies} RestMovies={RestMovies} translatedTitles={translatedTitles} />
+        <HomePageCom TopMovies={TopMovies} RestMovies={RestMovies} />
     )
 }
 

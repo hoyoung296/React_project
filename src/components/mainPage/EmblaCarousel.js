@@ -5,7 +5,7 @@ import Modal from './Modal';
 import Axios from "axios";
 import '../../css/main.css';
 
-const EmblaCarouselComponent = ({ list, translatedTitles }) => {
+const EmblaCarouselComponent = ({ list }) => {
     const [modalOpen, setModalOpen] = useState(false);
     const [modalType, setModalType] = useState('');
     const [selectedMovie, setSelectedMovie] = useState('');
@@ -73,7 +73,7 @@ const EmblaCarouselComponent = ({ list, translatedTitles }) => {
                             <div className='linear_gradient' />
                             <div className='main_movie_info'>
                                 <div className='main_movie_title'>{movie.title}</div>
-                                <h2>{translatedTitles[movie.movieId] || "로딩 중 ..."}</h2><br />
+                                <h2>{movie.entitle}</h2><br />
                                 <div className='main_movie_director'>연출 : {movie.directorName}</div>
                                 <div className='main_movie_actors'>배우 : {movie.actors}</div>
                                 <div className='mainBtn'>

@@ -1,7 +1,7 @@
 import "../../css/review/Search.css"
 import Modal from "../mainPage/Modal"
 
-const SearchCom = ({list, Infolist, relatedList = [], translatedTitle, id, infoId, onClick, showInfo, hideInfo, isModalOpen,modalType}) => {
+const SearchCom = ({ list, Infolist, relatedList = [], id, infoId, onClick, showInfo, hideInfo, isModalOpen, modalType }) => {
     return (
         <div className="SearchWrapdiv">
             <h1>'{id}'에 대한 검색 결과</h1><br />
@@ -27,11 +27,10 @@ const SearchCom = ({list, Infolist, relatedList = [], translatedTitle, id, infoI
             )}
 
             {infoId !== null && (
-                <Modal isOpen={isModalOpen} onClose={hideInfo} type={modalType} infoData={Infolist[0]} translatedTitle={translatedTitle} 
-                onClick={onClick} relatedList={relatedList} Infolist={Infolist}/>
+                <Modal isOpen={isModalOpen} onClose={hideInfo} type={modalType} infoData={Infolist[0]} onClick={onClick} relatedList={relatedList} Infolist={Infolist} />
             )}
         </div>
-    );
-};
+    )
+}
 
 export default SearchCom;

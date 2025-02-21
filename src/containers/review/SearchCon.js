@@ -1,7 +1,7 @@
 import { useNavigate, useSearchParams } from "react-router-dom"
 import SearchCom from "../../components/review/SearchCom"
 import { useEffect, useState } from "react"
-import { getSearchList, translateText, getInfoList } from "../../service/review"
+import { getSearchList, getInfoList } from "../../service/review"
 
 const SearchCon = () => {
     const navigate = useNavigate()
@@ -9,7 +9,6 @@ const SearchCon = () => {
     const [list, setList] = useState([])
     const [Infolist, setInfolist] = useState([])
     const [infoId, setInfoId] = useState()
-    const [translatedTitle, setTranslatedTitle] = useState("")
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [modalType, setModalType] = useState(null)
     const id = params.get("id")
@@ -32,14 +31,10 @@ const SearchCon = () => {
             try {
                 const data = await getInfoList(infoId);
                 setInfolist(data)
-                if (data && data.length > 0) {
-                    const translated = await translateText(data[0].title);
-                    setTranslatedTitle(translated)
-                }
             } catch (error) {
                 console.error("데이터 가져오기 오류:", error)
             }
-        };
+        }
         getInfo()
     }, [infoId])
 
@@ -66,19 +61,19 @@ const SearchCon = () => {
         setInfoId(movieId)
         setModalType("searchDetail")
         setIsModalOpen(true)
-    };
+    }
 
     const hideInfo = () => {
         setIsModalOpen(false)
         setModalType(null)
-    };
+    }
 
     const relatedList = Infolist.length > 0
         ? getRelatedMovies(Infolist[0].director + ',' + Infolist[0].actors)
         : []
 
     return (
-        <SearchCom list={list} Infolist={Infolist} id={id} infoId={infoId} translatedTitle={translatedTitle} relatedList={relatedList} onClick={onClick} showInfo={showInfo}
+        <SearchCom list={list} Infolist={Infolist} id={id} infoId={infoId} relatedList={relatedList} onClick={onClick} showInfo={showInfo}
             hideInfo={hideInfo} isModalOpen={isModalOpen} modalType={modalType}
         />
     )
