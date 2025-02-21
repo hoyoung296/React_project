@@ -1,6 +1,7 @@
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import Axios from "axios";
+import { useState } from "react";
 import "../../css/ticket.css";
 /*
 // useUnload 훅 정의
@@ -57,6 +58,9 @@ const mockData = {
     reservationId: "3488719234872947"
 };///////////////////////
 const PayMentCom = () => {
+    const [paymentMethod, setPaymentMethod] = useState(""); // 전체 결제 방식 (신용카드, 무통장, 간편결제)
+    const [selectedSimplePay, setSelectedSimplePay] = useState(""); // 간편결제 방식 (네이버페이, 카카오페이, 페이코)
+
     //////////////const location = useLocation(); // 현재 페이지의 state 가져오기
     //////////////// const { 
     //     movieDetailsState,
@@ -82,9 +86,36 @@ const PayMentCom = () => {
     // 예약 취소를 위해 useUnload 훅 호출
    // useUnload(reservationId);
 
+    const renderPaymentNotice = () => {
+        if (paymentMethod === "신용카드") {
+            return <p className="paymentNotice">신용카드 결제 안내문</p>;
+        }
+        if (paymentMethod === "무통장입금") {
+            return <p className="paymentNotice">무통장입금 결제 안내문</p>;
+        }
+        if (paymentMethod === "간편결제") {
+            if (selectedSimplePay === "네이버페이") {
+                return <p className="paymentNotice">네이버페이 결제 안내문</p>;
+            }
+            if (selectedSimplePay === "카카오페이") {
+                return <p className="paymentNotice">카카오페이 결제 순서<br/><br/>
+                우측 하단에 있는 ‘결제하기’ 버튼을 클릭해주세요.<br/>
+                예매내역 확인 후 결제하기 버튼 클릭 시 ‘카카오페이’ 결제 인증창이 뜹니다.<br/>
+                ‘카카오페이’ 결제 인증창에서 정보를 입력하신 후 결제해주세요.</p>;
+            }
+            if (selectedSimplePay === "페이코") {
+                return <p className="paymentNotice">페이코 결제 안내문</p>;
+            }
+            return <p className="paymentNotice">간편결제 방식을 선택해주세요.</p>;
+        }
+        return null;
+    };
+
+
     return (
         <div className="payMentPage">
             <div className="payMent">
+            <h3>결제 내역</h3>
                 <div className="movieInfo">
                     <div className="selectMovieInfoPayMent">
                     {movieDetailsState.posterurl && <img src={movieDetailsState?.posterurl} alt={movieDetailsState?.title} />}
@@ -111,15 +142,87 @@ const PayMentCom = () => {
                         </div>
                     </div>
                 </div>
-                <div>
-                    <label> <input type="radio" name="pay" value="credit" /> 신용카드 </label>
-                    <label> <input type="radio" name="pay" value="cash" /> 무통장 </label>
-                    <label> <input type="radio" name="pay" value="appPay" /> 간편결제 </label>
+                <div className="payRadio">
+                <h3>결제수단</h3>
+                <div className="payBtn">
+                <label>
+                        <input
+                            type="radio"
+                            name="pay"
+                            value="credit"
+                            onChange={() => {
+                                setPaymentMethod("신용카드");
+                                setSelectedSimplePay(""); // 간편결제 초기화
+                            }}
+                        />
+                        신용카드
+                    </label>
+                    <label>
+                        <input
+                            type="radio"
+                            name="pay"
+                            value="cash"
+                            onChange={() => {
+                                setPaymentMethod("무통장입금");
+                                setSelectedSimplePay(""); // 간편결제 초기화
+                            }}
+                        />
+                        무통장입금
+                    </label>
+                    <label>
+                        <input
+                            type="radio"
+                            name="pay"
+                            value="simple"
+                            onChange={() => {
+                                setPaymentMethod("간편결제"); // 공란
+                                setSelectedSimplePay(""); // 초기화
+                            }}
+                        />
+                        간편결제
+                    </label>
+                    </div>
+                    {/* 간편결제 선택 시 하위 옵션 표시 */}
+                    {paymentMethod === "간편결제" && (
+                        <div className="simplePayOptions">
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="simplePay"
+                                    value="네이버페이"
+                                    onChange={(e) => setSelectedSimplePay(e.target.value)}
+                                />
+                                네이버페이
+                            </label>
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="simplePay"
+                                    value="카카오페이"
+                                    onChange={(e) => setSelectedSimplePay(e.target.value)}
+                                />
+                                카카오페이
+                            </label>
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="simplePay"
+                                    value="페이코"
+                                    onChange={(e) => setSelectedSimplePay(e.target.value)}
+                                />
+                                페이코
+                            </label>
+                        </div>
+                    )}
                 </div>
+                <div className="payline"/>
+                {renderPaymentNotice()}
             </div>
             <div className="payInfo">
-                <p>결제방식 : </p>
-                <p>금액: {totalAmount ? `${totalAmount.toLocaleString()}원` : "금액 정보 없음"}</p>
+                <p>결제 방식</p>
+                <p>{paymentMethod || selectedSimplePay || ""}</p>
+                <p>총 결제 금액</p>
+                <p>{`${totalAmount.toLocaleString()}원` || ""}</p>
                 <button>결제하기</button>
             </div>
         </div>
