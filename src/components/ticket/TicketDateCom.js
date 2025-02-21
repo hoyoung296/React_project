@@ -25,7 +25,7 @@ const TicketDateCom = () => {
 
         const fetchShowtimes = async () => {
             try {
-                const response = await Axios.get("http://localhost:8080/root/member/schedule/title", {
+                const response = await Axios.get("http://192.168.0.91:8080/root/member/schedule/title", {
                     params: { title }
                 });
                 console.log("✅ 상영 날짜 데이터:", response.data);
@@ -57,7 +57,7 @@ const TicketDateCom = () => {
 
         if (newSelectedDate) {
             try {
-                const response = await Axios.get("http://localhost:8080/root/member/schedule/startdate", {
+                const response = await Axios.get("http://192.168.0.91:8080/root/member/schedule/startdate", {
                     params: { startdate: newSelectedDate }
                 });
                 console.log("✅ 상영관 정보:", response.data.data);
@@ -87,7 +87,14 @@ const TicketDateCom = () => {
     const navigate = useNavigate();
 
     // 좌석 선택으로 이동
-    const goToSeatSelection = () => {
+    const goToSeatSelection = (e) => {
+
+        if (!selectedDate || !selectedCinema || !selectedStartTime) {
+            alert("상영일정을 선택해주세요.");
+            e.preventDefault();
+            return; // 선택되지 않은 경우, 좌석 선택 페이지로 이동하지 않음
+        }
+
         navigate(`/ticket_seat?scheduleId=${selectedScheduleId}`, {
             state: {
                 movieDetails,
