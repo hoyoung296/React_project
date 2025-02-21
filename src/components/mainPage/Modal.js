@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react'
 import '../../css/main.css'
 
-const Modal = ({ isOpen, onClose, type, content, infoData, translatedTitle, onClick, Infolist, relatedList, modalData, onResult,
-    mySubmit, onChange, showResult, id }) => {
+const Modal = ({ isOpen, onClose, type, content, infoData, translatedTitle, onClick, Infolist, relatedList, modalData, mySubmit, onChange, showResult}) => {
     useEffect(() => {
         console.log('모달 상태 변경:', isOpen);
     }, [isOpen])
@@ -95,8 +94,6 @@ const Modal = ({ isOpen, onClose, type, content, infoData, translatedTitle, onCl
                             </div>
                         </div>
                     </div>)
-            case 'complete':
-                return 
             default:
                 return null
         }

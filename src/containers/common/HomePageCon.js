@@ -41,7 +41,7 @@ const HomePageCon = () => {
     const today = new Date()
     const TopMovies = list
         .map(movie => {
-            const [date, rank] = movie.movieRank.split("-") // 날짜-순위 분리
+            const [date, rank] = movie.movieRank.split("-") // 날짜-순위 분리 
             const movieDate = new Date(date)
             return {
                 ...movie,
