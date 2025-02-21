@@ -1,24 +1,27 @@
 import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Axios from "axios";
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Modal from "../mainPage/Modal";
 import "../../css/ticket.css";
-/*
+
 // useUnload 훅 정의
-const useUnload = (reservationId) => {
+const useUnload = (reservationId, scheduleId, seatIds, isSubmitting) => {
     useEffect(() => {
         const handleUnload = async (event) => {
+            // 결제 진행 중이면 경고창이 뜨지 않도록
+            if (isSubmitting) return;
+
             event.preventDefault();
 
             // 예약 취소 API 호출
-            if (reservationId) {
+            if (reservationId && scheduleId && seatIds) {
                 try {
-                    await Axios.delete("http://localhost:8080/root/member/schedule/cancel", {
+                    await Axios.delete("http://192.168.0.91:8080/root/member/schedule/cancel", {
                         data: { 
-                            reservationId : reservationId ,
-                            // 예시로 scheduleId와 seatIds를 넘길 수 있도록 변경
-                            scheduleId: 1,  // 예시 값
-                            seatIds: [1, 2, 3] 
+                            reservationId: reservationId,
+                            scheduleId: scheduleId,
+                            seatIds: [...seatIds]
                         }
                     });
                     console.log("✅ 예매가 정상적으로 취소되었습니다.");
@@ -27,64 +30,45 @@ const useUnload = (reservationId) => {
                 }
             }
 
-            // 경고 메시지 표시 (선택 사항)
-            event.returnValue = "이 페이지를 나가면 예매가 취소됩니다. 계속하시겠습니까?";
+            // 경고 메시지를 표시
+            event.returnValue = "페이지를 떠나면 예매가 취소됩니다. 정말 떠나시겠습니까?";
             return event.returnValue;
         };
 
-        // 브라우저 종료 또는 뒤로가기 시 이벤트 감지
         window.addEventListener("beforeunload", handleUnload);
 
-        // 컴포넌트 언마운트 시 이벤트 제거
         return () => {
             window.removeEventListener("beforeunload", handleUnload);
         };
-    }, [reservationId]);
+    }, [reservationId, scheduleId, seatIds, isSubmitting]);
 };
-*/
-//////////////////////////mockData 임시데이터. 서버연결 후 삭제예정
-const mockData = {
-    movieDetailsState: {
-        title: "미키17",
-        director: "봉준호",
-        actors: "로버트 패틴슨, 나오미 아키에",
-        posterurl: "../../img/poster/poster1.jpg"  // 임시 포스터 이미지
-    },
-    selectedDate: "2025-02-25",
-    selectedCinema: "1관",
-    selectedStartTime: "19:00",
-    selectedSeats: ["A1", "A2"],
-    totalAmount: 30000,
-    reservationId: "3488719234872947"
-};///////////////////////
+
 const PayMentCom = () => {
-    const [paymentMethod, setPaymentMethod] = useState(""); // 전체 결제 방식 (신용카드, 무통장, 간편결제)
-    const [selectedSimplePay, setSelectedSimplePay] = useState(""); // 간편결제 방식 (네이버페이, 카카오페이, 페이코)
-
-    //////////////const location = useLocation(); // 현재 페이지의 state 가져오기
-    //////////////// const { 
-    //     movieDetailsState,
-    //     selectedDate,
-    //     selectedCinema,
-    //     selectedStartTime,
-    //     selectedSeats = [], // 기본값 설정
-    //     totalAmount,
-    //     reservationId // 예약 ID를 받아옵니다.
-    /////////////////// } = location.state || {};  // 전달된 state 값
-
-      // 임시 데이터로 초기화
-    const { 
-        movieDetailsState = mockData.movieDetailsState,
-        selectedDate = mockData.selectedDate,
-        selectedCinema = mockData.selectedCinema,
-        selectedStartTime = mockData.selectedStartTime,
-        selectedSeats = mockData.selectedSeats, 
-        totalAmount = mockData.totalAmount,
-        reservationId = mockData.reservationId
-    } = mockData;  // mockData로부터 값 할당
+    const [paymentMethod, setPaymentMethod] = useState(""); // 전체 결제 방식
+    const [selectedSimplePay, setSelectedSimplePay] = useState(""); // 간편결제 방식
+    const [isSubmitting, setIsSubmitting] = useState(false); // 결제 진행 상태
+    const [modalOpen, setModalOpen] = useState(false); 
+    const [modalType, setModalType] = useState("");
+    const location = useLocation(); // 현재 페이지의 state 가져오기
+    const {
+        movieDetailsState = {}, // 기본값 설정
+        selectedDate = "정보 없음",
+        selectedCinema = "정보 없음",
+        selectedStartTime = "정보 없음",
+        selectedSeats = [],
+        totalAmount = 0,
+        reservationId,
+        scheduleId,
+        seatIds = []
+    } = location.state || {};
 
     // 예약 취소를 위해 useUnload 훅 호출
-   // useUnload(reservationId);
+    useUnload(reservationId, scheduleId, seatIds, isSubmitting);
+
+    const openModal = (type) => {
+        setModalType(type);
+        setModalOpen(true);
+    };
 
     const renderPaymentNotice = () => {
         if (paymentMethod === "신용카드") {
@@ -103,28 +87,38 @@ const PayMentCom = () => {
                 예매내역 확인 후 결제하기 버튼 클릭 시 ‘카카오페이’ 결제 인증창이 뜹니다.<br/>
                 ‘카카오페이’ 결제 인증창에서 정보를 입력하신 후 결제해주세요.</p>;
             }
-            if (selectedSimplePay === "페이코") {
-                return <p className="paymentNotice">페이코 결제 안내문</p>;
+            if (selectedSimplePay === "PAYCO") {
+                return <p className="paymentNotice">PAYCO 결제 안내문</p>;
             }
             return <p className="paymentNotice">간편결제 방식을 선택해주세요.</p>;
         }
         return null;
     };
 
+    const handleSubmit = () => {
+        
+            // 결제 수단이 선택되지 않았을 때 경고창 표시
+            if (!paymentMethod && !selectedSimplePay) {
+                alert("결제수단을 선택해주세요.");
+                return; // 결제 진행을 막음
+        };
+        setIsSubmitting(true); // 결제 진행 상태로 변경하여 경고창을 막음
+        openModal('payment');
+    };
 
     return (
         <div className="payMentPage">
             <div className="payMent">
-            <h3>결제 내역</h3>
+                <h3>결제 내역</h3>
                 <div className="movieInfo">
                     <div className="selectMovieInfoPayMent">
-                    {movieDetailsState.posterurl && <img src={movieDetailsState?.posterurl} alt={movieDetailsState?.title} />}
-                    <div>  
-                        <div>{movieDetailsState?.title || "정보 없음"}</div>
-                        <div>감독 : <span>{movieDetailsState?.director || "정보 없음"}</span></div>
-                        <div>배우 : <span>{movieDetailsState?.actors || "정보 없음"}</span></div>
+                        {movieDetailsState.posterurl && <img src={movieDetailsState?.posterurl} alt={movieDetailsState?.title} />}
+                        <div>  
+                            <div>{movieDetailsState?.title || "정보 없음"}</div>
+                            <div>감독 : <span>{movieDetailsState?.director || "정보 없음"}</span></div>
+                            <div>배우 : <span>{movieDetailsState?.actors || "정보 없음"}</span></div>
+                        </div>
                     </div>
-                </div>
                     <div>
                         <div>
                             <p>관람일자</p>
@@ -143,46 +137,45 @@ const PayMentCom = () => {
                     </div>
                 </div>
                 <div className="payRadio">
-                <h3>결제수단</h3>
-                <div className="payBtn">
-                <label>
-                        <input
-                            type="radio"
-                            name="pay"
-                            value="credit"
-                            onChange={() => {
-                                setPaymentMethod("신용카드");
-                                setSelectedSimplePay(""); // 간편결제 초기화
-                            }}
-                        />
-                        신용카드
-                    </label>
-                    <label>
-                        <input
-                            type="radio"
-                            name="pay"
-                            value="cash"
-                            onChange={() => {
-                                setPaymentMethod("무통장입금");
-                                setSelectedSimplePay(""); // 간편결제 초기화
-                            }}
-                        />
-                        무통장입금
-                    </label>
-                    <label>
-                        <input
-                            type="radio"
-                            name="pay"
-                            value="simple"
-                            onChange={() => {
-                                setPaymentMethod("간편결제"); // 공란
-                                setSelectedSimplePay(""); // 초기화
-                            }}
-                        />
-                        간편결제
-                    </label>
+                    <h3>결제수단</h3>
+                    <div className="payBtn">
+                        <label>
+                            <input
+                                type="radio"
+                                name="pay"
+                                value="credit"
+                                onChange={() => {
+                                    setPaymentMethod("신용카드");
+                                    setSelectedSimplePay(""); // 간편결제 초기화
+                                }}
+                            />
+                            신용카드
+                        </label>
+                        <label>
+                            <input
+                                type="radio"
+                                name="pay"
+                                value="cash"
+                                onChange={() => {
+                                    setPaymentMethod("무통장입금");
+                                    setSelectedSimplePay(""); // 간편결제 초기화
+                                }}
+                            />
+                            무통장입금
+                        </label>
+                        <label>
+                            <input
+                                type="radio"
+                                name="pay"
+                                value="simple"
+                                onChange={() => {
+                                    setPaymentMethod("간편결제");
+                                    setSelectedSimplePay(""); // 간편결제 초기화
+                                }}
+                            />
+                            간편결제
+                        </label>
                     </div>
-                    {/* 간편결제 선택 시 하위 옵션 표시 */}
                     {paymentMethod === "간편결제" && (
                         <div className="simplePayOptions">
                             <label>
@@ -190,6 +183,7 @@ const PayMentCom = () => {
                                     type="radio"
                                     name="simplePay"
                                     value="네이버페이"
+                                    checked="checked"
                                     onChange={(e) => setSelectedSimplePay(e.target.value)}
                                 />
                                 네이버페이
@@ -207,10 +201,10 @@ const PayMentCom = () => {
                                 <input
                                     type="radio"
                                     name="simplePay"
-                                    value="페이코"
+                                    value="PAYCO"
                                     onChange={(e) => setSelectedSimplePay(e.target.value)}
                                 />
-                                페이코
+                                PAYCO
                             </label>
                         </div>
                     )}
@@ -223,8 +217,13 @@ const PayMentCom = () => {
                 <p>{paymentMethod || selectedSimplePay || ""}</p>
                 <p>총 결제 금액</p>
                 <p>{`${totalAmount.toLocaleString()}원` || ""}</p>
-                <button>결제하기</button>
+                <button onClick={handleSubmit}>결제하기</button>
             </div>
+            <Modal
+                isOpen={modalOpen}
+                onClose={() => setModalOpen(false)}
+                type={modalType} 
+            />
         </div>
     );
 };

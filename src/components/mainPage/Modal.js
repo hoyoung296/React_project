@@ -96,6 +96,16 @@ const Modal = ({ isOpen, onClose, type, content, infoData, onClick, Infolist, re
                             </div>
                         </div>
                     </div>)
+            case 'payment':
+                return(
+                    <div className="modal-container" onClick={() => onClose()}>
+                        <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                            <div className="modal-body">
+                                <h1>결제api</h1>
+                            </div>
+                        </div>
+                    </div>
+                )
             default:
                 return null
         }
