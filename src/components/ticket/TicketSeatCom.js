@@ -13,7 +13,7 @@ const TicketSeatCom = () => {
     const scheduleId = searchParams.get("scheduleId"); // URL에서 가져옴
     const { movieDetails, selectedDate, selectedCinema, selectedStartTime } = location.state || {}; // state에서 가져옴
 
-    console.log(JSON.stringify(location.state, null, 2));
+    // console.log(JSON.stringify(location.state, null, 2));
     // 상태 변수 정의
     const [movieDetailsState, setMovieDetails] = useState(movieDetails || {});  // 영화 정보 상태
     const [selectedDateState, setSelectedDate] = useState(selectedDate || "");  // 선택된 날짜 상태
@@ -27,14 +27,14 @@ const TicketSeatCom = () => {
     
 
     useEffect(() => {
-        console.log("🎬 useEffect 실행됨");
-        console.log("📌 location.state:", location.state);
-        console.log("scheduleId : ",scheduleId)
+        // console.log("🎬 useEffect 실행됨");
+        // console.log("📌 location.state:", location.state);
+        // console.log("scheduleId : ",scheduleId)
         if (scheduleId) {
             console.log("📡 서버 요청 시작");
             const fetchMovieData = async () => {
                 try {
-                    const response = await Axios.get("http://192.168.0.91:8080/root/member/schedule/seatselect", {
+                    const response = await Axios.get("http://localhost:8080/root/member/schedule/seatselect", {
                         params: { scheduleId }
                     });
 
@@ -82,7 +82,7 @@ const TicketSeatCom = () => {
 
         // 예매 정보를 서버에 제출하는 API 호출 (예시)
         try {
-            const response = await Axios.post("http://192.168.0.91:8080/root/member/reserve/reservation", {
+            const response = await Axios.post("http://localhost:8080/root/member/reserve/reservation", {
                 scheduleId,
                 seatIds: [...seatIds],
                 totalAmount: totalAmount, //서버 연결해서 스케쥴id, 선택좌석, 총 금액 전달함
