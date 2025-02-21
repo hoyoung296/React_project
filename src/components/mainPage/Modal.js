@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import '../../css/main.css'
 
-const Modal = ({ isOpen, onClose, type, content, infoData, translatedTitle, onClick, Infolist, relatedList, hideModal, modalData,
-    mySubmit, onChange, showResult}) => {
+const Modal = ({ isOpen, onClose, type, content, infoData, translatedTitle, onClick, Infolist, relatedList, modalData, onResult,
+    mySubmit, onChange, showResult, id }) => {
     useEffect(() => {
         console.log('모달 상태 변경:', isOpen);
     }, [isOpen])
@@ -11,8 +11,15 @@ const Modal = ({ isOpen, onClose, type, content, infoData, translatedTitle, onCl
 
     const renderContent = () => {
         switch (type) {
-            case 'detail' :
-                return<p>{content}</p>
+            case 'detail':
+                return (
+                    <div className="modal-container" onClick={() => onClose()}>
+                        <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                            <div className="modal-body">
+                                <p>{content}</p>
+                            </div>
+                        </div>
+                    </div>)
             case 'searchDetail':
                 return (
                     infoData && (
@@ -66,43 +73,37 @@ const Modal = ({ isOpen, onClose, type, content, infoData, translatedTitle, onCl
                     ))
             case 'review':
                 return (
-                     <div className="Reservemodal">
-                    <div>
+                    <div className="Reservemodal">
                         <div>
-                            <span onClick={() => onClose()}>X</span>
-                        </div>
-                        <div className="Reservemodal-1">
-                            <h1>'{modalData.title}'의 리뷰를 작성해주세요.</h1>
-                            <div className="Reservemodal-2">
-                                <img src={`${modalData.posterUrl}`} alt="영화 포스터" />
-                                <div>
-                                    <p><b>{modalData.title}</b></p><br />
-                                    <p><b>감독 : {modalData.director}</b></p><br />
-                                    <b>배우 : {modalData.actors}</b>
-                                </div>
+                            <div>
+                                <span onClick={() => onClose()}>X</span>
                             </div>
-                            <form onSubmit={mySubmit}>
-                                <input name="review" placeholder="리뷰를 적어주세요." onChange={onChange} />
-                                <button onClick={()=>showResult()}>게시</button>
-                            </form>
+                            <div className="Reservemodal-1">
+                                <h1>'{modalData.title}'의 리뷰를 작성해주세요.</h1>
+                                <div className="Reservemodal-2">
+                                    <img src={`${modalData.posterUrl}`} alt="영화 포스터" />
+                                    <div>
+                                        <p><b>{modalData.title}</b></p><br />
+                                        <p><b>감독 : {modalData.director}</b></p><br />
+                                        <b>배우 : {modalData.actors}</b>
+                                    </div>
+                                </div>
+                                <form onSubmit={mySubmit}>
+                                    <input name="review" placeholder="리뷰를 적어주세요." onChange={onChange} />
+                                    <button onClick={() => showResult()}>게시</button>
+                                </form>
+                            </div>
                         </div>
-                    </div>
-                </div>)
+                    </div>)
             case 'complete':
-                return <p>리뷰 저장 완료!!</p>;
+                return 
             default:
-                return null;
+                return null
         }
     }
 
     return (
-        <div className="modal-container" onClick={() => onClose()}>
-            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                <div className="modal-body">
-                    {renderContent()}
-                </div>
-            </div>
-        </div>
+        renderContent()
     )
 }
 
