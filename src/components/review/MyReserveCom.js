@@ -3,7 +3,7 @@ import "../../css/review/MyReserve.css"
 import Pagination from "../common/Pagination"
 import Modal from "../mainPage/Modal"
 
-const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showModal, hideModal, modalData, id, mySubmit, onChange, showResult, hideResult, onClick, isModalOpen, modalType }) => {
+const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showModal, hideModal, modalData, id, mySubmit, onChange, showResult, hideResult, onResult, isModalOpen, modalType }) => {
     const now = new Date()
     return <>
         <div className="ReserveTotalDiv">
@@ -63,7 +63,7 @@ const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showMo
                             <img src={`${modalData.posterUrl}`} alt="영화 포스터" /><br /><br />
                             <h1>리뷰 작성이 완료되었습니다.</h1>
                             <br /><br /><br /><br /><br /><br /><br /><br /><br />
-                            <button onClick={() => onClick(id)}>리뷰 보러가기</button>
+                            <button onClick={() => onResult(id)}>리뷰 보러가기</button>
                         </div>
                     </div>
                 </div>

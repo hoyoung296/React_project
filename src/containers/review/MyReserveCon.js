@@ -71,6 +71,7 @@ const MyReserveCon = () => {
 
         try {
             const response = await writeReview(dto)
+            console.log("확인 : " , response)
             if (response === 1) {
                 showResult()
             }
@@ -120,7 +121,7 @@ const MyReserveCon = () => {
         setModalData(null)
     }
 
-    const onClick = () => {
+    const onResult = () => {
         navigate(`/myReview?id=${id}&start=`)
     }
 
@@ -128,7 +129,7 @@ const MyReserveCon = () => {
         <MyReserveCom
             list={list} start={start} reviewStatus={reviewStatus} modalData={modalData} id={id}
             handlePageChange={handlePageChange} del={del} showModal={showModal} hideModal={hideModal} mySubmit={mySubmit} onChange={onChange}
-            showResult={showResult} hideResult={hideResult} onClick={onClick} isModalOpen={isModalOpen} modalType={modalType}  />
+            showResult={showResult} hideResult={hideResult} onResult={onResult} isModalOpen={isModalOpen} modalType={modalType}  />
     </>
 }
 
