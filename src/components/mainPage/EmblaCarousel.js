@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import EmblaCarousel from 'embla-carousel';
 import Autoplay from 'embla-carousel-autoplay';
 import Modal from './Modal';
+import Axios from "axios";
 import '../../css/main.css';
 
 const EmblaCarouselComponent = ({ list, translatedTitles }) => {
@@ -45,6 +46,21 @@ const EmblaCarouselComponent = ({ list, translatedTitles }) => {
         emblaApiRef.current.scrollPrev();
     };
 
+    const handleReservation = async (movieId, title) => {
+        try {
+            const response = await Axios.post("http://localhost:8080/root/reservation", {
+                movieId: movieId,
+                title: title
+            });
+    
+            if (response.status === 200) {
+                window.location.href = `/ticket_date?title=${encodeURIComponent(title)}`;
+            }
+        } catch (error) {
+            console.error("❌ 예매페이지 이동 실패:", error);
+        }
+    };
+
     return (
         <div className="embla-wrapper">
             <button className="carousel-btn prev" onClick={scrollToPrev}>
@@ -64,9 +80,7 @@ const EmblaCarouselComponent = ({ list, translatedTitles }) => {
                                     {/* movie.title을 movie.movieId로 수정 (나호영 작성) */}
                                     
                                     <button onClick={() => openModal('detail', movie.movieId)}>상세보기</button>
-                                    <a href={`/ticket_date?title=${encodeURIComponent(movie.title)}`}>
-                                        <button>예매하기</button>
-                                    </a>
+                                    <button onClick={() => handleReservation(movie.movieId, movie.title)}>예매하기</button>
                                 </div>
                             </div>
                             <img src={`${movie.posterUrl}`} alt={movie.title} />
