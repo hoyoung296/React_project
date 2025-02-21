@@ -54,21 +54,19 @@ const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showMo
             )}
 
             {modalData && (
-                <Modal isOpen={isModalOpen} onClose={hideModal} type={modalType} modalData={modalData} id={id}/>
-
-                // <div className="Resultmodal">
-                //     <div>
-                //         <div>
-                //             <span onClick={hideResult}>X</span>
-                //         </div>
-                //         <div className="Resultmodal-1">
-                //             <img src={`${modalData.posterUrl}`} alt="영화 포스터" /><br /><br />
-                //             <h1>리뷰 작성이 완료되었습니다.</h1>
-                //             <br /><br /><br /><br /><br /><br /><br /><br /><br />
-                //             <button onClick={() => onClick(id)}>리뷰 보러가기</button>
-                //         </div>
-                //     </div>
-                // </div>
+                <div className="Resultmodal">
+                    <div>
+                        <div>
+                            <span onClick={hideResult}>X</span>
+                        </div>
+                        <div className="Resultmodal-1">
+                            <img src={`${modalData.posterUrl}`} alt="영화 포스터" /><br /><br />
+                            <h1>리뷰 작성이 완료되었습니다.</h1>
+                            <br /><br /><br /><br /><br /><br /><br /><br /><br />
+                            <button onClick={() => onClick(id)}>리뷰 보러가기</button>
+                        </div>
+                    </div>
+                </div>
             )}
         </div>
     </>

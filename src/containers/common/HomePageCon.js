@@ -31,27 +31,53 @@ const HomePageCon = () => {
                         translations[movie.movieId] = movie.title; // 🔹 오류 발생 시 원본 제목 사용
                     }
                 }
-                setTranslatedTitles(translations);
+                setTranslatedTitles(translations)
             };
-            translateAllTitles();
+            translateAllTitles()
         }
     }, [list]);
 
-    // movieId가 5 이하인 영화만 필터링 후 오름차순 정렬
+    // rank를 기준으로 필터링 및 날짜와 순위를 분리하여 처리
+    const today = new Date()
     const Top5Movies = list
-        .filter(movie => movie.movieId <= 5)
-        .sort((a, b) => a.movieId - b.movieId)
-        .slice(0, 5);
+        .map(movie => {
+            const [date, rank] = movie.rank.split("-") // 날짜-순위 분리
+            const movieDate = new Date(date)
+            return {
+                ...movie,
+                movieDate,
+                rank: parseInt(rank),
+            };
+        })
+        .filter(movie => movie.rank <= 5) // 순위 5 이하인 영화들만 필터링
+        .sort((a, b) => {
+            const diffA = Math.abs(today - a.movieDate)
+            const diffB = Math.abs(today - b.movieDate)
+            return diffA - diffB; // 날짜가 오늘에 가장 가까운 영화부터 정렬
+        })
+        .slice(0, 5) // 상위 5개의 영화만 선택
 
+    // Top5Movies를 제외한 나머지 영화들
     const RestMovies = list
-        .filter(movie => movie.movieId >= 6)
-        .sort((a, b) => a.movieId - b.movieId);
+        .filter(movie => !Top5Movies.includes(movie)) // Top5Movies를 제외
+        .map(movie => {
+            const [date, rank] = movie.rank.split("-") // 날짜-순위 분리
+            const movieDate = new Date(date)
+            return {
+                ...movie,
+                movieDate,
+                rank: parseInt(rank),
+            };
+        })
+        .sort((a, b) => {
+            const diffA = Math.abs(today - a.movieDate)
+            const diffB = Math.abs(today - b.movieDate)
+            return diffA - diffB; // 날짜가 오늘에 가장 가까운 영화부터 정렬
+        })
 
     return (
-        <>
-            <HomePageCom TopMovies={Top5Movies} RestMovies={RestMovies} translatedTitles={translatedTitles} />
-        </>
-    );
-};
+        <HomePageCom TopMovies={Top5Movies} RestMovies={RestMovies} translatedTitles={translatedTitles} />
+    )
+}
 
 export default HomePageCon;
