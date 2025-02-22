@@ -59,7 +59,7 @@ const SearchCon = () => {
 
     const showInfo = (movieId) => {
         setInfoId(movieId)
-        setModalType("searchDetail")
+        setModalType("detail")
         setIsModalOpen(true)
     }
 

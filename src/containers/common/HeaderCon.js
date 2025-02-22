@@ -12,7 +12,7 @@ const HeaderCon = () => {
     const mySubmit = (e) => {
         e.preventDefault()
         navigate(input.search ? `/search?id=${input.search}` : "/search")
-        setInput("")
+        setInput({ search: "" })
     }
 
     return <>

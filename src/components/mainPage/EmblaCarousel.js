@@ -1,49 +1,50 @@
-import React, { useEffect, useRef, useState } from 'react';
-import EmblaCarousel from 'embla-carousel';
-import Autoplay from 'embla-carousel-autoplay';
-import Modal from './Modal';
-import '../../css/main.css';
+import React, { useEffect, useRef, useState } from 'react'
+import EmblaCarousel from 'embla-carousel'
+import Autoplay from 'embla-carousel-autoplay'
+import Modal from './Modal'
+import '../../css/main.css'
 
-const EmblaCarouselComponent = ({ list }) => {
-    const [modalOpen, setModalOpen] = useState(false);
-    const [modalType, setModalType] = useState('');
-    const [selectedMovie, setSelectedMovie] = useState('');
+const EmblaCarouselComponent = ({ list, Infolist, infoId, showInfo, hideInfo, onClick, relatedList, isModalOpen, modalType }) => {
+    // 나호영 주석처리
+    // const [modalOpen, setModalOpen] = useState(false);
+    // const [modalType, setModalType] = useState('');
+    // const [selectedMovie, setSelectedMovie] = useState('');
 
-    const openModal = (type, title = '') => {
-        console.log('모달 열기', type, title);
-        setSelectedMovie(title);
-        setModalType(type);
-        setModalOpen(true);
-    };
+    // const openModal = (type, title = '') => {
+    //     console.log('모달 열기', type, title);
+    //     setSelectedMovie(title);
+    //     setModalType(type);
+    //     setModalOpen(true);
+    // };
 
-    const emblaRef = useRef(null);
-    const [selectedIndex, setSelectedIndex] = useState(0);
-    const emblaApiRef = useRef(null);
+    const emblaRef = useRef(null)
+    const [selectedIndex, setSelectedIndex] = useState(0)
+    const emblaApiRef = useRef(null)
 
     useEffect(() => {
-        const emblaNode = emblaRef.current;
-        if (!emblaNode) return;
-        const options = { loop: true };
-        const plugins = [Autoplay({ delay: 6000, stopOnInteraction: false })];
-        const emblaApi = EmblaCarousel(emblaNode, options, plugins);
-        emblaApiRef.current = emblaApi;
+        const emblaNode = emblaRef.current
+        if (!emblaNode) return
+        const options = { loop: true }
+        const plugins = [Autoplay({ delay: 6000, stopOnInteraction: false })]
+        const emblaApi = EmblaCarousel(emblaNode, options, plugins)
+        emblaApiRef.current = emblaApi
 
         const onSelect = () => {
-            const newIndex = emblaApi.selectedScrollSnap();
-            setSelectedIndex(newIndex);
+            const newIndex = emblaApi.selectedScrollSnap()
+            setSelectedIndex(newIndex)
         };
 
-        emblaApi.on('select', onSelect);
-        return () => emblaApi.destroy();
-    }, []);
+        emblaApi.on('select', onSelect)
+        return () => emblaApi.destroy()
+    }, [])
 
     const scrollToNext = () => {
-        emblaApiRef.current.scrollNext();
-    };
+        emblaApiRef.current.scrollNext()
+    }
 
     const scrollToPrev = () => {
-        emblaApiRef.current.scrollPrev();
-    };
+        emblaApiRef.current.scrollPrev()
+    }
 
     return (
         <div className="embla-wrapper">
@@ -62,16 +63,14 @@ const EmblaCarouselComponent = ({ list }) => {
                                 <div className='main_movie_actors'>배우 : {movie.actors}</div>
                                 <div className='mainBtn'>
                                     {/* movie.title을 movie.movieId로 수정 (나호영 작성) */}
-                                    
-                                    <button onClick={() => openModal('detail', movie.movieId)}>상세보기</button>
+
+                                    <button onClick={() => showInfo(movie.movieId)}>상세보기</button>
                                     <a href={`/ticket_date?title=${encodeURIComponent(movie.title)}`}>
                                         <button>예매하기</button>
                                     </a>
                                 </div>
                             </div>
-                            <img src={`${movie.posterUrl}`} alt={movie.title} />
-                            {/* 나호영 작성 */}
-                            {/* <img src={`/img/movie1.jpg`} alt={movie.title} /> */}
+                            <img src={`${movie.stillUrl}`} alt={movie.title} />
                         </div>
                     ))}
                 </div>
@@ -88,12 +87,9 @@ const EmblaCarouselComponent = ({ list }) => {
                     />
                 ))}
             </div>
-            <Modal
-                isOpen={modalOpen}
-                onClose={() => setModalOpen(false)}
-                type={modalType}
-                content={selectedMovie}
-            />
+            {infoId !== null && (
+                <Modal isOpen={isModalOpen} onClose={hideInfo} type={modalType} infoData={Infolist[0]} onClick={onClick} relatedList={relatedList} Infolist={Infolist} />
+            )}
         </div>
     );
 };

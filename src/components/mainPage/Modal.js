@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import '../../css/main.css'
 
-const Modal = ({ isOpen, onClose, type, content, infoData, onClick, Infolist, relatedList, modalData, mySubmit, onChange, showResult }) => {
+const Modal = ({ isOpen, onClose, type, infoData, onClick, Infolist, relatedList, modalData, mySubmit, onChange, showResult }) => {
     useEffect(() => {
-        console.log('모달 상태 변경:', isOpen);
+        console.log('모달 상태 변경:', isOpen)
     }, [isOpen])
 
     if (!isOpen) return null
@@ -11,15 +11,6 @@ const Modal = ({ isOpen, onClose, type, content, infoData, onClick, Infolist, re
     const renderContent = () => {
         switch (type) {
             case 'detail':
-                return (
-                    <div className="modal-container" onClick={() => onClose()}>
-                        <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                            <div className="modal-body">
-                                <p>{content}</p>
-                            </div>
-                        </div>
-                    </div>)
-            case 'searchDetail':
                 return (
                     infoData && (
                         <div className="Searchinfo">
@@ -96,6 +87,10 @@ const Modal = ({ isOpen, onClose, type, content, infoData, onClick, Infolist, re
                             </div>
                         </div>
                     </div>)
+            case 'complete' :
+                return (
+                    <h1>리뷰작성완료모달창</h1>
+                )
             case 'payment':
                 return(
                     <div className="modal-container" onClick={() => onClose()}>
