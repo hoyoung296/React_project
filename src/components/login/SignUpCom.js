@@ -1,7 +1,13 @@
 import React from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../css/login.css';
 
 const SignUpCom = () => {
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+
+
     return(
         <div className='login_body'>
         <div className='sign'>
