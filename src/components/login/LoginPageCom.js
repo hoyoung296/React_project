@@ -16,7 +16,7 @@ const LoginPageCom = () => {
         <div className='login'>
             <div className='title_movie'>THEFILLM</div>
             <div className='login_from'>
-                <input type="text" className='input_id' required placeholder="ID"/><br/>
+                <input type="text" className='input_id' required placeholder="ID"/>
                 <input type="password" className='input_pwd' required placeholder="PW"/>
                 <button className='login_btn' onClick={handleLogin}>Login</button>
                 <div className='slmpleBtn'>

@@ -1,10 +1,11 @@
 import React from 'react';
+import SignUpCom from '../components/login/SignUpCom';
 import '../css/main.css';
 
 function SignUp() {
     return (
     <div>
-        회원가입 페이지
+        <SignUpCom/>
     </div>
 )
 };

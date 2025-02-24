@@ -45,7 +45,6 @@ const useUnload = (reservationId, scheduleId, seatIds, isSubmitting) => {
 
 const PayMentCom = () => {
     const [paymentMethod, setPaymentMethod] = useState(""); // 전체 결제 방식
-    const [selectedSimplePay, setSelectedSimplePay] = useState(""); // 간편결제 방식
     const [isSubmitting, setIsSubmitting] = useState(false); // 결제 진행 상태
     const [modalOpen, setModalOpen] = useState(false); 
     const [modalType, setModalType] = useState("");
@@ -74,31 +73,26 @@ const PayMentCom = () => {
         if (paymentMethod === "신용카드") {
             return <p className="paymentNotice">신용카드 결제 안내문</p>;
         }
-        if (paymentMethod === "무통장입금") {
-            return <p className="paymentNotice">무통장입금 결제 안내문</p>;
+        if (paymentMethod === "네이버페이") {
+            return <p className="paymentNotice">네이버페이 결제 안내문</p>;
         }
-        if (paymentMethod === "간편결제") {
-            if (selectedSimplePay === "네이버페이") {
-                return <p className="paymentNotice">네이버페이 결제 안내문</p>;
-            }
-            if (selectedSimplePay === "카카오페이") {
-                return <p className="paymentNotice">카카오페이 결제 순서<br/><br/>
-                우측 하단에 있는 ‘결제하기’ 버튼을 클릭해주세요.<br/>
-                예매내역 확인 후 결제하기 버튼 클릭 시 ‘카카오페이’ 결제 인증창이 뜹니다.<br/>
-                ‘카카오페이’ 결제 인증창에서 정보를 입력하신 후 결제해주세요.</p>;
-            }
-            if (selectedSimplePay === "PAYCO") {
-                return <p className="paymentNotice">PAYCO 결제 안내문</p>;
-            }
-            return <p className="paymentNotice">간편결제 방식을 선택해주세요.</p>;
+        if (paymentMethod === "카카오페이") {
+            return <p className="paymentNotice">카카오페이 결제 순서<br/><br/>
+            우측 하단에 있는 ‘결제하기’ 버튼을 클릭해주세요.<br/>
+            예매내역 확인 후 결제하기 버튼 클릭 시 ‘카카오페이’ 결제 인증창이 뜹니다.<br/>
+            ‘카카오페이’ 결제 인증창에서 정보를 입력하신 후 결제해주세요.</p>;
         }
-        return null;
-    };
+
+            return <p className="paymentNotice">결제 방식을 선택해주세요.</p>;
+            return null;
+        }
+        
+
 
     const handleSubmit = () => {
         
             // 결제 수단이 선택되지 않았을 때 경고창 표시
-            if (!paymentMethod && !selectedSimplePay) {
+            if (!paymentMethod) {
                 alert("결제수단을 선택해주세요.");
                 return; // 결제 진행을 막음
         };
@@ -146,75 +140,41 @@ const PayMentCom = () => {
                                 value="credit"
                                 onChange={() => {
                                     setPaymentMethod("신용카드");
-                                    setSelectedSimplePay(""); // 간편결제 초기화
                                 }}
                             />
                             신용카드
                         </label>
                         <label>
                             <input
-                                type="radio"
-                                name="pay"
-                                value="cash"
-                                onChange={() => {
-                                    setPaymentMethod("무통장입금");
-                                    setSelectedSimplePay(""); // 간편결제 초기화
-                                }}
-                            />
-                            무통장입금
-                        </label>
-                        <label>
-                            <input
-                                type="radio"
-                                name="pay"
-                                value="simple"
-                                onChange={() => {
-                                    setPaymentMethod("간편결제");
-                                    setSelectedSimplePay(""); // 간편결제 초기화
-                                }}
-                            />
-                            간편결제
-                        </label>
-                    </div>
-                    {paymentMethod === "간편결제" && (
-                        <div className="simplePayOptions">
-                            <label>
-                                <input
                                     type="radio"
-                                    name="simplePay"
+                                    name="pay"
                                     value="네이버페이"
-                                    checked="checked"
-                                    onChange={(e) => setSelectedSimplePay(e.target.value)}
+                                    onChange={() => {
+                                        setPaymentMethod("네이버페이");
+                                    }}
                                 />
                                 네이버페이
                             </label>
                             <label>
                                 <input
                                     type="radio"
-                                    name="simplePay"
+                                    name="pay"
                                     value="카카오페이"
-                                    onChange={(e) => setSelectedSimplePay(e.target.value)}
+                                    onChange={() => {
+                                        setPaymentMethod("카카오페이");
+                                    }}
                                 />
                                 카카오페이
                             </label>
-                            <label>
-                                <input
-                                    type="radio"
-                                    name="simplePay"
-                                    value="PAYCO"
-                                    onChange={(e) => setSelectedSimplePay(e.target.value)}
-                                />
-                                PAYCO
-                            </label>
-                        </div>
-                    )}
+                    </div>
+                    
                 </div>
                 <div className="payline"/>
                 {renderPaymentNotice()}
             </div>
             <div className="payInfo">
                 <p>결제 방식</p>
-                <p>{paymentMethod || selectedSimplePay || ""}</p>
+                <p>{paymentMethod || ""}</p>
                 <p>총 결제 금액</p>
                 <p>{`${totalAmount.toLocaleString()}원` || ""}</p>
                 <button onClick={handleSubmit}>결제하기</button>
