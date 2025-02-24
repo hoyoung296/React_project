@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import '../../css/main.css'
 
-const Modal = ({ isOpen, onClose, type, content, infoData, translatedTitle, onClick, Infolist, relatedList, modalData, mySubmit, onChange, showResult}) => {
+const Modal = ({ isOpen, onClose, type, infoData, onClick, Infolist, relatedList, modalData, mySubmit, onChange, showResult }) => {
     useEffect(() => {
-        console.log('모달 상태 변경:', isOpen);
+        console.log('모달 상태 변경:', isOpen)
     }, [isOpen])
 
     if (!isOpen) return null
@@ -12,15 +12,6 @@ const Modal = ({ isOpen, onClose, type, content, infoData, translatedTitle, onCl
         switch (type) {
             case 'detail':
                 return (
-                    <div className="modal-container" onClick={() => onClose()}>
-                        <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                            <div className="modal-body">
-                                <p>{content}</p>
-                            </div>
-                        </div>
-                    </div>)
-            case 'searchDetail':
-                return (
                     infoData && (
                         <div className="Searchinfo">
                             <div className="SearchInfodiv">
@@ -28,7 +19,7 @@ const Modal = ({ isOpen, onClose, type, content, infoData, translatedTitle, onCl
                                     <span onClick={() => onClose()}>X</span>
                                     <div>
                                         <h1>{infoData.title}</h1><br />
-                                        <h2>{translatedTitle || infoData.title}</h2><br />
+                                        <h2>{infoData.entitle}</h2><br />
                                         <h3>감독 : {infoData.director}</h3>
                                         <h3>배우 : {infoData.actors}</h3><br />
                                         <button onClick={onClick}>예매하기</button>
@@ -57,16 +48,18 @@ const Modal = ({ isOpen, onClose, type, content, infoData, translatedTitle, onCl
                                         </div>
                                     ))}
                                 </div>
-                                <div className="SearchInfo5">
-                                    <h1>관련컨텐츠</h1>
-                                    <div className="SearchListDiv" style={{ width: "100%" }}>
-                                        {relatedList
-                                            .filter(movie => movie.movieId !== Infolist[0].movieId)
-                                            .map((data, index) => (
-                                                <div key={`related-${data.movieId}-${index}`} className="SearchImgDiv" style={{ backgroundImage: `url('${data.posterUrl}')` }} />
-                                            ))}
+                                {relatedList.length > 1 && (
+                                    <div className="SearchInfo5">
+                                        <h1>관련컨텐츠</h1>
+                                        <div className="SearchListDiv" style={{ width: "100%" }}>
+                                            {relatedList
+                                                .filter(movie => movie.movieId !== Infolist[0].movieId)
+                                                .map((data, index) => (
+                                                    <div key={`related-${data.movieId}-${index}`} className="SearchImgDiv" style={{ backgroundImage: `url('${data.posterUrl}')` }} />
+                                                ))}
+                                        </div>
                                     </div>
-                                </div>
+                                )}
                             </div>
                         </div>
                     ))
@@ -94,6 +87,20 @@ const Modal = ({ isOpen, onClose, type, content, infoData, translatedTitle, onCl
                             </div>
                         </div>
                     </div>)
+            case 'complete' :
+                return (
+                    <h1>리뷰작성완료모달창</h1>
+                )
+            case 'payment':
+                return(
+                    <div className="modal-container" onClick={() => onClose()}>
+                        <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                            <div className="modal-body">
+                                <h1>결제api</h1>
+                            </div>
+                        </div>
+                    </div>
+                )
             default:
                 return null
         }

@@ -80,6 +80,11 @@ const TicketSeatCom = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        if (seatIds.size === 0) {
+            alert("좌석을 선택해주세요.");
+            return; // 예매 진행하지 않음
+        }
+        
         // 예매 정보를 서버에 제출하는 API 호출 (예시)
         try {
             const response = await Axios.post("http://localhost:8080/root/member/reserve/reservation", {

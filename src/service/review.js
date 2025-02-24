@@ -1,8 +1,5 @@
 import axios from "axios"
 
-const API_KEY = process.env.REACT_APP_GOOGLE_API_KEY
-
-
 // 학원에서만 나호영 노트북 아이피로 연결 (나호영 작성)
 const BASE_URL = "http://localhost:8080/root/review"
 
@@ -102,31 +99,4 @@ const delReserve = async (id) => {
     }
 }
 
-// 번역 API 호출
-const translateText = async (text, targetLang = "en") => {
-    try {
-        const res = await axios.post(
-            `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`,
-            {
-                q: text,
-                target: targetLang,
-                source: "ko",
-                format: "text",
-            },
-            {
-                headers: { "Content-Type": "application/json" },
-            }
-        )
-
-        if (res.data.data && res.data.data.translations.length > 0) {
-            return res.data.data.translations[0].translatedText
-        } else {
-            throw new Error("번역 데이터를 가져오지 못했습니다.")
-        }
-    } catch (error) {
-        console.error("번역 오류:", error)
-        return text
-    }
-}
-
-export { getSearchList, getInfoList, getReviewList, getReserveList, checkReview, writeReview, delReserve, translateText }
+export { getSearchList, getInfoList, getReviewList, getReserveList, checkReview, writeReview, delReserve }

@@ -1,0 +1,29 @@
+.adminSidebarDiv {
+    width: 20%;
+    height: 800px;
+    text-align: center;
+    font-size: 20px;
+}
+
+.adminSidebarDiv img {
+    width: 40%;
+    height: 20%;
+    border-radius: 50%;
+    display: block;
+    margin: 0 auto;
+    margin-top: 20%;
+}
+
+.adminSidebarDiv p {
+    display: block;
+    margin-top: 30%;
+}
+
+.adminSidebarDiv span {
+    color: purple;
+}
+
+.adminSidebarDiv a {
+    color: white;
+    text-decoration: none;
+}

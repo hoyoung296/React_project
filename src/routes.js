@@ -11,6 +11,9 @@ import MyReview from './pages/MyReview';
 import InfoPwd from './pages/InfoPwd';
 import Info from './pages/info';
 import NotFound from './pages/NotFound';
+import AdminMovie from './pages/AdminMovie';
+import AdminMember from './pages/AdminMember';
+import AdminPayment from './pages/AdminPayment';
 
 const routes = [
     { path: '/', element: <HomePage /> },
@@ -26,6 +29,9 @@ const routes = [
     { path: '/info_pwd', element: <InfoPwd /> },
     { path: '/info', element: <Info /> },
     { path: '*', element: <NotFound /> },
+    { path: '/adminMovie' , element : <AdminMovie />},
+    { path: '/adminMember' , element : <AdminMember />},
+    { path: '/adminPayment' , element : <AdminPayment />}
 ];
 
 export default routes;
