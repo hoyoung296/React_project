@@ -1,12 +1,13 @@
 import AdminSidebar from "./AdminSidebar"
 import "../../css/admin/admin.css"
 
-const AdminMovieCom = ({ list, editMovie, InputChange, EditClick, Update }) => {
-    return <>
+const AdminMovieCom = ({ list, editMovie, InputChange, EditClick, Update, handleFileChange, manualUpdate }) => {
+    return (
         <div className="admindiv">
             <AdminSidebar activeLink="영화/상영관리" />
             <div className="admindiv-1">
-                <h1>영화/상영관리</h1><br />
+                <h1>영화/상영관리</h1>
+                <br />
                 <div className="table-wrapper">
                     <table align="center">
                         <thead>
@@ -18,7 +19,6 @@ const AdminMovieCom = ({ list, editMovie, InputChange, EditClick, Update }) => {
                                 <th>시놉시스</th>
                                 <th>감독</th>
                                 <th>배우</th>
-                                <th>개봉일자</th>
                                 <th>영화관리</th>
                                 <th>상영관리</th>
                             </tr>
@@ -29,92 +29,87 @@ const AdminMovieCom = ({ list, editMovie, InputChange, EditClick, Update }) => {
                                     <tr key={data.movieId}>
                                         <td>
                                             {editMovie?.movieId === data.movieId ? (
-                                            <input 
-                                            type="text"
-                                            name="title"
-                                            value={data.title}
-                                            onChange={(e) => InputChange(e, data.movieId)}/>): (data.title)}
-                                         </td>
+                                                <input type="text" name="title" value={data.title} onChange={(e) => InputChange(e, data.movieId)} />
+                                            ) : (
+                                                data.title
+                                            )}
+                                        </td>
                                         <td>
                                             {editMovie?.movieId === data.movieId ? (
-                                                <input
-                                                type="text"
-                                                name="entitle"
-                                                value={data.entitle}
-                                                onChange={(e) => InputChange(e, data.movieId)}
-                                                />): (data.entitle)}
-                                                </td>
-                                        <td>
-                                        {editMovie?.movieId === data.movieId ? (
-                                                    <input
-                                                        type="text"
-                                                        name="posterUrl"
-                                                        value={data.posterUrl}
-                                                        onChange={(e) => InputChange(e, data.movieId)}
-                                                    />) : (data.posterUrl)}
+                                                <input type="text" name="entitle" value={data.entitle} onChange={(e) => InputChange(e, data.movieId)} />
+                                            ) : (
+                                                data.entitle
+                                            )}
                                         </td>
                                         <td>
-                                        {editMovie?.movieId === data.movieId ? (
-                                                    <input
-                                                        type="text"
-                                                        name="stillUrl"
-                                                        value={data.stillUrl}
-                                                        onChange={(e) => InputChange(e, data.movieId)}
-                                                    />) : (data.stillUrl)}
+                                            {editMovie?.movieId === data.movieId ? (
+                                                <>
+                                                    {data.posterUrl === "데이터없음" && <input type="file" onChange={(e) => handleFileChange(e, data.movieId, "posterUrl")} />}
+                                                    {data.posterUrl !== "데이터없음" && <input type="text" name="posterUrl" value={data.posterUrl} onChange={(e) => InputChange(e, data.movieId)} />}
+                                                </>
+                                            ) : (
+                                                data.posterUrl
+                                            )}
                                         </td>
                                         <td>
-                                        {editMovie?.movieId === data.movieId ? (
-                                                    <textarea
-                                                        name="movieSynopsis"
-                                                        value={data.movieSynopsis}
-                                                        onChange={(e) => InputChange(e, data.movieId)}
-                                                    />) : (data.movieSynopsis)}
+                                            {editMovie?.movieId === data.movieId ? (
+                                                <>
+                                                    {data.stillUrl === "데이터없음" && <input type="file" onChange={(e) => handleFileChange(e, data.movieId, "stillUrl")} />}
+                                                    {data.stillUrl !== "데이터없음" && <input type="text" name="stillUrl" value={data.stillUrl} onChange={(e) => InputChange(e, data.movieId)} />}
+                                                </>
+                                            ) : (
+                                                data.stillUrl
+                                            )}
                                         </td>
                                         <td>
-                                        {editMovie?.movieId === data.movieId ? (
-                                                    <input
-                                                        type="text"
-                                                        name="directorName"
-                                                        value={data.directorName}
-                                                        onChange={(e) => InputChange(e, data.movieId)}
-                                                    />) : (data.directorName)}
+                                            {editMovie?.movieId === data.movieId ? (
+                                                <textarea name="movieSynopsis" value={data.movieSynopsis} onChange={(e) => InputChange(e, data.movieId)} />
+                                            ) : (
+                                                data.movieSynopsis
+                                            )}
                                         </td>
                                         <td>
-                                        {editMovie?.movieId === data.movieId ? (
-                                                    <input
-                                                        type="text"
-                                                        name="actors"
-                                                        value={data.actors}
-                                                        onChange={(e) => InputChange(e, data.movieId)}
-                                                    />) : (data.actors)}
+                                            {editMovie?.movieId === data.movieId ? (
+                                                <input type="text" name="directorName" value={data.directorName} onChange={(e) => InputChange(e, data.movieId)} />
+                                            ) : (
+                                                data.directorName
+                                            )}
                                         </td>
                                         <td>
-                                        {editMovie?.movieId === data.movieId ? (
-                                                    <input
-                                                        type="date"
-                                                        name="openDt"
-                                                        value={data.openDt}
-                                                        onChange={(e) => InputChange(e, data.movieId)}
-                                                    />) : (data.openDt)}
+                                            {editMovie?.movieId === data.movieId ? (
+                                                <input type="text" name="actors" value={data.actors} onChange={(e) => InputChange(e, data.movieId)} />
+                                            ) : (
+                                                data.actors
+                                            )}
                                         </td>
-                                        <td>{editMovie?.movieId === data.movieId ? (
-                                                    <button onClick={() => Update(data.movieId)}>수정 완료</button>) : (
-                                                    <button onClick={() => EditClick(data.movieId)}>수정</button>
-                                                )}</td>
-                                        <td><button>관리</button></td>
+                                        <td>
+                                            {editMovie?.movieId === data.movieId ? (
+                                                <button onClick={() => Update(data.movieId)}>수정 완료</button>
+                                            ) : (
+                                                <button onClick={() => EditClick(data.movieId)}>수정</button>
+                                            )}
+                                        </td>
+                                        <td>
+                                            <button>관리</button>
+                                        </td>
                                     </tr>
                                 ))
                             ) : (
-                                <tr>
-                                    <td colSpan="10">데이터가 없습니다.</td>
-                                </tr>
+                                <>
+                                    <tr>
+                                        <td colSpan="10">데이터가 없습니다.</td>
+                                    </tr>
+                                    <button className="update" onClick={() => manualUpdate()}>
+                                        업데이트
+                                    </button>
+                                </>
                             )}
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-    </>
+    )
 }
 
-export default AdminMovieCom
+export default AdminMovieCom;

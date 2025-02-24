@@ -99,6 +99,4 @@ const delReserve = async (id) => {
     }
 }
 
-
-
 export { getSearchList, getInfoList, getReviewList, getReserveList, checkReview, writeReview, delReserve }
