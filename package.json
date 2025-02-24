@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@portone/browser-sdk": "^0.0.13",
     "ajv": "^8.17.1",
     "ajv-keywords": "^5.1.0",
     "axios": "^1.7.9",
@@ -40,5 +41,5 @@
       "last 1 safari version"
     ]
   },
-   "proxy": "http://localhost:8080"
+  "proxy": "http://localhost:8080"
 }
