@@ -1,7 +1,7 @@
 import AdminSidebar from "./AdminSidebar"
 import "../../css/admin/admin.css"
 
-const AdminMovieCom = ({ list }) => {
+const AdminMovieCom = ({ list, editMovie, InputChange, EditClick, Update }) => {
     return <>
         <div className="admindiv">
             <AdminSidebar activeLink="영화/상영관리" />
@@ -11,36 +11,97 @@ const AdminMovieCom = ({ list }) => {
                     <table align="center">
                         <thead>
                             <tr>
-                                <th>movie_id</th>
-                                <th>title</th>
-                                <th>entitle</th>
-                                <th>poster_url</th>
-                                <th>still_url</th>
-                                <th>synopsis</th>
-                                <th>director</th>
-                                <th>actor</th>
-                                <th>rank</th>
-                                <th>openDt</th>
-                                <th>영화정보수정</th>
-                                <th>상영일정추가</th>
+                                <th>영화제목</th>
+                                <th>영어제목</th>
+                                <th>포스터URL</th>
+                                <th>스틸컷URL</th>
+                                <th>시놉시스</th>
+                                <th>감독</th>
+                                <th>배우</th>
+                                <th>개봉일자</th>
+                                <th>영화관리</th>
+                                <th>상영관리</th>
                             </tr>
                         </thead>
                         <tbody>
                             {list && list.length > 0 ? (
                                 list.map((data) => (
                                     <tr key={data.movieId}>
-                                        <td>{data.movieId}</td>
-                                        <td>{data.title}</td>
-                                        <td>{data.entitle}</td>
-                                        <td>{data.posterUrl}</td>
-                                        <td>{data.stillUrl}</td>
-                                        <td>{data.movieSynopsis}</td>
-                                        <td>{data.directorName}</td>
-                                        <td>{data.actors}</td>
-                                        <td>{data.movieRank}</td>
-                                        <td>{data.openDt}</td>
-                                        <td><button>수정</button></td>
-                                        <td><button>추가</button></td>
+                                        <td>
+                                            {editMovie?.movieId === data.movieId ? (
+                                            <input 
+                                            type="text"
+                                            name="title"
+                                            value={data.title}
+                                            onChange={(e) => InputChange(e, data.movieId)}/>): (data.title)}
+                                         </td>
+                                        <td>
+                                            {editMovie?.movieId === data.movieId ? (
+                                                <input
+                                                type="text"
+                                                name="entitle"
+                                                value={data.entitle}
+                                                onChange={(e) => InputChange(e, data.movieId)}
+                                                />): (data.entitle)}
+                                                </td>
+                                        <td>
+                                        {editMovie?.movieId === data.movieId ? (
+                                                    <input
+                                                        type="text"
+                                                        name="posterUrl"
+                                                        value={data.posterUrl}
+                                                        onChange={(e) => InputChange(e, data.movieId)}
+                                                    />) : (data.posterUrl)}
+                                        </td>
+                                        <td>
+                                        {editMovie?.movieId === data.movieId ? (
+                                                    <input
+                                                        type="text"
+                                                        name="stillUrl"
+                                                        value={data.stillUrl}
+                                                        onChange={(e) => InputChange(e, data.movieId)}
+                                                    />) : (data.stillUrl)}
+                                        </td>
+                                        <td>
+                                        {editMovie?.movieId === data.movieId ? (
+                                                    <textarea
+                                                        name="movieSynopsis"
+                                                        value={data.movieSynopsis}
+                                                        onChange={(e) => InputChange(e, data.movieId)}
+                                                    />) : (data.movieSynopsis)}
+                                        </td>
+                                        <td>
+                                        {editMovie?.movieId === data.movieId ? (
+                                                    <input
+                                                        type="text"
+                                                        name="directorName"
+                                                        value={data.directorName}
+                                                        onChange={(e) => InputChange(e, data.movieId)}
+                                                    />) : (data.directorName)}
+                                        </td>
+                                        <td>
+                                        {editMovie?.movieId === data.movieId ? (
+                                                    <input
+                                                        type="text"
+                                                        name="actors"
+                                                        value={data.actors}
+                                                        onChange={(e) => InputChange(e, data.movieId)}
+                                                    />) : (data.actors)}
+                                        </td>
+                                        <td>
+                                        {editMovie?.movieId === data.movieId ? (
+                                                    <input
+                                                        type="date"
+                                                        name="openDt"
+                                                        value={data.openDt}
+                                                        onChange={(e) => InputChange(e, data.movieId)}
+                                                    />) : (data.openDt)}
+                                        </td>
+                                        <td>{editMovie?.movieId === data.movieId ? (
+                                                    <button onClick={() => Update(data.movieId)}>수정 완료</button>) : (
+                                                    <button onClick={() => EditClick(data.movieId)}>수정</button>
+                                                )}</td>
+                                        <td><button>관리</button></td>
                                     </tr>
                                 ))
                             ) : (
