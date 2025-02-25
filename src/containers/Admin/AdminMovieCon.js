@@ -87,9 +87,21 @@ const AdminMovieCon = () => {
         }
     }
 
+    const show = () => {
+        const elements = document.getElementsByClassName("modal")
+        if (elements.length > 0)
+            elements[0].style.display = "block"
+    }
+
+    const hide = () => {
+        const elements = document.getElementsByClassName("modal")
+        if (elements.length > 0)
+            elements[0].style.display = "none"
+    }
+
     return (
         <AdminMovieCom list={list} editMovie={editMovie} InputChange={InputChange} EditClick={EditClick} Update={Update}
-            handleFileChange={handleFileChange} manualUpdate={manualUpdate} />
+            handleFileChange={handleFileChange} manualUpdate={manualUpdate} show={show} hide={hide} />
     )
 }
 
