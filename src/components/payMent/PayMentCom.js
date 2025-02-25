@@ -20,7 +20,7 @@ const useUnload = (reservationId, scheduleId, seatIds, isSubmitting) => {
             event.preventDefault();
             if (reservationId && scheduleId && seatIds) {
                 try {
-                    await Axios.delete("http://192.168.0.91:8080/root/member/schedule/cancel", {
+                    await Axios.delete("http://192.168.0.91:8080/root/member/reserve/reservation/cancel", {
                         data: { 
                             reservationId: reservationId,
                             scheduleId: scheduleId,
