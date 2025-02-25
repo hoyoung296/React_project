@@ -1,13 +1,12 @@
 import AdminSidebar from "./AdminSidebar"
 import "../../css/admin/admin.css"
 
-const AdminMovieCom = ({ list, editMovie, InputChange, EditClick, Update, handleFileChange, manualUpdate }) => {
+const AdminMovieCom = ({ list, editMovie, InputChange, EditClick, Update, handleFileChange, manualUpdate, show, hide }) => {
     return (
         <div className="admindiv">
             <AdminSidebar activeLink="영화/상영관리" />
             <div className="admindiv-1">
-                <h1>영화/상영관리</h1>
-                <br />
+                <h1>영화/상영관리</h1><br />
                 <div className="table-wrapper">
                     <table align="center">
                         <thead>
@@ -90,7 +89,7 @@ const AdminMovieCom = ({ list, editMovie, InputChange, EditClick, Update, handle
                                             )}
                                         </td>
                                         <td>
-                                            <button>관리</button>
+                                            <button onClick={()=>show()}>관리</button>
                                         </td>
                                     </tr>
                                 ))
@@ -106,6 +105,13 @@ const AdminMovieCom = ({ list, editMovie, InputChange, EditClick, Update, handle
                             )}
                         </tbody>
                     </table>
+                </div>
+            </div>
+
+            <div className="modal">
+                <div>
+                    <span onClick={() => hide()}>X</span>
+                    <h1>모달 확인</h1>
                 </div>
             </div>
         </div>
