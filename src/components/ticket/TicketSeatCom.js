@@ -34,7 +34,7 @@ const TicketSeatCom = () => {
             console.log("📡 서버 요청 시작");
             const fetchMovieData = async () => {
                 try {
-                    const response = await Axios.get("http://localhost:8080/root/member/schedule/seatselect", {
+                    const response = await Axios.get("http://192.168.0.91:8080/root/member/schedule/seatselect", {
                         params: { scheduleId }
                     });
 
@@ -87,13 +87,19 @@ const TicketSeatCom = () => {
         
         // 예매 정보를 서버에 제출하는 API 호출 (예시)
         try {
-            const response = await Axios.post("http://localhost:8080/root/member/reserve/reservation", {
+            const response = await Axios.post("http://192.168.0.91:8080/root/member/reserve/reservation", {
                 scheduleId,
                 seatIds: [...seatIds],
                 totalAmount: totalAmount, //서버 연결해서 스케쥴id, 선택좌석, 총 금액 전달함
                 withCredentials: true  // ✅ 세션 쿠키를 서버에 전달하는 설정
             });
             console.log("✅ 예매 성공:", response.data);
+
+            // 예약 ID를 bigInt로 변환
+            const reservationId = response.data.data?.reservationId;
+
+            console.log("📌 서버 응답에서 reservationId 확인:", reservationId);
+
             navigate("/payment", { //payment 페이지로 이동
                 state: {
                     movieDetails: movieDetailsState,
@@ -101,6 +107,8 @@ const TicketSeatCom = () => {
                     selectedCinema: selectedCinemaState,
                     selectedStartTime: selectedStartTimeState,
                     seatIds: [...seatIds],
+                    scheduleId,
+                    reservationId,
                     totalAmount // 추가로 state에 영화정보, 좌석정보 등 전달함
                 }
             });
