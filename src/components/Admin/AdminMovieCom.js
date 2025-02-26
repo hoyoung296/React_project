@@ -1,7 +1,7 @@
 import AdminSidebar from "./AdminSidebar"
 import "../../css/admin/admin.css"
 
-const AdminMovieCom = ({ list, editMovie, InputChange, EditClick, Update, handleFileChange, manualUpdate, show, hide }) => {
+const AdminMovieCom = ({ list, editMovie, InputChange, EditClick, Update, manualUpdate, show, hide }) => {
     return (
         <div className="admindiv">
             <AdminSidebar activeLink="영화/상영관리" />
@@ -42,20 +42,14 @@ const AdminMovieCom = ({ list, editMovie, InputChange, EditClick, Update, handle
                                         </td>
                                         <td>
                                             {editMovie?.movieId === data.movieId ? (
-                                                <>
-                                                    {data.posterUrl === "데이터없음" && <input type="file" onChange={(e) => handleFileChange(e, data.movieId, "posterUrl")} />}
-                                                    {data.posterUrl !== "데이터없음" && <input type="text" name="posterUrl" value={data.posterUrl} onChange={(e) => InputChange(e, data.movieId)} />}
-                                                </>
+                                               <input type="text" name="posterUrl" value={data.posterUrl} onChange={(e) => InputChange(e, data.movieId)} />
                                             ) : (
                                                 data.posterUrl
                                             )}
                                         </td>
                                         <td>
                                             {editMovie?.movieId === data.movieId ? (
-                                                <>
-                                                    {data.stillUrl === "데이터없음" && <input type="file" onChange={(e) => handleFileChange(e, data.movieId, "stillUrl")} />}
-                                                    {data.stillUrl !== "데이터없음" && <input type="text" name="stillUrl" value={data.stillUrl} onChange={(e) => InputChange(e, data.movieId)} />}
-                                                </>
+                                                <input type="text" name="stillUrl" value={data.stillUrl} onChange={(e) => InputChange(e, data.movieId)} />
                                             ) : (
                                                 data.stillUrl
                                             )}

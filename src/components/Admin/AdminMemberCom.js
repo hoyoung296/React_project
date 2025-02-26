@@ -1,7 +1,7 @@
 import AdminSidebar from "./AdminSidebar"
 import "../../css/admin/admin.css"
 
-const AdminMemberCom = ({ list, editUser, InputChange, EditUser, Update, del }) => {
+const AdminMemberCom = ({ list }) => {
     return <>
         <div className="admindiv">
             <AdminSidebar activeLink="회원관리" />
@@ -19,8 +19,6 @@ const AdminMemberCom = ({ list, editUser, InputChange, EditUser, Update, del }) 
                                 <th>우편번호</th>
                                 <th>생년월일</th>
                                 <th>등급</th>
-                                <th>수정</th>
-                                <th>삭제</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -28,77 +26,35 @@ const AdminMemberCom = ({ list, editUser, InputChange, EditUser, Update, del }) 
                                 list.map((data) => (
                                     <tr key={data.userId}>
                                         <td>
-                                            {editUser?.userId === data.userId ? (
-                                                <input type="text" name="userId" value={data.userId} onChange={(e) => InputChange(e, data.userId)} />
-                                            ) : (
-                                                data.userId
-                                            )}
+                                            {data.userId}
                                         </td>
                                         <td>
-                                            {editUser?.userId === data.userId ? (
-                                                <input type="text" name="userName" value={data.userName} onChange={(e) => InputChange(e, data.userId)} />
-                                            ) : (
-                                                data.userName
-                                            )}
+                                            {data.userName}
                                         </td>
                                         <td>
-                                            {editUser?.userId === data.userId ? (
-                                                <input type="text" name="email" value={data.email} onChange={(e) => InputChange(e, data.userId)} />
-                                            ) : (
-                                                data.email
-                                            )}
+                                            {data.email}
                                         </td>
                                         <td>
-                                            {editUser?.userId === data.userId ? (
-                                                <input type="text" name="phoneNumber" value={data.phoneNumber} onChange={(e) => InputChange(e, data.userId)} />
-                                            ) : (
-                                                data.phoneNumber
-                                            )}
+                                            {data.phoneNumber}
                                         </td>
                                         <td>
-                                            {editUser?.userId === data.userId ? (
-                                                <input type="text" name="addr" value={data.addr} onChange={(e) => InputChange(e, data.userId)} />
-                                            ) : (
-                                                data.addr
-                                            )}
+                                            {data.addr}
                                         </td>
                                         <td>
-                                            {editUser?.userId === data.userId ? (
-                                                <input type="text" name="postNum" value={data.postNum} onChange={(e) => InputChange(e, data.userId)} />
-                                            ) : (
-                                                data.postNum
-                                            )}
+                                            {data.postNum}
                                         </td>
                                         <td>
-                                            {editUser?.userId === data.userId ? (
-                                                <input type="text" name="userGrade" value={data.userGrade} onChange={(e) => InputChange(e, data.userId)} />
-                                            ) : (
-                                                data.userGrade
-                                            )}
+                                            {data.userBirthday}
                                         </td>
                                         <td>
-                                            {editUser?.userId === data.userId ? (
-                                                <input type="text" name="userBirthday" value={data.userBirthday} onChange={(e) => InputChange(e, data.userId)} />
-                                            ) : (
-                                                data.userBirthday
-                                            )}
-                                        </td>
-                                        <td>
-                                            {editUser?.userId === data.userId ? (
-                                                <button onClick={() => Update(data.userId)}>수정 완료</button>
-                                            ) : (
-                                                <button onClick={() => EditUser(data.userId)}>수정</button>
-                                            )}
-                                        </td>
-                                        <td>
-                                            <button onClick={() => del(data.userId)}>삭제</button>
+                                            {data.userGrade}
                                         </td>
                                     </tr>
                                 ))
                             ) : (
                                 <>
                                     <tr>
-                                        <td colSpan='10'>데이터가 없습니다.</td>
+                                        <td colSpan='8'>데이터가 없습니다.</td>
                                     </tr>
                                 </>
                             )}

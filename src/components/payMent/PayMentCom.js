@@ -1,8 +1,8 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import Axios from "axios";
 import PortOne from '@portone/browser-sdk/v2'; // 포트원 V2 SDK 임포트
-import Modal from "../mainPage/Modal";
+import Axios from "axios";
 import "../../css/ticket.css";
 
 const STORE_ID = process.env.REACT_APP_PORTONE_STORE_ID;       // 포트원 상점 식별자
@@ -12,46 +12,14 @@ console.log("키값1",STORE_ID)
 
 console.log("키값2",CHANNEL_KEY)
 
-// useUnload 훅 정의 (예약 취소 등)
-const useUnload = (reservationId, scheduleId, seatIds, isSubmitting) => {
-    useEffect(() => {
-        const handleUnload = async (event) => {
-            if (isSubmitting) return;
-            event.preventDefault();
-            if (reservationId && scheduleId && seatIds) {
-                try {
-                    await Axios.delete("http://192.168.0.91:8080/root/member/reserve/reservation/cancel", {
-                        data: { 
-                            reservationId: reservationId,
-                            scheduleId: scheduleId,
-                            seatIds: [...seatIds]
-                        }
-                    });
-                    console.log("✅ 예매가 정상적으로 취소되었습니다.");
-                } catch (error) {
-                    console.error("❌ 예매 취소 실패:", error);
-                }
-            }
-            event.returnValue = "페이지를 떠나면 예매가 취소됩니다. 정말 떠나시겠습니까?";
-            return event.returnValue;
-        };
-
-        window.addEventListener("beforeunload", handleUnload);
-        return () => {
-            window.removeEventListener("beforeunload", handleUnload);
-        };
-    }, [reservationId, scheduleId, seatIds, isSubmitting]);
-};
 
 const PayMentCom = () => {
     const [paymentMethod, setPaymentMethod] = useState(""); // 결제 수단
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [modalOpen, setModalOpen] = useState(false); 
-    const [modalType, setModalType] = useState("");
     const location = useLocation();
     const navigate = useNavigate();
     const {
-        movieDetailsState = {},
+        movieDetails = {},
         selectedDate = "정보 없음",
         selectedCinema = "정보 없음",
         selectedStartTime = "정보 없음",
@@ -61,13 +29,9 @@ const PayMentCom = () => {
         scheduleId,
         seatIds = []
     } = location.state || {};
+    console.log("현재 location.state: ", location.state);
 
-    useUnload(reservationId, scheduleId, seatIds, isSubmitting);
 
-    const openModal = (type) => {
-        setModalType(type);
-        setModalOpen(true);
-    };
 
     const renderPaymentNotice = () => {
         if (paymentMethod === "신용카드") {
@@ -161,17 +125,59 @@ const PayMentCom = () => {
         }
       };
 
+      useEffect(() => {
+        const handlePopState = async() => {
+            if (!isSubmitting) {
+                console.log("뒤로가기 감지!!")
+                console.log("🚀 전송할 데이터:");
+                console.log("reservationId:", reservationId);
+                console.log("scheduleId:", scheduleId);
+                console.log("seatIds:", seatIds);
+                if (window.confirm("페이지를 벗어날 시 변경사항이 저장되지 않을 수 있습니다. 이동하시겠습니까?")) {
+                    try {
+                        console.log("뒤로가기 YES -> axios 실행!!")
+                        await Axios.delete("http://192.168.0.91:8080/root/member/reserve/cancel", {
+                            data: {
+                                reservationId: reservationId, 
+                                scheduleId: scheduleId,
+                                seatIds: [...seatIds]
+                            },
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            }
+                        });
+                        console.log("✅ 예매가 정상적으로 취소되었습니다.");
+                        navigate(-1); // 뒤로가기
+                    } catch (error) {
+                        console.error("❌ 예매 취소 실패:", error);
+                    }
+                    console.log("axios 실행 후 뒤로가기 진행함")
+                    
+                }
+            }
+        };
+
+        window.history.pushState(null, document.title); // 초기 히스토리 추가
+        window.addEventListener("popstate", handlePopState);
+
+        // 페이지에서 벗어날 때 이벤트 제거
+        return () => {
+            window.removeEventListener("popstate", handlePopState);
+        };
+    }, [isSubmitting, navigate]);
+
     return (
         <div className="payMentPage">
             <div className="payMent">
                 <h3>결제 내역</h3>
                 <div className="movieInfo">
                     <div className="selectMovieInfoPayMent">
-                        {movieDetailsState.posterurl && <img src={movieDetailsState?.posterurl} alt={movieDetailsState?.title} />}
+                        {movieDetails.posterurl && <img src={movieDetails?.posterurl} alt={movieDetails?.title} />}
                         <div>  
-                            <div>{movieDetailsState?.title || "정보 없음"}</div>
-                            <div>감독 : <span>{movieDetailsState?.director || "정보 없음"}</span></div>
-                            <div>배우 : <span>{movieDetailsState?.actors || "정보 없음"}</span></div>
+                            <div>{movieDetails?.title || "정보 없음"}</div>
+                            <div>감독 : <span>{movieDetails?.director || "정보 없음"}</span></div>
+                            <div>배우 : <span>{movieDetails?.actors || "정보 없음"}</span></div>
                         </div>
                     </div>
                     <div>
@@ -186,8 +192,8 @@ const PayMentCom = () => {
                             <p>{selectedDate || "정보 없음"}</p>
                             <p>{selectedStartTime || "정보 없음"}</p>
                             <p>{selectedCinema || "정보 없음"}</p>
-                            <p>{selectedSeats.length > 0 ? `${selectedSeats.length}명` : "정보 없음"}</p>
-                            <p>{selectedSeats.length > 0 ? selectedSeats.join(", ") : "선택된 좌석 없음"}</p>
+                            <p>{seatIds.length > 0 ? `${seatIds.length}명` : "정보 없음"}</p>
+                            <p>{seatIds.length > 0 ? seatIds.join(", ") : "선택된 좌석 없음"}</p>
                         </div>
                     </div>
                 </div>
@@ -243,11 +249,8 @@ const PayMentCom = () => {
                     {isSubmitting ? "결제 진행 중..." : "결제하기"}
                 </button>
             </div>
-            <Modal
-                isOpen={modalOpen}
-                onClose={() => setModalOpen(false)}
-                type={modalType} 
-            />
+            
+            
         </div>
     );
 };
