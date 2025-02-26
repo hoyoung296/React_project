@@ -23,7 +23,6 @@ const PayMentCom = () => {
         selectedDate = "정보 없음",
         selectedCinema = "정보 없음",
         selectedStartTime = "정보 없음",
-        selectedSeats = [],
         totalAmount = 0,
         reservationId,
         scheduleId,
@@ -61,6 +60,17 @@ const PayMentCom = () => {
         }
         setIsSubmitting(true);
         const paymentIdForMerchant = "order_" + new Date().getTime();
+
+         // 선택된 결제 수단에 따라 paymentMethodId 값을 결정
+        let paymentMethodId;
+        if (paymentMethod === "신용카드") {
+            paymentMethodId = 1;
+        } else if (paymentMethod === "네이버페이" || paymentMethod === "카카오페이") {
+            paymentMethodId = 2;
+        } else {
+            // 기본값 처리 (필요에 따라 조정)
+            paymentMethodId = 1;
+        }
       
         try {
           // PortOne 결제 위젯 실행
@@ -87,8 +97,8 @@ const PayMentCom = () => {
             const { txId, paymentId } = response;
             // 백엔드에 결제 정보 전달 (필요에 따라 전송하는 데이터 항목 조정)
             const createRes = await Axios.post('/api/payment/create', {
-              reservationId: reservationId || 123, // 예시 값
-              paymentMethodId: 1, // 예시 값
+              reservationId: paymentId, // 예시 값
+              paymentMethodId: paymentMethodId, // 예시 값
               amount: totalAmount, // 실제 결제 금액 사용
               portonePaymentId: txId, // 결제 시도 고유 번호 사용
             });
