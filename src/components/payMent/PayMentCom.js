@@ -23,7 +23,6 @@ const PayMentCom = () => {
         selectedDate = "정보 없음",
         selectedCinema = "정보 없음",
         selectedStartTime = "정보 없음",
-        selectedSeats = [],
         totalAmount = 0,
         reservationId,
         scheduleId,
