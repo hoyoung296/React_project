@@ -26,7 +26,7 @@ const updateMovieManual = async () => {
             },
         })
     } catch (error) {
-        console.error("영화 정보 업데이트 실패: ", error)
+        console.error("영화 정보 수동 업데이트 실패: ", error)
         throw error
     }
 }
@@ -42,19 +42,54 @@ const getList = async () => {
     }
 }
 
-// 유저 정보 업데이트
-const updateUser = async (userData) => {
+// 상영관 정보 가져오기
+const getScreen = async () => {
     try {
-        const res = await axios.put(`${BASE_URL}/edit_user`, userData, {
+        const res = await axios.get(`${BASE_URL}/미정`)
+        return res.data
+    } catch (error) {
+        console.error("상영관 정보 불러오기 실패: ", error)
+        throw error
+    }
+}
+
+// 영화 일정 정보 가져오기
+const getSchedule = async () => {
+    try {
+        const res = await axios.get(`${BASE_URL}/미정`)
+        return res.data
+    } catch (error) {
+        console.error("일정 정보 불러오기 실패: ", error)
+        throw error
+    }
+}
+
+// 영화 일정 추가하기
+const updateSchedule = async (id) => {
+    try {
+        const res = await axios.post(`${BASE_URL}/미정`, id, {
             headers: {
                 "Content-Type": "application/json",
             },
         })
         return res.data
     } catch (error) {
-        console.error("유저 정보 업데이트 실패: ", error)
+        console.error("영화 일정 추가 실패 : ", error)
         throw error
     }
 }
 
-export { updateMovie, updateMovieManual, getList }
+//영화 일정 삭제하기
+const delSchedule = async (id) => {
+    try {
+        const res = await axios.delete(`${BASE_URL}/미정`, {
+            params: { id },
+        })
+        return res.data
+    } catch (error) {
+        console.error("영화 일정 삭제 실패 : ", error)
+        throw error
+    }
+}
+
+export { updateMovie, updateMovieManual, getSchedule, getScreen, getList, updateSchedule, delSchedule }

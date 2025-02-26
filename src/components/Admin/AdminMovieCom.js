@@ -1,12 +1,12 @@
 import AdminSidebar from "./AdminSidebar"
 import "../../css/admin/admin.css"
 
-const AdminMovieCom = ({ list, editMovie, InputChange, EditClick, Update, manualUpdate, show, hide }) => {
+const AdminMovieCom = ({ list, editMovie, InputChange, EditClick, Update, manualUpdate }) => {
     return (
         <div className="admindiv">
-            <AdminSidebar activeLink="영화/상영관리" />
+            <AdminSidebar activeLink="영화관리" />
             <div className="admindiv-1">
-                <h1>영화/상영관리</h1><br />
+                <h1>영화관리</h1><br />
                 <div className="table-wrapper">
                     <table align="center">
                         <thead>
@@ -18,8 +18,7 @@ const AdminMovieCom = ({ list, editMovie, InputChange, EditClick, Update, manual
                                 <th>시놉시스</th>
                                 <th>감독</th>
                                 <th>배우</th>
-                                <th>영화관리</th>
-                                <th>상영관리</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -42,7 +41,7 @@ const AdminMovieCom = ({ list, editMovie, InputChange, EditClick, Update, manual
                                         </td>
                                         <td>
                                             {editMovie?.movieId === data.movieId ? (
-                                               <input type="text" name="posterUrl" value={data.posterUrl} onChange={(e) => InputChange(e, data.movieId)} />
+                                                <input type="text" name="posterUrl" value={data.posterUrl} onChange={(e) => InputChange(e, data.movieId)} />
                                             ) : (
                                                 data.posterUrl
                                             )}
@@ -82,30 +81,24 @@ const AdminMovieCom = ({ list, editMovie, InputChange, EditClick, Update, manual
                                                 <button onClick={() => EditClick(data.movieId)}>수정</button>
                                             )}
                                         </td>
-                                        <td>
-                                            <button onClick={()=>show()}>관리</button>
-                                        </td>
                                     </tr>
                                 ))
                             ) : (
                                 <>
                                     <tr>
-                                        <td colSpan="10">데이터가 없습니다.</td>
+                                        <td colSpan="8">데이터가 없습니다.</td>
                                     </tr>
-                                    <button className="update" onClick={() => manualUpdate()}>
-                                        업데이트
-                                    </button>
+                                    <tr>
+                                        <td style={{ border: "none" }}>
+                                            <button className="update" onClick={() => manualUpdate()}>
+                                                업데이트
+                                            </button>
+                                        </td>
+                                    </tr>
                                 </>
                             )}
                         </tbody>
                     </table>
-                </div>
-            </div>
-
-            <div className="modal">
-                <div>
-                    <span onClick={() => hide()}>X</span>
-                    <h1>모달 확인</h1>
                 </div>
             </div>
         </div>
