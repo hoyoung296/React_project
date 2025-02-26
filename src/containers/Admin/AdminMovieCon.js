@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import AdminMovieCom from "../../components/Admin/AdminMovieCom"
 import { getSearchList } from "../../service/review"
-import { updateMovie, updateMovieManual, uploadMovieImage } from "../../service/admin"
+import { updateMovie, updateMovieManual } from "../../service/admin"
 import { useNavigate } from "react-router-dom"
 
 const AdminMovieCon = () => {
@@ -49,32 +49,6 @@ const AdminMovieCon = () => {
         }
     }
 
-    // 이미지 파일 변경 시 업로드 처리
-    const handleFileChange = async (e, movieId, fieldName) => {
-        const file = e.target.files[0]
-        if (!file) return
-
-        try {
-            const formData = new FormData()
-            formData.append("basePath", "C:/Users/USER/Desktop/job/web-workspace/react_")
-            formData.append("movieId", movieId)
-            formData.append("image", file)
-            formData.append("field", fieldName) // 어떤 필드인지 (posterUrl, stillUrl)
-
-            const response = await uploadMovieImage(formData)
-            alert(response.message)
-
-            // 상태 업데이트 (새로운 이미지 URL 반영)
-            setList((prevList) =>
-                prevList.map((movie) =>
-                    movie.movieId === movieId ? { ...movie, [fieldName]: response.imageUrl } : movie
-                )
-            )
-        } catch (error) {
-            console.error("이미지 업로드 오류", error)
-        }
-    }
-
     // 수동으로 영화 업데이트 (영화 목록 없을 시 사용)
     const manualUpdate = async () => {
         try {
@@ -100,8 +74,8 @@ const AdminMovieCon = () => {
     }
 
     return (
-        <AdminMovieCom list={list} editMovie={editMovie} InputChange={InputChange} EditClick={EditClick} Update={Update}
-            handleFileChange={handleFileChange} manualUpdate={manualUpdate} show={show} hide={hide} />
+        <AdminMovieCom list={list} editMovie={editMovie} InputChange={InputChange} EditClick={EditClick} Update={Update} 
+        manualUpdate={manualUpdate} show={show} hide={hide} />
     )
 }
 
