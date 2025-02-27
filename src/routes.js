@@ -14,6 +14,7 @@ import NotFound from './pages/NotFound';
 import AdminMovie from './pages/AdminMovie';
 import AdminMember from './pages/AdminMember';
 import AdminPayment from './pages/AdminPayment';
+import AdminSchedule from './pages/AdminSchedule';
 
 const routes = [
     { path: '/', element: <HomePage /> },
@@ -31,6 +32,7 @@ const routes = [
     { path: '*', element: <NotFound /> },
     { path: '/adminMovie' , element : <AdminMovie />},
     { path: '/adminMember' , element : <AdminMember />},
+    { path: '/adminSchedule' , element : <AdminSchedule />},
     { path: '/adminPayment' , element : <AdminPayment />}
 ];
 
