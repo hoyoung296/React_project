@@ -122,7 +122,7 @@ const TicketDateCom = () => {
             <div className="cinema">
                 {/* 🎥 1관 */}
                 <div className="cinemaA">
-                    <h3>🎬 1관</h3>
+                    <p>1관</p>
                     {cinemaA.length > 0 ? (
                         cinemaA.map((cinema, index) => (
                             <button
@@ -134,13 +134,13 @@ const TicketDateCom = () => {
                             </button>
                         ))
                     ) : (
-                        <p>❌ 1관에 상영 일정이 없습니다.</p>
+                        ""
                     )}
                 </div>
 
                 {/* 🎥 2관 */}
                 <div className="cinemaB">
-                    <h3>🎬 2관</h3>
+                    <p>2관</p>
                     {cinemaB.length > 0 ? (
                         cinemaB.map((cinema, index) => (
                             <button
@@ -152,13 +152,13 @@ const TicketDateCom = () => {
                             </button>
                         ))
                     ) : (
-                        <p>❌ 2관에 상영 일정이 없습니다.</p>
+                        ""
                     )}
                 </div>
 
                 {/* 🎥 3관 */}
                 <div className="cinemaC">
-                    <h3>🎬 3관</h3>
+                    <p>3관</p>
                     {cinemaC.length > 0 ? (
                         cinemaC.map((cinema, index) => (
                             <button
@@ -170,21 +170,35 @@ const TicketDateCom = () => {
                             </button>
                         ))
                     ) : (
-                        <p>❌ 3관에 상영 일정이 없습니다.</p>
+                        ""
                     )}
                 </div>
             </div>
 
             <div className="buyTicket">
-                <div>영화 포스터<img src={`${movieDetails.posterurl}`} alt={movieDetails.title} /></div>
-                <div>영화 제목: {movieDetails.title}</div> {/* 영화 제목 */}
-                <div>감독: {movieDetails.director}</div> {/* 감독 */}
-                <div>배우: {movieDetails.actors}</div> {/* 배우 */}
-                {selectedDate ? `선택된 날짜: ${selectedDate}` : "📅 날짜를 선택해주세요"}
                 <div>
-                    {selectedCinema && selectedStartTime
+                    <div className="buyTicketImg">
+                        <img src={`${movieDetails.posterurl}`} alt={movieDetails.title} />
+                    </div>
+                    <div>
+                        <div className="buyTicketTitle">
+                            {movieDetails.title ? movieDetails.title : "제목 데이터가 없습니다."}
+                        </div>
+                        <div className="buyTicketDirector">
+                            {movieDetails.director ? movieDetails.director : "감독 데이터가 없습니다."}
+                        </div>
+                        <div className="buyTicketActors">
+                            {movieDetails.actors ? movieDetails.actors : "배우 데이터가 없습니다."}
+                        </div>
+                    </div>
+                </div>
+                <div className="buyTicketDate">
+                    관람일자 : {selectedDate ? `선택된 날짜: ${selectedDate}` : ""}
+                </div>
+                <div className="buyTicketCinema">
+                    관람시간 : {selectedCinema && selectedStartTime
                         ? `선택된 상영관: ${selectedCinema} / 상영 시간: ${selectedStartTime}`
-                        : "📅 상영 시간을 선택해주세요"}
+                        : ""}
                 </div>
                 <a href={`/ticket_seat?scheduleId=${encodeURIComponent(selectedScheduleId)}`}>
                     <button onClick={goToSeatSelection}>좌석선택하러가기</button>

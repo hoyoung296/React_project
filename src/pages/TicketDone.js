@@ -1,10 +1,11 @@
 import React from 'react';
 import '../css/main.css';
+import TicketDoneCom from '../components/ticket/TicketDoneCom';
 
 function TicketDone() {
     return (
     <div>
-        예매 완료 페이지
+        <TicketDoneCom/>
     </div>
 )
 };

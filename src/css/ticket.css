@@ -8,7 +8,7 @@
     color: #ffffff;
 }
 .ticketCon > *{
-    border: 1px solid white;
+    border: 1px solid #a0a0a0;
     border-radius: 5px;
     height: 500px;
 }
@@ -38,7 +38,7 @@
     border-radius: 10px;
 }
 .ticketDate button.selected {
-    border: 1px solid #ffffff;
+    border: 1px solid #a0a0a0;
     border-radius: 10px;
     background-color: #381E72;
 }
@@ -46,11 +46,32 @@
     width: 250px;
     min-width: 250px;
     overflow-y: auto;
-    overflow-y: auto;
+    padding: 30px;
+}
+
+.cinema button{
+    width: 60px;
+    height: 35px;
+    flex-shrink: 0;
+    background-color: #a0a0a0;
+    border-style: none;
+    color: #ffffff;
+    font-size: 18px;
+    cursor: pointer;
+}
+.cinema button:hover{
+    background-color: #777777;
+    border-radius: 10px;
+}
+.cinema button.selected {
+    border: 1px solid #a0a0a0;
+    border-radius: 10px;
+    background-color: #381E72;
 }
 .cinemaA{
     width: 100%;
-    height: 150px;
+    min-height: 150px;
+    height: auto;
 }
 .cinemaB{
     width: 100%;
@@ -62,11 +83,52 @@
 }
 .buyTicket{
     width: 500px;
+    border-style: none;
 }
-.buyTicket img{
-    width: 100px;
+.buyTicketImg{
+    width: 166.67px;
+    height: 250px;
+    background-color: #888;
+    margin-top: 25px;
+    margin-right: 30px;
 }
-
+.buyTicket > div:first-child{
+    display: flex;
+    align-items: flex-end;
+}
+.buyTicketTitle{
+    margin-top: 30px;
+    font-size: 23px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+.buyTicketActors{
+    margin-top: 10px;
+}
+.buyTicketDate{
+    margin-top: 50px;
+    margin-bottom: 10px;
+}
+.buyTicketCinema{
+    margin-bottom: 50px;
+}
+.buyTicket button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+    width: 130px;
+    height: 40px;
+    background: #381E72;
+    color: #ffffff;
+    display: block;
+    margin: 0 auto;
+}
+.buyTicket button:hover {
+    background: #6a0dad;
+}
 
 
 
@@ -197,7 +259,7 @@
 
 .seatEx .possibleSeat { /*예매가능좌석 예시*/
     border-style: solid;
-    border-color: #c2c2c2;
+    border-color: #a0a0a0;
     pointer-events: none;
 }
 
@@ -350,6 +412,9 @@
     margin-right: 30px;
     font-size: 15px;
 }
+.movieInfo > div:last-child > div:last-child{
+    text-align: right;
+}
 .payRadio{
     margin-top: 30px;
 
@@ -429,4 +494,59 @@
 .paymentNotice{
     margin-bottom: 20px;
     line-height: 30px;
+}
+
+.donePage{
+    width: 1000px;
+    height: 500px;
+    margin: auto;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.donePage > div:first-child{
+    font-size: 14px;
+}
+.done img{
+    width: 220px;
+    height: 330px;
+    margin-right: 100px;
+}
+.done{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 80px;
+}
+.doneInfo > div:nth-of-type(3){
+    display: flex;
+    gap: 100px;
+    margin-top: 30px;
+}
+.doneInfo > div:nth-of-type(3) > div:first-child{
+    line-height: 30px;
+    
+}
+.doneInfo > div:nth-of-type(3) > div:last-child{
+    line-height: 30px;
+    text-align: right;
+}
+.doneTitle{
+    margin-bottom: 20px;
+    font-size: 22px;
+    font-weight: bold;
+}
+.doneInfo > div:nth-of-type(2){
+    font-size: 15px;
+    line-height: 20px;
+}
+.donePage button{
+    width: 150px;
+    height: 28px;
+    border-style: none;
+    background-color: #6a0dad;
+    color: #ffffff;
+    margin-top: 40px;
 }
