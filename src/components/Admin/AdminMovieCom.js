@@ -11,6 +11,7 @@ const AdminMovieCom = ({ list, editMovie, InputChange, EditClick, Update, manual
                     <table align="center">
                         <thead>
                             <tr>
+                                <th>영화id</th>
                                 <th>영화제목</th>
                                 <th>영어제목</th>
                                 <th>포스터URL</th>
@@ -18,6 +19,7 @@ const AdminMovieCom = ({ list, editMovie, InputChange, EditClick, Update, manual
                                 <th>시놉시스</th>
                                 <th>감독</th>
                                 <th>배우</th>
+                                <th>러닝타임</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -25,6 +27,13 @@ const AdminMovieCom = ({ list, editMovie, InputChange, EditClick, Update, manual
                             {list && list.length > 0 ? (
                                 list.map((data) => (
                                     <tr key={data.movieId}>
+                                         <td>
+                                            {editMovie?.movieId === data.movieId ? (
+                                                <input type="text" name="movieId" value={data.movieId} onChange={(e) => InputChange(e, data.movieId)} />
+                                            ) : (
+                                                data.movieId
+                                            )}
+                                        </td>
                                         <td>
                                             {editMovie?.movieId === data.movieId ? (
                                                 <input type="text" name="title" value={data.title} onChange={(e) => InputChange(e, data.movieId)} />
@@ -76,6 +85,13 @@ const AdminMovieCom = ({ list, editMovie, InputChange, EditClick, Update, manual
                                         </td>
                                         <td>
                                             {editMovie?.movieId === data.movieId ? (
+                                                <input type="text" name="runtime" value={data.runtime} onChange={(e) => InputChange(e, data.movieId)} />
+                                            ) : (
+                                                data.runtime
+                                            )}
+                                        </td>
+                                        <td>
+                                            {editMovie?.movieId === data.movieId ? (
                                                 <button onClick={() => Update(data.movieId)}>수정 완료</button>
                                             ) : (
                                                 <button onClick={() => EditClick(data.movieId)}>수정</button>
@@ -86,7 +102,7 @@ const AdminMovieCom = ({ list, editMovie, InputChange, EditClick, Update, manual
                             ) : (
                                 <>
                                     <tr>
-                                        <td colSpan="8">데이터가 없습니다.</td>
+                                        <td colSpan="10">데이터가 없습니다.</td>
                                     </tr>
                                     <tr>
                                         <td style={{ border: "none" }}>

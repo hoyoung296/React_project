@@ -1,0 +1,30 @@
+.adminMain{
+    border: 1px solid white;
+    border-radius: 5px;
+    margin: 0 auto;
+    margin-top: 10%;
+    text-align: center;
+    width: 15%;
+    height: 200px;
+
+    & button {
+        width: 80px;
+        min-height: 28px;
+        font-size: 12px;
+        background-color: #381E72;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        padding: 10px;
+
+        &:hover {
+            background: #7857bd;
+        }
+    }
+
+    & h1 {
+        color: #7857bd;
+        margin-top: 10px;
+    }
+}
