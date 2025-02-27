@@ -45,7 +45,7 @@ const getList = async () => {
 // 상영관 정보 가져오기
 const getScreen = async () => {
     try {
-        const res = await axios.get(`${BASE_URL}/미정`)
+        const res = await axios.get(`${BASE_URL}/screens`)
         return res.data
     } catch (error) {
         console.error("상영관 정보 불러오기 실패: ", error)
@@ -56,7 +56,7 @@ const getScreen = async () => {
 // 영화 일정 정보 가져오기
 const getSchedule = async () => {
     try {
-        const res = await axios.get(`${BASE_URL}/미정`)
+        const res = await axios.get(`${BASE_URL}/schedules`)
         return res.data
     } catch (error) {
         console.error("일정 정보 불러오기 실패: ", error)
@@ -67,7 +67,7 @@ const getSchedule = async () => {
 // 영화 일정 추가하기
 const updateSchedule = async (id) => {
     try {
-        const res = await axios.post(`${BASE_URL}/미정`, id, {
+        const res = await axios.post(`${BASE_URL}/schedule/insert`, id, {
             headers: {
                 "Content-Type": "application/json",
             },
@@ -82,7 +82,7 @@ const updateSchedule = async (id) => {
 //영화 일정 삭제하기
 const delSchedule = async (id) => {
     try {
-        const res = await axios.delete(`${BASE_URL}/미정`, {
+        const res = await axios.delete(`${BASE_URL}/schedule/delete`, {
             params: { id },
         })
         return res.data

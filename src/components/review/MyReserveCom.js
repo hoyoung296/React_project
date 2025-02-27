@@ -29,7 +29,7 @@ const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showMo
                                 <div className="ReserveInfoPart2Div">
                                     <p><b>예매번호 : {data.reservationId}</b>&nbsp;&nbsp;&nbsp;&nbsp;</p><br />
                                     <p><b>상영관 : {data.screenName}</b></p><br />
-                                    <p><b>관람일 : {data.startDateTime}</b>&nbsp;&nbsp;&nbsp;&nbsp;<b>좌석 : {data.seatId}</b></p>
+                                    <p><b>관람일 : {data.startDateTime}</b>&nbsp;&nbsp;&nbsp;&nbsp;<b>좌석 : {data.seatIds.join(", ")}</b></p>
                                 </div>
                                 {list != null && (
                                     <div className="ReserveInfoPart3Div">

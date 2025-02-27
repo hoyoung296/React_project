@@ -71,9 +71,9 @@ const AdminScheduleCom = ({ list, show, hide, screen, selectedMovieId, selectedO
                         <span onClick={() => hide()}>X</span><br />
                         <h1>일정 추가</h1><br />
                         <form onSubmit={mySubmit}>
-                            영화ID : <input type="text" name="movieId" value={selectedMovieId} onChange={onChange} readOnly={selectedMovieId !== null} /><br />
-                            상영 시작 시간 : <input type="datetime-local" name="startDateTime" placeholder="상영 시작 시간" onChange={onChange} /><br />
-                            상영 종료 시간 : <input type="datetime-local" name="endDateTime" placeholder="상영 종료 시간" onChange={onChange} /><br />
+                            영화ID : <input type="text" name="movieId" value={selectedMovieId} onChange={onChange} placeholder="영화id를 입력해주세요"  readOnly={selectedMovieId !== null} /><br />
+                            상영 시작 시간 : <input type="datetime-local" name="startDateTime" onChange={onChange} /><br />
+                            상영 종료 시간 : <input type="datetime-local" name="endDateTime" onChange={onChange} /><br />
                             상영관 선택:
                             {screen && screen.length > 0 && (
                                 screen.map((data) => (
@@ -93,7 +93,7 @@ const AdminScheduleCom = ({ list, show, hide, screen, selectedMovieId, selectedO
                         <span onClick={() => hide()}>X</span><br />
                         <h1>일정 삭제</h1><br />
                         <form onSubmit={delSubmit}>
-                            영화id : <input type="text" name="movieId" value={selectedMovieId} onChange={onChange} readOnly={selectedMovieId !== null} /><br />
+                            영화id : <input type="text" name="movieId" value={selectedMovieId} onChange={onChange} placeholder="영화id를 입력해주세요"  readOnly={selectedMovieId !== null} /><br />
                             삭제영화일정id : <input type="text" name="scheduleId" placeholder="삭제할 상영일정id를 입력해주세요" onChange={onChange}></input><br /><br />
                             <button>삭제</button>
                         </form>
