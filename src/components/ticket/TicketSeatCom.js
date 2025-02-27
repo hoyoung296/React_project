@@ -76,6 +76,8 @@ const TicketSeatCom = () => {
     // 예매 정보 및 좌석 정보 정리
     const seatIdsList = [...seatIds].join(", ");
 
+    console.log("선택좌석 ::: ", seatIds)
+
     // 결제 완료 후 페이지 이동
     const handleSubmit = async (e) => {
         e.preventDefault();
