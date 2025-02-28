@@ -15,6 +15,7 @@ import AdminMovie from './pages/AdminMovie';
 import AdminMember from './pages/AdminMember';
 import AdminPayment from './pages/AdminPayment';
 import AdminSchedule from './pages/AdminSchedule';
+import AdminMain from './pages/AdminMain';
 
 const routes = [
     { path: '/', element: <HomePage /> },
@@ -30,6 +31,7 @@ const routes = [
     { path: '/info_pwd', element: <InfoPwd /> },
     { path: '/info', element: <Info /> },
     { path: '*', element: <NotFound /> },
+    { path: '/adminMain' , element : <AdminMain />},
     { path: '/adminMovie' , element : <AdminMovie />},
     { path: '/adminMember' , element : <AdminMember />},
     { path: '/adminSchedule' , element : <AdminSchedule />},

@@ -1,65 +1,44 @@
 import AdminScheduleCom from "../../components/Admin/AdminScheduleCom"
-import { delSchedule, getSchedule, getScreen, updateSchedule } from "../../service/admin";
-import { useEffect, useState } from "react";
+import { delSchedule, getSchedule, getScreen, updateSchedule } from "../../service/admin"
+import { useEffect, useState } from "react"
+import { getSearchList } from "../../service/review"
 
 const AdminScheduleCon = () => {
+    const [movie, setMovie] = useState([])
     const [list, setList] = useState([])
     const [screen, setScreen] = useState([])
-    const [selectedMovieId, setSelectedMovieId] = useState("");
+    const [selectedMovieId, setSelectedMovieId] = useState("")
     const [input, setInput] = useState({ movieId: "", startDateTime: "", endDateTime: "", screenId: "" })
-    const [selectedOption, setSelectedOption] = useState("일정 추가") // 선택한 옵션 상태
-
-    useEffect(() => {
-        const getData = async () => {
-            try {
-                const data = await getSchedule("")
-                setList(data)
-            } catch (error) {
-                console.error("데이터 가져오기 오류:", error)
-            }
-        }
-        getData()
-    }, [])
-
-    useEffect(() => {
-        const getData = async () => {
-            try {
-                const data = await getScreen("")
-                setScreen(data)
-            } catch (error) {
-                console.error("데이터 가져오기 오류:", error)
-            }
-        }
-        getData()
-    }, [])
-
-    useEffect(() => {
-        setInput((prev) => ({ ...prev, movieId: selectedMovieId }));
-    }, [selectedMovieId])
-
-    const isScheduleOverlapping = (newStart, newEnd, newScreenID) => {
-
-
-        return list.some(schedule => {
-            const existingStart = new Date(schedule.startDateTime)
-            const existingEnd = new Date(schedule.endDateTime)
-            const newStartTime = new Date(newStart)
-            const newEndTime = new Date(newEnd)
-
-            console.log(typeof schedule.screenId, schedule.screenId)
-            console.log(typeof parseInt(newScreenID), parseInt(newScreenID))
-
-            return (
-                schedule.screenId === parseInt(newScreenID) && // 같은 스크린 ID일 때만 체크
-                newStartTime < existingEnd &&
-                newEndTime > existingStart
-            )
-        })
+    const [selectedOption, setSelectedOption] = useState("일정 추가")
+    const [selectedTimes, setSelectedTimes] = useState([])
+    const [timeOptions, setTimeOptions] = useState([]) // 상영관별 시간 옵션
+    const screenTimeOptions = {
+        "1": ["09:00", "11:00", "13:00", "15:00", "17:00"],
+        "2": ["10:30", "12:30", "14:30", "16:30", "18:30"],
+        "3": ["09:15", "11:45", "14:15", "16:45", "19:15"]
     }
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const movies = await getSearchList("")
+                console.log("영화 목록:", movies)
+                setMovie(movies)
+                setList(await getSchedule(""))
+                setScreen(await getScreen(""))
+            } catch (error) {
+                console.error("데이터 가져오기 오류:", error)
+            }
+        }
+        fetchData()
+    }, [])
+
+    useEffect(() => {
+        setInput((prev) => ({ ...prev, movieId: selectedMovieId || "" }))
+    }, [selectedMovieId])
+
     const show = (movieId) => {
-        setSelectedMovieId(movieId); // 선택한 영화의 ID 저장
-        console.log(movieId)
+        setSelectedMovieId(movieId)
         const elements = document.getElementsByClassName("modal")
         if (elements.length > 0)
             elements[0].style.display = "block"
@@ -76,48 +55,64 @@ const AdminScheduleCon = () => {
     }
 
     const onChange = (e) => {
-        // readOnly이지만 onChange 이벤트가 발생하도록 설정
         setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+    }
+
+    const handleTimeChange = (e) => {
+        const { value, checked } = e.target
+        setSelectedTimes((prev) => (checked ? [...prev, value] : prev.filter((time) => time !== value)))
+    }
+
+    const handleScreenChange = (e) => {
+        const selectedScreenId = e.target.value
+        setInput((prev) => ({ ...prev, screenId: selectedScreenId }))
+        setTimeOptions(screenTimeOptions[selectedScreenId] || []) // 해당 상영관 시간 배열 설정
+    }
+
+    const toKSTISOString = (date) => {
+        const kstOffset = 9 * 60 * 60 * 1000 // UTC+9 시간차
+        return new Date(date.getTime() + kstOffset).toISOString().replace("Z", "") // Z 제거 (UTC 표기 방지)
     }
 
     const mySubmit = async (e) => {
         e.preventDefault()
+        const { movieId, screenId, startDate, endDate } = input
+        const start = new Date(startDate)
+        const end = new Date(endDate)
+        const dtos = []
+        const selectedMovie = movie.find((m) => String(m.movieId) === String(movieId))
+        const runningTime = selectedMovie ? parseInt(selectedMovie.runtime, 10) : 120
+        while (start <= end) {
+            const currentDate = start.toISOString().split("T")[0]; // yyyy-mm-dd 형식
+            selectedTimes.forEach((time) => {
+                const startDateTime = toKSTISOString(new Date(`${currentDate}T${time}:00`))
+                const endDateTime = toKSTISOString(new Date(new Date(startDateTime).getTime() + runningTime * 60 * 1000))
 
-        const { movieId, startDateTime, endDateTime, screenId } = input
-
-        if (isScheduleOverlapping(startDateTime, endDateTime, screenId)) {
-            alert("선택한 상영관에서 해당 시간대에 이미 일정이 있습니다. 다른 시간을 선택해주세요.")
-            return
+                dtos.push({ movieId, screenId, startDateTime, endDateTime })
+            })
+            start.setDate(start.getDate() + 1)
         }
-
-        const dto = { movieId, startDateTime, endDateTime, screenId }
-
-        console.log("dto : ", dto)
-        const response = await updateSchedule(dto)
+        console.log(dtos);
+        const response = await updateSchedule(dtos) // 배열 전송
         alert(response.message)
-        // 일정 목록 갱신
-        const updatedData = await getSchedule("");
-        setList(updatedData);
-
+        const updatedData = await getSchedule("")
+        setList(updatedData)
         hide()
     }
 
     const delSubmit = async (e) => {
         e.preventDefault()
-        console.log(input.movieId)
-        console.log(input.scheduleId)
         const reponse = await delSchedule(input.scheduleId)
         alert(reponse.message)
-        // 일정 목록 갱신
-        const updatedData = await getSchedule("");
-        setList(updatedData);
-
+        const updatedData = await getSchedule("")
+        setList(updatedData)
         hide()
     }
 
     return <>
         <AdminScheduleCom list={list} show={show} hide={hide} screen={screen} selectedMovieId={selectedMovieId} selectedOption={selectedOption} handleSelectChange={handleSelectChange}
-            onChange={onChange} mySubmit={mySubmit} delSubmit={delSubmit} />
+            onChange={onChange} mySubmit={mySubmit} delSubmit={delSubmit} input={input} handleTimeChange={handleTimeChange} selectedTimes={selectedTimes} 
+            timeOptions={timeOptions} handleScreenChange={handleScreenChange} />
     </>
 }
 
