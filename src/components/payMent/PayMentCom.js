@@ -196,7 +196,7 @@ const PayMentCom = () => {
                 if (window.confirm("페이지를 벗어날 시 변경사항이 저장되지 않을 수 있습니다. 이동하시겠습니까?")) {
                     try {
                         console.log("뒤로가기 YES -> axios 실행!!")
-                        await Axios.delete("http://192.168.0.91:8080/root/member/reserve/cancel", {
+                        await Axios.delete("http://localhost:8080/root/member/reserve/cancel", {
                             data: {
                                 reservationId: reservationId, 
                                 scheduleId: scheduleId,

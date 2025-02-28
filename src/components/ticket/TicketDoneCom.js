@@ -1,7 +1,10 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../../css/ticket.css';
 
 function TicketDoneCom() {
+    const navigate = useNavigate();
+    
     const storedMovieTitle = localStorage.getItem('movieTitle');
     const movieTitle = storedMovieTitle ? JSON.parse(storedMovieTitle) : null;
     const storedMovieDirector = localStorage.getItem('movieDirector');
@@ -25,6 +28,9 @@ function TicketDoneCom() {
     const storedSeatIds = localStorage.getItem('seatIds')
     const seatIds = storedSeatIds ? JSON.parse(storedSeatIds) : []; 
     
+    const goToMyPage = () => {
+        navigate("/myTicket");
+    }
 
     return (
     <div className='donePage'>
@@ -59,7 +65,7 @@ function TicketDoneCom() {
                     </div>
             </div>
         </div>
-        <button>내 예매내역 보러가기</button>
+        <button onClick={goToMyPage}>내 예매내역 보러가기</button>
     </div>
 )
 };
