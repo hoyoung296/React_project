@@ -26,6 +26,7 @@ const getInfoList = async (id) => {
         const res = await axios.get(`${BASE_URL}/searchInfo`, {
             params: { id },
         })
+        console.log("data확인 : " , res.data)
         return res.data
     } catch (error) {
         console.error("영화 정보 가져오기 오류 : ", error)
