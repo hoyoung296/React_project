@@ -29,12 +29,8 @@ const AdminScheduleCom = ({ list, show, hide, screen, selectedMovieId, selectedO
                                         <td>
                                             {data.scheduleId}
                                         </td>
-                                        <td>
-                                            {new Date(data.startDateTime).toLocaleString()}
-                                        </td>
-                                        <td>
-                                            {new Date(data.endDateTime).toLocaleString()}
-                                        </td>
+                                        <td>{data.startDateTime ? new Date(data.startDateTime).toLocaleString() : "날짜 없음"}</td>
+                                        <td>{data.endDateTime ? new Date(data.endDateTime).toLocaleString() : "날짜 없음"}</td>
                                         <td>
                                             {data.movieId}
                                         </td>
