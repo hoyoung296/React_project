@@ -25,7 +25,7 @@ const TicketDateCom = () => {
 
         const fetchShowtimes = async () => {
             try {
-                const response = await Axios.get("http://192.168.0.91:8080/root/member/schedule/title", {
+                const response = await Axios.get("http://localhost:8080/root/member/schedule/title", {
                     params: { title }
                 });
                 console.log("✅ 상영 날짜 데이터:", response.data);
@@ -57,7 +57,7 @@ const TicketDateCom = () => {
 
         if (newSelectedDate) {
             try {
-                const response = await Axios.get("http://192.168.0.91:8080/root/member/schedule/startdate", {
+                const response = await Axios.get("http://localhost:8080/root/member/schedule/startdate", {
                     params: { startdate: newSelectedDate }
                 });
                 console.log("✅ 상영관 정보:", response.data.data);
@@ -193,12 +193,12 @@ const TicketDateCom = () => {
                     </div>
                 </div>
                 <div className="buyTicketDate">
-                    관람일자 : {selectedDate ? `선택된 날짜: ${selectedDate}` : ""}
+                    관람일자 : {selectedDate ? `${selectedDate}` : ""}
                 </div>
                 <div className="buyTicketCinema">
-                    관람시간 : {selectedCinema && selectedStartTime
-                        ? `선택된 상영관: ${selectedCinema} / 상영 시간: ${selectedStartTime}`
-                        : ""}
+                    관람시간 : {selectedStartTime ? `${selectedStartTime}` : ""}<br/>
+                    상영관 : {selectedCinema ? `${selectedCinema}` : ""} <br/>
+                    상영시간 : {selectedStartTime ? `${selectedStartTime}` : ""}
                 </div>
                 <a href={`/ticket_seat?scheduleId=${encodeURIComponent(selectedScheduleId)}`}>
                     <button onClick={goToSeatSelection}>좌석선택하러가기</button>
