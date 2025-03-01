@@ -198,7 +198,6 @@ const PayMentCom = () => {
                     try {
                         console.log("뒤로가기 YES -> axios 실행!!")
                         await Axios.delete("http://localhost:8080/root/member/reserve/cancel", {
-                        await Axios.delete("http://localhost:8080/root/member/reserve/cancel", {
                             data: {
                                 reservationId: reservationId, 
                                 scheduleId: scheduleId,
