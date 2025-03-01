@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import AdminMemberCom from "../../components/Admin/AdminMemberCom"
-import { getList, updateUser } from "../../service/admin"
+import { getList } from "../../service/admin"
 
 const AdminMemberCon = () => {
     const [list, setList] = useState([])

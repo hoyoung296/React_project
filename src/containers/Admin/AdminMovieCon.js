@@ -41,7 +41,7 @@ const AdminMovieCon = () => {
     const Update = async (movieId) => {
         try {
             const movieToUpdate = list.find((movie) => movie.movieId === movieId)
-            const response = await updateMovie(movieToUpdate); // 수정 요청 전송
+            const response = await updateMovie(movieToUpdate) // 수정 요청 전송
             alert(response.message)
             setEditMovie(null) // 수정 모드 종료
         } catch (error) {
@@ -61,21 +61,9 @@ const AdminMovieCon = () => {
         }
     }
 
-    const show = () => {
-        const elements = document.getElementsByClassName("modal")
-        if (elements.length > 0)
-            elements[0].style.display = "block"
-    }
-
-    const hide = () => {
-        const elements = document.getElementsByClassName("modal")
-        if (elements.length > 0)
-            elements[0].style.display = "none"
-    }
-
     return (
         <AdminMovieCom list={list} editMovie={editMovie} InputChange={InputChange} EditClick={EditClick} Update={Update} 
-        manualUpdate={manualUpdate} show={show} hide={hide} />
+        manualUpdate={manualUpdate} />
     )
 }
 

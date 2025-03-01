@@ -59,8 +59,8 @@ const EmblaCarouselComponent = ({ list, Infolist, infoId, showInfo, hideInfo, on
                             <div className='main_movie_info'>
                                 <div className='main_movie_title'>{movie.title}</div>
                                 <h2>{movie.entitle}</h2><br />
-                                <div className='main_movie_director'>연출 : {movie.directorName}</div>
-                                <div className='main_movie_actors'>배우 : {movie.actors}</div>
+                                <div className='main_movie_director'>{movie.directorName}</div>
+                                <div className='main_movie_actors'>{movie.actors}</div>
                                 <div className='mainBtn'>
                                     {/* movie.title을 movie.movieId로 수정 (나호영 작성) */}
 

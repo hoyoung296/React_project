@@ -4,7 +4,8 @@ import '../../css/admin/adminSidebar.css'
 const AdminSidebar = ({ activeLink }) => {
     const customLinks = 
         [
-            { to: "/adminMovie", text: "영화/상영관리" },
+            { to: "/adminMovie", text: "영화관리" },
+            { to: "/adminSchedule", text: "상영관리" },
             { to: "/adminMember", text: "회원관리" },
             { to: "/adminPayment", text : "결제관리" }
         ]

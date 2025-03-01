@@ -14,6 +14,9 @@ import NotFound from './pages/NotFound';
 import AdminMovie from './pages/AdminMovie';
 import AdminMember from './pages/AdminMember';
 import AdminPayment from './pages/AdminPayment';
+import AdminSchedule from './pages/AdminSchedule';
+import AdminMain from './pages/AdminMain';
+import AdminProtectedRoute from './components/Admin/AdminProtectedRoute';
 
 const routes = [
     { path: '/', element: <HomePage /> },
@@ -29,9 +32,11 @@ const routes = [
     { path: '/info_pwd', element: <InfoPwd /> },
     { path: '/info', element: <Info /> },
     { path: '*', element: <NotFound /> },
-    { path: '/adminMovie' , element : <AdminMovie />},
-    { path: '/adminMember' , element : <AdminMember />},
-    { path: '/adminPayment' , element : <AdminPayment />}
+    { path: '/adminMain' , element : <AdminMain />},
+    { path: '/adminMovie', element: <AdminProtectedRoute element={<AdminMovie />} /> },
+    { path: '/adminMember', element: <AdminProtectedRoute element={<AdminMember />} /> },
+    { path: '/adminSchedule', element: <AdminProtectedRoute element={<AdminSchedule />} /> },
+    { path: '/adminPayment', element: <AdminProtectedRoute element={<AdminPayment />} /> }
 ];
 
 export default routes;

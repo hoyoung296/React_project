@@ -20,7 +20,19 @@ const MyReserveCon = () => {
         const getData = async () => {
             try {
                 const data = await getReserveList(id, start)
-                setList(data)
+
+                // 같은 scheduleId끼리 묶어서 새로운 리스트 생성
+                const groupedData = {}
+                data.dto.forEach(item => {
+                    const key = item.scheduleId
+                    if (!groupedData[key]) {
+                        groupedData[key] = { ...item, seatIds: [item.seatId] }
+                    } else {
+                        groupedData[key].seatIds.push(item.seatId)
+                    }
+                })
+
+                setList({ dto: Object.values(groupedData), page: data.page })
             } catch (error) {
                 console.error("데이터 가져오기 오류 :", error)
             }
