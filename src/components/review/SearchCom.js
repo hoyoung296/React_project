@@ -4,26 +4,22 @@ import Modal from "../mainPage/Modal"
 const SearchCom = ({ list, Infolist, relatedList = [], id, infoId, onClick, showInfo, hideInfo, isModalOpen, modalType }) => {
     return (
         <div className="SearchWrapdiv">
-            <h1>'{id}'에 대한 검색 결과</h1><br />
+            <h1>'<span>{id}</span>' 에 대한 검색 결과</h1><br />
             {list.length === 0 ? (
                 <h2>검색 결과가 없습니다.</h2>
             ) : (
-                <div className="SearchListDiv">
-                    {list.map((data, index) => (
-                        <div
-                            key={`list-${data.movieId}-${index}`}
-                            className="SearchImgDiv"
-                            style={{ backgroundImage: `url('${data.posterUrl}')` }}
-                            onMouseEnter={() => document.querySelector(`.modal-${data.movieId}`).style.display = "flex"}
-                            onMouseLeave={() => document.querySelector(`.modal-${data.movieId}`).style.display = "none"}
-                        >
-                            <div className={`SearchModalWrap modal-${data.movieId}`}>
-                                <button className="SearchModalButton" onClick={() => showInfo(data.movieId)}>상세보기</button>
-                                <button className="SearchModalButton" onClick={() => onClick(data.title)}>예매하기</button>
-                            </div>
-                        </div>
-                    ))}
-                </div>
+                <div className="movieList">
+    {list.map((data, index) => (
+        <div className="poster" key={index}>
+            <img src={data.posterUrl} alt={data.title} className="SearchImg" />
+            <div className="overlay">
+                <button onClick={() => showInfo(data.movieId)}>상세보기</button>
+                <button onClick={() => onClick(data.title)}>예매하기</button>
+            </div>
+        </div>
+    ))}
+</div>
+
             )}
 
             {infoId !== null && (
