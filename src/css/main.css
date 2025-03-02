@@ -246,6 +246,7 @@ html{
     width: 180px;
     height: 270px;
     overflow: hidden;
+    border-radius: 5px;
 }
 .poster .overlay {
     position: absolute;
