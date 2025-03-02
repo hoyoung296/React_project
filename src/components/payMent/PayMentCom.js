@@ -108,7 +108,7 @@ const PayMentCom = () => {
             return;
         }
         setIsSubmitting(true);
-        const paymentIdForMerchant = "order_" + new Date().getTime();
+        // const paymentIdForMerchant = reservationId;
 
          // 선택된 결제 수단에 따라 paymentMethodId 값을 결정
         let paymentMethodId;
@@ -126,7 +126,7 @@ const PayMentCom = () => {
         const response = await PortOne.requestPayment({
             storeId: STORE_ID,
             channelKey: CHANNEL_KEY,
-            paymentId: paymentIdForMerchant, // merchant_uid 역할
+            paymentId: String(reservationId), // merchant_uid 역할
             orderName: "테스트 상품 결제",
             totalAmount: 1000,
             currency: "CURRENCY_KRW",
@@ -145,36 +145,37 @@ const PayMentCom = () => {
         if (!response.code) {
             const { txId, paymentId } = response;
             // 백엔드에 결제 정보 전달 (필요에 따라 전송하는 데이터 항목 조정)
-            const createRes = await Axios.post('/api/payment/create', {
-              reservationId: paymentId, // 예시 값
+            const createRes = await Axios.post('http://localhost:8080/root/member/payment/create', {
+              reservationId: String(reservationId), // 예시 값
               paymentMethodId: paymentMethodId, // 예시 값
-              amount: totalAmount, // 실제 결제 금액 사용
+              amount: 1000, // 실제 결제 금액 사용
+              //amount: totalAmount, // 실제 결제 금액 사용
               portonePaymentId: txId, // 결제 시도 고유 번호 사용
             });
             // 생성된 Payment의 paymentId를 응답으로 받는다고 가정
-            const dbPaymentId = createRes.data.paymentId || 12345;
-            
+            console.log("@@@data : ",createRes.data)
+            const dbPaymentId = createRes.data.data.paymentId;
+            console.log("@@@dbPaymentId : ",dbPaymentId)
+      
             // 결제 완료 검증: 포트원 API 조회 후 DB 업데이트 수행
-            const confirmRes = await Axios.post('/api/payment/confirm', { portonePaymentId: txId });
-            if (confirmRes.data.status === 'completed') {
-                alert("결제가 성공적으로 완료되었습니다.");
-            navigate("/ticket_done", { 
-                state: { //ticketDone 페이지로 넘기는 예매정보(state)
-                    moviePosterUrl,
-                    movieTitle,
-                    movieDirector,
-                    movieActors,
-                    reservationId,
-                    selectedDate,
-                    selectedStartTime,
-                    selectedCinema,
-                    seatIds: [...seatIds]
-                }
-            });
-            } else {
-                alert("결제 확인 실패.");
-            }
-        } else {
+            // const confirmRes  = await Axios.post(
+            //     "http://localhost:8080/root/member/payment/confirm",
+            //     { portonePaymentId: txId },
+            //     {
+            //         headers: {
+            //             Authorization: `Bearer ${process.env.REACT_APP_PORTONE_CHANNEL_KEY}` // ✅ Bearer 추가
+            //         },
+            //         withCredentials: true // ✅ CORS 인증 정보 포함
+            //     }
+            // );
+            // console.log("confirmRes@@@@@:",confirmRes.data.data.rs)
+            // if (confirmRes.data.data.rs === '성공') {
+            //   alert("결제가 성공적으로 완료되었습니다.");
+            //   navigate("/ticket/complete");
+            // } else {
+            //   alert("결제 확인 실패.");
+            // }
+          } else {
             alert(`결제 실패: ${response.message || "알 수 없는 오류"}`);
         }
         } catch (error) {

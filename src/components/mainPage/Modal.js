@@ -13,8 +13,8 @@ const Modal = ({ isOpen, onClose, type, infoData, onClick, Infolist, relatedList
             case 'detail':
                 return (
                     infoData && (
-                        <div className="Searchinfo">
-                            <div className="SearchInfodiv">
+                        <div className="Searchinfo" onClick={onClose}> {/* 모달 바깥 클릭 감지 */}
+                            <div className="SearchInfodiv" onClick={(e) => e.stopPropagation()}> {/* 내부 클릭 시 닫히지 않도록 */}
                                 <div className="SearchInfo1">
                                     <span onClick={() => onClose()}>X</span>
                                     <div>
@@ -22,7 +22,7 @@ const Modal = ({ isOpen, onClose, type, infoData, onClick, Infolist, relatedList
                                         <h2>{infoData.entitle}</h2><br />
                                         <h3>감독 : {infoData.director}</h3>
                                         <h3>배우 : {infoData.actors}</h3><br />
-                                        <button onClick={onClick}>예매하기</button>
+                                        <button onClick={() => onClick(infoData.title)}>예매하기</button>
                                     </div>
                                 </div>
 
@@ -65,8 +65,8 @@ const Modal = ({ isOpen, onClose, type, infoData, onClick, Infolist, relatedList
                     ))
             case 'review':
                 return (
-                    <div className="Reservemodal">
-                        <div>
+                    <div className="Reservemodal" onClick={onClose}>
+                        <div onClick={(e) => e.stopPropagation()}>
                             <div>
                                 <span onClick={() => onClose()}>X</span>
                             </div>
@@ -87,7 +87,7 @@ const Modal = ({ isOpen, onClose, type, infoData, onClick, Infolist, relatedList
                             </div>
                         </div>
                     </div>)
-            case 'complete' :
+            case 'complete':
                 return (
                     <h1>리뷰작성완료모달창</h1>
                 )

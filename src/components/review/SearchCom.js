@@ -19,7 +19,7 @@ const SearchCom = ({ list, Infolist, relatedList = [], id, infoId, onClick, show
                         >
                             <div className={`SearchModalWrap modal-${data.movieId}`}>
                                 <button className="SearchModalButton" onClick={() => showInfo(data.movieId)}>상세보기</button>
-                                <button className="SearchModalButton" onClick={() => onClick()}>예매하기</button>
+                                <button className="SearchModalButton" onClick={() => onClick(data.title)}>예매하기</button>
                             </div>
                         </div>
                     ))}

@@ -16,6 +16,7 @@ import AdminMember from './pages/AdminMember';
 import AdminPayment from './pages/AdminPayment';
 import AdminSchedule from './pages/AdminSchedule';
 import AdminMain from './pages/AdminMain';
+import AdminProtectedRoute from './components/Admin/AdminProtectedRoute';
 
 const routes = [
     { path: '/', element: <HomePage /> },
@@ -32,10 +33,10 @@ const routes = [
     { path: '/info', element: <Info /> },
     { path: '*', element: <NotFound /> },
     { path: '/adminMain' , element : <AdminMain />},
-    { path: '/adminMovie' , element : <AdminMovie />},
-    { path: '/adminMember' , element : <AdminMember />},
-    { path: '/adminSchedule' , element : <AdminSchedule />},
-    { path: '/adminPayment' , element : <AdminPayment />}
+    { path: '/adminMovie', element: <AdminProtectedRoute element={<AdminMovie />} /> },
+    { path: '/adminMember', element: <AdminProtectedRoute element={<AdminMember />} /> },
+    { path: '/adminSchedule', element: <AdminProtectedRoute element={<AdminSchedule />} /> },
+    { path: '/adminPayment', element: <AdminProtectedRoute element={<AdminPayment />} /> }
 ];
 
 export default routes;

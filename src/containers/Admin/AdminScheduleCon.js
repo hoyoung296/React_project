@@ -7,11 +7,15 @@ const AdminScheduleCon = () => {
     const [movie, setMovie] = useState([])
     const [list, setList] = useState([])
     const [screen, setScreen] = useState([])
-    const [selectedMovieId, setSelectedMovieId] = useState("")
-    const [input, setInput] = useState({ movieId: "", startDateTime: "", endDateTime: "", screenId: "" })
-    const [selectedOption, setSelectedOption] = useState("일정 추가")
+    const [input, setInput] = useState({
+        movieId: "",
+        startDate: "",
+        endDate: "",
+        screenId: ""
+    })
     const [selectedTimes, setSelectedTimes] = useState([])
-    const [timeOptions, setTimeOptions] = useState([]) // 상영관별 시간 옵션
+    const [timeOptions, setTimeOptions] = useState([])
+
     const screenTimeOptions = {
         "1": ["09:00", "11:00", "13:00", "15:00", "17:00"],
         "2": ["10:30", "12:30", "14:30", "16:30", "18:30"],
@@ -21,9 +25,7 @@ const AdminScheduleCon = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const movies = await getSearchList("")
-                console.log("영화 목록:", movies)
-                setMovie(movies)
+                setMovie(await getSearchList(""))
                 setList(await getSchedule(""))
                 setScreen(await getScreen(""))
             } catch (error) {
@@ -33,12 +35,7 @@ const AdminScheduleCon = () => {
         fetchData()
     }, [])
 
-    useEffect(() => {
-        setInput((prev) => ({ ...prev, movieId: selectedMovieId || "" }))
-    }, [selectedMovieId])
-
-    const show = (movieId) => {
-        setSelectedMovieId(movieId)
+    const show = () => {
         const elements = document.getElementsByClassName("modal")
         if (elements.length > 0)
             elements[0].style.display = "block"
@@ -50,28 +47,28 @@ const AdminScheduleCon = () => {
             elements[0].style.display = "none"
     }
 
-    const handleSelectChange = (e) => {
-        setSelectedOption(e.target.value)
-    }
-
     const onChange = (e) => {
-        setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+        setInput(prev => ({ ...prev, [e.target.name]: e.target.value }))
     }
-
     const handleTimeChange = (e) => {
         const { value, checked } = e.target
-        setSelectedTimes((prev) => (checked ? [...prev, value] : prev.filter((time) => time !== value)))
+        setSelectedTimes(prev => checked ? [...prev, value] : prev.filter(time => time !== value))
     }
-
     const handleScreenChange = (e) => {
-        const selectedScreenId = e.target.value
-        setInput((prev) => ({ ...prev, screenId: selectedScreenId }))
-        setTimeOptions(screenTimeOptions[selectedScreenId] || []) // 해당 상영관 시간 배열 설정
+        const selectedScreenId = e.target.value;
+        setInput(prev => ({ ...prev, screenId: selectedScreenId }))
+        setTimeOptions(screenTimeOptions[selectedScreenId] || [])
     }
 
     const toKSTISOString = (date) => {
-        const kstOffset = 9 * 60 * 60 * 1000 // UTC+9 시간차
-        return new Date(date.getTime() + kstOffset).toISOString().replace("Z", "") // Z 제거 (UTC 표기 방지)
+
+        if (!date || isNaN(date.getTime())) {
+            console.error("잘못된 날짜 값:", date)
+            return ""
+        }
+
+        const localDate = new Date(date.getTime())
+        return `${localDate.getFullYear()}-${String(localDate.getMonth() + 1).padStart(2, "0")}-${String(localDate.getDate()).padStart(2, "0")} ${String(localDate.getHours()).padStart(2, "0")}:${String(localDate.getMinutes()).padStart(2, "0")}:00`
     }
 
     const mySubmit = async (e) => {
@@ -79,41 +76,47 @@ const AdminScheduleCon = () => {
         const { movieId, screenId, startDate, endDate } = input
         const start = new Date(startDate)
         const end = new Date(endDate)
+
+        if (isNaN(start.getTime()) || isNaN(end.getTime())) {
+            alert("올바른 날짜를 입력하세요.")
+            return
+        }
+
         const dtos = []
-        const selectedMovie = movie.find((m) => String(m.movieId) === String(movieId))
+        const selectedMovie = movie.find(m => String(m.movieId) === String(movieId))
         const runningTime = selectedMovie ? parseInt(selectedMovie.runtime, 10) : 120
+
         while (start <= end) {
-            const currentDate = start.toISOString().split("T")[0]; // yyyy-mm-dd 형식
-            selectedTimes.forEach((time) => {
+            const currentDate = start.toISOString().split("T")[0]
+
+            selectedTimes.forEach(time => {
+
                 const startDateTime = toKSTISOString(new Date(`${currentDate}T${time}:00`))
                 const endDateTime = toKSTISOString(new Date(new Date(startDateTime).getTime() + runningTime * 60 * 1000))
-
                 dtos.push({ movieId, screenId, startDateTime, endDateTime })
             })
+
             start.setDate(start.getDate() + 1)
         }
-        console.log(dtos);
-        const response = await updateSchedule(dtos) // 배열 전송
+
+        console.log("dtos 확인 : ", dtos)
+        const response = await updateSchedule(dtos)
         alert(response.message)
-        const updatedData = await getSchedule("")
-        setList(updatedData)
+        setList(await getSchedule(""))
         hide()
     }
 
-    const delSubmit = async (e) => {
-        e.preventDefault()
-        const reponse = await delSchedule(input.scheduleId)
-        alert(reponse.message)
-        const updatedData = await getSchedule("")
-        setList(updatedData)
+    const delSubmit = async (id) => {
+        const response = await delSchedule(id)
+        alert(response.message)
+        setList(await getSchedule(""))
         hide()
     }
 
-    return <>
-        <AdminScheduleCom list={list} show={show} hide={hide} screen={screen} selectedMovieId={selectedMovieId} selectedOption={selectedOption} handleSelectChange={handleSelectChange}
-            onChange={onChange} mySubmit={mySubmit} delSubmit={delSubmit} input={input} handleTimeChange={handleTimeChange} selectedTimes={selectedTimes} 
-            timeOptions={timeOptions} handleScreenChange={handleScreenChange} />
-    </>
+    return (
+        <AdminScheduleCom list={list} show={show} hide={hide} screen={screen} onChange={onChange} mySubmit={mySubmit} delSubmit={delSubmit} input={input} handleTimeChange={handleTimeChange}
+            selectedTimes={selectedTimes} timeOptions={timeOptions} handleScreenChange={handleScreenChange} movie={movie} />
+    )
 }
 
 export default AdminScheduleCon
