@@ -13,33 +13,28 @@ const Modal = ({ isOpen, onClose, type, infoData, onClick, Infolist, relatedList
             case 'detail':
                 return (
                     infoData && (
-                        <div className="modal-container" onClick={onClose}>
-                            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                                <div className="modal-body">
-                                    <div className='movieModal'>
-                        <div className='movieInfo'>
-                            <div className='movieInfoText'>
-                            <p>
-                                {infoData.title}
-                            </p>
-                            <p>
-                                {infoData.entitle}
-                            </p>
-                            <p>
-                                {infoData.director}<br/>
-                                {infoData.actors}
-                            </p>
+                        <div className="Searchinfo" onClick={onClose}> {/* 모달 바깥 클릭 감지 */}
+                            <div className="SearchInfodiv" onClick={(e) => e.stopPropagation()}> {/* 내부 클릭 시 닫히지 않도록 */}
+                                <div className="SearchInfo1">
+                                    <div>
+                                        <h1>{infoData.title}</h1><br />
+                                        <h2>{infoData.entitle}</h2><br />
+                                        <h3>감독 : {infoData.director}</h3>
+                                        <h3>배우 : {infoData.actors}</h3><br />
                                         <button onClick={() => onClick(infoData.title)}>예매하기</button>
-                            </div>
-                                        <img src={infoData.posterUrl} alt="영화 포스터 이미지" />
-                                        
-                        </div>
-                        <div className='synops_review'>
-                            <div className='synops'>
-                                {infoData.synopsis}
-                            </div>
-                            <div className='review'>
-                                    <p>REVIEW</p>
+                                    </div>
+                                </div>
+
+                                <div className="SearchInfo2">
+                                    <img src={infoData.posterUrl} alt="영화 포스터 이미지" />
+                                </div>
+
+                                <div className="SearchInfo3">
+                                    <div>{infoData.synopsis}</div>
+                                </div>
+
+                                <div className="SearchInfo4">
+                                    <h1>REVIEW</h1>
                                     {Infolist.map((data, index) => (
                                         <div key={`info-${data.movieId}-${data.reviewDate}-${index}`}>
                                             {data.content != null &&
@@ -51,24 +46,19 @@ const Modal = ({ isOpen, onClose, type, infoData, onClick, Infolist, relatedList
                                             <p>{data.content}</p>
                                         </div>
                                     ))}
-                            </div>
-                        </div>
-                        <div className='nextMovie'>
+                                </div>
                                 {relatedList.length > 1 && (
-                                    <div>
+                                    <div className="SearchInfo5">
                                         <h1>관련컨텐츠</h1>
-                                        
+                                        <div className="SearchListDiv">
                                             {relatedList
                                                 .filter(movie => movie.movieId !== Infolist[0].movieId)
                                                 .map((data, index) => (
                                                     <div key={`related-${data.movieId}-${index}`} className="SearchImgDiv"/>
                                                 ))}
-                                        
+                                        </div>
                                     </div>
                                 )}
-                        </div>
-                                </div>
-                                </div>
                             </div>
                         </div>
                     ))
