@@ -6,9 +6,9 @@ const AdminMemberCom = ({ list }) => {
         <div className="admindiv">
             <AdminSidebar activeLink="회원관리" />
             <div className="admindiv-1">
-                <h1>회원관리</h1><br />
+                <h1>회원관리</h1>
                 <div className="table-wrapper">
-                    <table align="center">
+                    <table  className="movie-table">
                         <thead>
                             <tr>
                                 <th>유저ID</th>

@@ -9,9 +9,9 @@ const AdminScheduleCom = ({ list, show, hide, screen, onChange, mySubmit, delSub
             <AdminSidebar activeLink="상영관리" />
             <div className="admindiv-1">
                 <h1>상영관리</h1>
-                <button className="update" onClick={() => show()}>추가</button>
+                <button className="movieBtn" onClick={() => show()}>추가</button>
                 <div className="table-wrapper">
-                    <table align="center">
+                    <table className="movie-table">
                         <thead>
                             <tr>
                                 <th>일정순번</th>
@@ -20,7 +20,7 @@ const AdminScheduleCom = ({ list, show, hide, screen, onChange, mySubmit, delSub
                                 <th>영화id</th>
                                 <th>영화제목</th>
                                 <th>상영관id</th>
-                                <th></th>
+                                <th>관리</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -57,11 +57,10 @@ const AdminScheduleCom = ({ list, show, hide, screen, onChange, mySubmit, delSub
             </div>
 
             <div className="modal">
-                <div>
-                    <span onClick={hide}>X</span><br />
-                    <h1>일정 추가</h1><br />
+                <div  className="newMovie">
+                    <h1>일정 추가</h1>
                     <form onSubmit={mySubmit}>
-                        영화 선택:
+                        <p>영화 선택</p>
                         <select name="movieId" value={input.movieId} onChange={onChange}>
                             <option value="">영화를 선택하세요</option>
                             {movie.map((data) => (
@@ -71,25 +70,30 @@ const AdminScheduleCom = ({ list, show, hide, screen, onChange, mySubmit, delSub
                             ))}
                         </select>
                         <br />
-                        상영 기간: <input type="date" name="startDate" onChange={onChange} /> ~
-                        <input type="date" name="endDate" onChange={onChange} /><br />
-                        상영관 선택:
+                        <p>상영 기간</p>
+                        <input type="date" name="startDate" onChange={onChange} /> ~ <input type="date" name="endDate" onChange={onChange} /><br />
+                        <p>상영관 선택</p>
+                        <div>
                         {screen.map((data) => (
                             <label key={data.screenID}>
-                                {data.screenName} <input type="radio" name="screenId" value={data.screenID} onChange={handleScreenChange} />
+                                <span>{data.screenName}</span> <input type="radio" name="screenId" value={data.screenID} onChange={handleScreenChange} />
                             </label>
                         ))}
+                        </div>
                         <br />
 
-                        <h3>상영 시간</h3>
+                        <p>상영 시간</p>
+                        <div>
                         {timeOptions.map((time) => (
                             <label key={time}>
                                 <input type="checkbox" value={time} checked={selectedTimes.includes(time)} onChange={handleTimeChange} />
-                                {time}&nbsp;&nbsp;
+                                <span>{time}</span>
                             </label>
                         ))}
+                        </div>
                         <br />
-                        <button>추가</button>
+                        <button>등록</button>
+                        <button onClick={hide}>취소</button>
                     </form>
                 </div>
             </div>

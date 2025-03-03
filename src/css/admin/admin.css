@@ -1,16 +1,21 @@
 .admindiv {
     display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    color: #000000;
+    width: 100%;
+    height: 100vh;
 }
 
 .admindiv-1 {
     width: 100%;
-    min-height: 1000px;
-    padding: 20px;
+    padding: 10px;
     overflow-x: auto; /* 가로 스크롤 허용 */
 
     &>h1{
         display: inline;
         position: relative;
+        margin-left: 10px;
     }
 
     &>button{
@@ -19,97 +24,64 @@
         top: -5px;
     }
 }
+.movieBtn{
+    width: 60px;
+    height: 28px;
+    font-size: 12px;
+    color: #000000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.movieBtn:hover {
+    text-decoration: underline;
+}
 
-/* 테이블을 가로 스크롤 가능하게 설정하면서 기본적으로 화면에 맞게 표시 */
-.admindiv-1 .table-wrapper {
+/* 테이블 스타일 */
+.table-wrapper {
     overflow-x: auto;
     width: 100%;
     display: flex;
     justify-content: center;
+    margin-top: 30px;
 }
 
-/* 테이블이 너무 길어지더라도 전체 화면에 표시되도록 설정 */
-.admindiv-1 table {
+.movie-table {
     width: 100%;
-    min-width: 1200px; /* 최소 너비 설정 */
+    min-width: 1200px;
     border-collapse: collapse;
-    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
-    table-layout: fixed; /* 컬럼 너비 균등 분배 */
+    table-layout: fixed;
 }
 
-/* 첫 번째 칼럼(일정 순번) 너비 조정 */
-.admindiv-1 td:nth-child(1),
-.admindiv-1 th:nth-child(1) {
-    min-width: 100px; /* 최소 너비 설정 */
-    max-width: 150px; /* 너무 길어지지 않도록 제한 */
-    white-space: nowrap; /* 자동 줄바꿈 방지 */
-    text-align: center; /* 가운데 정렬 */
-}
-
-/* 테이블 헤더 및 셀 스타일 */
-.admindiv-1 th,
-.admindiv-1 td {
+/* 테이블 셀 스타일 */
+.movie-table th,
+.movie-table td {
     padding: 10px;
     border: 1px solid #ddd;
     text-align: center;
+    max-height: 50px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 13px;
 }
 
-/* 긴 텍스트 줄바꿈 방지 및 말줄임 처리 */
-.admindiv-1 td {
-    max-width: 200px;
+/* 긴 내용 말줄임 */
+.ellipsis {
+    display: block;
+    max-height: 50px;
     overflow: hidden;
     text-overflow: ellipsis;
-    word-break: break-word;
+    white-space: nowrap;
 }
 
-/* 가로 스크롤 가능하도록 설정 */
-.admindiv-1 .table-wrapper {
-    overflow-x: auto;
-    width: 100%;
-}
-
-/* 버튼 스타일 */
-.admindiv-1 button {
-    width: 80px;
-    min-height: 28px;
-    font-size: 12px;
-    background-color: #381E72;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    padding: 10px;
-}
-
-.admindiv-1 button:hover {
-    background: #7857bd;
-}
-
-/* 영화 제목(5번째 컬럼) 칸이 너무 좁아지지 않도록 설정 */
-.admindiv-1 td:nth-child(5),
-.admindiv-1 th:nth-child(5) {
-    min-width: 300px; /* 최소 너비 설정 */
-    max-width: 500px;
-    white-space: normal; /* 자동 줄바꿈 허용 */
-    word-break: break-word; /* 긴 단어도 줄바꿈 */
-}
-
-/* 화면이 작아질 경우(태블릿, 모바일) 테이블 최소 크기 설정 */
-@media screen and (max-width: 1024px) {
-    .admindiv-1 table {
-        min-width: 900px; /* 작은 화면에서도 테이블이 너무 작아지지 않도록 설정 */
-    }
-}
-
-@media screen and (max-width: 768px) {
-    .admindiv-1 .table-wrapper {
-        overflow-x: auto;
-        width: 100%;
-    }
-
-    .admindiv-1 table {
-        min-width: 700px;
-    }
+/* textarea와 input의 최대 높이 설정 */
+.movie-table textarea,
+.movie-table input {
+    max-height: 50px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .modal {
@@ -121,37 +93,64 @@
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 9999;
-
-    &>div {
-        position: fixed;
-        width: 20%;
-        min-height: 25%;
-        font-size: 12px;
-        background-color: #171717;
-        border-radius: 10px;
-        left: 40%;
-        margin-top: 10%;
-
-        & button {
-            width: 80px;
-            min-height: 28px;
-            font-size: 12px;
-            background-color: #381E72;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            padding: 10px;
-    
-            &:hover {
-                background: #7857bd;
-            }
-        }
-    }
+}
+.modal button{
+    width: 60px;
+    height: 28px;
+    font-size: 12px;
+    color: #000000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 30px;
+}
+.modal button:hover{
+    text-decoration: underline;
+}
+.modal .newMovie{
+    width: 400px;
+    height: 600px;
+    font-size: 12px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    margin: auto;
+    margin-top: 50px;
+    padding: 20px;
+}
+.newMovie h1{
+    margin-bottom: 20px;
+}
+.modal input{
+    width: 90%;
+    height: 30px;
+    margin-bottom: 10px;
 }
 
-.modal > div > span {
-    cursor: pointer;
-    margin-left: 5px;
-    font-size: 30px;
+.newMovie p{
+    font-size: 15px;
+    margin: 10px 0;
+    font-weight: bold;
+}
+.newMovie select{
+    margin-bottom: 20px;
+}
+.newMovie input[type="date"]{
+    width: 100px;
+    margin-bottom: 20px;
+}
+.newMovie > div{
+    display: flex;
+}
+.newMovie label{
+    margin-right: 20px;
+
+
+}
+.newMovie label span{
+    font-size: 14px;
+    font-weight: lighter;
+}
+.newMovie label input[type="radio"], .newMovie label input[type="checkbox"]{
+    width: 15px;
+    height: 15px;
 }
