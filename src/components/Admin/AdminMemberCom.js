@@ -19,6 +19,7 @@ const AdminMemberCom = ({ list }) => {
                                 <th>우편번호</th>
                                 <th>생년월일</th>
                                 <th>등급</th>
+                                <th>상세주소</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -49,12 +50,15 @@ const AdminMemberCom = ({ list }) => {
                                         <td>
                                             {data.userGrade}
                                         </td>
+                                        <td>
+                                            {data.detailAddr}
+                                        </td>
                                     </tr>
                                 ))
                             ) : (
                                 <>
                                     <tr>
-                                        <td colSpan='8'>데이터가 없습니다.</td>
+                                        <td colSpan='9'>데이터가 없습니다.</td>
                                     </tr>
                                 </>
                             )}
