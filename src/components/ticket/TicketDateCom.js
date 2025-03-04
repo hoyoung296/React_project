@@ -122,7 +122,7 @@ const TicketDateCom = () => {
             <div className="cinema">
                 {/* 🎥 1관 */}
                 <div className="cinemaA">
-                    <p>1관</p>
+                    <p>1관</p><br/>
                     {cinemaA.length > 0 ? (
                         cinemaA.map((cinema, index) => (
                             <button
@@ -140,7 +140,7 @@ const TicketDateCom = () => {
 
                 {/* 🎥 2관 */}
                 <div className="cinemaB">
-                    <p>2관</p>
+                    <p>2관</p><br/>
                     {cinemaB.length > 0 ? (
                         cinemaB.map((cinema, index) => (
                             <button
@@ -158,7 +158,7 @@ const TicketDateCom = () => {
 
                 {/* 🎥 3관 */}
                 <div className="cinemaC">
-                    <p>3관</p>
+                    <p>3관</p><br/>
                     {cinemaC.length > 0 ? (
                         cinemaC.map((cinema, index) => (
                             <button

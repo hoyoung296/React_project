@@ -3,12 +3,12 @@ import { useEffect, useState } from "react"
 
 const AdminProtectedRoute = ({ element }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(
-        sessionStorage.getItem("isAuthenticated") === "true"
+        sessionStorage.getItem("admin") === "true"
     )
 
     useEffect(() => {
         const checkAuth = () => {
-            const authStatus = sessionStorage.getItem("isAuthenticated") === "true"
+            const authStatus = sessionStorage.getItem("admin") === "true"
             setIsAuthenticated(authStatus)
         }
 

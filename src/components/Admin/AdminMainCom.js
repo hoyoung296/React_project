@@ -5,12 +5,12 @@ const AdminMainCom = ({ onChange, mySubmit, isAuthenticated, handleLogout }) => 
         <div className="adminMain">
             {isAuthenticated ? (
                 <>
-                    <p>관리자 로그인 중</p><br />
-                    <button onClick={handleLogout}>로그아웃</button>
+                    <p>관리자 로그인 중입니다.</p><br />
+                    <button onClick={handleLogout} className="logoutBtn">로그아웃</button>
                 </>
             ) : (
                 <>
-                    <h1>관리자 LOGIN</h1>
+                    <p>[ THEFILLM 관리자페이지 ]</p>
                     <br />
                     <form onSubmit={mySubmit}>
                         <input type="text" name="id" placeholder="아이디를 입력해주세요" onChange={onChange} />

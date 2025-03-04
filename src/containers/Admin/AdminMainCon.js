@@ -5,13 +5,13 @@ import AdminMainCom from "../../components/Admin/AdminMainCom"
 const AdminMainCon = () => {
     const [input, setInput] = useState({ id: "", pwd: "" })
     const [isAuthenticated, setIsAuthenticated] = useState(
-        sessionStorage.getItem("isAuthenticated") === "true"
+        sessionStorage.getItem("admin") === "true"
     )
     const navigate = useNavigate()
 
     useEffect(() => {
         const checkAuth = () => {
-            setIsAuthenticated(sessionStorage.getItem("isAuthenticated") === "true")
+            setIsAuthenticated(sessionStorage.getItem("admin") === "true")
         }
 
         // 로그인 상태 변경 감지
@@ -39,7 +39,7 @@ const AdminMainCon = () => {
             return
         }
 
-        sessionStorage.setItem("isAuthenticated", "true")
+        sessionStorage.setItem("admin", "true")
         setIsAuthenticated(true); // 상태 업데이트
         alert("로그인 성공")
         navigate("/adminMovie")
@@ -48,7 +48,7 @@ const AdminMainCon = () => {
     }
 
     const handleLogout = () => {
-        sessionStorage.removeItem("isAuthenticated")
+        sessionStorage.removeItem("admin")
         setIsAuthenticated(false) // 상태 업데이트
         alert("로그아웃 되었습니다.")
         navigate("/adminMain")
@@ -57,12 +57,7 @@ const AdminMainCon = () => {
     }
 
     return (
-        <AdminMainCom
-            onChange={onChange}
-            mySubmit={mySubmit}
-            isAuthenticated={isAuthenticated}
-            handleLogout={handleLogout}
-        />
+        <AdminMainCom onChange={onChange} mySubmit={mySubmit} isAuthenticated={isAuthenticated} handleLogout={handleLogout} />
     )
 }
 

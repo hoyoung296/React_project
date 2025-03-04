@@ -92,4 +92,19 @@ const delSchedule = async (id) => {
     }
 }
 
-export { updateMovie, updateMovieManual, getSchedule, getScreen, getList, updateSchedule, delSchedule }
+//영화 수동으로 삽입하기
+const insert = async (id) => {
+    try {
+        const res = await axios.post(`${BASE_URL}/movie/insert`, id, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+        return res.data
+    } catch (error) {
+        console.error("영화 수동 삽입 실패 : ", error)
+        throw error
+    }
+}
+
+export { updateMovie, updateMovieManual, getSchedule, getScreen, getList, updateSchedule, delSchedule, insert }

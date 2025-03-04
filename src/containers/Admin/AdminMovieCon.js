@@ -1,12 +1,25 @@
 import { useEffect, useState } from "react"
 import AdminMovieCom from "../../components/Admin/AdminMovieCom"
 import { getSearchList } from "../../service/review"
-import { updateMovie, updateMovieManual } from "../../service/admin"
+import { insert, updateMovie, updateMovieManual } from "../../service/admin"
 import { useNavigate } from "react-router-dom"
 
 const AdminMovieCon = () => {
     const [list, setList] = useState([])
     const [editMovie, setEditMovie] = useState(null) // 수정 중인 영화 정보
+    const [newMovie, setNewMovie] = useState({
+        movieId: "",
+        title: "",
+        entitle: "",
+        posterUrl: "",
+        stillUrl: "",
+        movieSynopsis: "",
+        directorName: "",
+        actors: "",
+        movieRank: "",
+        openDt: "",
+        runtime: "",
+    })
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -29,6 +42,42 @@ const AdminMovieCon = () => {
                 movie.movieId === movieId ? { ...movie, [name]: value } : movie
             )
         )
+    }
+
+    // 수동 영화 입력 내용
+    const handleChange = (e) => {
+        const { name, value } = e.target
+        setNewMovie((prev) => ({ ...prev, [name]: value, }))
+    }
+
+    // 수동 영화 입력 결과 전송
+    const manualinsert = async (e) => {
+        e.preventDefault()
+        console.log("입력값 확인 : ", newMovie)
+        try {
+            const response = await insert(newMovie)
+            alert(response.message)
+            const updatedData = await getSearchList("")
+            setList(updatedData)
+
+            setNewMovie({
+                movieId: "",
+                title: "",
+                entitle: "",
+                posterUrl: "",
+                stillUrl: "",
+                movieSynopsis: "",
+                directorName: "",
+                actors: "",
+                movieRank: "",
+                openDt: "",
+                runtime: "",
+            })
+            
+            hide()
+        } catch (error) {
+            console.error("영화 추가 오류:", error)
+        }
     }
 
     // 수정 버튼 클릭 시 해당 영화 상태에 저장
@@ -61,9 +110,21 @@ const AdminMovieCon = () => {
         }
     }
 
+    const show = () => {
+        const elements = document.getElementsByClassName("modal")
+        if (elements.length > 0)
+            elements[0].style.display = "block"
+    }
+
+    const hide = () => {
+        const elements = document.getElementsByClassName("modal")
+        if (elements.length > 0)
+            elements[0].style.display = "none"
+    }
+
     return (
-        <AdminMovieCom list={list} editMovie={editMovie} InputChange={InputChange} EditClick={EditClick} Update={Update} 
-        manualUpdate={manualUpdate} />
+        <AdminMovieCom list={list} editMovie={editMovie} InputChange={InputChange} EditClick={EditClick} Update={Update}
+            manualUpdate={manualUpdate} show={show} hide={hide} handleChange={handleChange} manualinsert={manualinsert} newMovie={newMovie} />
     )
 }
 
