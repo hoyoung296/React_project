@@ -31,9 +31,7 @@ const LoginPageCom = () => {
                 <input type="password" className='input_pwd' required placeholder="PW"/>
                 <button className='login_btn' onClick={handleLogin}>Login</button>
                 <div className='slmpleBtn'>
-                    <button>N</button>
                     <button onClick={kakaoLogin}>K</button>
-                    <button>G</button>
                 </div>
                 <div className='userBtn'>
                     <button>아이디찾기</button>|
