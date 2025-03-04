@@ -5,7 +5,8 @@ import { checkReview, delReserve, getReserveList, writeReview } from "../../serv
 
 const MyReserveCon = () => {
     const [params] = useSearchParams()
-    const [list, setList] = useState({ dto: [], page: 0 })
+    const [allList, setAllList] = useState([]) // 모든 데이터 저장
+    const [list, setList] = useState({ dto: [], page: 0 }) // 현재 페이지 데이터
     const [start, setStart] = useState(params.get("start") || 1)
     const [modalData, setModalData] = useState(null)
     const [input, setInput] = useState({ review: "" })
@@ -17,13 +18,20 @@ const MyReserveCon = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        const getData = async () => {
+        const getAllData = async () => {
             try {
-                const data = await getReserveList(id, start)
+                let allData = []
+                let page = 1
+                while (true) {
+                    const data = await getReserveList(id, page)
+                    if (!data.dto.length) break
+                    allData = [...allData, ...data.dto]
+                    page++
+                }
 
                 // 같은 scheduleId끼리 묶어서 새로운 리스트 생성
                 const groupedData = {}
-                data.dto.forEach(item => {
+                allData.forEach(item => {
                     const key = item.scheduleId
                     if (!groupedData[key]) {
                         groupedData[key] = { ...item, seatIds: [item.seatId] }
@@ -32,13 +40,19 @@ const MyReserveCon = () => {
                     }
                 })
 
-                setList({ dto: Object.values(groupedData), page: data.page })
+                const mergedList = Object.values(groupedData)
+
+                setAllList(mergedList) // 전체 리스트 저장
+                setList({
+                    dto: mergedList.slice(0, 5), // 첫 페이지 데이터
+                    page: Math.ceil(mergedList.length / 5) // 페이지 재정의
+                })
             } catch (error) {
                 console.error("데이터 가져오기 오류 :", error)
             }
         }
-        getData()
-    }, [id, start])
+        getAllData()
+    }, [id])
 
     useEffect(() => {
         if (modalData) {
@@ -52,20 +66,24 @@ const MyReserveCon = () => {
     useEffect(() => {
         const fetchReviewStatus = async () => {
             const status = {}
-            for (const data of list.dto) {
-                const review = await checkReview(data.userId, data.movieId);
-                status[data.reservationId] = review;
+            for (const data of allList) {
+                const review = await checkReview(data.userId, data.movieId)
+                status[data.reservationId] = review
             }
             setReviewStatus(status)
         }
 
-        if (list.dto.length > 0) {
+        if (allList.length > 0) {
             fetchReviewStatus()
         }
-    }, [list])
+    }, [allList])
 
     const handlePageChange = (page) => {
         setStart(page)
+        setList({
+            dto: allList.slice((page - 1) * 5, page * 5), // 5개씩 끊어서 페이지 데이터 설정
+            page: Math.ceil(allList.length / 5) // 전체 페이지 수 재계산
+        })
         navigate(`/myTicket?id=${id}&start=${page}`)
     }
 
@@ -75,22 +93,22 @@ const MyReserveCon = () => {
 
     const mySubmit = async (e) => {
         e.preventDefault()
+        if (!modalData) return // modalData가 없을 경우 예외 처리
+
         const dto = {
             content: input.review,
-            userId: list.dto[0].userId,
+            userId: list.dto[0]?.userId || "", // userId가 없을 경우 대비
             movieId: modalData.movieId
         }
 
         try {
             const response = await writeReview(dto)
-            console.log("확인 : " , response)
             if (response === 1) {
                 showResult()
-            }
-            else {
+            } else {
                 alert("리뷰 등록 실패")
             }
-            setStart(prev => prev === 1 ? 0 : 1)
+            setStart(1)
             navigate(`/myTicket?id=${id}&start=1`)
             hideModal()
         } catch (error) {
@@ -102,7 +120,7 @@ const MyReserveCon = () => {
         try {
             const response = await delReserve(rsv)
             alert(response.message)
-            setStart(prev => prev === 1 ? 0 : 1)
+            setStart(1)
             navigate(`/myTicket?id=${id}&start=1`)
         } catch (error) {
             alert("오류 발생: " + (error.response?.data?.message || "알 수 없는 오류"))
@@ -122,14 +140,12 @@ const MyReserveCon = () => {
 
     const showResult = () => {
         const elements = document.getElementsByClassName("Resultmodal")
-        if (elements.length > 0)
-            elements[0].style.display = "block"
+        if (elements.length > 0) elements[0].style.display = "block"
     }
 
     const hideResult = () => {
-        const elements = document.getElementsByClassName("Resultemodal")
-        if (elements.length > 0)
-            elements[0].style.display = "none"
+        const elements = document.getElementsByClassName("Resultmodal")
+        if (elements.length > 0) elements[0].style.display = "none"
         setModalData(null)
     }
 
@@ -137,12 +153,11 @@ const MyReserveCon = () => {
         navigate(`/myReview?id=${id}&start=`)
     }
 
-    return <>
-        <MyReserveCom
-            list={list} start={start} reviewStatus={reviewStatus} modalData={modalData} id={id}
-            handlePageChange={handlePageChange} del={del} showModal={showModal} hideModal={hideModal} mySubmit={mySubmit} onChange={onChange}
-            showResult={showResult} hideResult={hideResult} onResult={onResult} isModalOpen={isModalOpen} modalType={modalType}  />
-    </>
+    return (
+        <MyReserveCom list={list} start={start} reviewStatus={reviewStatus} modalData={modalData} id={id} handlePageChange={handlePageChange} del={del} 
+        showModal={showModal} hideModal={hideModal} mySubmit={mySubmit} onChange={onChange} showResult={showResult} hideResult={hideResult} onResult={onResult} 
+        isModalOpen={isModalOpen} modalType={modalType} />
+    )
 }
 
 export default MyReserveCon

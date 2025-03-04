@@ -1,11 +1,11 @@
 .SearchWrapdiv {
-    width: 100%;
-    min-height: 800px;
-    background: #171717;
+    width: 100vw;
+    margin: 10px;
+    margin-right: 15px;
 
     &>h1 {
-        width: 98%;
-        margin: 0 auto;
+        margin: 10px 30px;
+        font-size: 27px;
     }
 
     &>h2 {
@@ -13,25 +13,97 @@
         text-align: center;
     }
 }
+.SearchWrapdiv span{
+    color: #7857bd;
+}
+
+.movieList {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(180px, 1fr));
+    gap: 25px;
+    margin: 0 15px;
+    justify-content: start;
+}
+
+.poster {
+    flex: 0 1 180px;
+    max-width: 180px;
+    height: 270px;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.poster:hover {
+    transform: translateY(-15px);
+}
+
+.poster img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+.poster .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 180px;
+    height: 270px;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+}
+
+.poster:hover .overlay {
+    opacity: 1;
+}
+
+.overlay button {
+    background-color: #381E72;
+    border: none;
+    margin: 10px 7px;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    width: 80px;
+    height: 28px;
+    z-index: 2;
+}
+
+.overlay button:hover {
+    background-color: #7857bd;
+}
 
 .SearchListDiv {
-    width: 98%;
-    min-height: 600px;
-    display: flex;
-    flex-wrap: wrap;
-    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(7, minmax(180px, 1fr));
+    gap: 30px;
+    margin: 0 30px;
+    justify-content: start;
 }
 
 .SearchImgDiv {
-    width: 10%;
+    flex: 0 1 180px;
+    width: 180px;
     height: 270px;
-    margin-right: 5%;
-    margin-top: 20px;
-    background-size: 100% 100%;
-    background-position: center;
-    background-repeat: no-repeat;
+    overflow: hidden;
+    border-radius: 5px;
+    transition: transform 0.3s ease, filter 0.3s ease;
     position: relative;
 }
+
+.SearchImgDiv:hover {
+    transform: translateY(-15px);
+}
+
 
 .SearchImgDiv:nth-child(7n) {
     margin-right: 0;
@@ -170,7 +242,6 @@
     height: 20px;
     border-radius: 10px;
 }
-
 
 .SearchInfo5 {
     width: 100%;

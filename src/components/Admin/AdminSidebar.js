@@ -12,8 +12,6 @@ const AdminSidebar = ({ activeLink }) => {
         
     return <>
         <div className="adminSidebarDiv">
-            <img src="/img/movie1.jpg" alt="프사" /><br />
-            <b>관리자</b>
             {customLinks.map((link, index) => (
                 <p key={index}>
                     {activeLink === link.text ? (

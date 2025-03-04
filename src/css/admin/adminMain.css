@@ -1,30 +1,47 @@
-.adminMain{
-    border: 1px solid white;
-    border-radius: 5px;
-    margin: 0 auto;
-    margin-top: 10%;
+.adminMain {
+    background-color: #ffffff;
+    color: #000000;
+    width: 100%;
+    height: 100vh;
     text-align: center;
-    width: 15%;
-    height: 200px;
+    display: flex;
+    flex-direction: column;
+    padding-top: 200px;
+}
 
-    & button {
-        width: 80px;
-        min-height: 28px;
-        font-size: 12px;
-        background-color: #381E72;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        padding: 10px;
+.adminMain button {
+    width: 60px;
+    height: 28px;
+    font-size: 12px;
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.adminMain button:hover {
+    text-decoration: underline;
+}
+.logoutBtn{
+    margin: auto;
+    margin-top: 0;
+}
+.adminMain h1 {
+    font-weight: bold;
+}
 
-        &:hover {
-            background: #7857bd;
-        }
-    }
+.adminMain p {
+    font-weight: bold;
+    font-size: 30px;
+    margin-bottom: 30px;
+}
 
-    & h1 {
-        color: #7857bd;
-        margin-top: 10px;
-    }
+/* input 태그 스타일 추가 */
+.adminMain input {
+    width: 200px; /* 부모 요소에 맞게 자동 조절 */
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+    box-sizing: border-box; /* 패딩 포함 크기 유지 */
 }
