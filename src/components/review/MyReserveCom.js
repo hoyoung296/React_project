@@ -12,13 +12,10 @@ const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showMo
                 <h1>내 예매내역</h1><br />
                 {list.dto.length === 0 ? (<h2>예매 내역이 없습니다.</h2>) :
                     list.dto.map((data) => {
-                        const endDateTime = new Date(data.endDateTime);
-                        const startDateTime = new Date(
-                            data.startDateTime.replace(/(\d{4})년 (\d{2})월 (\d{2})일/, "$1-$2-$3")
-                        )
+                        const endDateTime = new Date(data.endDateTime)
+                        const startDateTime = new Date(data.startDateTime)
                         const showReviewButton = now > endDateTime
                         const showCancelButton = now < new Date(startDateTime.getTime() - 30 * 60 * 1000)
-
                         const hasReview = data.reservationId in reviewStatus && reviewStatus[data.reservationId] === 0
                         return (
                             <div className="ReserveDiv" key={data.reservationId}>

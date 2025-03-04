@@ -38,21 +38,18 @@ const SearchCon = () => {
         getInfo()
     }, [infoId])
 
-    const getRelatedMovies = (names) => {
-        const cleanedNames = names
-            .split(",")
-            .map(name => name.trim())
-            .filter(name => name.length > 0)
-
+    const getRelatedMovies = () => {
+        if (Infolist.length === 0) return []
+        const standardDirector = Infolist[0].director ? Infolist[0].director.split(",").map(name => name.trim()) : []
+        const standardActors = Infolist[0].actors ? Infolist[0].actors.split(",").map(name => name.trim()) : []
         return list.filter(movie => {
-            const director = movie.director || ''
-            const actors = movie.actors || ''
-            return cleanedNames.some(name =>
-                director.includes(name) || actors.includes(name)
-            )
+            const movieDirectors = movie.directorName ? movie.directorName.split(",").map(name => name.trim()) : []
+            const movieActors = movie.actors ? movie.actors.split(",").map(name => name.trim()) : []
+            const isRelated = movieDirectors.some(director => standardDirector.includes(director)) || movieActors.some(actor => standardActors.includes(actor))
+            return isRelated
         })
     }
-
+    
     const onClick = (id) => {
         navigate("/ticket_date?title=" + id)
     }
@@ -68,9 +65,7 @@ const SearchCon = () => {
         setModalType(null)
     }
 
-    const relatedList = Infolist.length > 0
-        ? getRelatedMovies(Infolist[0].director + ',' + Infolist[0].actors)
-        : []
+    const relatedList = Infolist.length > 0 ? getRelatedMovies(Infolist[0].director + ',' + Infolist[0].actors) : []
 
     return (
         <SearchCom list={list} Infolist={Infolist} id={id} infoId={infoId} relatedList={relatedList} onClick={onClick} showInfo={showInfo}
@@ -79,4 +74,4 @@ const SearchCon = () => {
     )
 }
 
-export default SearchCon;
+export default SearchCon

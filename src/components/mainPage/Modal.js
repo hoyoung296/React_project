@@ -17,57 +17,58 @@ const Modal = ({ isOpen, onClose, type, infoData, onClick, Infolist, relatedList
                             <div className="modal-content" onClick={(e) => e.stopPropagation()}>
                                 <div className="modal-body">
                                     <div className='movieModal'>
-                        <div className='movieInfo'>
-                            <div className='movieInfoText'>
-                            <p>
-                                {infoData.title}
-                            </p>
-                            <p>
-                                {infoData.entitle}
-                            </p>
-                            <p>
-                                {infoData.director}<br/>
-                                {infoData.actors}
-                            </p>
-                                        <button onClick={() => onClick(infoData.title)}>예매하기</button>
-                            </div>
-                                        <img src={infoData.posterUrl} alt="영화 포스터 이미지" />
-                                        
-                        </div>
-                        <div className='synops_review'>
-                            <div className='synops'>
-                                {infoData.synopsis}
-                            </div>
-                            <div className='review'>
-                                    <p>REVIEW</p>
-                                    {Infolist.map((data, index) => (
-                                        <div key={`info-${data.movieId}-${data.reviewDate}-${index}`}>
-                                            {data.content != null &&
+                                        <div className='movieInfo'>
+                                            <div className='movieInfoText'>
                                                 <p>
-                                                    <img src="/img/movie1.jpg" alt="프로필사진" />&nbsp;&nbsp;&nbsp;
-                                                    {data.userId} {data.reviewDate}
-                                                </p>}
-                                            <br />
-                                            <p>{data.content}</p>
+                                                    {infoData.title}
+                                                </p>
+                                                <p>
+                                                    {infoData.entitle}
+                                                </p>
+                                                <p>
+                                                    {infoData.director}<br />
+                                                    {infoData.actors}
+                                                </p>
+                                                <button onClick={() => onClick(infoData.title)}>예매하기</button>
+                                            </div>
+                                            <img src={infoData.posterUrl} alt="영화 포스터 이미지" />
+
                                         </div>
-                                    ))}
-                            </div>
-                        </div>
-                        <div className='nextMovie'>
-                                {relatedList.length > 1 && (
-                                    <div>
-                                        <h1>관련컨텐츠</h1>
-                                        
-                                            {relatedList
-                                                .filter(movie => movie.movieId !== Infolist[0].movieId)
-                                                .map((data, index) => (
-                                                    <div key={`related-${data.movieId}-${index}`} className="SearchImgDiv"/>
+                                        <div className='synops_review'>
+                                            <div className='synops'>
+                                                {infoData.synopsis}
+                                            </div>
+                                            <div className='review'>
+                                                <p>REVIEW</p>
+                                                {Infolist.map((data, index) => (
+                                                    <div key={`info-${data.movieId}-${data.reviewDate}-${index}`}>
+                                                        {data.content != null &&
+                                                            <p>
+                                                                <img src="/img/movie1.jpg" alt="프로필사진" />&nbsp;&nbsp;&nbsp;
+                                                                {data.userId} {data.reviewDate}
+                                                            </p>}
+                                                        <br />
+                                                        <p>{data.content}</p>
+                                                    </div>
                                                 ))}
-                                        
+                                            </div>
+                                        </div>
+                                        <div className='nextMovie'>
+                                            {console.log(relatedList)}
+                                            {relatedList.length > 1 && (
+                                                <div>
+                                                    <h1>관련컨텐츠</h1>
+                                                    {relatedList
+                                                        .filter(movie => movie.movieId !== Infolist[0].movieId)
+                                                        .map((data, index) => (
+                                                            <div key={`related-${data.movieId}-${index}`} className="SearchImgDiv">
+                                                                <img src={data.posterUrl} alt='포스터이미지' />
+                                                            </div>
+                                                        ))}
+                                                </div>
+                                            )}
+                                        </div>
                                     </div>
-                                )}
-                        </div>
-                                </div>
                                 </div>
                             </div>
                         </div>
