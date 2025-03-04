@@ -17,10 +17,13 @@ import AdminPayment from './pages/AdminPayment';
 import AdminSchedule from './pages/AdminSchedule';
 import AdminMain from './pages/AdminMain';
 import AdminProtectedRoute from './components/Admin/AdminProtectedRoute';
+import OAuthCallback from './components/login/OAuthCallback';
+import LoginHandler from './components/login/LoginHandler';
 
 const routes = [
     { path: '/', element: <HomePage /> },
     { path: '/login', element: <LoginPage /> },
+    { path: '/login/oauth2/callback/kakao', element: <LoginHandler/> },
     { path: '/search', element: <Search /> },
     { path: '/signup', element: <SignUp /> },
     { path: '/ticket_date', element: <TicketDate /> },
