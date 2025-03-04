@@ -20,7 +20,6 @@ const AdminMovieCom = ({ list, editMovie, InputChange, EditClick, Update, manual
                 <th>시놉시스</th>
                 <th>감독</th>
                 <th>배우</th>
-                <th>러닝타임</th>
                 <th>관리</th>
             </tr>
         </thead>
@@ -37,14 +36,13 @@ const AdminMovieCom = ({ list, editMovie, InputChange, EditClick, Update, manual
                             { name: "movieSynopsis", value: data.movieSynopsis },
                             { name: "directorName", value: data.directorName },
                             { name: "actors", value: data.actors },
-                            { name: "runtime", value: data.runtime }
                         ].map((item, index) => (
                             <td key={index}>
                                 {editMovie?.movieId === data.movieId ? (
                                     item.name === "movieSynopsis" ? (
                                         <textarea name={item.name} value={item.value} onChange={(e) => InputChange(e, data.movieId)} />
                                     ) : (
-                                        <input type="text" name={item.name} value={item.value} onChange={(e) => InputChange(e, data.movieId)} />
+                                        <input type="text" name={item.name} value={item.value} onChange={(e) => InputChange(e, data.movieId)}  readOnly={item.name === "movieId"} />
                                     )
                                 ) : (
                                     <span className="ellipsis">{item.value}</span>
@@ -63,7 +61,7 @@ const AdminMovieCom = ({ list, editMovie, InputChange, EditClick, Update, manual
             ) : (
                 <>
                     <tr>
-                        <td colSpan="10">데이터가 없습니다.</td>
+                        <td colSpan="9">데이터가 없습니다.</td>
                     </tr>
                     <tr>
                         <td style={{ border: "none" }}>
@@ -90,8 +88,7 @@ const AdminMovieCom = ({ list, editMovie, InputChange, EditClick, Update, manual
                         <input type="text" name="directorName" placeholder="감독" value={newMovie.directorName} onChange={handleChange} required />
                         <input type="text" name="actors" placeholder="배우" value={newMovie.actors} onChange={handleChange} required />
                         <input type="text" name="movieRank" placeholder="순위 (YYYYMMDD-R)" value={newMovie.movieRank} onChange={handleChange} required />
-                        <input type="text" name="openDt" placeholder="개봉일 (YYYY-MM-DD)" value={newMovie.openDt} onChange={handleChange} required />
-                        <input type="text" name="runtime" placeholder="러닝타임" value={newMovie.runtime} onChange={handleChange} required /><br /><br />
+                        <input type="text" name="openDt" placeholder="개봉일 (YYYY-MM-DD)" value={newMovie.openDt} onChange={handleChange} required /><br /><br />
                         <button>등록</button>
                         <button onClick={hide}>취소</button>
                     </form>
