@@ -167,25 +167,31 @@ const PayMentCom = () => {
             console.log("@@@data : ",createRes.data)
             const dbPaymentId = createRes.data.data.paymentId;
             console.log("@@@dbPaymentId : ",dbPaymentId)
+            console.log("@@@paymentId : ",paymentId)
       
             // 결제 완료 검증: 포트원 API 조회 후 DB 업데이트 수행
-            // const confirmRes  = await Axios.post(
-            //     "http://localhost:8080/root/member/payment/confirm",
-            //     { portonePaymentId: txId },
-            //     {
-            //         headers: {
-            //             Authorization: `Bearer ${process.env.REACT_APP_PORTONE_CHANNEL_KEY}` // ✅ Bearer 추가
-            //         },
-            //         withCredentials: true // ✅ CORS 인증 정보 포함
-            //     }
-            // );
-            // console.log("confirmRes@@@@@:",confirmRes.data.data.rs)
-            // if (confirmRes.data.data.rs === '성공') {
-            //   alert("결제가 성공적으로 완료되었습니다.");
-            //   navigate("/ticket/complete");
-            // } else {
-            //   alert("결제 확인 실패.");
-            // }
+            const confirmRes  = await Axios.post(
+                "http://localhost:8080/root/member/payment/confirm",
+                {   portonePaymentId: paymentId,
+                    amount : 1000,
+                    scheduleId: scheduleId,
+                    seatIds: [...seatIds]
+                }
+                // {
+                //     headers: {
+                //         Authorization: `Bearer ${process.env.REACT_APP_PORTONE_CHANNEL_KEY}` // ✅ Bearer 추가
+                //     },
+                //     withCredentials: true // ✅ CORS 인증 정보 포함
+                // }
+            );
+            console.log("confirmRes@@@@@:",confirmRes.data.data.rs)
+            if (confirmRes.data.data.rs === '성공') {
+              alert("결제가 성공적으로 완료되었습니다.");
+              navigate("/");
+            } else {
+              alert("결제 확인 실패.");
+              navigate("/");
+            }
           } else {
             alert(`결제 실패: ${response.message || "알 수 없는 오류"}`);
         }
