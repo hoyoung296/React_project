@@ -5,6 +5,7 @@ import PortOne from '@portone/browser-sdk/v2'; // 포트원 V2 SDK 임포트
 import Axios from "axios";
 import "../../css/ticket.css";
 
+
 const STORE_ID = process.env.REACT_APP_PORTONE_STORE_ID;       // 포트원 상점 식별자
 const CHANNEL_KEY = process.env.REACT_APP_PORTONE_CHANNEL_KEY; // 포트원 채널 키
 
@@ -13,35 +14,57 @@ console.log("키값1",STORE_ID)
 console.log("키값2",CHANNEL_KEY)
 
 
+
+
 const PayMentCom = () => {
     const [paymentMethod, setPaymentMethod] = useState(""); // 결제 수단
     const [isSubmitting, setIsSubmitting] = useState(false);
     const location = useLocation();
     const navigate = useNavigate();
 
-    useEffect(() => { //location.state에 있는 값들을 localStorage에 저장
+    // reservationId 상태로 관리
+    const [reservationId, setReservationId] = useState(() => {
+        const storedReservationId = localStorage.getItem('reservationId');
+        return storedReservationId ? storedReservationId : null;
+    });
+
+    // reservationId가 변경될 때마다 로컬스토리지에 저장
+    useEffect(() => {
+        if (location.state && location.state.reservationId) {
+            const newReservationId = String(location.state.reservationId);
+            setReservationId(newReservationId); // 상태 업데이트
+            localStorage.setItem('reservationId', newReservationId); // 로컬스토리지에 저장
+        } else if (!reservationId) {
+            alert("예매 번호가 없습니다.");
+        }
+    }, [location.state, reservationId]);
+
+    // 좌석 정보 변경 시 로컬스토리지에 저장 및 상태 업데이트
+    const [seatIds, setSeatIds] = useState(() => {
+        const storedSeatIds = localStorage.getItem("seatIds");
+        return storedSeatIds ? JSON.parse(storedSeatIds) : [];
+    });
+
+    useEffect(() => {
         if (location.state) {
-            console.log("선택된 좌석 확인:", location.state.seatIds);
-            // 각 값들을 로컬스토리지에 저장
-            localStorage.setItem('movieTitle', JSON.stringify(location.state.movieDetails.title));
-            localStorage.setItem('movieDirector', JSON.stringify(location.state.movieDetails.director));
-            localStorage.setItem('movieActors', JSON.stringify(location.state.movieDetails.actors));
-            localStorage.setItem('moviePosterUrl', JSON.stringify(location.state.movieDetails.posterurl));
-            localStorage.setItem('selectedDate', JSON.stringify(location.state.selectedDate));
-            localStorage.setItem('selectedCinema', JSON.stringify(location.state.selectedCinema));
-            localStorage.setItem('selectedStartTime', JSON.stringify(location.state.selectedStartTime));
-            localStorage.setItem('totalAmount', JSON.stringify(location.state.totalAmount));
-            localStorage.setItem('reservationId', JSON.stringify(location.state.reservationId));
-            localStorage.setItem('scheduleId', JSON.stringify(location.state.scheduleId));
-            localStorage.setItem('seatIds', JSON.stringify(location.state.seatIds));
-            
-            console.log("🔹 location.state.seatIds:", location.state.seatIds); // ⬅ 저장 직전 값 확인
-            console.log("🔹 저장 후 seatIds:", localStorage.getItem('seatIds')); // ⬅ 저장 후 값 확인
-            console.log("🔹 localstorage seatIds : ", storedSeatIds ? JSON.parse(storedSeatIds) : [])
-    
-            // 필요한 다른 값들도 추가적으로 저장
+            localStorage.setItem("seatIds", JSON.stringify(location.state.seatIds));
+            setSeatIds(location.state.seatIds); // 💡 UI 반영을 위해 상태 업데이트
         }
     }, [location.state]);
+
+    useEffect(() => {
+        const handleStorageChange = () => {
+            const updatedSeatIds = localStorage.getItem("seatIds");
+            setSeatIds(updatedSeatIds ? JSON.parse(updatedSeatIds) : []);
+        };
+
+        window.addEventListener("storage", handleStorageChange);
+
+        return () => {
+            window.removeEventListener("storage", handleStorageChange);
+        };
+    }, []);
+
 
     const storedMovieTitle = localStorage.getItem('movieTitle');
     const movieTitle = storedMovieTitle ? JSON.parse(storedMovieTitle) : null;
@@ -59,25 +82,13 @@ const PayMentCom = () => {
     const selectedStartTime = storedSelectedStartTime ? JSON.parse(storedSelectedStartTime) : null;
     const storedTotalAmount = localStorage.getItem('totalAmount');
     const totalAmount = storedTotalAmount ? JSON.parse(storedTotalAmount) : 0;
-    const storedReservationId = localStorage.getItem('reservationId');
-    const reservationId = storedReservationId ? JSON.parse(storedReservationId) : null;
+
+    
+   // const storedReservationId = localStorage.getItem('reservationId');
+   // const reservationId = localStorage.getItem('reservationId');
+    
     const storedScheduleId = localStorage.getItem('scheduleId');
     const scheduleId = storedScheduleId ? JSON.parse(storedScheduleId) : null;
-    const storedSeatIds = localStorage.getItem('seatIds')
-    const seatIds = storedSeatIds ? JSON.parse(storedSeatIds) : []; 
-    
-
-    // const {
-    //     movieDetails = {},
-    //     selectedDate = "정보 없음",
-    //     selectedCinema = "정보 없음",
-    //     selectedStartTime = "정보 없음",
-    //     totalAmount = 0,
-    //     reservationId,
-    //     scheduleId,
-    //     seatIds = []
-    // } = location.state || {};
-    // console.log("현재 location.state: ", location.state);
 
 
 
@@ -219,7 +230,6 @@ const PayMentCom = () => {
             }
         };
 
-        window.history.pushState(null, document.title); // 초기 히스토리 추가
         window.history.pushState(null, document.title);
         window.addEventListener("popstate", handlePopState);
 
@@ -255,7 +265,7 @@ const PayMentCom = () => {
                             <p>{selectedStartTime || "정보 없음"}</p>
                             <p>{selectedCinema || "정보 없음"}</p>
                             <p>{seatIds.length > 0 ? `${seatIds.length}명` : "정보 없음"}</p>
-                            <p>{storedSeatIds}</p>
+                            <p>{seatIds.length > 0 ? seatIds.join(", ") : "정보 없음"}</p>
 
                         </div>
                     </div>
