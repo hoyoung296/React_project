@@ -30,8 +30,8 @@ const AdminScheduleCom = ({ list, show, hide, screen, onChange, mySubmit, delSub
                                         <td>
                                             {data.scheduleId}
                                         </td>
-                                        <td>{data.startDateTime ? new Date(data.startDateTime).toLocaleString() : "날짜 없음"}</td>
-                                        <td>{data.endDateTime ? new Date(data.endDateTime).toLocaleString() : "날짜 없음"}</td>
+                                        <td>{new Date(data.startDateTime).toLocaleString()}</td>
+                                        <td>{new Date(data.endDateTime).toLocaleString()}</td>
                                         <td>
                                             {data.movieId}
                                         </td>
@@ -71,9 +71,9 @@ const AdminScheduleCom = ({ list, show, hide, screen, onChange, mySubmit, delSub
                         </select>
                         <br />
                         <p>상영 기간</p>
-                        <input type="date" name="startDate" onChange={onChange} min={new Date().toISOString().split("T")[0]} />
+                        <input type="date" name="startDate" onChange={onChange} min={new Date(new Date().getTime() + 9 * 60 * 60 * 1000).toISOString().split("T")[0]} />
                         ~
-                        <input type="date" name="endDate" onChange={onChange} min={new Date().toISOString().split("T")[0]} /><br />
+                        <input type="date" name="endDate" onChange={onChange} min={new Date(new Date().getTime() + 9 * 60 * 60 * 1000).toISOString().split("T")[0]} /><br />
                         <p>상영관 선택</p>
                         <div>
                             {screen.map((data) => (

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import AdminMovieCom from "../../components/Admin/AdminMovieCom"
 import { getSearchList } from "../../service/review"
-import { insert, updateMovie, updateMovieManual } from "../../service/admin"
+import { deleteMovie, insert, updateMovie, updateMovieManual } from "../../service/admin"
 import { useNavigate } from "react-router-dom"
 
 const AdminMovieCon = () => {
@@ -69,7 +69,7 @@ const AdminMovieCon = () => {
                 actors: "",
                 movieRank: "",
                 openDt: "",
-            })     
+            })
         } catch (error) {
             if (error.response && error.response.data && error.response.data.message) {
                 alert(error.response.data.message)
@@ -129,9 +129,26 @@ const AdminMovieCon = () => {
             elements[0].style.display = "none"
     }
 
+    // 영화 삭제
+    const delMovie = async (id) => {
+        try {
+            const response = await deleteMovie(id)
+            alert(response.message)
+            const updatedData = await getSearchList("")
+            setList(updatedData)
+            navigate("/adminMovie")
+        } catch (error) {
+            if (error.response && error.response.data && error.response.data.message) {
+                alert(error.response.data.message)
+            } else {
+                alert("영화 삭제 중 오류 발생")
+            }
+        }
+    }
+
     return (
         <AdminMovieCom list={list} editMovie={editMovie} InputChange={InputChange} EditClick={EditClick} Update={Update}
-            manualUpdate={manualUpdate} show={show} hide={hide} handleChange={handleChange} manualinsert={manualinsert} newMovie={newMovie} />
+            manualUpdate={manualUpdate} show={show} hide={hide} handleChange={handleChange} manualinsert={manualinsert} newMovie={newMovie} delMovie={delMovie} />
     )
 }
 

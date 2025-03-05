@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const BASE_URL = "http://localhost:8080/root/admin"
+const BASE_URL = "http://192.168.51.103:8080/root/admin"
 
 // 영화 정보 업데이트
 const updateMovie = async (movieData) => {
@@ -17,7 +17,7 @@ const updateMovie = async (movieData) => {
     }
 }
 
-//영화 정보 수동 업데이트
+// 영화 정보 수동 업데이트
 const updateMovieManual = async () => {
     try {
         await axios.post(`${BASE_URL}/movie/popular`, {
@@ -79,7 +79,7 @@ const updateSchedule = async (id) => {
     }
 }
 
-//영화 일정 삭제하기
+// 영화 일정 삭제하기
 const delSchedule = async (id) => {
     try {
         const res = await axios.delete(`${BASE_URL}/schedule/delete`, {
@@ -92,7 +92,7 @@ const delSchedule = async (id) => {
     }
 }
 
-//영화 수동으로 삽입하기
+// 영화 수동으로 삽입하기
 const insert = async (id) => {
     try {
         const res = await axios.post(`${BASE_URL}/movie/insert`, id, {
@@ -107,4 +107,17 @@ const insert = async (id) => {
     }
 }
 
-export { updateMovie, updateMovieManual, getSchedule, getScreen, getList, updateSchedule, delSchedule, insert }
+// 영화 목록 삭제하기
+const deleteMovie = async (id) => {
+    try {
+        const res = await axios.delete(`${BASE_URL}/movie/delete`, {
+            params: { id },
+        })
+        return res.data
+    } catch (error) {
+        console.error("영화 일정 삭제 실패 : ", error)
+        throw error
+    }
+}
+
+export { updateMovie, updateMovieManual, getSchedule, getScreen, getList, updateSchedule, delSchedule, insert, deleteMovie }

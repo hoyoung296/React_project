@@ -1,7 +1,7 @@
 import AdminSidebar from "./AdminSidebar"
 import "../../css/admin/admin.css"
 
-const AdminMovieCom = ({ list, editMovie, InputChange, EditClick, Update, manualUpdate, show, hide, handleChange, manualinsert, newMovie }) => {
+const AdminMovieCom = ({ list, editMovie, InputChange, EditClick, Update, manualUpdate, show, hide, handleChange, manualinsert, newMovie, delMovie }) => {
     return (
         <div className="admindiv">
             <AdminSidebar activeLink="영화관리" />
@@ -54,7 +54,8 @@ const AdminMovieCom = ({ list, editMovie, InputChange, EditClick, Update, manual
                                 <button className="movieBtn" onClick={() => Update(data.movieId)}>수정 완료</button>
                             ) : (
                                 <button className="movieBtn" onClick={() => EditClick(data.movieId)}>수정</button>
-                            )}
+                            )}/
+                            <button className="movieBtn" onClick={()=>delMovie(data.movieId)}>삭제</button>
                         </td>
                     </tr>
                 ))
