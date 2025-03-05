@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const BASE_URL = "http://localhost:8080/root/review"
+const BASE_URL = "http://192.168.51.103:8080/root/review"
 
 // 학원에서만 다른사람 노트북 아이피로 연결 (박소담 전용) 
 //const BASE_URL = "http://localhost:8080/root/review" //성호

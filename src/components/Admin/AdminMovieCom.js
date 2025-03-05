@@ -8,6 +8,7 @@ const AdminMovieCom = ({ list, editMovie, InputChange, EditClick, Update, manual
             <div className="admindiv-1">
                 <h1>영화관리</h1>
                 <button onClick={show} className="movieBtn">추가</button>
+                <button className="movieBtn" onClick={() => manualUpdate()}>업데이트</button>
                 <div className="table-wrapper">
     <table className="movie-table">
         <thead>
@@ -63,11 +64,6 @@ const AdminMovieCom = ({ list, editMovie, InputChange, EditClick, Update, manual
                 <>
                     <tr>
                         <td colSpan="9">데이터가 없습니다.</td>
-                    </tr>
-                    <tr>
-                        <td style={{ border: "none" }}>
-                            <button className="movieBtn" onClick={() => manualUpdate()}>업데이트</button>
-                        </td>
                     </tr>
                 </>
             )}
