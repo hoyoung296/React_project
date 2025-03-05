@@ -123,7 +123,7 @@ const deleteMovie = async (id) => {
 // 결제 내역 가져오기
 const getPayment = async () => {
     try {
-        const res = await axios.get(`${BASE_URL}/미정`)
+        const res = await axios.get(`${BASE_URL}/paymentList`)
         return res.data
     } catch (error) {
         console.error("결제 내역 불러오기 실패: ", error)
