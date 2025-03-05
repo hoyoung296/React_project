@@ -2,7 +2,7 @@ import AdminSidebar from "./AdminSidebar"
 import "../../css/admin/admin.css"
 
 const AdminScheduleCom = ({ list, show, hide, screen, onChange, mySubmit, delSubmit, input,
-    handleTimeChange, selectedTimes, timeOptions, handleScreenChange, movie }) => {
+    handleTimeChange, selectedTimes, timeOptions, handleScreenChange, movie, isTimeDisabled }) => {
 
     return (
         <div className="admindiv">
@@ -30,8 +30,8 @@ const AdminScheduleCom = ({ list, show, hide, screen, onChange, mySubmit, delSub
                                         <td>
                                             {data.scheduleId}
                                         </td>
-                                        <td>{data.startDateTime ? new Date(data.startDateTime).toLocaleString() : "날짜 없음"}</td>
-                                        <td>{data.endDateTime ? new Date(data.endDateTime).toLocaleString() : "날짜 없음"}</td>
+                                        <td>{new Date(data.startDateTime).toLocaleString()}</td>
+                                        <td>{new Date(data.endDateTime).toLocaleString()}</td>
                                         <td>
                                             {data.movieId}
                                         </td>
@@ -57,7 +57,7 @@ const AdminScheduleCom = ({ list, show, hide, screen, onChange, mySubmit, delSub
             </div>
 
             <div className="modal">
-                <div  className="newMovie">
+                <div className="newMovie">
                     <h1>일정 추가</h1>
                     <form onSubmit={mySubmit}>
                         <p>영화 선택</p>
@@ -71,29 +71,37 @@ const AdminScheduleCom = ({ list, show, hide, screen, onChange, mySubmit, delSub
                         </select>
                         <br />
                         <p>상영 기간</p>
-                        <input type="date" name="startDate" onChange={onChange} /> ~ <input type="date" name="endDate" onChange={onChange} /><br />
+                        <input type="date" name="startDate" onChange={onChange} min={new Date(new Date().getTime() + 9 * 60 * 60 * 1000).toISOString().split("T")[0]} />
+                        ~
+                        <input type="date" name="endDate" onChange={onChange} min={new Date(new Date().getTime() + 9 * 60 * 60 * 1000).toISOString().split("T")[0]} /><br />
                         <p>상영관 선택</p>
                         <div>
-                        {screen.map((data) => (
-                            <label key={data.screenID}>
-                                <span>{data.screenName}</span> <input type="radio" name="screenId" value={data.screenID} onChange={handleScreenChange} />
-                            </label>
-                        ))}
+                            {screen.map((data) => (
+                                <label key={data.screenID}>
+                                    <span>{data.screenName}</span> <input type="radio" name="screenId" value={data.screenID} onChange={handleScreenChange} />
+                                </label>
+                            ))}
                         </div>
                         <br />
 
                         <p>상영 시간</p>
                         <div>
-                        {timeOptions.map((time) => (
-                            <label key={time}>
-                                <input type="checkbox" value={time} checked={selectedTimes.includes(time)} onChange={handleTimeChange} />
-                                <span>{time}</span>
-                            </label>
-                        ))}
+                            {timeOptions.map((time) => (
+                                <label key={time}>
+                                    <input
+                                        type="checkbox"
+                                        value={time}
+                                        checked={selectedTimes.includes(time)}
+                                        onChange={handleTimeChange}
+                                        disabled={isTimeDisabled(time)}
+                                    />
+                                    <span>{time}</span>
+                                </label>
+                            ))}
                         </div>
                         <br />
                         <button>등록</button>
-                        <button onClick={hide}>취소</button>
+                        <button type="button" onClick={hide}>취소</button>
                     </form>
                 </div>
             </div>

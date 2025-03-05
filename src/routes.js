@@ -19,6 +19,7 @@ import AdminMain from './pages/AdminMain';
 import AdminProtectedRoute from './components/Admin/AdminProtectedRoute';
 import OAuthCallback from './components/login/OAuthCallback';
 import LoginHandler from './components/login/LoginHandler';
+import ProtectedRoute from './components/login/ProtectedRoute';
 
 const routes = [
     { path: '/', element: <HomePage /> },
@@ -26,15 +27,18 @@ const routes = [
     { path: '/login/oauth2/callback/kakao', element: <LoginHandler/> },
     { path: '/search', element: <Search /> },
     { path: '/signup', element: <SignUp /> },
-    { path: '/ticket_date', element: <TicketDate /> },
-    { path: '/ticket_seat', element: <TicketSeat /> },
-    { path: '/payment', element: <PayMent /> },
-    { path: '/ticket_done', element: <TicketDone /> },
-    { path: '/myTicket', element: <MyTicket /> },
-    { path: '/myReview', element: <MyReview /> },
-    { path: '/info_pwd', element: <InfoPwd /> },
-    { path: '/info', element: <Info /> },
+
+    { path: '/ticket_date', element: <ProtectedRoute element={<TicketDate />} /> },
+    { path: '/ticket_seat', element: <ProtectedRoute element={<TicketSeat />} /> },
+    { path: '/payment', element: <ProtectedRoute element={<PayMent />} /> },
+    { path: '/ticket_done', element: <ProtectedRoute element={<TicketDone />} /> },
+    { path: '/myTicket', element: <ProtectedRoute element={<MyTicket />} /> },
+    { path: '/myReview', element: <ProtectedRoute element={<MyReview />} /> },
+    { path: '/info_pwd', element: <ProtectedRoute element={<InfoPwd />} /> },
+    { path: '/info', element: <ProtectedRoute element={<Info />} /> },
+
     { path: '*', element: <NotFound /> },
+
     { path: '/adminMain' , element : <AdminMain />},
     { path: '/adminMovie', element: <AdminProtectedRoute element={<AdminMovie />} /> },
     { path: '/adminMember', element: <AdminProtectedRoute element={<AdminMember />} /> },

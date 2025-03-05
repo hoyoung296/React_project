@@ -81,12 +81,16 @@ const TicketSeatCom = () => {
     // 결제 완료 후 페이지 이동
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log("✅ handleSubmit 함수 실행됨!");
 
         if (seatIds.size === 0) {
             alert("좌석을 선택해주세요.");
             return; // 예매 진행하지 않음
         }
-        
+        console.log("📌 서버로 보낼 데이터:");
+        console.log("scheduleId:", scheduleId);
+        console.log("seatIds:", [...seatIds]);
+        console.log("totalAmount:", totalAmount);
         // 예매 정보를 서버에 제출하는 API 호출 (예시)
         try {
             const response = await Axios.post("http://localhost:8080/root/member/reserve/reservation", {
@@ -166,7 +170,7 @@ const TicketSeatCom = () => {
             {/* 예매 정보 */}
             <div className="buySeat">
                 <div className="selectMovieInfo">
-                    {movieDetailsState.posterurl && <img src={`/img/${movieDetailsState?.posterurl}`} alt={movieDetailsState?.title} />}
+                <img src={`${movieDetails.posterurl}`} alt={movieDetails.title} />
                     <div>
                         <div>{movieDetailsState?.title || "정보 없음"}</div>
                         <div>감독 : <span>{movieDetailsState?.director || "정보 없음"}</span></div>

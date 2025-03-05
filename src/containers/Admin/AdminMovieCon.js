@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import AdminMovieCom from "../../components/Admin/AdminMovieCom"
 import { getSearchList } from "../../service/review"
-import { insert, updateMovie, updateMovieManual } from "../../service/admin"
+import { deleteMovie, insert, updateMovie, updateMovieManual } from "../../service/admin"
 import { useNavigate } from "react-router-dom"
 
 const AdminMovieCon = () => {
@@ -18,7 +18,6 @@ const AdminMovieCon = () => {
         actors: "",
         movieRank: "",
         openDt: "",
-        runtime: "",
     })
     const navigate = useNavigate()
 
@@ -59,7 +58,6 @@ const AdminMovieCon = () => {
             alert(response.message)
             const updatedData = await getSearchList("")
             setList(updatedData)
-
             setNewMovie({
                 movieId: "",
                 title: "",
@@ -71,13 +69,16 @@ const AdminMovieCon = () => {
                 actors: "",
                 movieRank: "",
                 openDt: "",
-                runtime: "",
             })
-            
-            hide()
         } catch (error) {
-            console.error("영화 추가 오류:", error)
+            if (error.response && error.response.data && error.response.data.message) {
+                alert(error.response.data.message)
+            } else {
+                alert("영화 추가 중 오류 발생")
+            }
         }
+
+        hide()
     }
 
     // 수정 버튼 클릭 시 해당 영화 상태에 저장
@@ -94,14 +95,20 @@ const AdminMovieCon = () => {
             alert(response.message)
             setEditMovie(null) // 수정 모드 종료
         } catch (error) {
-            console.error("영화 정보 수정 오류", error)
+            if (error.response && error.response.data && error.response.data.message) {
+                alert(error.response.data.message)
+            } else {
+                alert("영화 수정 중 오류 발생")
+            }
         }
     }
 
     // 수동으로 영화 업데이트 (영화 목록 없을 시 사용)
     const manualUpdate = async () => {
         try {
+            alert("데이터 요청")
             await updateMovieManual() // 데이터 업데이트 요청
+            alert("데이터 불러오기 완료")
             const updatedData = await getSearchList("") // 업데이트된 데이터 다시 가져오기
             setList(updatedData) // 상태 업데이트
             navigate("/adminMovie") // 데이터 갱신 후 페이지 이동
@@ -122,9 +129,26 @@ const AdminMovieCon = () => {
             elements[0].style.display = "none"
     }
 
+    // 영화 삭제
+    const delMovie = async (id) => {
+        try {
+            const response = await deleteMovie(id)
+            alert(response.message)
+            const updatedData = await getSearchList("")
+            setList(updatedData)
+            navigate("/adminMovie")
+        } catch (error) {
+            if (error.response && error.response.data && error.response.data.message) {
+                alert(error.response.data.message)
+            } else {
+                alert("영화 삭제 중 오류 발생")
+            }
+        }
+    }
+
     return (
         <AdminMovieCom list={list} editMovie={editMovie} InputChange={InputChange} EditClick={EditClick} Update={Update}
-            manualUpdate={manualUpdate} show={show} hide={hide} handleChange={handleChange} manualinsert={manualinsert} newMovie={newMovie} />
+            manualUpdate={manualUpdate} show={show} hide={hide} handleChange={handleChange} manualinsert={manualinsert} newMovie={newMovie} delMovie={delMovie} />
     )
 }
 
