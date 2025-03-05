@@ -42,6 +42,15 @@ useEffect(() => {
 // 좌석 정보 변경 시 로컬스토리지에 저장 및 상태 업데이트
 const [seatIds, setSeatIds] = useState(() => {
     const storedSeatIds = location.state?.seatIds || JSON.parse(localStorage.getItem("seatIds")) || [];
+
+     // 로컬스토리지에서 불러온 좌석 정보가 비어있다면 빈 배열로 초기화
+    if (storedSeatIds.length === 0) {
+        console.log("storedSeatIds가 없음! 추가하겠음");
+        seatIds = localStorage.getItem('seatIds');
+        console.log("seatIds : ", seatIds);
+
+    }
+    
     return storedSeatIds;
 });
 
@@ -90,10 +99,28 @@ const selectedStartTime = storedSelectedStartTime ? JSON.parse(storedSelectedSta
 const storedTotalAmount = localStorage.getItem('totalAmount');
 const totalAmount = storedTotalAmount ? JSON.parse(storedTotalAmount) : 0;
 
-// scheduleId 가져오기
-const storedScheduleId = location.state?.scheduleId || JSON.parse(localStorage.getItem('scheduleId')) || null;
-const scheduleId = storedScheduleId? JSON.parse(storedScheduleId) : null;
 
+const [scheduleId, setScheduleId] = useState(() => {
+    const storedScheduleId = location.state?.scheduleId || JSON.parse(localStorage.getItem('scheduleId')) || null;
+    return storedScheduleId;  // 바로 초기화
+});
+useEffect(() => {
+    if (scheduleId === "0" || scheduleId === null) {
+        console.log("scheduleId가 없음! 추가하겠음");
+        const storedScheduleId = localStorage.getItem('scheduleId');
+        if (storedScheduleId) {
+            setScheduleId(storedScheduleId);  // 로컬스토리지에서 가져온 값으로 상태 업데이트
+            console.log("scheduleId : ", storedScheduleId);
+        }
+    }
+}, [scheduleId]);  // scheduleId가 변경될 때마다 실행
+
+// scheduleId가 변경되면 로컬스토리지에 저장
+useEffect(() => {
+    if (scheduleId) {
+        localStorage.setItem('scheduleId', scheduleId);
+    }
+}, [scheduleId]);
 
 
     const renderPaymentNotice = () => {
