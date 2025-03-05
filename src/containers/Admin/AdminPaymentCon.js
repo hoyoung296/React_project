@@ -18,7 +18,7 @@ const AdminPaymentCon = () => {
     }, [])
 
     return<>
-        <AdminPaymentCom list={list}/>
+        <AdminPaymentCom list={list} />
     </>
 }
 
