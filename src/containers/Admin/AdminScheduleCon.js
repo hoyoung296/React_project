@@ -126,12 +126,8 @@ const AdminScheduleCon = () => {
     }
 
     return (
-        <AdminScheduleCom
-            list={list} show={show} hide={hide} screen={screen} onChange={onChange}
-            mySubmit={mySubmit} delSubmit={delSubmit} input={input} handleTimeChange={handleTimeChange}
-            selectedTimes={selectedTimes} timeOptions={timeOptions} handleScreenChange={handleScreenChange}
-            movie={movie} isTimeDisabled={isTimeDisabled}
-        />
+        <AdminScheduleCom list={list} show={show} hide={hide} screen={screen} onChange={onChange} mySubmit={mySubmit} delSubmit={delSubmit} 
+        input={input} handleTimeChange={handleTimeChange} selectedTimes={selectedTimes} timeOptions={timeOptions} handleScreenChange={handleScreenChange} movie={movie} isTimeDisabled={isTimeDisabled} />
     )
 }
 
