@@ -118,6 +118,7 @@ html{
     text-decoration: underline;
     font-weight: bold;
 }
+
 .embla {
     overflow: hidden;
     width: 100%;
@@ -314,17 +315,33 @@ html{
     padding: 5px 0;
     display: none;
 }
-.dropDown li {
-    padding: 10px;
+.userName{
+    cursor: default;
     text-align: center;
+    margin-top: 7px;
 }
-.dropDown li a {
+.dropDown > li:nth-child(2){
+    width: 80%;
+    height: 1px;
+    background-color: #ffffff;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+.dropDownBtn {
+    padding: 10px;
+    margin: auto;
+    text-align: center;
     text-decoration: none;
     color: #ffffff;
     display: block;
+    border-style: none;
+    background-color: transparent;
+    color: #ffffff;   
 }
-.dropDown li:hover {
+.dropDownBtn:hover {
     font-weight: bold;
+    cursor: pointer;
 }
 .dropDownMenu:hover .dropDown {
     display: block;

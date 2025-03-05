@@ -9,11 +9,18 @@ function HeaderCom({ onChange, mySubmit, input}) {
     const isHomePage = location.pathname === '/';
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [username, setUsername] = useState("");
 
     useEffect(() => {
         // 로컬 스토리지에서 로그인 상태 확인
         const loginStatus = localStorage.getItem("LoginSuccess");
         setIsLoggedIn(loginStatus === "true");  // 문자열 "true"와 비교
+
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+            const userData = JSON.parse(storedUser);
+            setUsername(userData.username || "닉네임"); // username 없으면 기본값 설정
+        }
     }, []);
 
     // 로그아웃 처리
@@ -39,9 +46,13 @@ function HeaderCom({ onChange, mySubmit, input}) {
                 <div className='dropDownMenu'>
                     <div className='profile_img'><img src='/img/img.png' alt='profile'/></div>
                     <ul className='dropDown'>
-                        <li className='dropDownBtn'><Link to="/myTicket?id=&start=">마이페이지</Link></li>
-                        <li className='dropDownBtn'>
-                            <button onClick={handleLogout}>로그아웃</button>
+                        <li className='userName'>{username}</li>
+                        <li/>
+                        <li>
+                            <button className='dropDownBtn' onClick={() => navigate("/myTicket?id=&start=")}>마이페이지</button>
+                        </li>
+                        <li>
+                            <button className='dropDownBtn' onClick={handleLogout}>로그아웃</button>
                         </li>
                     </ul>
                 </div>
