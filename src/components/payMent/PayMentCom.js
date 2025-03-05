@@ -22,73 +22,77 @@ const PayMentCom = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    // reservationId 상태로 관리
-    const [reservationId, setReservationId] = useState(() => {
-        const storedReservationId = localStorage.getItem('reservationId');
-        return storedReservationId ? storedReservationId : null;
-    });
+// reservationId 상태로 관리
+const [reservationId, setReservationId] = useState(() => {
+    const storedReservationId = location.state?.reservationId || localStorage.getItem('reservationId');
+    return storedReservationId ? String(storedReservationId) : null;
+});
 
-    // reservationId가 변경될 때마다 로컬스토리지에 저장
-    useEffect(() => {
-        if (location.state && location.state.reservationId) {
-            const newReservationId = String(location.state.reservationId);
-            setReservationId(newReservationId); // 상태 업데이트
-            localStorage.setItem('reservationId', newReservationId); // 로컬스토리지에 저장
-        } else if (!reservationId) {
-            alert("예매 번호가 없습니다.");
-        }
-    }, [location.state, reservationId]);
+// reservationId가 변경될 때마다 로컬스토리지에 저장
+useEffect(() => {
+    if (location.state && location.state.reservationId) {
+        const newReservationId = String(location.state.reservationId);
+        setReservationId(newReservationId);
+        localStorage.setItem('reservationId', newReservationId); // 상태 변경 시 로컬스토리지에 저장
+    } else if (!reservationId) {
+        alert("예매 번호가 없습니다.");
+    }
+}, [location.state, reservationId]);
 
-    // 좌석 정보 변경 시 로컬스토리지에 저장 및 상태 업데이트
-    const [seatIds, setSeatIds] = useState(() => {
-        const storedSeatIds = localStorage.getItem("seatIds");
-        return storedSeatIds ? JSON.parse(storedSeatIds) : [];
-    });
+// 좌석 정보 변경 시 로컬스토리지에 저장 및 상태 업데이트
+const [seatIds, setSeatIds] = useState(() => {
+    const storedSeatIds = location.state?.seatIds || JSON.parse(localStorage.getItem("seatIds")) || [];
+    return storedSeatIds;
+});
 
-    useEffect(() => {
-        if (location.state) {
-            localStorage.setItem("seatIds", JSON.stringify(location.state.seatIds));
-            setSeatIds(location.state.seatIds); // 💡 UI 반영을 위해 상태 업데이트
-        }
-    }, [location.state]);
+useEffect(() => {
+    if (location.state && location.state.seatIds) {
+        localStorage.setItem("seatIds", JSON.stringify(location.state.seatIds));
+        setSeatIds(location.state.seatIds); // 💡 UI 반영을 위해 상태 업데이트
+    }
+}, [location.state]);
 
-    useEffect(() => {
-        const handleStorageChange = () => {
-            const updatedSeatIds = localStorage.getItem("seatIds");
-            setSeatIds(updatedSeatIds ? JSON.parse(updatedSeatIds) : []);
-        };
+useEffect(() => {
+    const handleStorageChange = () => {
+        const updatedSeatIds = localStorage.getItem("seatIds");
+        setSeatIds(updatedSeatIds ? JSON.parse(updatedSeatIds) : []);
+    };
 
-        window.addEventListener("storage", handleStorageChange);
+    window.addEventListener("storage", handleStorageChange);
 
-        return () => {
-            window.removeEventListener("storage", handleStorageChange);
-        };
-    }, []);
+    return () => {
+        window.removeEventListener("storage", handleStorageChange);
+    };
+}, []);
 
+// 다른 값들 로컬스토리지에서 불러오기
+const storedMovieTitle = localStorage.getItem('movieTitle');
+const movieTitle = storedMovieTitle ? JSON.parse(storedMovieTitle) : null;
 
-    const storedMovieTitle = localStorage.getItem('movieTitle');
-    const movieTitle = storedMovieTitle ? JSON.parse(storedMovieTitle) : null;
-    const storedMovieDirector = localStorage.getItem('movieDirector');
-    const movieDirector = storedMovieDirector ? JSON.parse(storedMovieDirector) : null;
-    const storedMovieActors = localStorage.getItem('movieActors');
-    const movieActors = storedMovieActors ? JSON.parse(storedMovieActors) : null;
-    const storedMoviePosterUrl = localStorage.getItem('moviePosterUrl');
-    const moviePosterUrl = storedMoviePosterUrl ? JSON.parse(storedMoviePosterUrl) : null;
-    const storedSelectedDate = localStorage.getItem('selectedDate');
-    const selectedDate = storedSelectedDate ? JSON.parse(storedSelectedDate) : null;
-    const storedSelectedCinema = localStorage.getItem('selectedCinema');
-    const selectedCinema = storedSelectedCinema ? JSON.parse(storedSelectedCinema) : null;
-    const storedSelectedStartTime = localStorage.getItem('selectedStartTime');
-    const selectedStartTime = storedSelectedStartTime ? JSON.parse(storedSelectedStartTime) : null;
-    const storedTotalAmount = localStorage.getItem('totalAmount');
-    const totalAmount = storedTotalAmount ? JSON.parse(storedTotalAmount) : 0;
+const storedMovieDirector = localStorage.getItem('movieDirector');
+const movieDirector = storedMovieDirector ? JSON.parse(storedMovieDirector) : null;
 
-    
-   // const storedReservationId = localStorage.getItem('reservationId');
-   // const reservationId = localStorage.getItem('reservationId');
-    
-    const storedScheduleId = localStorage.getItem('scheduleId');
-    const scheduleId = storedScheduleId ? JSON.parse(storedScheduleId) : null;
+const storedMovieActors = localStorage.getItem('movieActors');
+const movieActors = storedMovieActors ? JSON.parse(storedMovieActors) : null;
+
+const storedMoviePosterUrl = localStorage.getItem('moviePosterUrl');
+const moviePosterUrl = storedMoviePosterUrl ? JSON.parse(storedMoviePosterUrl) : null;
+
+const storedSelectedDate = localStorage.getItem('selectedDate');
+const selectedDate = storedSelectedDate ? JSON.parse(storedSelectedDate) : null;
+
+const storedSelectedCinema = localStorage.getItem('selectedCinema');
+const selectedCinema = storedSelectedCinema ? JSON.parse(storedSelectedCinema) : null;
+
+const storedSelectedStartTime = localStorage.getItem('selectedStartTime');
+const selectedStartTime = storedSelectedStartTime ? JSON.parse(storedSelectedStartTime) : null;
+
+const storedTotalAmount = localStorage.getItem('totalAmount');
+const totalAmount = storedTotalAmount ? JSON.parse(storedTotalAmount) : 0;
+
+// scheduleId 가져오기
+const storedScheduleId = location.state?.scheduleId || JSON.parse(localStorage.getItem('scheduleId')) || null;
+const scheduleId = storedScheduleId? JSON.parse(storedScheduleId) : null;
 
 
 
@@ -204,21 +208,25 @@ const PayMentCom = () => {
     };
 
     useEffect(() => {
-        const handlePopState = async() => {
+        const handlePopState = async () => {
             if (!isSubmitting) {
-                console.log("뒤로가기 감지!!")
+                console.log("뒤로가기 감지!!");
                 console.log("🚀 전송할 데이터:");
                 console.log("reservationId:", reservationId);
                 console.log("scheduleId:", scheduleId);
                 console.log("seatIds:", seatIds);
-                if (window.confirm("페이지를 벗어날 시 변경사항이 저장되지 않을 수 있습니다. 이동하시겠습니까?")) {
+    
+                // 사용자가 뒤로 가기를 누를 때 예매 취소 여부 확인
+                const userConfirmed = window.confirm("페이지를 벗어날 시 변경사항이 저장되지 않을 수 있습니다. 이동하시겠습니까?");
+                if (userConfirmed) {
                     try {
-                        console.log("뒤로가기 YES -> axios 실행!!")
+                        // 예매 취소 요청을 백엔드로 보내는 부분
+                        console.log("뒤로가기 YES -> axios 실행!!");
                         await Axios.delete("http://localhost:8080/root/member/reserve/cancel", {
                             data: {
-                                reservationId: reservationId, 
+                                reservationId: reservationId,
                                 scheduleId: scheduleId,
-                                seatIds: [...seatIds]
+                                seatIds: seatIds,
                             },
                             headers: {
                                 'Content-Type': 'application/json',
@@ -226,25 +234,26 @@ const PayMentCom = () => {
                             }
                         });
                         console.log("✅ 예매가 정상적으로 취소되었습니다.");
-                        navigate(-1); // 뒤로가기
+                        navigate('/'); // 뒤로가기 후 홈으로 이동
                     } catch (error) {
                         console.error("❌ 예매 취소 실패:", error);
                     }
-                    console.log("axios 실행 후 뒤로가기 진행함")
-                    
                 }
             }
         };
-
-        window.history.pushState(null, document.title);
+    
+        // 페이지 상태를 history에 추가 (이 부분은 이미 존재하므로 변경이 필요 없음)
+        window.history.replaceState(null, document.title);
+        // popstate 이벤트 리스너 설정
         window.addEventListener("popstate", handlePopState);
-
-        // 페이지에서 벗어날 때 이벤트 제거
+    
+        // clean-up
         return () => {
-            window.removeEventListener("popstate", handlePopState);
+            
         };
-    }, [isSubmitting, navigate]);
+    }, [isSubmitting, reservationId, seatIds, scheduleId, navigate]);
 
+    
     return (
         <div className="payMentPage">
             <div className="payMent">
