@@ -1,6 +1,7 @@
 // src/components/LoginHandler.jsx
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import '../../css/login.css'
 import axios from 'axios';
 
 
@@ -26,7 +27,14 @@ import axios from 'axios';
         localStorage.setItem("jwtToken", response.data.jwtToken);
         localStorage.setItem("user", JSON.stringify(response.data.user));
         localStorage.setItem("LoginSuccess", JSON.stringify(response.data.loginSuccess));
-        navigate("/");
+
+         // 부모 창 새로 고침 후 로그인 완료 페이지로 이동
+        if (window.opener) {
+          window.opener.location.href = '/';
+          window.close(); // 팝업 창 닫기
+        } else {
+          window.location.href = '/'; // 팝업이 아닌 경우 일반 리디렉션
+        }
       } catch (error) {
         console.error("카카오 로그인 에러:", error);
       }
@@ -38,7 +46,7 @@ import axios from 'axios';
   }, [code, navigate]);
 
   return (
-    <div>
+    <div className='loginIng'>
       <p>로그인 중입니다. 잠시만 기다려주세요...</p>
     </div>
   );
