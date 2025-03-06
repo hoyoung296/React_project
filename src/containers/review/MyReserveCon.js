@@ -121,7 +121,7 @@ const MyReserveCon = () => {
             const response = await delReserve(rsv)
             alert(response.message)
             setStart(1)
-            navigate(`/myTicket?id=${id}&start=1`)
+            window.location.reload();
         } catch (error) {
             alert("오류 발생: " + (error.response?.data?.message || "알 수 없는 오류"))
         }

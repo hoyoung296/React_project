@@ -58,7 +58,7 @@ const TicketDateCom = () => {
         if (newSelectedDate) {
             try {
                 const response = await Axios.get("http://localhost:8080/root/member/schedule/startdate", {
-                    params: { startdate: newSelectedDate }
+                    params: { startdate: newSelectedDate,title }
                 });
                 console.log("✅ 상영관 정보:", response.data.data);
                 setCinemaInfo(response.data.data);
