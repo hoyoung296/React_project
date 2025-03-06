@@ -29,10 +29,10 @@ const MyReserveCon = () => {
                     page++
                 }
 
-                // 같은 scheduleId끼리 묶어서 새로운 리스트 생성
+                // 같은 reservationId끼리 묶어서 새로운 리스트 생성
                 const groupedData = {}
                 allData.forEach(item => {
-                    const key = item.scheduleId
+                    const key = item.reservationId
                     if (!groupedData[key]) {
                         groupedData[key] = { ...item, seatIds: [item.seatId] }
                     } else {
@@ -154,9 +154,9 @@ const MyReserveCon = () => {
     }
 
     return (
-        <MyReserveCom list={list} start={start} reviewStatus={reviewStatus} modalData={modalData} id={id} handlePageChange={handlePageChange} del={del} 
-        showModal={showModal} hideModal={hideModal} mySubmit={mySubmit} onChange={onChange} showResult={showResult} hideResult={hideResult} onResult={onResult} 
-        isModalOpen={isModalOpen} modalType={modalType} />
+        <MyReserveCom list={list} start={start} reviewStatus={reviewStatus} modalData={modalData} id={id} handlePageChange={handlePageChange} del={del}
+            showModal={showModal} hideModal={hideModal} mySubmit={mySubmit} onChange={onChange} showResult={showResult} hideResult={hideResult} onResult={onResult}
+            isModalOpen={isModalOpen} modalType={modalType} />
     )
 }
 

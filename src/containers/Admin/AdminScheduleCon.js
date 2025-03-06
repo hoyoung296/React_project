@@ -15,8 +15,7 @@ const AdminScheduleCon = () => {
     })
     const [selectedTimes, setSelectedTimes] = useState([])
     const [timeOptions, setTimeOptions] = useState([])
-
-    const screenTimeOptions = ["09:00", "10:00","11:00","12:00", "13:00", "14:00", "15:00", "18:00", "21:00"]
+    const screenTimeOptions = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "18:00", "21:00"]
 
     useEffect(() => {
         const fetchData = async () => {
@@ -40,10 +39,13 @@ const AdminScheduleCon = () => {
 
     const handleTimeChange = (e) => {
         const { value, checked } = e.target
-        if (checked) {
-            setSelectedTimes(prev => [...prev, value])
-        } else {
-            setSelectedTimes(prev => prev.filter(time => time !== value))
+        // 시간이 비활성화 상태이면 체크 해제되지 않도록 함
+        if (!isTimeDisabled(value)) {
+            if (checked) {
+                setSelectedTimes(prev => [...prev, value])
+            } else {
+                setSelectedTimes(prev => prev.filter(time => time !== value))
+            }
         }
     }
 
@@ -108,6 +110,7 @@ const AdminScheduleCon = () => {
             const response = await updateSchedule(dtos)
             alert(response.message)
             setList(await getSchedule(""))
+            setSelectedTimes([])  // 선택된 시간 초기화
         } catch (error) {
             alert(error.response?.data?.message || "일정 추가 중 오류 발생")
         }
@@ -126,8 +129,8 @@ const AdminScheduleCon = () => {
     }
 
     return (
-        <AdminScheduleCom list={list} show={show} hide={hide} screen={screen} onChange={onChange} mySubmit={mySubmit} delSubmit={delSubmit} 
-        input={input} handleTimeChange={handleTimeChange} selectedTimes={selectedTimes} timeOptions={timeOptions} handleScreenChange={handleScreenChange} movie={movie} isTimeDisabled={isTimeDisabled} />
+        <AdminScheduleCom list={list} show={show} hide={hide} screen={screen} onChange={onChange} mySubmit={mySubmit} delSubmit={delSubmit}
+            input={input} handleTimeChange={handleTimeChange} selectedTimes={selectedTimes} timeOptions={timeOptions} handleScreenChange={handleScreenChange} movie={movie} isTimeDisabled={isTimeDisabled} />
     )
 }
 
