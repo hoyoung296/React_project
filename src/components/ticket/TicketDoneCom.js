@@ -1,35 +1,43 @@
 import React from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../css/ticket.css';
 
 function TicketDoneCom() {
     const navigate = useNavigate();
+
+    const moviePosterUrl = localStorage.getItem("moviePosterUrl");
+    const movieDirector = localStorage.getItem("movieDirector");
+    const movieActors = localStorage.getItem("movieActors");
+    const movieTitle = localStorage.getItem("movieTitle");
+    const selectedDate = localStorage.getItem("selectedDate");
+    const selectedCinema = localStorage.getItem("selectedCinema");
+    const selectedStartTime = localStorage.getItem("selectedStartTime");
+    const totalAmount = JSON.parse(localStorage.getItem("totalAmount") || "0");
+    const reservationId = localStorage.getItem('reservationId');
+    const seatIds = JSON.parse(localStorage.getItem("seatIds")) || [];
     
-    const storedMovieTitle = localStorage.getItem('movieTitle');
-    const movieTitle = storedMovieTitle ? JSON.parse(storedMovieTitle) : null;
-    const storedMovieDirector = localStorage.getItem('movieDirector');
-    const movieDirector = storedMovieDirector ? JSON.parse(storedMovieDirector) : null;
-    const storedMovieActors = localStorage.getItem('movieActors');
-    const movieActors = storedMovieActors ? JSON.parse(storedMovieActors) : null;
-    const storedMoviePosterUrl = localStorage.getItem('moviePosterUrl');
-    const moviePosterUrl = storedMoviePosterUrl ? JSON.parse(storedMoviePosterUrl) : null;
-    const storedSelectedDate = localStorage.getItem('selectedDate');
-    const selectedDate = storedSelectedDate ? JSON.parse(storedSelectedDate) : null;
-    const storedSelectedCinema = localStorage.getItem('selectedCinema');
-    const selectedCinema = storedSelectedCinema ? JSON.parse(storedSelectedCinema) : null;
-    const storedSelectedStartTime = localStorage.getItem('selectedStartTime');
-    const selectedStartTime = storedSelectedStartTime ? JSON.parse(storedSelectedStartTime) : null;
-    const storedTotalAmount = localStorage.getItem('totalAmount');
-    const totalAmount = storedTotalAmount ? JSON.parse(storedTotalAmount) : 0;
-    const storedReservationId = localStorage.getItem('reservationId');
-    const reservationId = storedReservationId ? JSON.parse(storedReservationId) : null;
-    const storedScheduleId = localStorage.getItem('scheduleId');
-    const scheduleId = storedScheduleId ? JSON.parse(storedScheduleId) : null;
-    const storedSeatIds = localStorage.getItem('seatIds')
-    const seatIds = storedSeatIds ? JSON.parse(storedSeatIds) : []; 
-    
+    const [userId, setUserId] = useState(null);
+
+    const storedUser = localStorage.getItem("user");
+    if (userId) {
+        const userData = JSON.parse(storedUser);
+        setUserId(userData.userId || null); // userId 설정, 마이페이지 넘어갈 때 id가 필요해서 작성(나호영 작성)
+    }
+
     const goToMyPage = () => {
-        navigate("/myTicket");
+        navigate(`/myTicket?id=${userId}&start=`);
+        localStorage.removeItem("moviePosterUrl");
+        localStorage.removeItem("movieDirector");
+        localStorage.removeItem("movieActors");
+        localStorage.removeItem("movieTitle");
+        localStorage.removeItem("selectedDate");
+        localStorage.removeItem("selectedCinema");
+        localStorage.removeItem("selectedStartTime");
+        localStorage.removeItem("totalAmount");
+        localStorage.removeItem("reservationId");
+        localStorage.removeItem("seatIds");
+        localStorage.removeItem("scheduleId");
     }
 
     return (

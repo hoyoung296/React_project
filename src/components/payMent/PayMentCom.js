@@ -202,18 +202,7 @@ useEffect(() => {
             console.log("confirmRes@@@@@:",confirmRes.data.data.rs)
             if (confirmRes.data.data.rs === '성공') {
                 alert("결제가 성공적으로 완료되었습니다.");
-                localStorage.removeItem("moviePosterUrl");
-                localStorage.removeItem("movieDirector");
-                localStorage.removeItem("movieActors");
-                localStorage.removeItem("movieTitle");
-                localStorage.removeItem("selectedDate");
-                localStorage.removeItem("selectedCinema");
-                localStorage.removeItem("selectedStartTime");
-                localStorage.removeItem("totalAmount");
-                localStorage.removeItem("reservationId");
-                localStorage.removeItem("seatIds");
-                localStorage.removeItem("scheduleId");
-                navigate("/");
+                navigate("/ticket_done");
             } else {
                 alert("결제 확인 실패.");
                 navigate("/");
