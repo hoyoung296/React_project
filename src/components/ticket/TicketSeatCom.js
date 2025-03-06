@@ -83,6 +83,16 @@ const TicketSeatCom = () => {
         e.preventDefault();
         console.log("✅ handleSubmit 함수 실행됨!");
 
+        // 1) 로컬 스토리지에서 userId 가져오기
+        const userStr = localStorage.getItem("user");  // "user"라는 키로 저장된 JSON 문자열
+        console.log("userStr@@@@@@", userStr);
+        let userId = "aaa";  // 기본값
+        if (userStr) {
+          const userObj = JSON.parse(userStr);        // 문자열을 JS 객체로 변환
+          userId = userObj.userId || "aaa";           // userObj 안의 userid 추출
+        }
+        console.log("userId@@@@@@", userId);
+
         if (seatIds.size === 0) {
             alert("좌석을 선택해주세요.");
             return; // 예매 진행하지 않음
@@ -97,6 +107,7 @@ const TicketSeatCom = () => {
                 scheduleId,
                 seatIds: [...seatIds],
                 totalAmount: totalAmount, //서버 연결해서 스케쥴id, 선택좌석, 총 금액 전달함
+                userId: userId, 
                 withCredentials: true  // ✅ 세션 쿠키를 서버에 전달하는 설정
             });
             console.log("✅ 예매 성공:", response.data);

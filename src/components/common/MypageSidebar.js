@@ -3,30 +3,34 @@ import '../../css/review/MypageSidebar.css'
 
 const MypageSidebar = ({ activeLink }) => {
     const [params] = useSearchParams()
-    const paramId = params.get("id")
     const location = useLocation()
-    const userId = paramId
+
+    // localStorage에서 user 정보 가져오기
+    const storedUser = localStorage.getItem("user")
+    const userData = storedUser ? JSON.parse(storedUser) : null
+    const username = userData?.username || "사용자"
+    const userId = params.get("id")
     const customLinks = location.pathname.includes("myReview")
         ? [
-            { to: userId ? `/myTicket?id=${userId}&start=` : `/myTicket?id=${paramId}&start=`, text: "내 예매내역" },
+            { to: `/myTicket?id=${userId}&start=`, text: "내 예매내역" },
             { to: "/myReview", text: "내 리뷰" },
-            { to: userId ? `/info_pwd?id=${userId}` : `/info_pwd?id=${paramId}`, text: "회원정보 수정" }
+            { to: `/info_pwd?id=${userId}`, text: "회원정보 수정" }
         ]
         : location.pathname.includes("myTicekt") ? [
             { to: "/myTicket", text: "내 예매내역" },
-            { to: userId ? `/myReview?id=${userId}&start=` : `/myReview?id=${paramId}&start=`, text: "내 리뷰" },
-            { to: userId ? `/info_pwd?id=${userId}` : `/info_pwd?id=${paramId}`, text: "회원정보 수정" }
+            { to: `/myReview?id=${userId}&start=`, text: "내 리뷰" },
+            { to: `/info_pwd?id=${userId}`, text: "회원정보 수정" }
         ] :
             [
-                { to: userId ? `/myTicket?id=${userId}&start=` : `/myTicket?id=${paramId}&start=`, text: "내 예매내역" },
-                { to: userId ? `/myReview?id=${userId}&start=` : `/myReview?id=${paramId}&start=`, text: "내 리뷰" },
+                { to: `/myTicket?id=${userId}&start=`, text: "내 예매내역" },
+                { to: `/myReview?id=${userId}&start=`, text: "내 리뷰" },
                 { to: "/info_pwd", text: "회원정보 수정" }
             ]
 
     return <>
         <div className="SidebarDiv">
             <img src="/img/movie1.jpg" alt="프사" /><br />
-            <b>{userId || paramId}</b>
+            <b>{username}</b>
             {customLinks.map((link, index) => (
                 <p key={index}>
                     {activeLink === link.text ? (

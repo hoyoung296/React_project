@@ -154,7 +154,7 @@ useEffect(() => {
             channelKey: CHANNEL_KEY,
             paymentId: String(reservationId), // merchant_uid 역할
             orderName: "테스트 상품 결제",
-            totalAmount: 1000,
+            totalAmount: totalAmount,
             currency: "CURRENCY_KRW",
             // 신용카드는 "CARD", 카카오페이와 네이버페이는 모두 EASY_PAY로 지정
             payMethod: paymentMethod === "신용카드" ? "CARD" : "EASY_PAY",
@@ -174,7 +174,7 @@ useEffect(() => {
             const createRes = await Axios.post('http://localhost:8080/root/member/payment/create', {
               reservationId: String(reservationId), // 예시 값
               paymentMethodId: paymentMethodId, // 예시 값
-              amount: 1000, // 실제 결제 금액 사용
+              amount: totalAmount, // 실제 결제 금액 사용
               //amount: totalAmount, // 실제 결제 금액 사용
               portonePaymentId: txId, // 결제 시도 고유 번호 사용
             });
@@ -188,7 +188,7 @@ useEffect(() => {
             const confirmRes  = await Axios.post(
                 "http://localhost:8080/root/member/payment/confirm",
                 {   portonePaymentId: paymentId,
-                    amount : 1000,
+                    amount : totalAmount,
                     scheduleId: scheduleId,
                     seatIds: [...seatIds]
                 }

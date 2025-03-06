@@ -106,7 +106,11 @@ const SignUpCom = () => {
                     <button type="button" onClick={handlePostcodeSearch}>우편번호 찾기</button>
                     <input type="text" className="input_text" value={address} placeholder="주소" readOnly />
                     <input type="text" className="input_text" value={detailAddress} placeholder="상세주소" onChange={(e) => setDetailAddress(e.target.value)} />
-                    <input type="date" className="input_text" placeholder="생년월일" value={userBirthday} onChange={(e) => setUserBirthday(e.target.value)} required />
+                    <input type="text" className="input_text" value={userBirthday} placeholder="생년월일" onChange={(e) => setUserBirthday(e.target.value)} onFocus={(e) => (e.target.type = "date")} // 클릭 시 달력 표시
+                    onBlur={(e) => (e.target.type = "text")}  // 포커스 해제 시 다시 placeholder 표시
+                    required />
+
+
 
                     <button className='sign_btn' onClick={handleSignUp}>Sign up</button>
             </div>
