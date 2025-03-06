@@ -85,7 +85,7 @@ const writeReview = async (id) => {
 // 예매 취소
 const delReserve = async (id) => {
     try {
-        const res = await axios.delete(`${BASE_URL}/del`, {
+        const res = await axios.delete(`http://localhost:8080/root/member/payment/cancel`, {
             params: { id },
         })
         return res.data
