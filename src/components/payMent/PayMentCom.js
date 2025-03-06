@@ -183,7 +183,7 @@ useEffect(() => {
             const dbPaymentId = createRes.data.data.paymentId;
             console.log("@@@dbPaymentId : ",dbPaymentId)
             console.log("@@@paymentId : ",paymentId)
-      
+
             // 결제 완료 검증: 포트원 API 조회 후 DB 업데이트 수행
             const confirmRes  = await Axios.post(
                 "http://localhost:8080/root/member/payment/confirm",
@@ -201,13 +201,24 @@ useEffect(() => {
             );
             console.log("confirmRes@@@@@:",confirmRes.data.data.rs)
             if (confirmRes.data.data.rs === '성공') {
-              alert("결제가 성공적으로 완료되었습니다.");
-              navigate("/");
+                alert("결제가 성공적으로 완료되었습니다.");
+                localStorage.removeItem("moviePosterUrl");
+                localStorage.removeItem("movieDirector");
+                localStorage.removeItem("movieActors");
+                localStorage.removeItem("movieTitle");
+                localStorage.removeItem("selectedDate");
+                localStorage.removeItem("selectedCinema");
+                localStorage.removeItem("selectedStartTime");
+                localStorage.removeItem("totalAmount");
+                localStorage.removeItem("reservationId");
+                localStorage.removeItem("seatIds");
+                localStorage.removeItem("scheduleId");
+                navigate("/");
             } else {
-              alert("결제 확인 실패.");
-              navigate("/");
+                alert("결제 확인 실패.");
+                navigate("/");
             }
-          } else {
+        } else {
             alert(`결제 실패: ${response.message || "알 수 없는 오류"}`);
         }
         } catch (error) {
