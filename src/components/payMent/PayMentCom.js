@@ -74,30 +74,14 @@ useEffect(() => {
     };
 }, []);
 
-// 다른 값들 로컬스토리지에서 불러오기
-const storedMovieTitle = localStorage.getItem('movieTitle');
-const movieTitle = storedMovieTitle ? JSON.parse(storedMovieTitle) : null;
-
-const storedMovieDirector = localStorage.getItem('movieDirector');
-const movieDirector = storedMovieDirector ? JSON.parse(storedMovieDirector) : null;
-
-const storedMovieActors = localStorage.getItem('movieActors');
-const movieActors = storedMovieActors ? JSON.parse(storedMovieActors) : null;
-
-const storedMoviePosterUrl = localStorage.getItem('moviePosterUrl');
-const moviePosterUrl = storedMoviePosterUrl ? JSON.parse(storedMoviePosterUrl) : null;
-
-const storedSelectedDate = localStorage.getItem('selectedDate');
-const selectedDate = storedSelectedDate ? JSON.parse(storedSelectedDate) : null;
-
-const storedSelectedCinema = localStorage.getItem('selectedCinema');
-const selectedCinema = storedSelectedCinema ? JSON.parse(storedSelectedCinema) : null;
-
-const storedSelectedStartTime = localStorage.getItem('selectedStartTime');
-const selectedStartTime = storedSelectedStartTime ? JSON.parse(storedSelectedStartTime) : null;
-
-const storedTotalAmount = localStorage.getItem('totalAmount');
-const totalAmount = storedTotalAmount ? JSON.parse(storedTotalAmount) : 0;
+const moviePosterUrl = localStorage.getItem("moviePosterUrl");
+const movieDirector = localStorage.getItem("movieDirector");
+const movieActors = localStorage.getItem("movieActors");
+const movieTitle = localStorage.getItem("movieTitle");
+const selectedDate = localStorage.getItem("selectedDate");
+const selectedCinema = localStorage.getItem("selectedCinema");
+const selectedStartTime = localStorage.getItem("selectedStartTime");
+const totalAmount = JSON.parse(localStorage.getItem("totalAmount") || "0");
 
 
 const [scheduleId, setScheduleId] = useState(() => {
@@ -199,7 +183,7 @@ useEffect(() => {
             const dbPaymentId = createRes.data.data.paymentId;
             console.log("@@@dbPaymentId : ",dbPaymentId)
             console.log("@@@paymentId : ",paymentId)
-      
+
             // 결제 완료 검증: 포트원 API 조회 후 DB 업데이트 수행
             const confirmRes  = await Axios.post(
                 "http://localhost:8080/root/member/payment/confirm",
@@ -217,13 +201,24 @@ useEffect(() => {
             );
             console.log("confirmRes@@@@@:",confirmRes.data.data.rs)
             if (confirmRes.data.data.rs === '성공') {
-              alert("결제가 성공적으로 완료되었습니다.");
-              navigate("/");
+                alert("결제가 성공적으로 완료되었습니다.");
+                localStorage.removeItem("moviePosterUrl");
+                localStorage.removeItem("movieDirector");
+                localStorage.removeItem("movieActors");
+                localStorage.removeItem("movieTitle");
+                localStorage.removeItem("selectedDate");
+                localStorage.removeItem("selectedCinema");
+                localStorage.removeItem("selectedStartTime");
+                localStorage.removeItem("totalAmount");
+                localStorage.removeItem("reservationId");
+                localStorage.removeItem("seatIds");
+                localStorage.removeItem("scheduleId");
+                navigate("/");
             } else {
-              alert("결제 확인 실패.");
-              navigate("/");
+                alert("결제 확인 실패.");
+                navigate("/");
             }
-          } else {
+        } else {
             alert(`결제 실패: ${response.message || "알 수 없는 오류"}`);
         }
         } catch (error) {
