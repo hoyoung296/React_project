@@ -49,7 +49,7 @@
     padding: 30px;
 }
 
-.cinema button{
+.cinemaItem{
     width: 50px;
     height: 30px;
     margin-right: 10px;
@@ -63,11 +63,18 @@
     border-radius: 5px;
     cursor: pointer;
 }
-.cinema button:hover{
+.cinemaItem:hover{
     background-color: #381E72;
 }
-.cinema button.selected {
+.cinemaItem.selected {
     background-color: #381E72;
+}
+.cinemaItem:disabled{
+    background-color: #838383a5;
+    color: #6c6c6c;
+}
+.cinemaItem:disabled:hover{
+    cursor: default;
 }
 .cinemaA{
     width: 100%;
@@ -89,7 +96,6 @@
     border-style: none;
 }
 .buyTicketImg{
-    background-color: #888;
     margin-top: 25px;
     margin-right: 30px;
 }
@@ -346,7 +352,7 @@
     margin-top: 50px;
     gap: 10px;
 }
-.selectMovieInfo > div:last-child >  div:nth-of-type(2){
+.selectMovieInfo > div:last-child >  div:nth-of-type(1){
     margin-bottom: 10px;
 }
 .selectMovieInfo img{
@@ -518,6 +524,7 @@
     width: 220px;
     height: 330px;
     margin-right: 100px;
+    border-radius: 5px;
 }
 .done{
     display: flex;

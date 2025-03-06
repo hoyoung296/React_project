@@ -10,6 +10,7 @@ function HeaderCom({ onChange, mySubmit, input}) {
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [username, setUsername] = useState("");
+    const [userId, setUserId] = useState(null);
 
     useEffect(() => {
         // 로컬 스토리지에서 로그인 상태 확인
@@ -20,6 +21,7 @@ function HeaderCom({ onChange, mySubmit, input}) {
         if (storedUser) {
             const userData = JSON.parse(storedUser);
             setUsername(userData.username || "닉네임"); // username 없으면 기본값 설정
+            setUserId(userData.userId || null);
         }
     }, []);
 
@@ -49,7 +51,7 @@ function HeaderCom({ onChange, mySubmit, input}) {
                         <li className='userName'>{username}</li>
                         <li/>
                         <li>
-                            <button className='dropDownBtn' onClick={() => navigate("/myTicket?id=&start=")}>마이페이지</button>
+                            <button className='dropDownBtn' onClick={() => navigate(`/myTicket?id=${userId}&start=`)}>마이페이지</button>
                         </li>
                         <li>
                             <button className='dropDownBtn' onClick={handleLogout}>로그아웃</button>

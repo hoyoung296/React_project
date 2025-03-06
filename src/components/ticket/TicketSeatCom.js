@@ -195,8 +195,8 @@ const TicketSeatCom = () => {
                 <img src={`${movieDetails.posterurl}`} alt={movieDetails.title} />
                     <div>
                         <div>{movieDetailsState?.title || "정보 없음"}</div>
-                        <div>감독 : <span>{movieDetailsState?.director || "정보 없음"}</span></div>
-                        <div>배우 : <span>{movieDetailsState?.actors || "정보 없음"}</span></div>
+                        <div><span>{movieDetailsState?.director || "정보 없음"}</span></div>
+                        <div><span>{movieDetailsState?.actors || "정보 없음"}</span></div>
                     </div>
                 </div>
                 <div className="selectDateInfo">
