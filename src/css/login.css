@@ -102,15 +102,15 @@ html, .login_body {
 }
 
 .slmpleBtn{
-    margin: 30px 0;
+    margin: 25px 0;
     display: flex;
-    gap: 20px;
 }
 .slmpleBtn button{
-    width: 30px;
-    height: 30px;
-    border-radius: 100%;
     border-style: none;
+    background-color: transparent;
+}
+.slmpleBtn img{
+    width: 60px;
 }
 .userBtn{
     margin-bottom: 20px;
@@ -135,4 +135,13 @@ html, .login_body {
     background-color: #ffffff69;
     padding-left: 20px;
     outline: none;
+}
+
+.loginIng{
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 30px;
 }

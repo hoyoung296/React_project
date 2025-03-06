@@ -18,10 +18,25 @@ const LoginPageCom = () => {
     };
 
      // 카카오 로그인 버튼 클릭 시 호출되는 함수
-     const kakaoLogin = (e) => {
+    const kakaoLogin = (e) => {
         e.preventDefault();
-        window.location.href = KAKAO_AUTH_URL;
+        const popup = window.open(
+            KAKAO_AUTH_URL,  // 로그인 URL
+            "kakaoLoginPopup",  // 팝업 이름
+            "width=500,height=600,scrollbars=yes"  // 팝업 창 크기와 설정
+        );
+    
+        // 팝업 창이 닫히면 부모 창을 새로 고침하고, 팝업 창을 닫음
+        const interval = setInterval(() => {
+            if (popup.closed) {
+                clearInterval(interval);
+                // 부모 창 새로 고침
+                window.location.reload();
+            }
+        }, 1000);
     };
+
+    
     return (
     <div className='login_body'>
         <div className='login'>
@@ -31,7 +46,7 @@ const LoginPageCom = () => {
                 <input type="password" className='input_pwd' required placeholder="PW"/>
                 <button className='login_btn' onClick={handleLogin}>Login</button>
                 <div className='slmpleBtn'>
-                    <button onClick={kakaoLogin}>K</button>
+                    <button onClick={kakaoLogin}><img src='img/kakao_login_large.png' alt='kakaoLogin'/></button>
                 </div>
                 <div className='userBtn'>
                     <button>아이디찾기</button>|
