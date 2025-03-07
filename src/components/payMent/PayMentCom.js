@@ -223,6 +223,7 @@ useEffect(() => {
         } catch (error) {
             console.error("결제 처리 중 오류 발생:", error);
             alert("결제 처리 중 오류가 발생했습니다.");
+            navigate("/");
         } finally {
             setIsSubmitting(false);
         }
@@ -256,6 +257,17 @@ useEffect(() => {
                         });
                         console.log("✅ 예매가 정상적으로 취소되었습니다.");
                         navigate('/'); // 뒤로가기 후 홈으로 이동
+                        localStorage.removeItem("moviePosterUrl");
+                        localStorage.removeItem("movieDirector");
+                        localStorage.removeItem("movieActors");
+                        localStorage.removeItem("movieTitle");
+                        localStorage.removeItem("selectedDate");
+                        localStorage.removeItem("selectedCinema");
+                        localStorage.removeItem("selectedStartTime");
+                        localStorage.removeItem("totalAmount");
+                        localStorage.removeItem("reservationId");
+                        localStorage.removeItem("seatIds");
+                        localStorage.removeItem("scheduleId");
                     } catch (error) {
                         console.error("❌ 예매 취소 실패:", error);
                     }
