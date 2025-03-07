@@ -3,7 +3,7 @@ import "../../css/review/MyReserve.css"
 import Pagination from "../common/Pagination"
 import Modal from "../mainPage/Modal"
 
-const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showModal, hideModal, modalData, id, mySubmit, onChange, showResult, hideResult, onResult, isModalOpen, modalType, onPayment }) => {
+const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showModal, hideModal, modalData, id, mySubmit, onChange, showResult, hideResult, onResult, isModalOpen, modalType, onPayment, onReserve }) => {
     const now = new Date()
     return <>
         <div className="ReserveTotalDiv">
@@ -27,17 +27,20 @@ const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showMo
                                     <p><b>예매번호 : {data.reservationId}</b>&nbsp;&nbsp;&nbsp;&nbsp;</p><br />
                                     <p><b>상영관 : {data.screenName}</b></p><br />
                                     <p><b>관람일 : {data.startDateTime}</b>&nbsp;&nbsp;&nbsp;&nbsp;<b>좌석 : {data.seatIds.join(", ")}</b></p><br />
-                                    <p><b>결제상태 :  {data.paymentId === undefined ? "결제진행중" : "결제완료"}</b></p>
+                                    {console.log("reservationstatusId 확인 :" , data.reservationStatusId)}
+                                    <p><b>예매상태 :  {data.reservationStatusId === 1 ? "예매 진행 중" : data.reservationStatusId === 2 ? "예매 완료" : "예매 취소"}</b></p>
+                                    {data.reservationStatusId===2 && <p><b>결제상태 :  {data.paymentId === undefined ? "결제진행중" : "결제완료"}</b></p>}
                                 </div>
                                 {list != null && (
                                     <div className="ReserveInfoPart3Div">
                                         {showReviewButton && (
-                                            hasReview && <button onClick={() => showModal(data.title, data.posterUrl, data.director, data.actors, data.movieId)}>리뷰 쓰기</button>
+                                            hasReview && data.reservationStatusId !== 3 && <button onClick={() => showModal(data.title, data.posterUrl, data.director, data.actors, data.movieId)}>리뷰 쓰기</button>
                                         )}
-                                        {showCancelButton && (
+                                        {showCancelButton && data.reservationStatusId === 2 && (
                                             <button onClick={() => del(data.reservationId)}>예매 취소</button>
                                         )}
-                                        {data.paymentId === undefined && <button onClick={()=>onPayment(data)}>결제하기</button>}
+                                        {data.reservationStatusId === 1 && <button onClick={()=>onReserve(data)}>예매 진행</button>}
+                                        {data.paymentId === undefined && data.reservationStatusId===2 && <button onClick={()=>onPayment(data)}>결제 진행</button>}
                                     </div>
                                 )}
                             </div>

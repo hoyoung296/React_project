@@ -153,6 +153,22 @@ const MyReserveCon = () => {
         navigate(`/myReview?id=${id}&start=`)
     }
 
+    const onReserve = (data) => {
+        const [date, time] = data.startDateTime.split(" ");
+        const formattedTime = time.slice(0, 5); 
+        navigate(`/ticket_seat?scheduleId=${data.scheduleId}`, {
+            state: {
+                title: data.title,
+                director: data.director,
+                actors : data.actors,
+                posterurl : data.posterUrl,
+                selectedDate: date,
+                selectedCinema: data.screenName,
+                selectedStartTime : formattedTime
+            }
+        })
+    }
+
     const onPayment = (data) => {
         const [date, time] = data.startDateTime.split(" ");
         const formattedTime = time.slice(0, 5); 
@@ -183,7 +199,7 @@ const MyReserveCon = () => {
     return (
         <MyReserveCom list={list} start={start} reviewStatus={reviewStatus} modalData={modalData} id={id} handlePageChange={handlePageChange} del={del}
             showModal={showModal} hideModal={hideModal} mySubmit={mySubmit} onChange={onChange} showResult={showResult} hideResult={hideResult} onResult={onResult}
-            isModalOpen={isModalOpen} modalType={modalType} onPayment={onPayment} />
+            isModalOpen={isModalOpen} modalType={modalType} onPayment={onPayment} onReserve={onReserve} />
     )
 }
 

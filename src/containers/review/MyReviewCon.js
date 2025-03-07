@@ -31,7 +31,6 @@ const MyReviewCon = () => {
     return <>
         <MyReviewCom list={list} start={start} handlePageChange={handlePageChange} />
     </>
-
 }
 
 export default MyReviewCon
