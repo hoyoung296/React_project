@@ -1,0 +1,57 @@
+.mypagePwd, .mypage{
+    display: flex;
+}
+.infoPwdMain{
+    min-width: 300px;
+    margin: auto;
+    display: flex;
+    flex-direction : column;
+    align-items: center;
+}
+.infoPwdMain p{
+    font-size: 17px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+.infoPwdMain input{
+    width: 200px;
+    height: 40px;
+    border: 2px solid #6f6f6f7a;
+    border-radius: 20px;
+    background-color: transparent;
+    padding-left: 20px;
+    outline: none;
+    color: #ffffff;
+}
+
+.infoPwdMain button {
+    width: 80px;
+    height: 30px;
+    background-color: #381E72;
+    border-style: none;
+    border-radius: 10px;
+    color: #ffffff;
+    margin-top: 20px;
+}
+.infoPwdMain button:hover{
+    background-color: #7857bd;
+    cursor: pointer;
+}
+
+.infoMain{
+    background-color: #6c6c6c;
+    min-width: 700px;
+    height: 500px;
+    margin: auto;
+    margin-top: 30px;
+    display: flex;
+    gap: 20px;
+}
+.infoMain > div:first-child{
+    background-color: #9c9c9c;
+    width: 60%;
+}
+.infoMain > div:last-child{
+    background-color: #9c9c9c;
+    width: 30%;
+}
