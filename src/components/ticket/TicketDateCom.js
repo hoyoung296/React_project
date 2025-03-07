@@ -138,9 +138,8 @@ const TicketDateCom = () => {
                         cinemaA.map((cinema, index) => (
                             <button
                                 key={index}
-                                className={selectedStartTime === cinema.STARTTIME && selectedCinema === cinema.SCREENNAME ? "cinemaItem selected" : "cinemaItem"}
+                                className="cinemaItem"
                                 onClick={() => handleCinemaSelect(cinema.SCREENNAME, cinema.STARTTIME, cinema.SCHEDULE_ID)}
-                                disabled={isPastTime(cinema.STARTTIME)}
                             >
                                 {cinema.STARTTIME}
                             </button>
@@ -157,9 +156,8 @@ const TicketDateCom = () => {
                         cinemaB.map((cinema, index) => (
                             <button
                                 key={index}
-                                className={selectedStartTime === cinema.STARTTIME && selectedCinema === cinema.SCREENNAME ? "cinemaItem selected" : "cinemaItem"}
+                                className="cinemaItem"
                                 onClick={() => handleCinemaSelect(cinema.SCREENNAME, cinema.STARTTIME, cinema.SCHEDULE_ID)}
-                                disabled={isPastTime(cinema.STARTTIME)}
                             >
                                 {cinema.STARTTIME}
                             </button>
@@ -176,9 +174,8 @@ const TicketDateCom = () => {
                         cinemaC.map((cinema, index) => (
                             <button
                                 key={index}
-                                className={selectedStartTime === cinema.STARTTIME && selectedCinema === cinema.SCREENNAME ? "cinemaItem selected" : "cinemaItem"}
+                                className="cinemaItem"
                                 onClick={() => handleCinemaSelect(cinema.SCREENNAME, cinema.STARTTIME, cinema.SCHEDULE_ID)}
-                                disabled={isPastTime(cinema.STARTTIME)}
                             >
                                 {cinema.STARTTIME}
                             </button>

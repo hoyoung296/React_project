@@ -69,13 +69,6 @@
 .cinemaItem.selected {
     background-color: #381E72;
 }
-.cinemaItem:disabled{
-    background-color: #838383a5;
-    color: #6c6c6c;
-}
-.cinemaItem:disabled:hover{
-    cursor: default;
-}
 .cinemaA{
     width: 100%;
     min-height: 150px;
