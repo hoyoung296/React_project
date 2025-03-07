@@ -2,7 +2,6 @@ import '../../css/main.css';
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 
-
 function HeaderCom({ onChange, mySubmit, input}) {
     const location = useLocation();
     const navigate = useNavigate();
@@ -42,7 +41,6 @@ function HeaderCom({ onChange, mySubmit, input}) {
                 <button className='search_btn'>
                     <img className='search_btn' src='/img/search.png' alt='search'/>
                 </button>
-                
             </form>
             {isLoggedIn ? (
                 <div className='dropDownMenu'>

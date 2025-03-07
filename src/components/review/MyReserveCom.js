@@ -3,7 +3,7 @@ import "../../css/review/MyReserve.css"
 import Pagination from "../common/Pagination"
 import Modal from "../mainPage/Modal"
 
-const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showModal, hideModal, modalData, id, mySubmit, onChange, showResult, hideResult, onResult, isModalOpen, modalType }) => {
+const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showModal, hideModal, modalData, id, mySubmit, onChange, showResult, hideResult, onResult, isModalOpen, modalType, onPayment }) => {
     const now = new Date()
     return <>
         <div className="ReserveTotalDiv">
@@ -26,7 +26,8 @@ const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showMo
                                 <div className="ReserveInfoPart2Div">
                                     <p><b>예매번호 : {data.reservationId}</b>&nbsp;&nbsp;&nbsp;&nbsp;</p><br />
                                     <p><b>상영관 : {data.screenName}</b></p><br />
-                                    <p><b>관람일 : {data.startDateTime}</b>&nbsp;&nbsp;&nbsp;&nbsp;<b>좌석 : {data.seatIds.join(", ")}</b></p>
+                                    <p><b>관람일 : {data.startDateTime}</b>&nbsp;&nbsp;&nbsp;&nbsp;<b>좌석 : {data.seatIds.join(", ")}</b></p><br />
+                                    <p><b>결제상태 :  {data.paymentId === undefined ? "결제진행중" : "결제완료"}</b></p>
                                 </div>
                                 {list != null && (
                                     <div className="ReserveInfoPart3Div">
@@ -36,6 +37,7 @@ const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showMo
                                         {showCancelButton && (
                                             <button onClick={() => del(data.reservationId)}>예매 취소</button>
                                         )}
+                                        {data.paymentId === undefined && <button onClick={()=>onPayment(data)}>결제하기</button>}
                                     </div>
                                 )}
                             </div>

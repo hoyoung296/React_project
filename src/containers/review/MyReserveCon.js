@@ -153,10 +153,37 @@ const MyReserveCon = () => {
         navigate(`/myReview?id=${id}&start=`)
     }
 
+    const onPayment = (data) => {
+        const [date, time] = data.startDateTime.split(" ");
+        const formattedTime = time.slice(0, 5); 
+        localStorage.setItem("moviePosterUrl", data.posterUrl);
+        localStorage.setItem("movieTitle", data.title);
+        localStorage.setItem("movieDirector", data.director);
+        localStorage.setItem("movieActors", data.actors);
+        localStorage.setItem("selectedDate", date);
+        localStorage.setItem("selectedCinema", data.screenName);
+        localStorage.setItem("selectedStartTime", formattedTime);
+        localStorage.setItem("totalAmount", data.totalAmount);
+
+        navigate("/payment", {
+            state: {
+                seatIds: data.seatIds,
+                movieTitle: data.title,
+                moviePosterUrl: data.posterUrl,
+                movieDirector: data.director,
+                movieActors: data.actors,
+                selectedDate: data.startDateTime,
+                selectedCinema: data.screenName,
+                scheduleId : data.scheduleId,
+                reservationId : data.reservationId
+            }
+        })
+    }
+
     return (
         <MyReserveCom list={list} start={start} reviewStatus={reviewStatus} modalData={modalData} id={id} handlePageChange={handlePageChange} del={del}
             showModal={showModal} hideModal={hideModal} mySubmit={mySubmit} onChange={onChange} showResult={showResult} hideResult={hideResult} onResult={onResult}
-            isModalOpen={isModalOpen} modalType={modalType} />
+            isModalOpen={isModalOpen} modalType={modalType} onPayment={onPayment} />
     )
 }
 
