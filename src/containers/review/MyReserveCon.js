@@ -24,6 +24,7 @@ const MyReserveCon = () => {
                 let page = 1
                 while (true) {
                     const data = await getReserveList(id, page)
+                    console.log("data 확인 : " , data)
                     if (!data.dto.length) break
                     allData = [...allData, ...data.dto]
                     page++
@@ -153,22 +154,6 @@ const MyReserveCon = () => {
         navigate(`/myReview?id=${id}&start=`)
     }
 
-    const onReserve = (data) => {
-        const [date, time] = data.startDateTime.split(" ");
-        const formattedTime = time.slice(0, 5); 
-        navigate(`/ticket_seat?scheduleId=${data.scheduleId}`, {
-            state: {
-                title: data.title,
-                director: data.director,
-                actors : data.actors,
-                posterurl : data.posterUrl,
-                selectedDate: date,
-                selectedCinema: data.screenName,
-                selectedStartTime : formattedTime
-            }
-        })
-    }
-
     const onPayment = (data) => {
         const [date, time] = data.startDateTime.split(" ");
         const formattedTime = time.slice(0, 5); 
@@ -199,7 +184,7 @@ const MyReserveCon = () => {
     return (
         <MyReserveCom list={list} start={start} reviewStatus={reviewStatus} modalData={modalData} id={id} handlePageChange={handlePageChange} del={del}
             showModal={showModal} hideModal={hideModal} mySubmit={mySubmit} onChange={onChange} showResult={showResult} hideResult={hideResult} onResult={onResult}
-            isModalOpen={isModalOpen} modalType={modalType} onPayment={onPayment} onReserve={onReserve} />
+            isModalOpen={isModalOpen} modalType={modalType} onPayment={onPayment} />
     )
 }
 
