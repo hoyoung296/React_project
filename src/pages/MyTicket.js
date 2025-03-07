@@ -1,4 +1,4 @@
-import MyReserveCon from "../containers/review/MyReserveCon";
+import MyReserveCon from "../containers/reserve/MyReserveCon";
 
 function MyTicket() {
     return<>

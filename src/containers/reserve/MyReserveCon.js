@@ -1,5 +1,5 @@
 import { useNavigate, useSearchParams } from "react-router-dom"
-import MyReserveCom from "../../components/review/MyReserveCom"
+import MyReserveCom from "../../components/reserve/MyReserveCom"
 import { useEffect, useState } from "react"
 import { checkReview, delReserve, getReserveList, writeReview } from "../../service/review"
 

@@ -1,4 +1,4 @@
-import SearchCon from '../containers/review/SearchCon';
+import SearchCon from '../containers/search/SearchCon';
 
 function Search() {
     return<>
