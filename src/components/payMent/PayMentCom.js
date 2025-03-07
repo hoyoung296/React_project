@@ -109,17 +109,27 @@ useEffect(() => {
 
     const renderPaymentNotice = () => {
         if (paymentMethod === "신용카드") {
-            return <p className="paymentNotice">신용카드 결제 안내문</p>;
+            return <p className="paymentNotice">
+                    신용카드 결제 순서<br/><br/>
+                    예매내역을 확인하신 후 우측 하단에 있는 '결제하기' 버튼을 클릭해주세요.<br/>
+                    버튼 클릭 시 신용카드 카드사 선택 창이 뜹니다.<br/>
+                    결제 인증창에서 정보를 입력하신 후 결제해주세요.
+            </p>;
         }
         if (paymentMethod === "네이버페이") {
-            return <p className="paymentNotice">네이버페이 결제 안내문</p>;
+            return <p className="paymentNotice">
+                    네이버페이 결제 순서<br/><br/>
+                    예매내역을 확인하신 후 우측 하단에 있는 '결제하기' 버튼을 클릭해주세요.<br/>
+                    버튼 클릭 시 '네이버페이' 결제 인증창이 뜹니다.<br/>
+                    '네이버페이' 결제 인증창에서 정보를 입력하신 후 결제해주세요.
+            </p>;
         }
         if (paymentMethod === "카카오페이") {
             return (
                 <p className="paymentNotice">
                     카카오페이 결제 순서<br/><br/>
-                    우측 하단에 있는 ‘결제하기’ 버튼을 클릭해주세요.<br/>
-                    예매내역 확인 후 결제하기 버튼 클릭 시 ‘카카오페이’ 결제 인증창이 뜹니다.<br/>
+                    예매내역을 확인하신 후 우측 하단에 있는 '결제하기' 버튼을 클릭해주세요.<br/>
+                    버튼 클릭 시 '카카오페이' 결제 인증창이 뜹니다.<br/>
                     ‘카카오페이’ 결제 인증창에서 정보를 입력하신 후 결제해주세요.
                 </p>
             );
@@ -274,8 +284,8 @@ useEffect(() => {
                         {moviePosterUrl && <img src={moviePosterUrl} alt={movieTitle} />}
                         <div>  
                             <div>{movieTitle|| "정보 없음"}</div>
-                            <div>감독 : <span>{movieDirector || "정보 없음"}</span></div>
-                            <div>배우 : <span>{movieActors || "정보 없음"}</span></div>
+                            <div><span>{movieDirector || "정보 없음"}</span></div>
+                            <div><span>{movieActors || "정보 없음"}</span></div>
                         </div>
                     </div>
                     <div>

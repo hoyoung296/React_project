@@ -105,6 +105,17 @@ const TicketDateCom = () => {
         });
     };
 
+    const isPastTime = (startTime) => {
+        const currentTime = new Date();
+        const [hours, minutes] = startTime.split(":").map(num => parseInt(num, 10));
+        const startTimeDate = new Date(currentTime);
+        startTimeDate.setHours(hours);
+        startTimeDate.setMinutes(minutes);
+        startTimeDate.setSeconds(0);
+        startTimeDate.setMilliseconds(0);
+        return startTimeDate < currentTime;
+    };
+
     return (
         <div className="ticketCon">
             <div className="ticketDate">
@@ -127,8 +138,9 @@ const TicketDateCom = () => {
                         cinemaA.map((cinema, index) => (
                             <button
                                 key={index}
-                                className="cinemaItem"
+                                className={selectedStartTime === cinema.STARTTIME && selectedCinema === cinema.SCREENNAME ? "cinemaItem selected" : "cinemaItem"}
                                 onClick={() => handleCinemaSelect(cinema.SCREENNAME, cinema.STARTTIME, cinema.SCHEDULE_ID)}
+                                disabled={isPastTime(cinema.STARTTIME)}
                             >
                                 {cinema.STARTTIME}
                             </button>
@@ -145,8 +157,9 @@ const TicketDateCom = () => {
                         cinemaB.map((cinema, index) => (
                             <button
                                 key={index}
-                                className="cinemaItem"
+                                className={selectedStartTime === cinema.STARTTIME && selectedCinema === cinema.SCREENNAME ? "cinemaItem selected" : "cinemaItem"}
                                 onClick={() => handleCinemaSelect(cinema.SCREENNAME, cinema.STARTTIME, cinema.SCHEDULE_ID)}
+                                disabled={isPastTime(cinema.STARTTIME)}
                             >
                                 {cinema.STARTTIME}
                             </button>
@@ -163,8 +176,9 @@ const TicketDateCom = () => {
                         cinemaC.map((cinema, index) => (
                             <button
                                 key={index}
-                                className="cinemaItem"
+                                className={selectedStartTime === cinema.STARTTIME && selectedCinema === cinema.SCREENNAME ? "cinemaItem selected" : "cinemaItem"}
                                 onClick={() => handleCinemaSelect(cinema.SCREENNAME, cinema.STARTTIME, cinema.SCHEDULE_ID)}
+                                disabled={isPastTime(cinema.STARTTIME)}
                             >
                                 {cinema.STARTTIME}
                             </button>
