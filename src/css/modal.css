@@ -101,3 +101,54 @@
     font-size: 19px;
     font-weight: bold;
 }
+
+.movieTitle > p:first-child{
+    font-size: 23px;
+    font-weight: bold;
+    margin-left: 20px;
+    margin-bottom: 40px;
+}
+.movieTitle img{
+    border-radius: 5px;
+}
+.reviewMovieInfo{
+    display: flex;
+    gap: 50px;
+    margin-left: 20px;
+    margin-bottom: 30px;
+    line-height: 25px;
+    align-items: flex-end;
+}
+.reviewMovieInfo > div > p:first-child{
+    margin-bottom: 20px;
+}
+.reviewMovieInfo p{
+    justify-content: flex-end;
+}
+.submitReview textarea{
+    width: 600px;
+    height: 120px;
+    border: 2px solid #7373736c;
+    border-radius: 5px;
+    background-color: transparent;
+    color: #ffffff;
+    outline: none;
+    padding: 15px;
+    resize: none;
+    margin-left: 5px;
+}
+.submitReview button{
+    width: 70px;
+    height: 30px;
+    background-color: #381E72;
+    border-radius: 3px;
+    border-style: none;
+    color: #ffffff;
+    line-height: 30px;
+    margin-top: 10px;
+    margin-left: 265px;
+}
+.submitReview button:hover{
+    cursor: pointer;
+    background-color: #7857bd;
+}

@@ -75,31 +75,51 @@ const Modal = ({ isOpen, onClose, type, infoData, onClick, Infolist, relatedList
                     ))
             case 'review':
                 return (
-                    <div className="Reservemodal" onClick={onClose}>
-                        <div onClick={(e) => e.stopPropagation()}>
-                            <div>
-                                <span onClick={() => onClose()}>X</span>
-                            </div>
-                            <div className="Reservemodal-1">
-                                <h1>'{modalData.title}'의 리뷰를 작성해주세요.</h1>
-                                <div className="Reservemodal-2">
-                                    <img src={`${modalData.posterUrl}`} alt="영화 포스터" />
-                                    <div>
-                                        <p><b>{modalData.title}</b></p><br />
-                                        <p><b>감독 : {modalData.director}</b></p><br />
-                                        <b>배우 : {modalData.actors}</b>
+                    <div className="modal-container" onClick={onClose}>
+                        <div className='modal-content' onClick={(e) => e.stopPropagation()}>
+                            <div className="modal-body">
+                                <div className='movieModal'>
+                                    <div className='movieTitle'>
+                                        <p>'{modalData.title}'의 리뷰를 작성해주세요.</p>
+                                        <div className="reviewMovieInfo">
+                                            <img src={`${modalData.posterUrl}`} alt="영화 포스터" />
+                                            <div>
+                                                <p>{modalData.title}</p>
+                                                <p>{modalData.director}</p>
+                                                <p>{modalData.actors}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className='submitReview'>
+                                        <form onSubmit={mySubmit}>
+                                        <textarea 
+                                            name="review" 
+                                            placeholder="리뷰를 적어주세요." 
+                                            onChange={onChange} 
+                                            autoComplete="off"
+                                        />
+                                            <button onClick={() => showResult()}>게시</button>
+                                        </form>
                                     </div>
                                 </div>
-                                <form onSubmit={mySubmit}>
-                                    <input name="review" placeholder="리뷰를 적어주세요." onChange={onChange} />
-                                    <button onClick={() => showResult()}>게시</button>
-                                </form>
                             </div>
                         </div>
                     </div>)
             case 'complete':
                 return (
-                    <h1>리뷰작성완료모달창</h1>
+                    <div className="modal-container" onClick={onClose}>
+                        <div className='modal-content' onClick={(e) => e.stopPropagation()}>
+                            <div className="modal-body">
+                                <div className='movieModal'>
+                                    <div>
+                                        포스터이미지
+                                        리뷰작성완료
+                                        리뷰보러가기버튼
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 )
             default:
                 return null
