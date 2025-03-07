@@ -20,29 +20,17 @@ const MyReserveCon = () => {
     useEffect(() => {
         const getAllData = async () => {
             try {
-                let allData = []
-                let page = 1
-                while (true) {
-                    const data = await getReserveList(id, page)
-                    console.log("data 확인 : " , data)
-                    if (!data.dto.length) break
-                    allData = [...allData, ...data.dto]
-                    page++
-                }
-
-                // 같은 reservationId끼리 묶어서 새로운 리스트 생성
-                const groupedData = {}
-                allData.forEach(item => {
+                const data = await getReserveList(id)
+                const groupedData = data.dto?.reduce((acc, item) => {
                     const key = item.reservationId
-                    if (!groupedData[key]) {
-                        groupedData[key] = { ...item, seatIds: [item.seatId] }
+                    if (!acc[key]) {
+                        acc[key] = { ...item, seatIds: [item.seatId] }
                     } else {
-                        groupedData[key].seatIds.push(item.seatId)
+                        acc[key].seatIds.push(item.seatId)
                     }
-                })
-
+                    return acc
+                }, {})
                 const mergedList = Object.values(groupedData)
-
                 setAllList(mergedList) // 전체 리스트 저장
                 setList({
                     dto: mergedList.slice(0, 5), // 첫 페이지 데이터
@@ -156,7 +144,7 @@ const MyReserveCon = () => {
 
     const onPayment = (data) => {
         const [date, time] = data.startDateTime.split(" ");
-        const formattedTime = time.slice(0, 5); 
+        const formattedTime = time.slice(0, 5);
         localStorage.setItem("moviePosterUrl", data.posterUrl);
         localStorage.setItem("movieTitle", data.title);
         localStorage.setItem("movieDirector", data.director);
@@ -175,8 +163,8 @@ const MyReserveCon = () => {
                 movieActors: data.actors,
                 selectedDate: data.startDateTime,
                 selectedCinema: data.screenName,
-                scheduleId : data.scheduleId,
-                reservationId : data.reservationId
+                scheduleId: data.scheduleId,
+                reservationId: data.reservationId
             }
         })
     }

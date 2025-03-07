@@ -42,10 +42,10 @@ const getReviewList = async (id, start) => {
 }
 
 // 예매 내역 가져오기
-const getReserveList = async (id, start) => {
+const getReserveList = async (id) => {
     try {
         const res = await axios.get(`${BASE_URL}/reserve`, {
-            params: { id, start },
+            params: { id },
         })
         return res.data
     } catch (error) {

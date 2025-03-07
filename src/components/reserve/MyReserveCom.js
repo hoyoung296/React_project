@@ -27,13 +27,12 @@ const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showMo
                                     <p><b>예매번호 : {data.reservationId}</b>&nbsp;&nbsp;&nbsp;&nbsp;</p><br />
                                     <p><b>상영관 : {data.screenName}</b></p><br />
                                     <p><b>관람일 : {data.startDateTime}</b>&nbsp;&nbsp;&nbsp;&nbsp;<b>좌석 : {data.seatIds.join(", ")}</b></p><br />
-                                    {console.log("reservationstatusId 확인 :", data.reservationStatusId)}
-                                    <p><b>예매상태 :  {data.reservationStatusId === 1 ? "예매 진행 중" : data.reservationStatusId === 2 ? "예매 완료" : "예매 취소"}</b></p>
+                                    <p><b>예매상태 :  {data.reservationStatusId === 1 ? "예매 진행 중" : "예매 완료"}</b></p>
                                 </div>
                                 {list != null && (
                                     <div className="ReserveInfoPart3Div">
                                         {showReviewButton && hasReview && data.paymentId !== undefined && <button onClick={() => showModal(data.title, data.posterUrl, data.director, data.actors, data.movieId)}>리뷰 쓰기</button>}
-                                        {showCancelButton && data.reservationStatusId === 2 && <button onClick={() => del(data.reservationId)}>예매 취소</button>}
+                                        {showCancelButton && data.paymentId !== undefined && <button onClick={() => del(data.reservationId)}>예매 취소</button>}
                                         {data.paymentId === undefined && <button onClick={() => onPayment(data)}>결제 진행</button>}
                                     </div>
                                 )}
