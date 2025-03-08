@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
 import AdminPaymentCom from "../../components/Admin/AdminPaymentCom"
 import { getPayment } from "../../service/admin"
+import { delReserve } from "../../service/review"
 
 const AdminPaymentCon = () => {
-     const [list, setList] = useState([])
+    const [list, setList] = useState([])
 
-     useEffect(() => {
+    useEffect(() => {
         const getData = async () => {
             try {
                 const data = await getPayment()
@@ -17,8 +18,18 @@ const AdminPaymentCon = () => {
         getData()
     }, [])
 
-    return<>
-        <AdminPaymentCom list={list} />
+    const del = async (id) => {
+        try {
+            const response = await delReserve(id)
+            alert(response.message)
+            window.location.reload();
+        } catch (error) {
+            alert("오류 발생: " + (error.response?.data?.message || "알 수 없는 오류"))
+        }
+    }
+
+    return <>
+        <AdminPaymentCom list={list} del={del} />
     </>
 }
 
