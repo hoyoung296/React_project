@@ -78,6 +78,7 @@
     margin: 0 20px;
     width: 220px;
     height: 330px;
+    border-radius: 5px;
 }
 .synops_review{
     display: flex;
