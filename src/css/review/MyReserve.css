@@ -7,7 +7,7 @@
 
 .ReserveWrapdiv {
     width: 80%;
-    height: 1000px;
+    height: 1150px;  /* 기존 : 1000px */
     position: relative;
 
     &>h2 {
@@ -22,7 +22,7 @@
 
 .ReserveDiv {
     width: 95%;
-    min-height: 20%;
+    min-height: 100px; /* 기존 : 20% */
     border-radius: 5px;
     display: flex;
     align-items: stretch;
