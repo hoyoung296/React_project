@@ -16,12 +16,18 @@ const MyReviewCon = () => {
             try {
                 const data = await getReviewList(id, start)
                 setList(data)
+
+                // start 값이 총 페이지 수보다 큰 경우 첫 번째 페이지로 설정
+                if (start > data.page) {
+                    setStart(1)
+                    navigate(`/myReview?id=${id}&start=1`)  // 첫 번째 페이지로 리디렉션
+                }
             } catch (error) {
                 console.error("데이터 가져오기 오류:", error)
             }
         }
         getData()
-    }, [id, start])
+    }, [id, start, navigate])
 
     const handlePageChange = (page) => {
         setStart(page)
