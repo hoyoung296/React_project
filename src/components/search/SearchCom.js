@@ -9,16 +9,16 @@ const SearchCom = ({ list, Infolist, relatedList = [], id, infoId, onClick, show
                 <h2>검색 결과가 없습니다.</h2>
             ) : (
                 <div className="movieList">
-    {list.map((data, index) => (
-        <div className="poster" key={index}>
-            <img src={data.posterUrl} alt={data.title} className="SearchImg" />
-            <div className="overlay">
-                <button onClick={() => showInfo(data.movieId)}>상세보기</button>
-                <button onClick={() => onClick(data.title)}>예매하기</button>
-            </div>
-        </div>
-    ))}
-</div>
+                    {list.map((data, index) => (
+                        <div className="poster" key={index}>
+                            <img src={data.posterUrl} alt={data.title} className="SearchImg" />
+                            <div className="overlay">
+                                <button onClick={() => showInfo(data.movieId)}>상세보기</button>
+                                <button onClick={() => onClick(data.title)}>예매하기</button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
 
             )}
 

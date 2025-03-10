@@ -1,7 +1,7 @@
 import { useNavigate, useSearchParams } from "react-router-dom"
 import SearchCom from "../../components/search/SearchCom"
 import { useEffect, useState } from "react"
-import { getSearchList, getInfoList } from "../../service/review"
+import { getSearchList, getInfoList } from "../../service/search"
 
 const SearchCon = () => {
     const navigate = useNavigate()
@@ -49,7 +49,7 @@ const SearchCon = () => {
             return isRelated
         })
     }
-    
+
     const onClick = (id) => {
         navigate("/ticket_date?title=" + id)
     }

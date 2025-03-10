@@ -1,7 +1,7 @@
 import AdminScheduleCom from "../../components/Admin/AdminScheduleCom"
 import { delSchedule, getSchedule, getScreen, updateSchedule } from "../../service/admin"
 import { useEffect, useState } from "react"
-import { getSearchList } from "../../service/review"
+import { getSearchList } from "../../service/search"
 
 const AdminScheduleCon = () => {
     const [movie, setMovie] = useState([])

@@ -2,6 +2,36 @@ import React, { useEffect } from 'react'
 import '../../css/modal.css'
 
 const Modal = ({ isOpen, onClose, type, infoData, onClick, Infolist, relatedList, modalData, mySubmit, onChange, showResult }) => {
+    /*
+    // 모달 통합 관련 코드 (나호영 작성)
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [modalType, setModalType] = useState(null)
+
+    // 검색 페이지 모달 창 닫는 함수
+    const hideInfo = () => {
+        setIsModalOpen(false)
+        setModalType(null)
+    }
+
+    // 리뷰 작성 모달 창 닫는 함수
+    const hideModal = () => {
+        setIsModalOpen(false)
+        setModalType(null)
+    }
+
+    // 리뷰 작성 결과 창 보이고 닫는 함수
+    const showResult = () => {
+        const elements = document.getElementsByClassName("Resultmodal")
+        if (elements.length > 0) elements[0].style.display = "block"
+    }
+
+    const hideResult = () => {
+        const elements = document.getElementsByClassName("Resultmodal")
+        if (elements.length > 0) elements[0].style.display = "none"
+        setModalData(null)
+    }
+    */
+
     useEffect(() => {
         console.log('모달 상태 변경:', isOpen)
     }, [isOpen])
@@ -92,12 +122,12 @@ const Modal = ({ isOpen, onClose, type, infoData, onClick, Infolist, relatedList
                                     </div>
                                     <div className='submitReview'>
                                         <form onSubmit={mySubmit}>
-                                        <textarea 
-                                            name="review" 
-                                            placeholder="리뷰를 적어주세요." 
-                                            onChange={onChange} 
-                                            autoComplete="off"
-                                        />
+                                            <textarea
+                                                name="review"
+                                                placeholder="리뷰를 적어주세요."
+                                                onChange={onChange}
+                                                autoComplete="off"
+                                            />
                                             <button onClick={() => showResult()}>게시</button>
                                         </form>
                                     </div>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import AdminMovieCom from "../../components/Admin/AdminMovieCom"
-import { getSearchList } from "../../service/review"
+import { getSearchList } from "../../service/search"
 import { deleteMovie, insert, updateMovie, updateMovieManual } from "../../service/admin"
 import { useNavigate } from "react-router-dom"
 
