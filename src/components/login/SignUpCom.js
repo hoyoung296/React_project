@@ -15,6 +15,9 @@ const SignUpCom = () => {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [userName, setUserName] = useState('');
     const [userBirthday, setUserBirthday] = useState('');
+    const [passwordVisible, setPasswordVisible] = useState(false);
+    const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+
 
     const navigate = useNavigate();
 
@@ -96,25 +99,59 @@ const SignUpCom = () => {
         <div className='sign'>
             <div className='title_movie'>THEFILLM</div>
             <div className='login_from'>
-            <input type="text" className='input_text' placeholder="아이디" value={userId} onChange={(e) => setUserId(e.target.value)} required />
-                    <input type="password" className='input_text' placeholder="비밀번호" value={password} onChange={(e) => setPassword(e.target.value)} required />
-                    <input type="password" className='input_text' placeholder="비밀번호 확인" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
+                <div>
+                    <input type="text" className='input_text' placeholder="아이디" value={userId} onChange={(e) => setUserId(e.target.value)} required />
+                    <span className='addrBtn'>
+                        <input 
+                                type={passwordVisible ? "text" : "password"} 
+                                className='addr_text' 
+                                placeholder="비밀번호" 
+                                value={password} 
+                                onChange={(e) => setPassword(e.target.value)} 
+                                required 
+                            />
+                        <button type="button" onClick={() => setPasswordVisible(!passwordVisible)}>
+                                <img src={passwordVisible ? '../../img/pwdHide.png' : '../../img/pwdOpen.png'} alt="toggle visibility" />
+                            </button>
+                    </span>
+                    <span className='addrBtn'>
+                            <input 
+                                type={confirmPasswordVisible ? "text" : "password"} 
+                                className='addr_text' 
+                                placeholder="비밀번호 확인" 
+                                value={confirmPassword} 
+                                onChange={(e) => setConfirmPassword(e.target.value)} 
+                                required 
+                            />
+                            <button type="button" onClick={() => setConfirmPasswordVisible(!confirmPasswordVisible)}>
+                                <img src={confirmPasswordVisible ? '../../img/pwdHide.png' : '../../img/pwdOpen.png'} alt="toggle visibility" />
+                            </button>
+                    </span>
                     <input type="text" className='input_text' placeholder="닉네임" value={userName} onChange={(e) => setUserName(e.target.value)} required />
                     <input type="email" className='input_text' placeholder="이메일" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                </div>
+                <div>
                     <input type="tel" className='input_text' placeholder="연락처" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} required />
-                    <input type="text" className="input_text" value={postcode} placeholder="우편번호" readOnly />
-                    <button type="button" onClick={handlePostcodeSearch}>우편번호 찾기</button>
+                    <span className='addrBtn'>
+                        <input type="text" className="addr_text" value={postcode} placeholder="우편번호 찾기" readOnly />
+                        <button type="button" onClick={handlePostcodeSearch}><img src='../../img/search.png'/></button>
+                    </span>
                     <input type="text" className="input_text" value={address} placeholder="주소" readOnly />
                     <input type="text" className="input_text" value={detailAddress} placeholder="상세주소" onChange={(e) => setDetailAddress(e.target.value)} />
                     <input type="text" className="input_text" value={userBirthday} placeholder="생년월일" onChange={(e) => setUserBirthday(e.target.value)} onFocus={(e) => (e.target.type = "date")} // 클릭 시 달력 표시
                     onBlur={(e) => (e.target.type = "text")}  // 포커스 해제 시 다시 placeholder 표시
                     required />
-
-
-
-                    <button className='sign_btn' onClick={handleSignUp}>Sign up</button>
+                </div>
             </div>
-            {errorMessage && <div className="error_message">{errorMessage}</div>}
+            <div className="sign_btn_container">
+                <button className="sign_btn" onClick={handleSignUp}>Sign up</button>
+            </div>
+            <div className="sign_btn_container">
+            {errorMessage && 
+                <div className="error_message" key={errorMessage}>
+                    {errorMessage}
+                </div>}
+            </div>
         </div>
         <div className='backgroundImg'/>
     </div>

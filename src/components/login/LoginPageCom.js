@@ -36,6 +36,10 @@ const LoginPageCom = () => {
         }, 1000);
     };
 
+    const goToSignPage = () => {
+        navigate("/signup");
+    }
+
     
     return (
     <div className='login_body'>
@@ -51,7 +55,7 @@ const LoginPageCom = () => {
                 <div className='userBtn'>
                     <button>아이디찾기</button>|
                     <button>비밀번호찾기</button>|
-                    <button>회원가입</button>
+                    <button onClick={goToSignPage}>회원가입</button>
                 </div>
                 
             </div>
