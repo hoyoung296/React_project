@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import AdminPaymentCom from "../../components/Admin/AdminPaymentCom"
 import { getPayment } from "../../service/admin"
-import { delReserve } from "../../service/review"
+import { delReserve } from "../../service/reserve"
 
 const AdminPaymentCon = () => {
     const [list, setList] = useState([])

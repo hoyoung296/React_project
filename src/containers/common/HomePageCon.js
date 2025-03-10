@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import HomePageCom from "../../components/mainPage/HomePageCom"
-import { getInfoList, getSearchList} from "../../service/review"
+import { getInfoList, getSearchList} from "../../service/search"
 import { useNavigate } from "react-router-dom"
 
 const HomePageCon = () => {

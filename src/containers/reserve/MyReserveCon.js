@@ -1,7 +1,7 @@
 import { useNavigate, useSearchParams } from "react-router-dom"
 import MyReserveCom from "../../components/reserve/MyReserveCom"
 import { useEffect, useState } from "react"
-import { checkReview, delReserve, getReserveList, writeReview } from "../../service/review"
+import { checkReview, delReserve, getReserveList, writeReview } from "../../service/reserve"
 
 const MyReserveCon = () => {
     const [params] = useSearchParams()
