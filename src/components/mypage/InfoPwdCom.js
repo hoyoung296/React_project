@@ -35,7 +35,7 @@ function InfoPwdCom() {
 
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
-            InfoPwdCom();
+            handleInfoPwd();
         }
     };
 
