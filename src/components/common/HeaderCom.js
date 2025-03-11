@@ -30,7 +30,7 @@ function HeaderCom({ onChange, mySubmit, input}) {
         localStorage.removeItem("user");
         localStorage.removeItem("LoginSuccess");
         setIsLoggedIn(false);
-        navigate("/");  // 홈으로 이동
+        window.location.reload();
     };
 
     return <>

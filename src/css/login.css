@@ -37,7 +37,7 @@ html, .login_body {
     padding: 20px;
     background-color: #ffffff35;
     opacity: 1;
-    z-index: 1;
+    z-index: 1;    
 }
 .sign{
     width: 800px;
@@ -63,15 +63,27 @@ html, .login_body {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 40px;
+    gap: 10px;
+    flex-direction: column;
 }
 .login_from div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.sign_from {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+}
+.sign_from div{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
-.input_id, .input_pwd{
+.input_id{
     width: 250px;
     height: 40px;
     margin-bottom: 30px;
@@ -81,7 +93,35 @@ html, .login_body {
     padding-left: 20px;
     outline: none;
 }
-
+.loginpwdBtn{
+    width: 250px;
+    height: 40px;
+    margin-bottom: 30px;
+    border-style: none;
+    border-radius: 20px;
+    background-color: #ffffff69;
+    padding-left: 20px;
+    outline: none;
+    display: flex;
+    align-items: center;
+}
+.loginpwdBtn img{
+    width: 20px;
+    height: 20px;
+}
+.loginpwdBtn button{
+    background-color: transparent;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+.input_pwd{
+    background-color: transparent;
+    outline: none;
+    cursor: default;
+    border: none;
+    margin-right: 20px;
+}
 .login_btn {
     width: 80px;
     height: 30px;
@@ -124,6 +164,7 @@ html, .login_body {
     margin-bottom: 20px;
     display: flex;
     gap: 10px;
+    flex-direction: row;
 }
 .userBtn button{
     border-style: none;
