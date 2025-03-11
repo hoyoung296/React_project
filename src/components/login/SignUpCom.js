@@ -57,16 +57,15 @@ const SignUpCom = () => {
 
     const sendVerificationCode = async () => {
         try {
-            // email을 JSON body로 전송
             const response = await axios.post('http://localhost:8080/root/mail/send-auth-code', {
                 email: email
+            }, {
+                headers: { "Content-Type": "application/json" }  // JSON 요청 명시
             });
     
-            // 응답 처리
             if (response.status === 200) {
                 alert("인증번호가 이메일로 전송되었습니다.");
-                // 서버에서 인증번호를 받아옴
-                setServerVerificationCode(response.data.verificationCode);  // 이 부분 수정
+                setServerVerificationCode(response.data.verificationCode); // 인증번호 저장
             }
         } catch (error) {
             console.error("이메일 인증 요청 실패:", error);
@@ -79,10 +78,13 @@ const SignUpCom = () => {
             const response = await axios.post('http://localhost:8080/root/mail/verify-auth-code', {
                 email: email,
                 code: verificationCode
-            }
-        );
+            }, {
+                headers: { "Content-Type": "application/json" }  // JSON 요청 명시
+            });
     
-            if (response.status === 200 && response.data.status === 'success') {
+            console.log("서버 응답:", response.data);
+    
+            if (response.data.status === "success") {
                 alert("이메일 인증이 완료되었습니다.");
                 setIsEmailVerified(true);
             } else {
@@ -90,10 +92,10 @@ const SignUpCom = () => {
                 setIsEmailVerified(false);
             }
         } catch (error) {
+            console.error("인증번호 확인 요청 실패:", error);
             alert("인증번호 확인 중 오류가 발생했습니다.");
-            console.error(error);
         }
-    };   
+    };
 
     const validateInputs = () => {
         const idRegex = /^[a-zA-Z0-9]{6,}$/;
