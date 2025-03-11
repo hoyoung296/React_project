@@ -44,24 +44,29 @@ const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showMo
             </div>
 
             {modalData && (
-                <Modal isOpen={isModalOpen} onClose={hideModal} type={modalType} modalData={modalData} mySubmit={mySubmit}
+                <Modal isOpen={isModalOpen} onClose={hideModal} type={modalType} modalData={modalData}  
+                mySubmit={(e) => {
+                    mySubmit(e);  // 기존 기능 수행
+                    hideModal();  // 리뷰 모달 닫기
+                    showResult(); // 리뷰 작성 완료 모달 열기
+                }} 
                     onChange={onChange} showResult={showResult} />
             )}
 
-            {modalData && (
-                <div className="Resultmodal">
-                    <div>
-                        <div>
-                            <span onClick={hideResult}>X</span>
-                        </div>
-                        <div className="Resultmodal-1">
-                            <img src={`${modalData.posterUrl}`} alt="영화 포스터" /><br /><br />
-                            <h1>리뷰 작성이 완료되었습니다.</h1>
-                            <br /><br /><br /><br /><br /><br /><br /><br /><br />
-                            <button onClick={() => onResult(id)}>리뷰 보러가기</button>
+            {modalData && !isModalOpen && (
+                <div className="review_modal_container" onClick={hideResult}>
+                        <div className='review_modal_content' onClick={(e) => e.stopPropagation()}>
+                            <div className="review_modal_body">
+                                <div className='review_movieModal'>
+                                    <div>
+                                        <img src={`${modalData.posterUrl}`} alt="영화 포스터" />
+                                        <p>리뷰 작성이 완료되었습니다.</p>
+                                        <button onClick={() => onResult(id)}>리뷰 보러가기</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
             )}
         </div>
     </>
