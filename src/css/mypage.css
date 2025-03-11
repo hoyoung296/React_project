@@ -13,7 +13,18 @@
     font-weight: bold;
     margin-bottom: 30px;
 }
-.infoPwdMain input{
+.input_id{
+    width: 200px;
+    height: 40px;
+    border: 2px solid #6f6f6f7a;
+    border-radius: 20px;
+    background-color: transparent;
+    padding-left: 20px;
+    padding-right: 20px;
+    outline: none;
+    color: #ffffff;
+}
+.loginpwdBtn{
     width: 200px;
     height: 40px;
     border: 2px solid #6f6f6f7a;
@@ -23,8 +34,23 @@
     outline: none;
     color: #ffffff;
 }
-
-.infoPwdMain button {
+.infopwdeye{
+    background-color: transparent;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    left: 50px;
+}
+.infopwdeye img{
+    width: 20px;
+    height: 20px;
+}
+.input_pwd{
+    border: none;
+    width: 120px;
+    color: #ffffff;
+}
+.infoPwdBtn {
     width: 80px;
     height: 30px;
     background-color: #381E72;
@@ -33,25 +59,93 @@
     color: #ffffff;
     margin-top: 20px;
 }
-.infoPwdMain button:hover{
+.infoPwdBtn:hover{
     background-color: #7857bd;
     cursor: pointer;
 }
 
 .infoMain{
-    background-color: #6c6c6c;
     min-width: 700px;
-    height: 500px;
     margin: auto;
     margin-top: 30px;
     display: flex;
     gap: 20px;
 }
 .infoMain > div:first-child{
-    background-color: #9c9c9c;
-    width: 60%;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+    margin-left: 100px;
+    margin-right: 100px;
+}
+.infoMain > div:first-child button{
+    width: 70px;
+    height: 30px;
+    padding: 4px;
+    border-radius: 5px;
+    border-color: transparent;
+    margin: auto;
+    margin-top: 90px;
+    background-color: #381E72;
+    color: #ffffff;
+}
+.infoMain > div:first-child button:hover{
+    cursor: pointer;
+    background-color: #7857bd;
+    text-decoration: underline;
 }
 .infoMain > div:last-child{
-    background-color: #9c9c9c;
-    width: 30%;
+    width: 300px;
+    margin-top: 80px;
+    display: flex;
+    flex-direction: column;
+}
+.infoMain > div:last-child img{
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    border-color: transparent;
+    background-color: white;
+    margin: 30px auto;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.infoMain > div:last-child button{
+    width: 70px;
+    height: 30px;
+    padding: 4px;
+    border-radius: 5px;
+    border-color: transparent;
+    margin: auto;
+    margin-top: 90px;
+    background-color: #381E72;
+    color: #ffffff;
+}
+.infoMain > div:last-child button:hover{
+    cursor: pointer;
+    background-color: #7857bd;
+    text-decoration: underline;
+}
+.infodata{
+    width: 200px;
+    height: 30px;
+    margin: 10px auto;
+    margin-left: 30px;
+    outline: none;
+    border-width: 0 0 1px;
+    border-color: #ffffff;
+    background-color: transparent;
+    color: #ffffff;
+}
+.infoMain span{
+    font-size: 14px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.infoMain span span{
+    width: 80px;
 }

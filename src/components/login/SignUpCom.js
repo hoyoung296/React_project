@@ -171,7 +171,7 @@ const SignUpCom = () => {
         <div className='login_body'>
         <div className='sign'>
             <div className='title_movie'>THEFILLM</div>
-            <div className='login_from'>
+            <div className='sign_from'>
                 <div>
                     <input type="text" className='input_text' placeholder="아이디" value={userId} onChange={(e) => setUserId(e.target.value)} required />
                     <span className='addrBtn'>

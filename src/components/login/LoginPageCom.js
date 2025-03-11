@@ -1,20 +1,59 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import '../../css/login.css';
 
 const LoginPageCom = () => {
     const navigate = useNavigate();
+
+    const [userId, setUserId] = useState('');
+    const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+    const [passwordVisible, setPasswordVisible] = useState(false);
 
     const REST_API_KEY = process.env.REACT_APP_KAKAO_REST_API_KEY;
     const REDIRECT_URI = process.env.REACT_APP_KAKAO_REDIRECT_URI;
     const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
 
-    const handleLogin = () => {
-        //로그인 성공하면(아이디 패스워드 일치한지 확인)
-        navigate('/'
+    const handleLogin = async () => {
+        try {
+            // Axios를 이용한 서버 요청
+            const response = await axios.post('http://localhost:8080/root/login', {
+                userId,
+                password
+            });
 
-        );
+            // 서버로부터 받은 응답 처리
+            if (response.data.code === 200 && response.data.data) {
+                // 로그인 성공 시, 서버에서 받은 데이터로 처리
+                const { data } = response.data;
+
+                const userData = {
+                    userId: data.userId,
+                    username: data.username,
+                    password: data.password,
+                    email: data.email,
+                    phoneNumber: data.phoneNumber,
+                    addr: data.addr,
+                    postnum: data.postnum,
+                    userBirthday: data.userBirthday,
+                    detailAddr: data.detailAddr,
+                    userGrade: data.userGrade
+                };
+                console.log(userData);
+
+                localStorage.setItem('user', JSON.stringify(userData));
+                localStorage.setItem('LoginSuccess', 'true');
+
+                navigate('/', { state: { userInfo: data } });
+            } else {
+                setErrorMessage('아이디나 비밀번호가 일치하지 않습니다.');
+            }
+        } catch (error) {
+            console.error('로그인 중 오류 발생:', error);
+            setErrorMessage('서버와 연결할 수 없습니다. 나중에 다시 시도해 주세요.');
+        }
     };
 
      // 카카오 로그인 버튼 클릭 시 호출되는 함수
@@ -40,15 +79,49 @@ const LoginPageCom = () => {
         navigate("/signup");
     }
 
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            handleLogin();
+        }
+    };
     
     return (
     <div className='login_body'>
         <div className='login'>
             <div className='title_movie'>THEFILLM</div>
             <div className='login_from'>
-                <input type="text" className='input_id' required placeholder="ID"/>
-                <input type="password" className='input_pwd' required placeholder="PW"/>
+                <input
+                    type="text"
+                    className='input_id'
+                    required
+                    placeholder="ID"
+                    value={userId}
+                    onChange={(e) => setUserId(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    />
+                
+                    <span className='loginpwdBtn'>
+                        <input
+                            type={passwordVisible ? "text" : "password"}
+                            className='input_pwd'
+                            required
+                            placeholder="PW"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            onKeyDown={handleKeyDown}
+                        />
+                        <button 
+                            type="button" 
+                            onClick={() => setPasswordVisible(!passwordVisible)}
+                        >
+                            <img 
+                                src={passwordVisible ? '../../img/pwdHide.png' : '../../img/pwdOpen.png'} 
+                                alt="toggle visibility" 
+                            />
+                        </button>
+                    </span>
                 <button className='login_btn' onClick={handleLogin}>Login</button>
+                {errorMessage && <div className="error_message">{errorMessage}</div>}
                 <div className='slmpleBtn'>
                     <button onClick={kakaoLogin}><img src='img/kakao_login_large.png' alt='kakaoLogin'/></button>
                 </div>
