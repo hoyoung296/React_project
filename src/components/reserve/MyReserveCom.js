@@ -53,20 +53,20 @@ const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showMo
                     onChange={onChange} showResult={showResult} />
             )}
 
-            {modalData && !isModalOpen && (
+            {modalData && !isModalOpen && !showResult && ( // showResult가 true일 때만 리뷰 완료 모달 표시
                 <div className="review_modal_container" onClick={hideResult}>
-                        <div className='review_modal_content' onClick={(e) => e.stopPropagation()}>
-                            <div className="review_modal_body">
-                                <div className='review_movieModal'>
-                                    <div>
-                                        <img src={`${modalData.posterUrl}`} alt="영화 포스터" />
-                                        <p>리뷰 작성이 완료되었습니다.</p>
-                                        <button onClick={() => onResult(id)}>리뷰 보러가기</button>
-                                    </div>
+                    <div className='review_modal_content' onClick={(e) => e.stopPropagation()}>
+                        <div className="review_modal_body">
+                            <div className='review_movieModal'>
+                                <div>
+                                    <img src={`${modalData.posterUrl}`} alt="영화 포스터" />
+                                    <p>리뷰 작성이 완료되었습니다.</p>
+                                    <button onClick={() => onResult(id)}>리뷰 보러가기</button>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
             )}
         </div>
     </>
