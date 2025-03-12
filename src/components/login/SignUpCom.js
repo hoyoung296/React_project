@@ -55,47 +55,45 @@ const SignUpCom = () => {
         }).open();
     };
 
+    // 이메일 인증번호 요청
     const sendVerificationCode = async () => {
         try {
             const response = await axios.post('http://localhost:8080/root/mail/send-auth-code', {
                 email: email
             }, {
-                headers: { "Content-Type": "application/json" }  // JSON 요청 명시
+                headers: { "Content-Type": "application/json" }
             });
-    
+
             if (response.status === 200) {
                 alert("인증번호가 이메일로 전송되었습니다.");
-                setServerVerificationCode(response.data.verificationCode); // 인증번호 저장
+                setServerVerificationCode(response.data.verificationCode);  // 서버에서 반환한 인증번호 저장
+                console.log("서버에서 받은 인증번호:", response.data.verificationCode);  // 확인용 로그
             }
         } catch (error) {
             console.error("이메일 인증 요청 실패:", error);
             alert("이메일 인증 요청 중 오류가 발생했습니다.");
         }
     };
-    
+
+    // 인증번호 확인
     const verifyCode = async () => {
         try {
-            const response = await axios.post('http://localhost:8080/root/mail/verify-auth-code', {
-                email: email,
-                code: verificationCode
-            }, {
-                headers: { "Content-Type": "application/json" }  // JSON 요청 명시
-            });
-    
-            console.log("서버 응답:", response.data);
-    
-            if (response.data.status === "success") {
+            // 요청 전에 데이터 확인
+            console.log("Email:", email);
+            console.log("Verification Code:", verificationCode);
+            if (verificationCode === serverVerificationCode) {
+                setIsEmailVerified(true); // 인증 완료 상태 업데이트
                 alert("이메일 인증이 완료되었습니다.");
-                setIsEmailVerified(true);
             } else {
+                setIsEmailVerified(false); // 인증 실패 상태 업데이트
                 alert("인증번호가 올바르지 않습니다.");
-                setIsEmailVerified(false);
             }
         } catch (error) {
-            console.error("인증번호 확인 요청 실패:", error);
+            console.error("인증번호 확인 요청 실패:", error.response ? error.response.data : error.message);
             alert("인증번호 확인 중 오류가 발생했습니다.");
         }
     };
+
 
     const validateInputs = () => {
         const idRegex = /^[a-zA-Z0-9]{6,}$/;
