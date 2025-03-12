@@ -12,6 +12,9 @@ function InfoPwdCom() {
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [passwordVisible, setPasswordVisible] = useState(false);
+    const user = JSON.parse(localStorage.getItem("user"));
+    const id = user ? user.userId : null; // user가 null이 아니면 userId를 추출
+
 
     const handleInfoPwd = async () => {
         try {
@@ -39,7 +42,10 @@ function InfoPwdCom() {
         }
     };
 
+   
     return (
+
+        
     <div className='mypagePwd'>
         <MypageSidebar activeLink="회원정보 수정" />
         <div className='infoPwdMain'>
@@ -50,7 +56,7 @@ function InfoPwdCom() {
                     className='input_id'
                     required
                     placeholder="아이디"
-                    value={userId}
+                    value={id}
                     onChange={(e) => setUserId(e.target.value)}
                     onKeyDown={handleKeyDown}
                 />

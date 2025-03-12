@@ -17,6 +17,9 @@ const SignUpCom = () => {
     const [userBirthday, setUserBirthday] = useState('');
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+    const [verificationCode, setVerificationCode] = useState('');
+    const [isEmailVerified, setIsEmailVerified] = useState(false);
+    const [serverVerificationCode, setServerVerificationCode] = useState('');
 
 
     const navigate = useNavigate();
@@ -52,8 +55,88 @@ const SignUpCom = () => {
         }).open();
     };
 
+    // 이메일 인증번호 요청
+    const sendVerificationCode = async () => {
+        try {
+            const response = await axios.post('http://localhost:8080/root/mail/send-auth-code', {
+                email: email
+            }, {
+                headers: { "Content-Type": "application/json" }
+            });
+
+            if (response.status === 200) {
+                alert("인증번호가 이메일로 전송되었습니다.");
+                setServerVerificationCode(response.data.verificationCode);  // 서버에서 반환한 인증번호 저장
+                console.log("서버에서 받은 인증번호:", response.data.verificationCode);  // 확인용 로그
+            }
+        } catch (error) {
+            console.error("이메일 인증 요청 실패:", error);
+            alert("이메일 인증 요청 중 오류가 발생했습니다.");
+        }
+    };
+
+    // 인증번호 확인
+    const verifyCode = async () => {
+        try {
+            console.log("인증번호 확인 시작...");
+            console.log("입력된 이메일:", email);
+            console.log("입력된 인증번호:", verificationCode);
+            console.log("서버에서 받은 인증번호:", serverVerificationCode); // 서버에서 받은 인증번호 로그
+
+            if (verificationCode === serverVerificationCode) {
+                setIsEmailVerified(true); // 인증 완료 상태 업데이트
+                alert("이메일 인증이 완료되었습니다.");
+                console.log("이메일 인증 성공! 인증 완료 상태:", isEmailVerified); // 상태 업데이트 후 로그
+            } else {
+                setIsEmailVerified(false); // 인증 실패 상태 업데이트
+                alert("인증번호가 올바르지 않습니다.");
+                console.log("이메일 인증 실패. 상태:", isEmailVerified); // 상태 업데이트 후 로그
+            }
+        } catch (error) {
+            console.error("인증번호 확인 요청 실패:", error.response ? error.response.data : error.message);
+            alert("인증번호 확인 중 오류가 발생했습니다.");
+        }
+    };
+    // isEmailVerified 상태가 변경될 때마다 확인
+    useEffect(() => {
+        console.log("이메일 인증 상태 변경됨:", isEmailVerified);
+        // 이메일 인증 완료 후, 회원가입 진행 등의 작업을 여기서 처리
+    }, [isEmailVerified]); // isEmailVerified가 변경될 때마다 실행
+
+
+    const validateInputs = () => {
+        const idRegex = /^[a-zA-Z0-9]{6,}$/;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const phoneRegex = /^\d{10,11}$/;
+        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+        if (!idRegex.test(userId)) {
+            setErrorMessage("아이디는 6자 이상, 영문과 숫자만 포함해야 합니다.");
+            return false;
+        }
+        if (!emailRegex.test(email)) {
+            setErrorMessage("올바른 이메일 형식을 입력해주세요.");
+            return false;
+        }
+        if (!phoneRegex.test(phoneNumber)) {
+            setErrorMessage("연락처는 10~11자리 숫자로 입력해주세요.");
+            return false;
+        }
+        if (!passwordRegex.test(password)) {
+            setErrorMessage("비밀번호는 최소 8자 이상, 영문/숫자/특수문자를 포함해야 합니다.");
+            return false;
+        }
+        return true;
+    };
+
     // 회원가입 처리 함수
     const handleSignUp = async () => {
+        if (!validateInputs()) return;
+
+        if (!isEmailVerified) {
+            alert("이메일 인증을 완료해야 회원가입이 가능합니다.");
+            return;
+        }
         // 비밀번호 확인
         if (password !== confirmPassword) {
             setErrorMessage("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
@@ -74,21 +157,24 @@ const SignUpCom = () => {
                 postNum: postcode,
                 addr: address,
                 detailAddr: detailAddress,
-                userBirthday: birthdayNumber
+                userBirthday: birthdayNumber,
+                isEmailVerified: isEmailVerified // 인증 상태 전송
             };
-            //console.log('회원가입 데이터:', memberData); // 데이터를 콘솔에 출력
+            console.log('회원가입 데이터:', memberData); // 데이터를 콘솔에 출력
 
             const response = await axios.post('http://localhost:8080/root/register', memberData);
+            console.log("서버 응답:", response);
+
             if (response.status === 200) {
                 alert("회원가입이 완료되었습니다.");
                 navigate('/login'); // 로그인 페이지로 이동
             }
         } catch (error) {
             if (error.response && error.response.data) {
-                console.error("회원가입 실패:", error.response.data); // 서버 응답 확인 (콘솔 출력)
+                console.log("서버 오류:", error.response.data.message);
                 setErrorMessage(error.response.data.message); // 화면에 에러 메시지 표시
             } else {
-                console.error("회원가입 요청 중 오류 발생:", error); // 요청 자체가 실패한 경우
+                console.log("서버 오류:", error);
                 setErrorMessage("서버 오류로 인해 회원가입에 실패했습니다.");
             }
         }
@@ -129,6 +215,10 @@ const SignUpCom = () => {
                     </span>
                     <input type="text" className='input_text' placeholder="닉네임" value={userName} onChange={(e) => setUserName(e.target.value)} required />
                     <input type="email" className='input_text' placeholder="이메일" value={email} onChange={(e) => setEmail(e.target.value)} required />
+<button type="button" onClick={sendVerificationCode}>인증번호 요청</button>
+
+<input type="text" className='input_text' placeholder="인증번호 입력" value={verificationCode} onChange={(e) => setVerificationCode(e.target.value)} required />
+<button type="button" onClick={verifyCode}>인증번호 확인</button>
                 </div>
                 <div>
                     <input type="tel" className='input_text' placeholder="연락처" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} required />
