@@ -73,9 +73,15 @@ const TicketDateCom = () => {
 
     // ✅ 상영 시간 선택 시, 해당 상영관과 상영 시각 및 SCHEDULE_ID 저장
     const handleCinemaSelect = (cinemaName, startTime, scheduleId) => {
-        setSelectedCinema(cinemaName);
-        setSelectedStartTime(startTime);
-        setSelectedScheduleId(scheduleId);
+        if (selectedCinema === cinemaName && selectedStartTime === startTime) {
+            setSelectedCinema("");
+            setSelectedStartTime("");
+            setSelectedScheduleId("");
+        } else {
+            setSelectedCinema(cinemaName);
+            setSelectedStartTime(startTime);
+            setSelectedScheduleId(scheduleId);
+        }
         console.log(`선택된 상영관: ${cinemaName}, 선택된 상영 시간: ${startTime}, SCHEDULE_ID: ${scheduleId}`);
     };
 
@@ -95,7 +101,7 @@ const TicketDateCom = () => {
             return; // 선택되지 않은 경우, 좌석 선택 페이지로 이동하지 않음
         }
 
-        navigate(`/ticket_seat?scheduleId=${selectedScheduleId}`, {
+        navigate(`/ticket/seat?scheduleId=${selectedScheduleId}`, {
             state: {
                 movieDetails,
                 selectedDate,
@@ -138,7 +144,7 @@ const TicketDateCom = () => {
                         cinemaA.map((cinema, index) => (
                             <button
                                 key={index}
-                                className="cinemaItem"
+                                className={`cinemaItem ${selectedCinema === cinema.SCREENNAME && selectedStartTime === cinema.STARTTIME ? "selected" : ""}`}
                                 onClick={() => handleCinemaSelect(cinema.SCREENNAME, cinema.STARTTIME, cinema.SCHEDULE_ID)}
                             >
                                 {cinema.STARTTIME}
@@ -156,7 +162,7 @@ const TicketDateCom = () => {
                         cinemaB.map((cinema, index) => (
                             <button
                                 key={index}
-                                className="cinemaItem"
+                                className={`cinemaItem ${selectedCinema === cinema.SCREENNAME && selectedStartTime === cinema.STARTTIME ? "selected" : ""}`}
                                 onClick={() => handleCinemaSelect(cinema.SCREENNAME, cinema.STARTTIME, cinema.SCHEDULE_ID)}
                             >
                                 {cinema.STARTTIME}
@@ -174,7 +180,7 @@ const TicketDateCom = () => {
                         cinemaC.map((cinema, index) => (
                             <button
                                 key={index}
-                                className="cinemaItem"
+                                className={`cinemaItem ${selectedCinema === cinema.SCREENNAME && selectedStartTime === cinema.STARTTIME ? "selected" : ""}`}
                                 onClick={() => handleCinemaSelect(cinema.SCREENNAME, cinema.STARTTIME, cinema.SCHEDULE_ID)}
                             >
                                 {cinema.STARTTIME}
@@ -211,7 +217,7 @@ const TicketDateCom = () => {
                     상영관 : {selectedCinema ? `${selectedCinema}` : ""} <br/>
                     상영시간 : {selectedStartTime ? `${selectedStartTime}` : ""}
                 </div>
-                <a href={`/ticket_seat?scheduleId=${encodeURIComponent(selectedScheduleId)}`}>
+                <a href={`/ticket/seat?scheduleId=${encodeURIComponent(selectedScheduleId)}`}>
                     <button onClick={goToSeatSelection}>좌석선택하러가기</button>
                 </a>
             </div>

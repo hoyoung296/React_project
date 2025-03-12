@@ -26,7 +26,7 @@ function InfoPwdCom() {
 
             // 서버로부터 받은 응답 처리
             if (response.data.code === 200) {
-                navigate('/info');
+                navigate('/mypage/info');
             } else {
                 setErrorMessage('아이디 또는 비밀번호가 일치하지 않습니다.');
             }

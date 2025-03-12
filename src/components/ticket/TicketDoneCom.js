@@ -26,7 +26,7 @@ function TicketDoneCom() {
     }
 
     const goToMyPage = () => {
-        navigate(`/myTicket?id=${userId}&start=`);
+        navigate(`/mypage/ticket?id=${userId}&start=`);
         localStorage.removeItem("moviePosterUrl");
         localStorage.removeItem("movieDirector");
         localStorage.removeItem("movieActors");

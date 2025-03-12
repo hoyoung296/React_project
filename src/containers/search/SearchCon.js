@@ -51,7 +51,7 @@ const SearchCon = () => {
     }
 
     const onClick = (id) => {
-        navigate("/ticket_date?title=" + id)
+        navigate("/ticket/date?title=" + id)
     }
 
     const showInfo = (movieId) => {

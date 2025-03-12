@@ -47,7 +47,7 @@ const MyReserveCon = () => {
         const currentPage = parseInt(start)
         if (currentPage > list.page) {
             setStart(1)
-            navigate(`/myTicket?id=${id}&start=1`)
+            navigate(`/mypage/ticket?id=${id}&start=1`)
         } else {
             setList({
                 dto: allList.slice((currentPage - 1) * 5, currentPage * 5),
@@ -86,7 +86,7 @@ const MyReserveCon = () => {
             dto: allList.slice((page - 1) * 5, page * 5),
             page: Math.ceil(allList.length / 5),
         })
-        navigate(`/myTicket?id=${id}&start=${page}`)
+        navigate(`/mypage/ticket?id=${id}&start=${page}`)
     }
 
     const onChange = (e) => {
@@ -114,7 +114,7 @@ const MyReserveCon = () => {
                 alert("리뷰 등록 실패")
             }
             setStart(1)
-            navigate(`/myTicket?id=${id}&start=1`)
+            navigate(`/mypage/ticket?id=${id}&start=1`)
             hideModal()
         } catch (error) {
             alert("오류 발생: " + (error.response?.data?.message || "알 수 없는 오류"))
@@ -154,7 +154,7 @@ const MyReserveCon = () => {
     }
 
     const onResult = () => {
-        navigate(`/myReview?id=${id}&start=`)
+        navigate(`/mypage/review?id=${id}&start=`)
     }
 
     const onPayment = (data) => {

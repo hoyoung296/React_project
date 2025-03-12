@@ -23,7 +23,7 @@ const MovieList = ({ list, Infolist, infoId, showInfo, hideInfo, onClick, relate
                         <img src={`${movie.posterUrl}`} alt={`Movie Poster ${movie.movieId}`} />
                         <div className="overlay">
                             <button onClick={() => showInfo(movie.movieId)}>상세보기</button>
-                            <button onClick={() => navigate(`/ticket_date?title=${encodeURIComponent(movie.title)}`)}>
+                            <button onClick={() => navigate(`/ticket/date?title=${encodeURIComponent(movie.title)}`)}>
                                 예매하기
                             </button>
                         </div>
