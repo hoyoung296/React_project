@@ -24,7 +24,7 @@ const AdminProtectedRoute = ({ element }) => {
 
     if (!isAuthenticated) {
         alert("관리자 로그인이 필요합니다.")
-        return <Navigate to="/adminMain" replace />
+        return <Navigate to="/admin/login" replace />
     }
 
     return element

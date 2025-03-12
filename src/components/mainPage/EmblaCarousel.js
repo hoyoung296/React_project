@@ -63,7 +63,7 @@ const EmblaCarouselComponent = ({ list, Infolist, infoId, showInfo, hideInfo, on
                                 <div className='main_movie_actors'>{movie.actors}</div>
                                 <div className='mainBtn'>
                                     <button onClick={() => showInfo(movie.movieId)}>상세보기</button>
-                                    <a href={`/ticket_date?title=${encodeURIComponent(movie.title)}`}>
+                                    <a href={`/ticket/date?title=${encodeURIComponent(movie.title)}`}>
                                         <button>예매하기</button>
                                     </a>
                                 </div>

@@ -101,7 +101,7 @@ const TicketDateCom = () => {
             return; // 선택되지 않은 경우, 좌석 선택 페이지로 이동하지 않음
         }
 
-        navigate(`/ticket_seat?scheduleId=${selectedScheduleId}`, {
+        navigate(`/ticket/seat?scheduleId=${selectedScheduleId}`, {
             state: {
                 movieDetails,
                 selectedDate,
@@ -217,7 +217,7 @@ const TicketDateCom = () => {
                     상영관 : {selectedCinema ? `${selectedCinema}` : ""} <br/>
                     상영시간 : {selectedStartTime ? `${selectedStartTime}` : ""}
                 </div>
-                <a href={`/ticket_seat?scheduleId=${encodeURIComponent(selectedScheduleId)}`}>
+                <a href={`/ticket/seat?scheduleId=${encodeURIComponent(selectedScheduleId)}`}>
                     <button onClick={goToSeatSelection}>좌석선택하러가기</button>
                 </a>
             </div>
