@@ -1,10 +1,33 @@
+import React, { useState } from "react";
 import MypageSidebar from "../common/MypageSidebar"
 import "../../css/review/MyReserve.css"
 import Pagination from "../common/Pagination"
 import Modal from "../mainPage/Modal"
 
-const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showModal, hideModal, modalData, id, mySubmit, onChange, showResult, hideResult, onResult, isModalOpen, modalType, onPayment }) => {
+const MyReserveCom = ({
+    list,
+    start,
+    reviewStatus,
+    handlePageChange,
+    del,
+    showModal,
+    hideModal,
+    modalData,
+    id,
+    mySubmit,
+    onChange,
+    onResult,
+    isModalOpen,
+    modalType,
+    onPayment,
+}) => {
+    const [showResult, setShowResult] = useState(false);
     const now = new Date()
+
+    const hideResult = () => {
+        setShowResult(false);
+    };
+    
     return <>
         <div className="ReserveTotalDiv">
             <MypageSidebar activeLink="내 예매내역" />
@@ -56,16 +79,21 @@ const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showMo
             </div>
 
             {modalData && (
-                <Modal isOpen={isModalOpen} onClose={hideModal} type={modalType} modalData={modalData}  
-                mySubmit={(e) => {
-                    mySubmit(e);  // 기존 기능 수행
-                    hideModal();  // 리뷰 모달 닫기
-                    showResult(); // 리뷰 작성 완료 모달 열기
-                }} 
-                    onChange={onChange} showResult={showResult} />
+                <Modal
+                    isOpen={isModalOpen}
+                    onClose={hideModal}
+                    type={modalType}
+                    modalData={modalData}
+                    mySubmit={(e) => {
+                        mySubmit(e); // 기존 기능 수행
+                        hideModal(); // 리뷰 모달 닫기
+                    }}
+                    onChange={onChange}
+                    setShowResult={setShowResult} // 상태 변경 함수 전달
+                />
             )}
 
-            {modalData && !isModalOpen && !showResult && ( // showResult가 true일 때만 리뷰 완료 모달 표시
+            {showResult && modalData && ( // showResult가 true일 때만 리뷰 완료 모달 표시
                 <div className="review_modal_container" onClick={hideResult}>
                     <div className='review_modal_content' onClick={(e) => e.stopPropagation()}>
                         <div className="review_modal_body">
