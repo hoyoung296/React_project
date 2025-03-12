@@ -4,29 +4,13 @@ import "../../css/review/MyReserve.css"
 import Pagination from "../common/Pagination"
 import Modal from "../mainPage/Modal"
 
-const MyReserveCom = ({
-    list,
-    start,
-    reviewStatus,
-    handlePageChange,
-    del,
-    showModal,
-    hideModal,
-    modalData,
-    id,
-    mySubmit,
-    onChange,
-    onResult,
-    isModalOpen,
-    modalType,
-    onPayment,
-}) => {
-    const [showResult, setShowResult] = useState(false);
+const MyReserveCom = ({list, start, reviewStatus, handlePageChange, del, showModal, hideModal, modalData, id, mySubmit, 
+    onChange, onResult, isModalOpen, modalType, onPayment }) => {
+    const [showResult, setShowResult] = useState(false)
     const now = new Date()
-
     const hideResult = () => {
-        setShowResult(false);
-    };
+        setShowResult(false)
+    }
     
     return <>
         <div className="ReserveTotalDiv">
@@ -44,7 +28,7 @@ const MyReserveCom = ({
                             const minutes = String(d.getMinutes()).padStart(2, '0')
                             const seconds = String(d.getSeconds()).padStart(2, '0')
                             return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
-                          }
+                        }
                         const endDateTime = new Date(data.endDateTime)
                         const startDateTime = new Date(data.startDateTime)
                         const showReviewButton = now > endDateTime
@@ -53,7 +37,7 @@ const MyReserveCom = ({
                         return (
                             <div className="myReserveBody" key={data.reservationId}>
                                 <div>
-                                    <img src={`${data.posterUrl}`} alt={`${data.title}`}/>
+                                    <img src={`${data.posterUrl}`} alt={`${data.title}`} />
                                 </div>
                                 <div>
                                     <p>{data.title}</p>
@@ -69,39 +53,32 @@ const MyReserveCom = ({
                                 </div>
                                 <div>
                                     <div className="myReserveBodyTicketPay">
-                                        <p>{data.reservationStatusId === 1 ? <>잠시 후 대기 건이 취소됩니다.<br/>결제를 완료해주세요.</> : ""}</p>
+                                        <p>{data.reservationStatusId === 1 ? <>잠시 후 대기 건이 취소됩니다.<br />결제를 완료해주세요.</> : ""}</p>
                                     </div>
                                     {list != null && (
                                         <div className="myReserveBodyBtnList">
-                                            {/* {showReviewButton && hasReview && data.paymentId !== undefined && 
-                                                <button className="myReserveBodyBtn" onClick={() => showModal(data.title, data.posterUrl, data.director, data.actors, data.movieId)}>리뷰 쓰기</button>} */}
-                                                <button className="myReserveBodyBtn" onClick={() => showModal(data.title, data.posterUrl, data.director, data.actors, data.movieId)}>리뷰 쓰기</button>
-                                            {showCancelButton && data.paymentId !== undefined && 
+                                            {showReviewButton && hasReview && data.paymentId !== undefined &&
+                                                <button className="myReserveBodyBtn" onClick={() => showModal(data.title, data.posterUrl, data.director, data.actors, data.movieId)}>리뷰 쓰기</button>}
+                                            {showCancelButton && data.paymentId !== undefined &&
                                                 <button className="myReserveBodyBtn_del" onClick={() => del(data.reservationId)}>예매 취소</button>}
-                                            {data.paymentId === undefined && 
+                                            {data.paymentId === undefined &&
                                                 <button className="myReserveBodyBtn" onClick={() => onPayment(data)}>결제 진행</button>}
                                         </div>
                                     )}
                                 </div>
                             </div>
-                                ); 
-                            })}
+                        )
+                    })}
                 <Pagination start={start} list={list} handlePageChange={handlePageChange} />
             </div>
 
             {modalData && (
-                <Modal
-                    isOpen={isModalOpen}
-                    onClose={hideModal}
-                    type={modalType}
-                    modalData={modalData}
+                <Modal isOpen={isModalOpen} onClose={hideModal} type={modalType} modalData={modalData}
                     mySubmit={(e) => {
                         mySubmit(e); // 기존 기능 수행
                         hideModal(); // 리뷰 모달 닫기
-                    }}
-                    onChange={onChange}
-                    setShowResult={setShowResult} // 상태 변경 함수 전달
-                />
+                    }} onChange={onChange}
+                    setShowResult={setShowResult} /> // 상태 변경 함수 전달
             )}
 
             {showResult && modalData && ( // showResult가 true일 때만 리뷰 완료 모달 표시

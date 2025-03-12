@@ -41,8 +41,8 @@ const routes = [
 
     { path: '/admin/login' , element : <AdminMain />},
     { path: '/admin/movie', element: <AdminProtectedRoute element={<AdminMovie />} /> },
-    { path: '/admin/schedule', element: <AdminProtectedRoute element={<AdminMember />} /> },
-    { path: '/admin/member', element: <AdminProtectedRoute element={<AdminSchedule />} /> },
+    { path: '/admin/member', element: <AdminProtectedRoute element={<AdminMember />} /> },
+    { path: '/admin/schedule', element: <AdminProtectedRoute element={<AdminSchedule />} /> },
     { path: '/admin/payment', element: <AdminProtectedRoute element={<AdminPayment />} /> }
 ];
 
