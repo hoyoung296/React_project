@@ -97,6 +97,11 @@ const SignUpCom = () => {
             alert("인증번호 확인 중 오류가 발생했습니다.");
         }
     };
+    // isEmailVerified 상태가 변경될 때마다 확인
+    useEffect(() => {
+        console.log("이메일 인증 상태 변경됨:", isEmailVerified);
+        // 이메일 인증 완료 후, 회원가입 진행 등의 작업을 여기서 처리
+    }, [isEmailVerified]); // isEmailVerified가 변경될 때마다 실행
 
 
     const validateInputs = () => {
