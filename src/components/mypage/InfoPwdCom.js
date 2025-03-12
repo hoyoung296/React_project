@@ -8,12 +8,11 @@ import '../../css/mypage.css';
 function InfoPwdCom() {
     const navigate = useNavigate();
     
-    const [userId, setUserId] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [passwordVisible, setPasswordVisible] = useState(false);
     const user = JSON.parse(localStorage.getItem("user"));
-    const id = user ? user.userId : null; // user가 null이 아니면 userId를 추출
+    const userId = user ? user.userId : null; // user가 null이 아니면 userId를 추출
 
 
     const handleInfoPwd = async () => {
@@ -25,7 +24,7 @@ function InfoPwdCom() {
             console.log('서버 응답:', response);
 
             // 서버로부터 받은 응답 처리
-            if (response.data.code === 200) {
+            if (response.data.code === 1) {
                 navigate('/mypage/info');
             } else {
                 setErrorMessage('아이디 또는 비밀번호가 일치하지 않습니다.');
@@ -56,8 +55,7 @@ function InfoPwdCom() {
                     className='input_id'
                     required
                     placeholder="아이디"
-                    value={id}
-                    onChange={(e) => setUserId(e.target.value)}
+                    value={userId}
                     onKeyDown={handleKeyDown}
                 />
             <span className='loginpwdBtn'>
