@@ -35,6 +35,16 @@ const MyReserveCom = ({
                 <p>내 예매내역</p>
                 {list.dto.length === 0 ? (<h2>예매 내역이 없습니다.</h2>) :
                     list.dto.map((data) => {
+                        const formatDate = (date) => {
+                            const d = new Date(date)
+                            const year = d.getFullYear()
+                            const month = String(d.getMonth() + 1).padStart(2, '0')
+                            const day = String(d.getDate()).padStart(2, '0')
+                            const hours = String(d.getHours()).padStart(2, '0')
+                            const minutes = String(d.getMinutes()).padStart(2, '0')
+                            const seconds = String(d.getSeconds()).padStart(2, '0')
+                            return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
+                          }
                         const endDateTime = new Date(data.endDateTime)
                         const startDateTime = new Date(data.startDateTime)
                         const showReviewButton = now > endDateTime
@@ -50,7 +60,7 @@ const MyReserveCom = ({
                                 </div>
                                 <div>
                                     <p>예매번호 : {data.reservationId}</p>
-                                    <p>예매일 : </p>
+                                    <p>예매일 : {formatDate(data.createdAt)}</p>
                                     <p>관람일 : {data.startDateTime}</p>
                                 </div>
                                 <div>
