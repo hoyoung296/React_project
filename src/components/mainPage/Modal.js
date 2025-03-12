@@ -78,7 +78,7 @@ const Modal = ({ isOpen, onClose, type, infoData, onClick, Infolist, relatedList
                                             </div>
                                             <div className='review'>
                                                 <p>REVIEW</p>
-                                                {Infolist.map((data, index) => (
+                                                {Infolist.slice(-5).map((data, index) => (
                                                     <div className='reviewList' key={`info-${data.movieId}-${data.reviewDate}-${index}`}>
                                                         {data.content != null && (
                                                             <>

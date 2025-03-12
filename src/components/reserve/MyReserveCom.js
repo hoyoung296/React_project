@@ -73,8 +73,9 @@ const MyReserveCom = ({
                                     </div>
                                     {list != null && (
                                         <div className="myReserveBodyBtnList">
-                                            {showReviewButton && hasReview && data.paymentId !== undefined && 
-                                                <button className="myReserveBodyBtn" onClick={() => showModal(data.title, data.posterUrl, data.director, data.actors, data.movieId)}>리뷰 쓰기</button>}
+                                            {/* {showReviewButton && hasReview && data.paymentId !== undefined && 
+                                                <button className="myReserveBodyBtn" onClick={() => showModal(data.title, data.posterUrl, data.director, data.actors, data.movieId)}>리뷰 쓰기</button>} */}
+                                                <button className="myReserveBodyBtn" onClick={() => showModal(data.title, data.posterUrl, data.director, data.actors, data.movieId)}>리뷰 쓰기</button>
                                             {showCancelButton && data.paymentId !== undefined && 
                                                 <button className="myReserveBodyBtn_del" onClick={() => del(data.reservationId)}>예매 취소</button>}
                                             {data.paymentId === undefined && 

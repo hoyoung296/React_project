@@ -1,65 +1,50 @@
 .ReviewTotalDiv {
     width: 100%;
     height: 100%;
-    background: #171717;
     display: flex;
 }
-
 .ReviewWrapdiv {
     width: 80%;
     height: 1000px;
     position: relative;
-
-    &>h2 {
-        text-align: center;
-        margin-top: 0;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
 }
 
-.ReviewDiv {
-    width: 95%;
-    height: 15%;
+.myReviewBody{
+    width: 1100px;
+    height: 190px;
+    padding: 15px;
+    padding-left: 25px;
+    border: 1px solid;
     border-radius: 5px;
+    margin-bottom: 20px;
+    margin: 10px 50px;
     display: flex;
-    border: 1px solid white;
-    position: relative;
-    margin-bottom: 30px;
-
-    &>img {
-        width: 10%;
-        height: 85%;
-        margin-left: 2%;
-        margin-top: 1%;
-    }
-
-    &>div {
-        width: 70%;
-        height: 80%;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        margin-bottom: 10px;
-    }
 }
-
-.ReviewDiv>div>p {
-    margin-top: 3%;
+.reviewPng{
+    width: 20px;
+    height: 20px;
 }
-
-.ReviewDiv>div>img {
-    width: 30px;
-    height: 30px;
-    margin-top: -10px;
+.moviePoster {
+    border-radius: 5px;
+    margin-right: 50px;
+    margin-top: 10px;
 }
-
-.ReviewDiv>div>b {
-    font-size: 20px;
-    display: inline-block;
-    position: relative;
-    top: -7px;
+.reviewTitle{
+    margin-top: 40px;
+}
+.ReviewWrapdiv > p{
+    font-size: 25px;
+    font-weight: bold;
+    margin-left: 50px;
+    margin-bottom: 40px;
+}
+.ReviewWrapdiv h2{
+    margin: 200px 550px;
+    width: 100%;
+}
+.reviewPageContent{
+    display: flex;
+    gap: 20px;
+    font-size: 14px;
+    margin-top: 40px;
 }
