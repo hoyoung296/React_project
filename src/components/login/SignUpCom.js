@@ -78,15 +78,19 @@ const SignUpCom = () => {
     // 인증번호 확인
     const verifyCode = async () => {
         try {
-            // 요청 전에 데이터 확인
-            console.log("Email:", email);
-            console.log("Verification Code:", verificationCode);
+            console.log("인증번호 확인 시작...");
+            console.log("입력된 이메일:", email);
+            console.log("입력된 인증번호:", verificationCode);
+            console.log("서버에서 받은 인증번호:", serverVerificationCode); // 서버에서 받은 인증번호 로그
+
             if (verificationCode === serverVerificationCode) {
                 setIsEmailVerified(true); // 인증 완료 상태 업데이트
                 alert("이메일 인증이 완료되었습니다.");
+                console.log("이메일 인증 성공! 인증 완료 상태:", isEmailVerified); // 상태 업데이트 후 로그
             } else {
                 setIsEmailVerified(false); // 인증 실패 상태 업데이트
                 alert("인증번호가 올바르지 않습니다.");
+                console.log("이메일 인증 실패. 상태:", isEmailVerified); // 상태 업데이트 후 로그
             }
         } catch (error) {
             console.error("인증번호 확인 요청 실패:", error.response ? error.response.data : error.message);
@@ -151,17 +155,21 @@ const SignUpCom = () => {
                 userBirthday: birthdayNumber,
                 isEmailVerified: isEmailVerified // 인증 상태 전송
             };
-            //console.log('회원가입 데이터:', memberData); // 데이터를 콘솔에 출력
+            console.log('회원가입 데이터:', memberData); // 데이터를 콘솔에 출력
 
             const response = await axios.post('http://localhost:8080/root/register', memberData);
+            console.log("서버 응답:", response);
+
             if (response.status === 200) {
                 alert("회원가입이 완료되었습니다.");
                 navigate('/login'); // 로그인 페이지로 이동
             }
         } catch (error) {
             if (error.response && error.response.data) {
+                console.log("서버 오류:", error.response.data.message);
                 setErrorMessage(error.response.data.message); // 화면에 에러 메시지 표시
             } else {
+                console.log("서버 오류:", error);
                 setErrorMessage("서버 오류로 인해 회원가입에 실패했습니다.");
             }
         }
