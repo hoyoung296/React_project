@@ -42,7 +42,7 @@ const AdminMainCon = () => {
         sessionStorage.setItem("admin", "true")
         setIsAuthenticated(true); // 상태 업데이트
         alert("로그인 성공")
-        navigate("/adminMovie")
+        navigate("/admin/movie")
 
         window.dispatchEvent(new Event("storage")) // 상태 변경 이벤트 발생
     }
@@ -51,7 +51,7 @@ const AdminMainCon = () => {
         sessionStorage.removeItem("admin")
         setIsAuthenticated(false) // 상태 업데이트
         alert("로그아웃 되었습니다.")
-        navigate("/adminMain")
+        navigate("/admin/login")
 
         window.dispatchEvent(new Event("storage")) // 상태 변경 이벤트 발생
     }
