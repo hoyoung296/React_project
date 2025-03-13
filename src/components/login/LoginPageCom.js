@@ -32,7 +32,7 @@ const LoginPageCom = () => {
 
                 localStorage.setItem("jwtToken", data.jwtToken);
                 localStorage.setItem("refreshToken", data.refreshToken);
-  
+
 
 
                 navigate('/');
