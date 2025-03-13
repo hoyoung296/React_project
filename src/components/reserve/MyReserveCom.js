@@ -4,14 +4,14 @@ import "../../css/review/MyReserve.css"
 import Pagination from "../common/Pagination"
 import Modal from "../mainPage/Modal"
 
-const MyReserveCom = ({list, start, reviewStatus, handlePageChange, del, showModal, hideModal, modalData, id, mySubmit, 
+const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showModal, hideModal, modalData, id, mySubmit,
     onChange, onResult, isModalOpen, modalType, onPayment }) => {
     const [showResult, setShowResult] = useState(false)
     const now = new Date()
     const hideResult = () => {
         setShowResult(false)
     }
-    
+
     return <>
         <div className="ReserveTotalDiv">
             <MypageSidebar activeLink="내 예매내역" />
@@ -57,9 +57,9 @@ const MyReserveCom = ({list, start, reviewStatus, handlePageChange, del, showMod
                                     </div>
                                     {list != null && (
                                         <div className="myReserveBodyBtnList">
-                                            {showReviewButton && hasReview && data.paymentId !== undefined &&
+                                            {showReviewButton && hasReview && data.paymentId !== undefined && data.reservationStatusId !== 3 &&
                                                 <button className="myReserveBodyBtn" onClick={() => showModal(data.title, data.posterUrl, data.director, data.actors, data.movieId)}>리뷰 쓰기</button>}
-                                            {showCancelButton && data.paymentId !== undefined &&
+                                            {showCancelButton && data.paymentId !== undefined && data.reservationStatusId !== 3 &&
                                                 <button className="myReserveBodyBtn_del" onClick={() => del(data.reservationId)}>예매 취소</button>}
                                             {data.paymentId === undefined &&
                                                 <button className="myReserveBodyBtn" onClick={() => onPayment(data)}>결제 진행</button>}

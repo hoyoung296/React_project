@@ -59,7 +59,7 @@ function InfoCom() {
 
     const handleSave = async () => {
         try {
-            const response = await axios.post('http://localhost:8080/root/update', {
+            const response = await axios.put('http://localhost:8080/root/update', {
                 userId: userInfo.userId,
                 password: userInfo.password,
                 newPassword: userInfo.newPassword,
@@ -81,7 +81,6 @@ function InfoCom() {
             alert('업데이트 중 오류가 발생했습니다.');
         }
     };
-
 
     return (
         <div className='mypage'>
@@ -105,21 +104,19 @@ function InfoCom() {
                             onChange={handleChange}
                         />
                     </span>
-                    <span><span>비밀번호</span>
+                    <span><span>새로운 비밀번호</span>
                         <input
                             type="password"
                             className='infodata'
-                            name="password"
-                            value={userInfo.password}
+                            name="newPassword"
                             onChange={handleChange}
                         />
                     </span>
-                    <span><span>비밀번호 확인</span>
+                    <span><span>새로운 비밀번호 확인</span>
                         <input
                             type="password"
                             className='infodata'
                             name="confirmPassword"
-                            value={userInfo.confirmPassword}
                             onChange={handleChange}
                         />
                     </span>
