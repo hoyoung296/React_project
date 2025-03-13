@@ -24,26 +24,25 @@ function HeaderCom({ onChange, mySubmit, input}) {
     const token = localStorage.getItem('jwtToken');
     console.log("토큰 : " + token)
     if (token) {
-      axios
-        .get(`${process.env.REACT_APP_BACKEND_URL}/root/member/user/info`, {
-          headers: {
+        axios.get(`${process.env.REACT_APP_BACKEND_URL}/root/member/user/info`, {
+            headers: {
             Authorization: `Bearer ${token}`,
-          },
+            },
         })
         .then((res) => {
           // 백엔드에서 반환한 사용자 정보 (userId, username, email 등)
-          const { userId, username, email } = res.data;
-          setUserId(userId);
-          setUsername(username);
-          setIsLoggedIn(true); // 토큰 유효 -> 로그인 상태
-          localStorage.setItem("LoginSuccess", JSON.stringify(true));
+            const { userId, username, email } = res.data;
+                setUserId(userId);
+                setUsername(username);
+                setIsLoggedIn(true); // 토큰 유효 -> 로그인 상태
+                localStorage.setItem("LoginSuccess", JSON.stringify(true));
         })
         .catch((err) => {
-          console.error('JWT 검증 실패:', err);
+            console.error('JWT 검증 실패:', err);
           //handleLogout(); // 토큰이 유효하지 않으면 로그아웃 처리
         });
     }
-  }, []);
+}, []);
 
     // 로그아웃 처리
     const handleLogout = () => {

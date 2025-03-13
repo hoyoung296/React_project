@@ -24,7 +24,7 @@ const PayMentCom = () => {
 
 // reservationId 상태로 관리
 const [reservationId, setReservationId] = useState(() => {
-    const storedReservationId = location.state?.reservationId || localStorage.getItem('reservationId');
+    const storedReservationId = location.state?.reservationId || sessionStorage.getItem('reservationId');
     return storedReservationId ? String(storedReservationId) : null;
 });
 
@@ -33,7 +33,7 @@ useEffect(() => {
     if (location.state && location.state.reservationId) {
         const newReservationId = String(location.state.reservationId);
         setReservationId(newReservationId);
-        localStorage.setItem('reservationId', newReservationId); // 상태 변경 시 로컬스토리지에 저장
+        sessionStorage.setItem('reservationId', newReservationId); // 상태 변경 시 로컬스토리지에 저장
     } else if (!reservationId) {
         alert("예매 번호가 없습니다.");
     }
@@ -41,12 +41,12 @@ useEffect(() => {
 
 // 좌석 정보 변경 시 로컬스토리지에 저장 및 상태 업데이트
 const [seatIds, setSeatIds] = useState(() => {
-    const storedSeatIds = location.state?.seatIds || JSON.parse(localStorage.getItem("seatIds")) || [];
+    const storedSeatIds = location.state?.seatIds || JSON.parse(sessionStorage.getItem("seatIds")) || [];
 
      // 로컬스토리지에서 불러온 좌석 정보가 비어있다면 빈 배열로 초기화
     if (storedSeatIds.length === 0) {
         console.log("storedSeatIds가 없음! 추가하겠음");
-        seatIds = localStorage.getItem('seatIds');
+        seatIds = sessionStorage.getItem('seatIds');
         console.log("seatIds : ", seatIds);
 
     }
@@ -56,14 +56,14 @@ const [seatIds, setSeatIds] = useState(() => {
 
 useEffect(() => {
     if (location.state && location.state.seatIds) {
-        localStorage.setItem("seatIds", JSON.stringify(location.state.seatIds));
+        sessionStorage.setItem("seatIds", JSON.stringify(location.state.seatIds));
         setSeatIds(location.state.seatIds); // 💡 UI 반영을 위해 상태 업데이트
     }
 }, [location.state]);
 
 useEffect(() => {
     const handleStorageChange = () => {
-        const updatedSeatIds = localStorage.getItem("seatIds");
+        const updatedSeatIds = sessionStorage.getItem("seatIds");
         setSeatIds(updatedSeatIds ? JSON.parse(updatedSeatIds) : []);
     };
 
@@ -74,24 +74,24 @@ useEffect(() => {
     };
 }, []);
 
-const moviePosterUrl = localStorage.getItem("moviePosterUrl");
-const movieDirector = localStorage.getItem("movieDirector");
-const movieActors = localStorage.getItem("movieActors");
-const movieTitle = localStorage.getItem("movieTitle");
-const selectedDate = localStorage.getItem("selectedDate");
-const selectedCinema = localStorage.getItem("selectedCinema");
-const selectedStartTime = localStorage.getItem("selectedStartTime");
-const totalAmount = JSON.parse(localStorage.getItem("totalAmount") || "0");
+const moviePosterUrl = sessionStorage.getItem("moviePosterUrl");
+const movieDirector = sessionStorage.getItem("movieDirector");
+const movieActors = sessionStorage.getItem("movieActors");
+const movieTitle = sessionStorage.getItem("movieTitle");
+const selectedDate = sessionStorage.getItem("selectedDate");
+const selectedCinema = sessionStorage.getItem("selectedCinema");
+const selectedStartTime = sessionStorage.getItem("selectedStartTime");
+const totalAmount = JSON.parse(sessionStorage.getItem("totalAmount") || "0");
 
 
 const [scheduleId, setScheduleId] = useState(() => {
-    const storedScheduleId = location.state?.scheduleId || JSON.parse(localStorage.getItem('scheduleId')) || null;
+    const storedScheduleId = location.state?.scheduleId || JSON.parse(sessionStorage.getItem('scheduleId')) || null;
     return storedScheduleId;  // 바로 초기화
 });
 useEffect(() => {
     if (scheduleId === "0" || scheduleId === null) {
         console.log("scheduleId가 없음! 추가하겠음");
-        const storedScheduleId = localStorage.getItem('scheduleId');
+        const storedScheduleId = sessionStorage.getItem('scheduleId');
         if (storedScheduleId) {
             setScheduleId(storedScheduleId);  // 로컬스토리지에서 가져온 값으로 상태 업데이트
             console.log("scheduleId : ", storedScheduleId);
@@ -102,7 +102,7 @@ useEffect(() => {
 // scheduleId가 변경되면 로컬스토리지에 저장
 useEffect(() => {
     if (scheduleId) {
-        localStorage.setItem('scheduleId', scheduleId);
+        sessionStorage.setItem('scheduleId', scheduleId);
     }
 }, [scheduleId]);
 
@@ -257,17 +257,17 @@ useEffect(() => {
                         });
                         console.log("✅ 예매가 정상적으로 취소되었습니다.");
                         navigate('/'); // 뒤로가기 후 홈으로 이동
-                        localStorage.removeItem("moviePosterUrl");
-                        localStorage.removeItem("movieDirector");
-                        localStorage.removeItem("movieActors");
-                        localStorage.removeItem("movieTitle");
-                        localStorage.removeItem("selectedDate");
-                        localStorage.removeItem("selectedCinema");
-                        localStorage.removeItem("selectedStartTime");
-                        localStorage.removeItem("totalAmount");
-                        localStorage.removeItem("reservationId");
-                        localStorage.removeItem("seatIds");
-                        localStorage.removeItem("scheduleId");
+                        sessionStorage.removeItem("moviePosterUrl");
+                        sessionStorage.removeItem("movieDirector");
+                        sessionStorage.removeItem("movieActors");
+                        sessionStorage.removeItem("movieTitle");
+                        sessionStorage.removeItem("selectedDate");
+                        sessionStorage.removeItem("selectedCinema");
+                        sessionStorage.removeItem("selectedStartTime");
+                        sessionStorage.removeItem("totalAmount");
+                        sessionStorage.removeItem("reservationId");
+                        sessionStorage.removeItem("seatIds");
+                        sessionStorage.removeItem("scheduleId");
                     } catch (error) {
                         console.error("❌ 예매 취소 실패:", error);
                     }
