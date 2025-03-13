@@ -1,5 +1,4 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../css/ticket.css';
 
@@ -16,17 +15,22 @@ function TicketDoneCom() {
     const totalAmount = JSON.parse(localStorage.getItem("totalAmount") || "0");
     const reservationId = localStorage.getItem('reservationId');
     const seatIds = JSON.parse(localStorage.getItem("seatIds")) || [];
-    
+
     const [userId, setUserId] = useState(null);
 
-    const storedUser = localStorage.getItem("user");
-    if (userId) {
-        const userData = JSON.parse(storedUser);
-        setUserId(userData.userId || null); // userId 설정, 마이페이지 넘어갈 때 id가 필요해서 작성(나호영 작성)
-    }
+    useEffect(() => {
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+            const userData = JSON.parse(storedUser);
+            setUserId(userData.userId || null);
+            console.log("userId 설정 완료:", userData.userId);
+        }
+    }, []);
+
+    console.log("userId : ", userId);
 
     const goToMyPage = () => {
-        navigate(`/mypage/ticket?id=${userId}&start=`);
+        navigate(`/mypage/ticket?id=${userId}&start=`)
         localStorage.removeItem("moviePosterUrl");
         localStorage.removeItem("movieDirector");
         localStorage.removeItem("movieActors");

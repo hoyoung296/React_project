@@ -43,12 +43,6 @@ function InfoPwdCom() {
         <MypageSidebar activeLink="회원정보 수정" />
         <div className='infoPwdMain'>
             <p>비밀번호를 입력해주세요.</p>
-                <input
-                    type="text"
-                    className='input_id'
-                    value={userId}
-                    onKeyDown={handleKeyDown}
-                />
             <span className='loginpwdBtn'>
                 <input
                     type={passwordVisible ? "text" : "password"}
