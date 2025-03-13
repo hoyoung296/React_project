@@ -122,14 +122,14 @@ const TicketSeatCom = () => {
             console.log("✅ 예매 성공:", response.data);
 
             // ✅ 예약번호, 좌석번호, 스케줄 ID 제외한 데이터 저장
-            localStorage.setItem("moviePosterUrl", movieDetails.posterurl);
-            localStorage.setItem("movieTitle", movieDetails.title);
-            localStorage.setItem("movieDirector", movieDetailsState.director);
-            localStorage.setItem("movieActors", movieDetailsState.actors);
-            localStorage.setItem("selectedDate", selectedDateState);
-            localStorage.setItem("selectedCinema", selectedCinemaState);
-            localStorage.setItem("selectedStartTime", selectedStartTimeState);
-            localStorage.setItem("totalAmount", totalAmount);
+            sessionStorage.setItem("moviePosterUrl", movieDetails.posterurl);
+            sessionStorage.setItem("movieTitle", movieDetails.title);
+            sessionStorage.setItem("movieDirector", movieDetailsState.director);
+            sessionStorage.setItem("movieActors", movieDetailsState.actors);
+            sessionStorage.setItem("selectedDate", selectedDateState);
+            sessionStorage.setItem("selectedCinema", selectedCinemaState);
+            sessionStorage.setItem("selectedStartTime", selectedStartTimeState);
+            sessionStorage.setItem("totalAmount", totalAmount);
 
 
             // 예약 ID를 bigInt로 변환

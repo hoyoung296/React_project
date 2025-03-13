@@ -1,47 +1,62 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from '../common/axiosConfig';
 import '../../css/ticket.css';
 
 function TicketDoneCom() {
     const navigate = useNavigate();
 
-    const moviePosterUrl = localStorage.getItem("moviePosterUrl");
-    const movieDirector = localStorage.getItem("movieDirector");
-    const movieActors = localStorage.getItem("movieActors");
-    const movieTitle = localStorage.getItem("movieTitle");
-    const selectedDate = localStorage.getItem("selectedDate");
-    const selectedCinema = localStorage.getItem("selectedCinema");
-    const selectedStartTime = localStorage.getItem("selectedStartTime");
-    const totalAmount = JSON.parse(localStorage.getItem("totalAmount") || "0");
-    const reservationId = localStorage.getItem('reservationId');
-    const seatIds = JSON.parse(localStorage.getItem("seatIds")) || [];
+    const moviePosterUrl = sessionStorage.getItem("moviePosterUrl");
+    const movieDirector = sessionStorage.getItem("movieDirector");
+    const movieActors = sessionStorage.getItem("movieActors");
+    const movieTitle = sessionStorage.getItem("movieTitle");
+    const selectedDate = sessionStorage.getItem("selectedDate");
+    const selectedCinema = sessionStorage.getItem("selectedCinema");
+    const selectedStartTime = sessionStorage.getItem("selectedStartTime");
+    const totalAmount = JSON.parse(sessionStorage.getItem("totalAmount") || "0");
+    const reservationId = sessionStorage.getItem('reservationId');
+    const seatIds = JSON.parse(sessionStorage.getItem("seatIds")) || [];
 
     const [userId, setUserId] = useState(null);
 
     useEffect(() => {
-        const storedUser = localStorage.getItem("user");
-        if (storedUser) {
-            const userData = JSON.parse(storedUser);
-            setUserId(userData.userId || null);
-            console.log("userId 설정 완료:", userData.userId);
+        const token = localStorage.getItem('jwtToken');
+        console.log("토큰 : " + token);
+        if (token) {
+            axios.get(`${process.env.REACT_APP_BACKEND_URL}/root/member/user/info`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then((res) => {
+                // 필요한 값만 추출하여 state에 저장
+                const { userId } = res.data;
+                setUserId(userId);
+            })
+            .catch((err) => {
+                console.error('JWT 검증 실패:', err);
+            });
         }
     }, []);
+
+
+    
 
     console.log("userId : ", userId);
 
     const goToMyPage = () => {
         navigate(`/mypage/ticket?id=${userId}&start=`)
-        localStorage.removeItem("moviePosterUrl");
-        localStorage.removeItem("movieDirector");
-        localStorage.removeItem("movieActors");
-        localStorage.removeItem("movieTitle");
-        localStorage.removeItem("selectedDate");
-        localStorage.removeItem("selectedCinema");
-        localStorage.removeItem("selectedStartTime");
-        localStorage.removeItem("totalAmount");
-        localStorage.removeItem("reservationId");
-        localStorage.removeItem("seatIds");
-        localStorage.removeItem("scheduleId");
+        sessionStorage.removeItem("moviePosterUrl");
+        sessionStorage.removeItem("movieDirector");
+        sessionStorage.removeItem("movieActors");
+        sessionStorage.removeItem("movieTitle");
+        sessionStorage.removeItem("selectedDate");
+        sessionStorage.removeItem("selectedCinema");
+        sessionStorage.removeItem("selectedStartTime");
+        sessionStorage.removeItem("totalAmount");
+        sessionStorage.removeItem("reservationId");
+        sessionStorage.removeItem("seatIds");
+        sessionStorage.removeItem("scheduleId");
     }
 
     return (
