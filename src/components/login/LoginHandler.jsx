@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../css/login.css'
-import axios from 'axios';
+import axios from '../common/axiosConfig';
 
 
   const LoginHandler = () => {
@@ -25,8 +25,9 @@ import axios from 'axios';
         );
         // 백엔드 응답 예시: { loginSuccess: true, user: { ... }, jwtToken: "eyJhbGciOi..." }
         localStorage.setItem("jwtToken", response.data.jwtToken);
-        localStorage.setItem("user", JSON.stringify(response.data.user));
-        localStorage.setItem("LoginSuccess", JSON.stringify(response.data.loginSuccess));
+        localStorage.setItem("refreshToken", response.data.refreshToken);
+        // localStorage.setItem("user", JSON.stringify(response.data.user));
+        // localStorage.setItem("LoginSuccess", JSON.stringify(response.data.loginSuccess));
 
          // 부모 창 새로 고침 후 로그인 완료 페이지로 이동
         if (window.opener) {

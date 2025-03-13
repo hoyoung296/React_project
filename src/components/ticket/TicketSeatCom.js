@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation, useSearchParams, useNavigate } from "react-router-dom";
 import Axios from "axios";
+import { jwtDecode } from "jwt-decode";
 import "../../css/ticket.css";
 
 const ROWS = 7; // 세로 줄 수
@@ -83,15 +84,23 @@ const TicketSeatCom = () => {
         e.preventDefault();
         console.log("✅ handleSubmit 함수 실행됨!");
 
-        // 1) 로컬 스토리지에서 userId 가져오기
-        const userStr = localStorage.getItem("user");  // "user"라는 키로 저장된 JSON 문자열
-        console.log("userStr@@@@@@", userStr);
-        let userId = "aaa";  // 기본값
-        if (userStr) {
-          const userObj = JSON.parse(userStr);        // 문자열을 JS 객체로 변환
-          userId = userObj.userId || "aaa";           // userObj 안의 userid 추출
-        }
-        console.log("userId@@@@@@", userId);
+         // JWT 토큰에서 userId 추출 함수 (jwt-decode 사용)
+         const getUserIdFromToken = () => {
+            const token = localStorage.getItem("jwtToken");
+            if (token) {
+              try {
+                const decoded = jwtDecode(token);
+                return decoded.sub;
+              } catch (error) {
+                console.error("JWT 디코딩 오류:", error);
+              }
+            }
+            return "aaa";
+        };
+          
+         // JWT 토큰에서 userId 가져오기
+        const userId = getUserIdFromToken();
+        console.log("디코딩된 userId:", userId);
 
         if (seatIds.size === 0) {
             alert("좌석을 선택해주세요.");
