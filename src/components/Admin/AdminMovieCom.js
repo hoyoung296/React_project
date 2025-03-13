@@ -10,66 +10,66 @@ const AdminMovieCom = ({ list, editMovie, InputChange, EditClick, Update, manual
                 <button onClick={show} className="movieBtn">추가</button>
                 <button className="movieBtn" onClick={() => manualUpdate()}>업데이트</button>
                 <div className="table-wrapper">
-    <table className="movie-table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>제목</th>
-                <th>영문제목</th>
-                <th>포스터 URL</th>
-                <th>스틸컷 URL</th>
-                <th>시놉시스</th>
-                <th>감독</th>
-                <th>배우</th>
-                <th>관리</th>
-            </tr>
-        </thead>
-        <tbody>
-            {list && list.length > 0 ? (
-                list.map((data) => (
-                    <tr key={data.movieId}>
-                        {[
-                            { name: "movieId", value: data.movieId },
-                            { name: "title", value: data.title },
-                            { name: "entitle", value: data.entitle },
-                            { name: "posterUrl", value: data.posterUrl },
-                            { name: "stillUrl", value: data.stillUrl },
-                            { name: "movieSynopsis", value: data.movieSynopsis },
-                            { name: "directorName", value: data.directorName },
-                            { name: "actors", value: data.actors },
-                        ].map((item, index) => (
-                            <td key={index}>
-                                {editMovie?.movieId === data.movieId ? (
-                                    item.name === "movieSynopsis" ? (
-                                        <textarea name={item.name} value={item.value} onChange={(e) => InputChange(e, data.movieId)} />
-                                    ) : (
-                                        <input type="text" name={item.name} value={item.value} onChange={(e) => InputChange(e, data.movieId)}  readOnly={item.name === "movieId"} />
-                                    )
-                                ) : (
-                                    <span className="ellipsis">{item.value}</span>
-                                )}
-                            </td>
-                        ))}
-                        <td>
-                            {editMovie?.movieId === data.movieId ? (
-                                <button className="movieBtn" onClick={() => Update(data.movieId)}>수정 완료</button>
+                    <table className="movie-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>제목</th>
+                                <th>영문제목</th>
+                                <th>포스터 URL</th>
+                                <th>스틸컷 URL</th>
+                                <th>시놉시스</th>
+                                <th>감독</th>
+                                <th>배우</th>
+                                <th>관리</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {list && list.length > 0 ? (
+                                list.map((data) => (
+                                    <tr key={data.movieId}>
+                                        {[
+                                            { name: "movieId", value: data.movieId },
+                                            { name: "title", value: data.title },
+                                            { name: "entitle", value: data.entitle },
+                                            { name: "posterUrl", value: data.posterUrl },
+                                            { name: "stillUrl", value: data.stillUrl },
+                                            { name: "movieSynopsis", value: data.movieSynopsis },
+                                            { name: "directorName", value: data.directorName },
+                                            { name: "actors", value: data.actors },
+                                        ].map((item, index) => (
+                                            <td key={index}>
+                                                {editMovie?.movieId === data.movieId ? (
+                                                    item.name === "movieSynopsis" ? (
+                                                        <textarea name={item.name} value={item.value} onChange={(e) => InputChange(e, data.movieId)} />
+                                                    ) : (
+                                                        <input type="text" name={item.name} value={item.value} onChange={(e) => InputChange(e, data.movieId)} readOnly={item.name === "movieId"} />
+                                                    )
+                                                ) : (
+                                                    <span className="ellipsis">{item.value}</span>
+                                                )}
+                                            </td>
+                                        ))}
+                                        <td>
+                                            {editMovie?.movieId === data.movieId ? (
+                                                <button className="movieBtn" onClick={() => Update(data.movieId)}>수정 완료</button>
+                                            ) : (
+                                                <button className="movieBtn" onClick={() => EditClick(data.movieId)}>수정</button>
+                                            )}/
+                                            <button className="movieBtn" onClick={() => delMovie(data.movieId)}>삭제</button>
+                                        </td>
+                                    </tr>
+                                ))
                             ) : (
-                                <button className="movieBtn" onClick={() => EditClick(data.movieId)}>수정</button>
-                            )}/
-                            <button className="movieBtn" onClick={()=>delMovie(data.movieId)}>삭제</button>
-                        </td>
-                    </tr>
-                ))
-            ) : (
-                <>
-                    <tr>
-                        <td colSpan="9">데이터가 없습니다.</td>
-                    </tr>
-                </>
-            )}
-        </tbody>
-    </table>
-</div>
+                                <>
+                                    <tr>
+                                        <td colSpan="9">데이터가 없습니다.</td>
+                                    </tr>
+                                </>
+                            )}
+                        </tbody>
+                    </table>
+                </div>
 
             </div>
             <div className="modal">

@@ -28,22 +28,22 @@ const routes = [
     { path: '/search', element: <Search /> },
     { path: '/signup', element: <SignUp /> },
 
-    { path: '/ticket_date', element: <ProtectedRoute element={<TicketDate />} /> },
-    { path: '/ticket_seat', element: <ProtectedRoute element={<TicketSeat />} /> },
+    { path: '/ticket/date', element: <ProtectedRoute element={<TicketDate />} /> },
+    { path: '/ticket/seat', element: <ProtectedRoute element={<TicketSeat />} /> },
     { path: '/payment', element: <ProtectedRoute element={<PayMent />} /> },
-    { path: '/ticket_done', element: <ProtectedRoute element={<TicketDone />} /> },
-    { path: '/myTicket', element: <ProtectedRoute element={<MyTicket />} /> },
-    { path: '/myReview', element: <ProtectedRoute element={<MyReview />} /> },
-    { path: '/info_pwd', element: <ProtectedRoute element={<InfoPwd />} /> },
-    { path: '/info', element: <ProtectedRoute element={<Info />} /> },
+    { path: '/ticket/done', element: <ProtectedRoute element={<TicketDone />} /> },
+    { path: '/mypage/ticket', element: <ProtectedRoute element={<MyTicket />} /> },
+    { path: '/mypage/review', element: <ProtectedRoute element={<MyReview />} /> },
+    { path: '/mypage/info/confirm', element: <ProtectedRoute element={<InfoPwd />} /> },
+    { path: '/mypage/info', element: <ProtectedRoute element={<Info />} /> },
 
     { path: '*', element: <NotFound /> },
 
-    { path: '/adminMain' , element : <AdminMain />},
-    { path: '/adminMovie', element: <AdminProtectedRoute element={<AdminMovie />} /> },
-    { path: '/adminMember', element: <AdminProtectedRoute element={<AdminMember />} /> },
-    { path: '/adminSchedule', element: <AdminProtectedRoute element={<AdminSchedule />} /> },
-    { path: '/adminPayment', element: <AdminProtectedRoute element={<AdminPayment />} /> }
+    { path: '/admin/login' , element : <AdminMain />},
+    { path: '/admin/movie', element: <AdminProtectedRoute element={<AdminMovie />} /> },
+    { path: '/admin/member', element: <AdminProtectedRoute element={<AdminMember />} /> },
+    { path: '/admin/schedule', element: <AdminProtectedRoute element={<AdminSchedule />} /> },
+    { path: '/admin/payment', element: <AdminProtectedRoute element={<AdminPayment />} /> }
 ];
 
 export default routes;

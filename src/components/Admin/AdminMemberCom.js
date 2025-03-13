@@ -8,7 +8,7 @@ const AdminMemberCom = ({ list }) => {
             <div className="admindiv-1">
                 <h1>회원관리</h1>
                 <div className="table-wrapper">
-                    <table  className="movie-table">
+                    <table className="movie-table">
                         <thead>
                             <tr>
                                 <th>유저ID</th>

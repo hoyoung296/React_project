@@ -98,7 +98,37 @@
     padding-left: 65px;
     font-size: 13px;
 }
-.synops_review .review p{
+.reviewList {
+    margin-bottom: 20px;
+}
+.reviewHeader {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+.reviewImg {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.reviewUser {
+    font-weight: bold;
+    margin: 0;
+    font-size: 15px;
+}
+.reviewDate {
+    font-size: 13px;
+    font-weight: lighter;
+    color: gray;
+    margin: 0;
+}
+.reviewContent {
+    margin-top: 10px;
+    font-size: 13px;
+    line-height: 1.5;
+}
+.synops_review .review > p{
     font-size: 19px;
     font-weight: bold;
 }

@@ -111,7 +111,7 @@ const AdminMovieCon = () => {
             alert("데이터 불러오기 완료")
             const updatedData = await getSearchList("") // 업데이트된 데이터 다시 가져오기
             setList(updatedData) // 상태 업데이트
-            navigate("/adminMovie") // 데이터 갱신 후 페이지 이동
+            navigate("/admin/movie") // 데이터 갱신 후 페이지 이동
         } catch (error) {
             console.error("업데이트 중 오류 발생:", error)
         }
@@ -136,7 +136,7 @@ const AdminMovieCon = () => {
             alert(response.message)
             const updatedData = await getSearchList("")
             setList(updatedData)
-            navigate("/adminMovie")
+            navigate("/admin/movie")
         } catch (error) {
             if (error.response && error.response.data && error.response.data.message) {
                 alert(error.response.data.message)

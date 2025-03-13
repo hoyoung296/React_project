@@ -1,15 +1,15 @@
-import { Link} from "react-router-dom"
+import { Link } from "react-router-dom";
 import '../../css/admin/adminSidebar.css'
 
 const AdminSidebar = ({ activeLink }) => {
-    const customLinks = 
+    const customLinks =
         [
-            { to: "/adminMovie", text: "영화관리" },
-            { to: "/adminSchedule", text: "상영관리" },
-            { to: "/adminMember", text: "회원관리" },
-            { to: "/adminPayment", text : "결제관리" }
+            { to: "/admin/movie", text: "영화관리" },
+            { to: "/admin/schedule", text: "상영관리" },
+            { to: "/admin/member", text: "회원관리" },
+            { to: "/admin/payment", text: "결제관리" }
         ]
-        
+
     return <>
         <div className="adminSidebarDiv">
             {customLinks.map((link, index) => (

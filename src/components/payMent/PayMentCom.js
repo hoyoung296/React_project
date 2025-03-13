@@ -212,7 +212,7 @@ useEffect(() => {
             console.log("confirmRes@@@@@:",confirmRes.data.data.rs)
             if (confirmRes.data.data.rs === '성공') {
                 alert("결제가 성공적으로 완료되었습니다.");
-                navigate("/ticket_done");
+                navigate("/ticket/done");
             } else {
                 alert("결제 확인 실패.");
                 navigate("/");

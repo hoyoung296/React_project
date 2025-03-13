@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
 import '../../css/modal.css'
 
-const Modal = ({ isOpen, onClose, type, infoData, onClick, Infolist, relatedList, modalData, mySubmit, onChange, showResult }) => {
+const Modal = ({ isOpen, onClose, type, infoData, onClick, Infolist, relatedList, modalData, mySubmit, onChange, showResult, setShowResult }) => {
+
     /*
     // 모달 통합 관련 코드 (나호영 작성)
     const [isModalOpen, setIsModalOpen] = useState(false)
@@ -38,6 +39,13 @@ const Modal = ({ isOpen, onClose, type, infoData, onClick, Infolist, relatedList
 
     if (!isOpen) return null
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        mySubmit(e); // 기존 기능 수행
+        setShowResult(true); // 리뷰 작성 후 결과 모달을 띄우기 위해 showResult를 true로 설정
+        onClose(); // 리뷰 모달 닫기
+    };
+
     const renderContent = () => {
         switch (type) {
             case 'detail':
@@ -70,19 +78,25 @@ const Modal = ({ isOpen, onClose, type, infoData, onClick, Infolist, relatedList
                                             </div>
                                             <div className='review'>
                                                 <p>REVIEW</p>
-                                                {Infolist.map((data, index) => (
-                                                    <div key={`info-${data.movieId}-${data.reviewDate}-${index}`}>
-                                                        {data.content != null &&
-                                                            <p>
-                                                                <img src="/img/movie1.jpg" alt="프로필사진" />&nbsp;&nbsp;&nbsp;
-                                                                {data.userId} {data.reviewDate}
-                                                            </p>}
-                                                        <br />
-                                                        <p>{data.content}</p>
+                                                {Infolist.slice(-5).map((data, index) => (
+                                                    <div className='reviewList' key={`info-${data.movieId}-${data.reviewDate}-${index}`}>
+                                                        {data.content != null && (
+                                                            <>
+                                                                <div className='reviewHeader'>
+                                                                    <img className='reviewImg' src="/img/movie1.jpg" alt="프로필사진" />
+                                                                    <div>
+                                                                        <p className='reviewUser'>{data.userId}</p>
+                                                                        <p className='reviewDate'>{data.reviewDate}</p>
+                                                                    </div>
+                                                                </div>
+                                                                <p className='reviewContent'>{data.content}</p>
+                                                            </>
+                                                        )}
                                                     </div>
                                                 ))}
                                             </div>
                                         </div>
+
                                         <div className='nextMovie'>
                                             {console.log(relatedList)}
                                             {relatedList.length > 1 && (
@@ -121,36 +135,20 @@ const Modal = ({ isOpen, onClose, type, infoData, onClick, Infolist, relatedList
                                         </div>
                                     </div>
                                     <div className='submitReview'>
-                                        <form onSubmit={mySubmit}>
+                                        <form onSubmit={handleSubmit}>
                                             <textarea
                                                 name="review"
                                                 placeholder="리뷰를 적어주세요."
                                                 onChange={onChange}
                                                 autoComplete="off"
                                             />
-                                            <button onClick={() => showResult()}>게시</button>
+                                            <button type="submit">게시</button>
                                         </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>)
-            case 'complete':
-                return (
-                    <div className="modal-container" onClick={onClose}>
-                        <div className='modal-content' onClick={(e) => e.stopPropagation()}>
-                            <div className="modal-body">
-                                <div className='movieModal'>
-                                    <div>
-                                        포스터이미지
-                                        리뷰작성완료
-                                        리뷰보러가기버튼
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                )
             default:
                 return null
         }

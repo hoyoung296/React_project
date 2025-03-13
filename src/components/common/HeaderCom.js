@@ -70,7 +70,7 @@ function HeaderCom({ onChange, mySubmit, input}) {
                         <li className='userName'>{username}</li>
                         <li/>
                         <li>
-                            <button className='dropDownBtn' onClick={() => navigate(`/myTicket?id=${userId}&start=`)}>마이페이지</button>
+                            <button className='dropDownBtn' onClick={() => navigate(`/mypage/ticket?id=${userId}&start=`)}>마이페이지</button>
                         </li>
                         <li>
                             <button className='dropDownBtn' onClick={handleLogout}>로그아웃</button>

@@ -29,6 +29,10 @@ const LoginPageCom = () => {
                 // 로그인 성공 시, 서버에서 받은 데이터로 처리
                 const { data } = response.data;
 
+                if(data.username=== undefined){
+                    data.username=data.userName
+                }
+
                 const userData = {
                     userId: data.userId,
                     username: data.username,
