@@ -1,6 +1,7 @@
 import '../../css/main.css';
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
+import axios from '../common/axiosConfig';
 
 function HeaderCom({ onChange, mySubmit, input}) {
     const location = useLocation();
@@ -12,22 +13,42 @@ function HeaderCom({ onChange, mySubmit, input}) {
     const [userId, setUserId] = useState(null); // userId 설정, 마이페이지 넘어갈 때 id가 필요해서 작성(나호영 작성)
 
     useEffect(() => {
-        // 로컬 스토리지에서 로그인 상태 확인
-        const loginStatus = localStorage.getItem("LoginSuccess");
-        setIsLoggedIn(loginStatus === "true");  // 문자열 "true"와 비교
+    //     // 1) 로컬 스토리지에서 로그인 상태 확인
+    // const loginStatus = localStorage.getItem('LoginSuccess');
+    // if (loginStatus === 'true') {
+    //   setIsLoggedIn(true);
+    // }
 
-        const storedUser = localStorage.getItem("user");
-        if (storedUser) {
-            const userData = JSON.parse(storedUser);
-            setUsername(userData.username || "닉네임"); // username 없으면 기본값 설정
-            setUserId(userData.userId || null); // userId 설정, 마이페이지 넘어갈 때 id가 필요해서 작성(나호영 작성)
-        }
-    }, []);
+    // 2) jwtToken이 있다면 /user/info 호출
+    const token = localStorage.getItem('jwtToken');
+    console.log("토큰 : " + token)
+    if (token) {
+      axios
+        .get(`${process.env.REACT_APP_BACKEND_URL}/root/member/user/info`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          // 백엔드에서 반환한 사용자 정보 (userId, username, email 등)
+          const { userId, username, email } = res.data;
+          setUserId(userId);
+          setUsername(username);
+          setIsLoggedIn(true); // 토큰 유효 -> 로그인 상태
+          localStorage.setItem("LoginSuccess", JSON.stringify(true));
+        })
+        .catch((err) => {
+          console.error('JWT 검증 실패:', err);
+          //handleLogout(); // 토큰이 유효하지 않으면 로그아웃 처리
+        });
+    }
+  }, []);
 
     // 로그아웃 처리
     const handleLogout = () => {
         localStorage.removeItem("jwtToken");
-        localStorage.removeItem("user");
+        localStorage.removeItem("refreshToken");
+        // localStorage.removeItem("user");
         localStorage.removeItem("LoginSuccess");
         setIsLoggedIn(false);
         window.location.reload();
