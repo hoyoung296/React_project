@@ -104,33 +104,11 @@ const SignUpCom = () => {
     }, [isEmailVerified]); // isEmailVerified가 변경될 때마다 실행
 
 
-    const validateInputs = () => {
-        
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        const phoneRegex = /^\d{10,11}$/;
-        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-
-        
-        
-        if (!emailRegex.test(email)) {
-            setErrorMessage("올바른 이메일 형식을 입력해주세요.");
-            return false;
-        }
-        if (!phoneRegex.test(phoneNumber)) {
-            setErrorMessage("연락처는 10~11자리 숫자로 입력해주세요.");
-            return false;
-        }
-        if (!passwordRegex.test(password)) {
-            setErrorMessage("비밀번호는 최소 8자 이상, 영문/숫자/특수문자를 포함해야 합니다.");
-            return false;
-        }
-        return true;
-    };
+    
 
     // 회원가입 처리 함수
     const handleSignUp = async () => {
-        if (!validateInputs()) return;
-
+        
         if (!isEmailVerified) {
             alert("이메일 인증을 완료해야 회원가입이 가능합니다.");
             return;
