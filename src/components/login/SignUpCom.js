@@ -105,15 +105,13 @@ const SignUpCom = () => {
 
 
     const validateInputs = () => {
-        const idRegex = /^[a-zA-Z0-9]{6,}$/;
+        
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const phoneRegex = /^\d{10,11}$/;
         const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
-        if (!idRegex.test(userId)) {
-            setErrorMessage("아이디는 6자 이상, 영문과 숫자만 포함해야 합니다.");
-            return false;
-        }
+        
+        
         if (!emailRegex.test(email)) {
             setErrorMessage("올바른 이메일 형식을 입력해주세요.");
             return false;
