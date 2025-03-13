@@ -28,29 +28,14 @@ const LoginPageCom = () => {
             if (response.data.code === 200 && response.data.data) {
                 // 로그인 성공 시, 서버에서 받은 데이터로 처리
                 const { data } = response.data;
+                console.log("로그인 data",data);
 
-                if(data.username=== undefined){
-                    data.username=data.userName
-                }
+                localStorage.setItem("jwtToken", data.jwtToken);
+                localStorage.setItem("refreshToken", data.refreshToken);
+  
 
-                const userData = {
-                    userId: data.userId,
-                    username: data.username,
-                    password: data.password,
-                    email: data.email,
-                    phoneNumber: data.phoneNumber,
-                    addr: data.addr,
-                    postnum: data.postnum,
-                    userBirthday: data.userBirthday,
-                    detailAddr: data.detailAddr,
-                    userGrade: data.userGrade
-                };
-                console.log(userData);
 
-                localStorage.setItem('user', JSON.stringify(userData));
-                localStorage.setItem('LoginSuccess', 'true');
-
-                navigate('/', { state: { userInfo: data } });
+                navigate('/');
             } else {
                 setErrorMessage('아이디나 비밀번호가 일치하지 않습니다.');
             }
