@@ -16,7 +16,7 @@ const MypageSidebar = ({ activeLink }) => {
             { to: "/mypage/review", text: "내 리뷰" },
             { to: `/mypage/info/confirm?id=${userId}`, text: "회원정보 수정" }
         ]
-        : location.pathname.includes("ticekt") ? [
+        : location.pathname.includes("ticket") ? [
             { to: "/mypage/ticket", text: "내 예매내역" },
             { to: `/mypage/review?id=${userId}&start=`, text: "내 리뷰" },
             { to: `/mypage/info/confirm?id=${userId}`, text: "회원정보 수정" }
