@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MypageSidebar from "../common/MypageSidebar"
 import "../../css/review/MyReserve.css"
 import Pagination from "../common/Pagination"
@@ -8,11 +8,26 @@ const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showMo
     onChange, onResult, isModalOpen, modalType, onPayment }) => {
     const [showResult, setShowResult] = useState(false)
     const now = new Date()
+    
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === "Escape") {
+                setShowResult(false);
+            }
+        };
+
+        if (showResult) {
+            window.addEventListener("keydown", handleKeyDown);
+        }
+
+        return () => {
+            window.removeEventListener("keydown", handleKeyDown);
+        };
+    }, [showResult]);
+
     const hideResult = () => {
         setShowResult(false)
     }
-
-    
 
     return <>
         <div className="ReserveTotalDiv">

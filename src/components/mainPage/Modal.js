@@ -2,9 +2,24 @@ import React, { useEffect } from 'react'
 import '../../css/modal.css'
 
 const Modal = ({ isOpen, onClose, type, infoData, onClick, Infolist, relatedList, modalData, mySubmit, onChange, setShowResult }) => {
+    
     useEffect(() => {
-        console.log('모달 상태 변경:', isOpen)
-    }, [isOpen])
+        console.log('모달 상태 변경:', isOpen);
+
+        const handleKeyDown = (e) => {
+            if (e.key === "Escape") {
+                onClose();
+            }
+        };
+
+        if (isOpen) {
+            window.addEventListener("keydown", handleKeyDown);
+        }
+
+        return () => {
+            window.removeEventListener("keydown", handleKeyDown);
+        };
+    }, [isOpen, onClose]);
 
     if (!isOpen) return null
 
