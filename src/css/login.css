@@ -12,21 +12,20 @@ html, .login_body {
     align-items: center;
 }
 
-.backgroundImg::before{
-    background-color: #171717;
-    /* background-image: url('../../public/img/movie1.jpg');
-    background-size: cover; 
-    background-repeat: no-repeat;
-    background-position: center;
-    content: "";
-    background-size: cover;
-    opacity: 0.5;
+.backgroundImg {
+    background-color: transparent;
     position: absolute;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    bottom: 0px; */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    opacity: 0.5;
+    z-index: -1;
 }
+
 
 .login{
     width: 500px;

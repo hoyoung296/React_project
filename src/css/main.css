@@ -20,7 +20,7 @@ html{
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background-color: #171717;
+    
     position: relative;
     /* 모든 페이지 글자 기본 설정 흰색 (버튼 제외) 나호영 작성 */
     color : white;

@@ -11,6 +11,7 @@ const LoginPageCom = () => {
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [passwordVisible, setPasswordVisible] = useState(false);
+    const [backgroundImage, setBackgroundImage] = useState(null);
 
     const REST_API_KEY = process.env.REACT_APP_KAKAO_REST_API_KEY;
     const REDIRECT_URI = process.env.REACT_APP_KAKAO_REDIRECT_URI;
@@ -47,7 +48,17 @@ const LoginPageCom = () => {
             return diffA - diffB; // 날짜가 오늘에 가장 가까운 영화부터 정렬
         })
         .slice(0, 5) // 상위 5개의 영화만 선택
-   
+        
+        const stillUrls = TopMovies.length > 0 ? TopMovies.map(movie => movie.stillUrl) : [];
+
+        useEffect(() => {
+            if (stillUrls.length > 0 && !backgroundImage) {  // 배경이 없을 때만 랜덤 이미지를 설정
+                const randomIndex = Math.floor(Math.random() * stillUrls.length);
+                setBackgroundImage(stillUrls[randomIndex]);
+            }
+        }, [stillUrls, backgroundImage]);  // backgroundImage가 변경되지 않으면 다시 실행되지 않도록 조건 추가
+        
+
     const handleLogin = async () => {
         try {
             // Axios를 이용한 서버 요청
@@ -152,9 +163,7 @@ const LoginPageCom = () => {
                 
             </div>
         </div>
-        <div className='backgroundImg'/>
-        {console.log("데이터확인 : " , TopMovies)}
-      
+        {backgroundImage && <img className='backgroundImg' src={backgroundImage} alt="background" />}
     </div>
     )
 };
