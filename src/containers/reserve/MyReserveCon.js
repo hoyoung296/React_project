@@ -160,14 +160,14 @@ const MyReserveCon = () => {
     const onPayment = (data) => {
         const [date, time] = data.startDateTime.split(" ")
         const formattedTime = time.slice(0, 5)
-        localStorage.setItem("moviePosterUrl", data.posterUrl)
-        localStorage.setItem("movieTitle", data.title)
-        localStorage.setItem("movieDirector", data.director)
-        localStorage.setItem("movieActors", data.actors)
-        localStorage.setItem("selectedDate", date)
-        localStorage.setItem("selectedCinema", data.screenName)
-        localStorage.setItem("selectedStartTime", formattedTime)
-        localStorage.setItem("totalAmount", data.totalAmount)
+        sessionStorage.setItem("moviePosterUrl", data.posterUrl)
+        sessionStorage.setItem("movieTitle", data.title)
+        sessionStorage.setItem("movieDirector", data.director)
+        sessionStorage.setItem("movieActors", data.actors)
+        sessionStorage.setItem("selectedDate", date)
+        sessionStorage.setItem("selectedCinema", data.screenName)
+        sessionStorage.setItem("selectedStartTime", formattedTime)
+        sessionStorage.setItem("totalAmount", data.totalAmount)
 
         navigate("/payment", {
             state: {
