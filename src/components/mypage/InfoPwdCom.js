@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import MypageSidebar from "../common/MypageSidebar"
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import '../../css/mypage.css';
 
 function InfoPwdCom() {
     const navigate = useNavigate();
+    const [params] = useSearchParams()
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [passwordVisible, setPasswordVisible] = useState(false);
-    const user = JSON.parse(localStorage.getItem("user"));
-    const userId = user ? user.userId : null; // user가 null이 아니면 userId를 추출
+    const userId = params.get("id")
 
     const handleInfoPwd = async () => {
         try {
@@ -22,7 +22,7 @@ function InfoPwdCom() {
 
             // 서버로부터 받은 응답 처리
             if (response.data.code === 1) {
-                navigate('/mypage/info');
+                navigate(`/mypage/info?id=${userId}`);
             } else {
                 setErrorMessage('아이디 또는 비밀번호가 일치하지 않습니다.');
             }

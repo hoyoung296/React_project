@@ -21,7 +21,6 @@ const SignUpCom = () => {
     const [isEmailVerified, setIsEmailVerified] = useState(false);
     const [serverVerificationCode, setServerVerificationCode] = useState('');
 
-
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -102,9 +101,6 @@ const SignUpCom = () => {
         console.log("이메일 인증 상태 변경됨:", isEmailVerified);
         // 이메일 인증 완료 후, 회원가입 진행 등의 작업을 여기서 처리
     }, [isEmailVerified]); // isEmailVerified가 변경될 때마다 실행
-
-
-    
 
     // 회원가입 처리 함수
     const handleSignUp = async () => {
