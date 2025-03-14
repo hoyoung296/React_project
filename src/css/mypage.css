@@ -70,6 +70,7 @@
     margin-top: 30px;
     display: flex;
     gap: 20px;
+    position: relative;
 }
 .infoMain > div:first-child{
     width: 500px;
@@ -79,7 +80,7 @@
     margin-left: 100px;
     margin-right: 100px;
 }
-.infoMain > div:first-child button{
+.saveBtn{
     width: 70px;
     height: 30px;
     padding: 4px;
@@ -90,9 +91,27 @@
     background-color: #381E72;
     color: #ffffff;
 }
-.infoMain > div:first-child button:hover{
+.saveBtn:hover{
     cursor: pointer;
     background-color: #7857bd;
+    text-decoration: underline;
+}
+.delBtn{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 70px;
+    height: 30px;
+    padding: 4px;
+    border-radius: 5px;
+    border-color: transparent;
+    margin: auto;
+    background-color: #323131;
+    color: #ffffff;
+}
+.delBtn:hover{
+    cursor: pointer;
+    background-color: #4f4f4f;
     text-decoration: underline;
 }
 .infoMain > div:last-child{
@@ -147,5 +166,35 @@
     align-items: center;
 }
 .infoMain span span{
-    width: 80px;
+    width: 100px;
+}
+
+.pwdImgBtn{
+    width: 200px;
+    height: 30px;
+    margin: 10px auto;
+    margin-left: 30px;
+    outline: none;
+    border-width: 0 0 1px;
+    border-color: #ffffff;
+    background-color: transparent;
+    color: #ffffff;
+    display: flex;
+    border-style: solid;
+}
+.pwdImgBtn img {
+    width: 20px;
+    height: 20px;
+}
+.pwdImgBtn button{
+    background-color: transparent;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+.pwdImgBtnNew{
+    background-color: transparent;
+    color: #ffffff;
+    outline: none;
+    border-style: none;
 }

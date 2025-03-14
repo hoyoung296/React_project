@@ -19,6 +19,10 @@ function InfoCom() {
         userGrade: '',
         userBirthday: ''
     });
+
+    const [passwordVisible, setPasswordVisible] = useState(false);
+    const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+
     const navigate = useNavigate();
     const [params] = useSearchParams()
     const userId = params.get("id")
@@ -87,6 +91,9 @@ function InfoCom() {
     };
 
     const delId = async () => {
+        const isConfirmed = window.confirm("정말로 탈퇴하시겠습니까? 탈퇴 후에는 복구할 수 없습니다.");
+        if (!isConfirmed) return;
+    
         console.log("실행")
         try {
             const response = await axios.delete('http://localhost:8080/root/delete', {
@@ -127,21 +134,35 @@ function InfoCom() {
                             onChange={handleChange}
                         />
                     </span>
-                    <span><span>새로운 비밀번호</span>
-                        <input
-                            type="password"
-                            className='infodata'
-                            name="newPassword"
-                            onChange={handleChange}
-                        />
+                    <span><span>변경할 비밀번호</span>
+                        <div className="pwdImgBtn">
+                            <input
+                                type={passwordVisible ? "text" : "password"}
+                                className='pwdImgBtnNew'
+                                name="newPassword"
+                                value={userInfo.newPassword}
+                                onChange={handleChange}
+                                required
+                            />
+                            <button type="button" onClick={() => setPasswordVisible(!passwordVisible)}>
+                                <img src={passwordVisible ? '../../img/pwdHide.png' : '../../img/pwdOpen.png'} alt="toggle visibility" />
+                            </button>
+                        </div>
                     </span>
-                    <span><span>새로운 비밀번호 확인</span>
-                        <input
-                            type="password"
-                            className='infodata'
-                            name="confirmPassword"
-                            onChange={handleChange}
-                        />
+                    <span><span>비밀번호 확인</span>
+                        <div className="pwdImgBtn">
+                            <input
+                                type={confirmPasswordVisible ? "text" : "password"}
+                                className='pwdImgBtnNew'
+                                name="confirmPassword"
+                                value={userInfo.confirmPassword}
+                                onChange={handleChange}
+                                required
+                            />
+                            <button type="button" onClick={() => setConfirmPasswordVisible(!confirmPasswordVisible)}>
+                                <img src={confirmPasswordVisible ? '../../img/pwdHide.png' : '../../img/pwdOpen.png'} alt="toggle visibility" />
+                            </button>
+                        </div>
                     </span>
                     <span><span>이메일</span>
                         <input
@@ -179,7 +200,8 @@ function InfoCom() {
                             onChange={handleChange}
                         />
                     </span>
-                    <button onClick={delId}>탈퇴하기</button>
+                    <button className='saveBtn' onClick={handleSave}>저장하기</button>
+                    <button className='delBtn' onClick={delId}>탈퇴하기</button>
                 </div>
                 <div>
                     <img src='../../img/img.png' />
@@ -187,7 +209,6 @@ function InfoCom() {
                         type='file'
                         accept='image/*'
                     />
-                    <button onClick={handleSave}>저장하기</button>
                 </div>
             </div>
         </div>
