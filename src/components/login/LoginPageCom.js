@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../../css/login.css';
+import { getSearchList } from '../../service/search';
 
 const LoginPageCom = () => {
     const navigate = useNavigate();
-
+    const [list, setList] = useState([]);
     const [userId, setUserId] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -15,7 +16,38 @@ const LoginPageCom = () => {
     const REDIRECT_URI = process.env.REACT_APP_KAKAO_REDIRECT_URI;
     const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
+    useEffect(() => {
+        const getData = async () => {
+            try {
+                const data = await getSearchList("")
+                setList(data)
+            } catch (error) {
+                console.error("데이터 가져오기 오류:", error)
+            }
+        }
+        getData()
+    }, [])
 
+    // rank를 기준으로 필터링 및 날짜와 순위를 분리하여 처리
+    const today = new Date()
+    const TopMovies = list
+        .map(movie => {
+            const [date, rank] = movie.movieRank.split("-") // 날짜-순위 분리 
+            const movieDate = new Date(date)
+            return {
+                ...movie,
+                movieDate,
+                movieRank: parseInt(rank),
+            };
+        })
+        .filter(movie => movie.movieRank <= 5) // 순위 5 이하인 영화들만 필터링
+        .sort((a, b) => {
+            const diffA = Math.abs(today - a.movieDate)
+            const diffB = Math.abs(today - b.movieDate)
+            return diffA - diffB; // 날짜가 오늘에 가장 가까운 영화부터 정렬
+        })
+        .slice(0, 5) // 상위 5개의 영화만 선택
+   
     const handleLogin = async () => {
         try {
             // Axios를 이용한 서버 요청
@@ -32,8 +64,6 @@ const LoginPageCom = () => {
 
                 localStorage.setItem("jwtToken", data.jwtToken);
                 localStorage.setItem("refreshToken", data.refreshToken);
-
-
 
                 navigate('/');
             } else {
@@ -123,6 +153,8 @@ const LoginPageCom = () => {
             </div>
         </div>
         <div className='backgroundImg'/>
+        {console.log("데이터확인 : " , TopMovies)}
+      
     </div>
     )
 };
