@@ -1,15 +1,13 @@
 import { Link, useLocation, useSearchParams } from "react-router-dom"
 import '../../css/review/MypageSidebar.css'
+import axios from "axios"
+import { useEffect, useState } from "react"
 
 const MypageSidebar = ({ activeLink }) => {
     const [params] = useSearchParams()
     const location = useLocation()
-
-    // localStorage에서 user 정보 가져오기
-    const storedUser = localStorage.getItem("user")
-    const userData = storedUser ? JSON.parse(storedUser) : null
-    const username = userData?.username || "사용자"
     const userId = params.get("id")
+    const [userData, setUserData] = useState(null)
     const customLinks = location.pathname.includes("review")
         ? [
             { to: `/mypage/ticket?id=${userId}&start=`, text: "내 예매내역" },
@@ -26,11 +24,26 @@ const MypageSidebar = ({ activeLink }) => {
                 { to: `/mypage/review?id=${userId}&start=`, text: "내 리뷰" },
                 { to: "/mypage/info/confirm", text: "회원정보 수정" }
             ]
+    
+    useEffect(() => {
+        const getList = async () => {
+            try {
+                const res = await axios.get(`http://localhost:8080/root/info?userId=${userId}`)
+                console.log("data 확인 : ", res.data)
+                setUserData(res.data)
+            } catch (error) {
+                console.error("유저 정보 불러오기 실패: ", error)
+            }
+        }
+
+        if (userId) getList()
+    }, [userId])
 
     return <>
         <div className="SidebarDiv">
             <img src="/img/movie1.jpg" alt="프사" /><br />
-            <b>{username}</b>
+            {console.log("userData : " , userData)}
+            {userData &&  <b>{userData.data.userName}</b> }
             {customLinks.map((link, index) => (
                 <p key={index}>
                     {activeLink === link.text ? (
