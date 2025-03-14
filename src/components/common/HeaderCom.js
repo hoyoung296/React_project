@@ -44,6 +44,16 @@ function HeaderCom({ onChange, mySubmit, input}) {
     }
 }, []);
 
+    const completeLogout = () => {
+        // 로컬 스토리지에서 로그인 정보 제거
+        localStorage.removeItem("kakaoAccessToken");
+        localStorage.removeItem("jwtToken");
+        localStorage.removeItem("refreshToken");
+        localStorage.removeItem("LoginSuccess")
+
+        // 새로 고침 (리렌더링 최소화)
+        window.location.reload();
+    };
     // 로그아웃 처리
     const handleLogout = () => {
         // (1) 카카오 REST API 키
@@ -57,21 +67,32 @@ function HeaderCom({ onChange, mySubmit, input}) {
             console.error("Logout Redirect URI가 정의되어 있지 않습니다.");
         }
             
-        // (3) 우리 애플리케이션에서 사용하던 로컬 스토리지 데이터 제거
-        //     (kakaoAccessToken, jwtToken, refreshToken 등)
-        localStorage.removeItem("kakaoAccessToken");
-        localStorage.removeItem("jwtToken");
-        localStorage.removeItem("refreshToken");
-        localStorage.removeItem("LoginSuccess");
-    
-        // (4) 브라우저를 카카오 로그아웃 URL로 리다이렉트
-        //     Kakao 측에서 로그아웃 처리 후 LOGOUT_REDIRECT_URI로 다시 돌아옴
-        window.location.href =
-        `https://kauth.kakao.com/oauth/logout?client_id=${REST_API_KEY}&logout_redirect_uri=${logoutRedirectUri}`;
-      };
-      
+        // 카카오 로그아웃 URL
+        const KAKAO_LOGOUT_URL = `https://kauth.kakao.com/oauth/logout?client_id=${REST_API_KEY}&logout_redirect_uri=${logoutRedirectUri}`;
 
-    return <>
+        // 팝업 창 열기
+        const popup = window.open(
+            KAKAO_LOGOUT_URL,
+            "kakaoLogoutPopup",
+            "width=500,height=600,scrollbars=yes"
+        );
+    
+        // 일정 시간 후 팝업이 닫히지 않으면 강제 닫기
+        const interval = setInterval(() => {
+            try {
+                if (popup.closed) {
+                    clearInterval(interval);
+                    completeLogout(); // 부모 창에서 로그아웃 처리
+                }
+            } catch (error) {
+                // 팝업이 다른 도메인으로 로딩되는 중에는 크로스 도메인 에러가 발생할 수 있음
+                console.error("팝업에서 에러 발생:", error);
+            }
+        }, 1000);
+        };
+
+
+    return (
         <header className={`header_body ${isHomePage ? 'homepage_header' : ''}`}>
             <Link to="/" className="logo">TheFillm</Link>
             <form onSubmit={mySubmit} className='searchForm'>
@@ -98,6 +119,6 @@ function HeaderCom({ onChange, mySubmit, input}) {
                 <button className="loginBtn" onClick={() => navigate("/login")}>로그인</button>
             )}
         </header>
-    </>
+    );
 };
 export default HeaderCom;

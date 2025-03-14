@@ -56,13 +56,13 @@ function InfoPwdCom() {
                 <button 
                     type="button" 
                     className='infopwdeye'
-                            onClick={() => setPasswordVisible(!passwordVisible)}
-                        >
-                            <img 
-                                src={passwordVisible ? '../../img/pwdHide.png' : '../../img/pwdOpen.png'} 
-                                alt="toggle visibility" 
-                            />
-                        </button>
+                    onClick={() => setPasswordVisible(!passwordVisible)}
+                >
+                    <img 
+                        src={passwordVisible ? '../../img/pwdHide.png' : '../../img/pwdOpen.png'} 
+                        alt="toggle visibility" 
+                    />
+                </button>
             </span>
             <button className='infoPwdBtn' onClick={handleInfoPwd}>확인</button>
             {errorMessage && <div className="error_message">{errorMessage}</div>}

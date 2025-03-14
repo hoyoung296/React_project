@@ -282,3 +282,71 @@ html, .login_body {
         transform: translateX(3px);
     }
 }
+.kakao_mypagePwd{
+    width: 100%;
+    display: flex;
+    flex-direction : column;
+    align-items: center;
+    margin-top: 100px;
+}
+.kakao_infoPwdMain{
+    width: 100%;
+    min-width: 300px;
+    height: 400px;
+    padding-top: 20px;
+    margin: auto;
+    display: flex;
+    flex-direction : column;
+    align-items: center;
+    
+}
+.kakao_mypagePwd p{
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+.kakao_loginpwdBtn{
+    width: 180px;
+    height: 35px;
+    margin-bottom: 15px;
+    border: 2px solid #6f6f6f7a;
+    border-radius: 20px;
+    background-color: transparent;
+    padding-left: 20px;
+    outline: none;
+    color: #ffffff;
+    position: relative;
+}
+.kakao_input_pwd{
+    border: none;
+    width: 120px;
+    color: #ffffff;
+    background-color: transparent;
+    margin-top: 6px;
+    outline: none;
+}
+.kakao_infopwdeye{
+    background-color: transparent;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    top: 20%;
+}
+.kakao_infopwdeye img{
+    width: 20px;
+    height: 20px;
+}
+.kakao_infoPwdBtn {
+    width: 80px;
+    height: 30px;
+    background-color: #381E72;
+    border-style: none;
+    border-radius: 10px;
+    color: #ffffff;
+    margin-top: 20px;
+}
+.kakao_infoPwdBtn:hover{
+    background-color: #7857bd;
+    cursor: pointer;
+}
