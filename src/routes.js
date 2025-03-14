@@ -20,11 +20,15 @@ import AdminProtectedRoute from './components/Admin/AdminProtectedRoute';
 import OAuthCallback from './components/login/OAuthCallback';
 import LoginHandler from './components/login/LoginHandler';
 import ProtectedRoute from './components/login/ProtectedRoute';
+import SetPassword from './components/login/SetPassword';
+import KakaoLogoutCallback from './components/login/KakaoLogoutCallback';
 
 const routes = [
     { path: '/', element: <HomePage /> },
+    { path: '/login/set-password', element: <SetPassword /> },
     { path: '/login', element: <LoginPage /> },
     { path: '/login/oauth2/callback/kakao', element: <LoginHandler/> },
+    { path: '/logout-callback', element: <KakaoLogoutCallback/> },
     { path: '/search', element: <Search /> },
     { path: '/signup', element: <SignUp /> },
 
