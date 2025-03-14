@@ -176,7 +176,7 @@ html, .login_body {
     text-decoration: underline;
 }
 .input_text{
-    width: 350px;
+    width: 250px;
     height: 40px;
     margin-top: 30px;
     margin-bottom: 5px;
@@ -188,7 +188,7 @@ html, .login_body {
     box-sizing: border-box;
 }
 .imgBtn{
-    width: 350px;
+    width: 250px;
     height: 40px;
     margin-top: 30px;
     display: flex;
@@ -212,14 +212,14 @@ html, .login_body {
     outline: none;
     cursor: default;
     border: none;
-    margin-right: 110px;
+    margin-right: 20px;
 }
 .emailBtn{
     font-size: 10px;
     color: #ffffff;
 }
 .addrBtn{
-    width: 350px;
+    width: 250px;
     height: 40px;
     margin-top: 30px;
     display: flex;
@@ -228,9 +228,7 @@ html, .login_body {
     background-color: #ffffff69;
     padding-left: 20px;
 }
-.addrBtn > .addr_text:first-child{
-    width: 45px;
-}
+
 .addrBtn img{
     width: 20px;
     height: 20px;
@@ -242,7 +240,7 @@ html, .login_body {
     cursor: pointer;
 }
 .addr_text {
-    width: 250px;
+    width: 200px;
     background-color: transparent;
     outline: none;
     cursor: default;
@@ -262,9 +260,9 @@ html, .login_body {
     font-weight: lighter;
     animation: shake 0.3s ease-in-out;
     animation-iteration-count: 1;
-    color: red;
-    background-color: #ffffff63;
-    padding: 3px;
+    color: #ffffff;
+    background-color: #000000;
+    padding: 5px;
     border-radius: 5px;
 }
 @keyframes shake {

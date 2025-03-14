@@ -12,6 +12,8 @@ const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showMo
         setShowResult(false)
     }
 
+    
+
     return <>
         <div className="ReserveTotalDiv">
             <MypageSidebar activeLink="내 예매내역" />
@@ -26,8 +28,7 @@ const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showMo
                             const day = String(d.getDate()).padStart(2, '0')
                             const hours = String(d.getHours()).padStart(2, '0')
                             const minutes = String(d.getMinutes()).padStart(2, '0')
-                            const seconds = String(d.getSeconds()).padStart(2, '0')
-                            return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
+                            return `${year}년 ${month}월 ${day}일 ${hours}시 ${minutes}분`
                         }
                         const endDateTime = new Date(data.endDateTime)
                         const startDateTime = new Date(data.startDateTime)
@@ -45,7 +46,7 @@ const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showMo
                                 <div>
                                     <p>예매번호 : {data.reservationId}</p>
                                     <p>예매일 : {formatDate(data.createdAt)}</p>
-                                    <p>관람일 : {data.startDateTime}</p>
+                                    <p>관람일 : {formatDate(data.startDateTime)}</p>
                                 </div>
                                 <div>
                                     <p>상영관 : {data.screenName}</p>

@@ -100,6 +100,9 @@
     margin: 10px 50px;
     display: flex;
 }
+.myReserveBody p{
+    font-size: 14px;
+}
 .myReserveBody img{
     width: 100px;
     border-radius: 5px;

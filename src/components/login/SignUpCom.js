@@ -104,9 +104,10 @@ const SignUpCom = () => {
 
     // 회원가입 처리 함수
     const handleSignUp = async () => {
-        
+        setErrorMessage('');
+
         if (!isEmailVerified) {
-            alert("이메일 인증을 완료해야 회원가입이 가능합니다.");
+            setErrorMessage("이메일 인증을 완료해야 회원가입이 가능합니다.");
             return;
         }
         // 비밀번호 확인
@@ -120,7 +121,7 @@ const SignUpCom = () => {
 
         try {
             const memberData = {
-                userId: userId,
+                userId: email,
                 password: password,
                 confirmPassword: confirmPassword,
                 userName: userName,
@@ -158,7 +159,10 @@ const SignUpCom = () => {
             <div className='title_movie'>THEFILLM</div>
             <div className='sign_from'>
                 <div>
-                    <input type="text" className='input_text' placeholder="아이디" value={userId} onChange={(e) => setUserId(e.target.value)} required />
+                    <span className='imgBtn'>
+                        <input type="email" className='img_text' placeholder="아이디 (이메일)" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                        <button className='emailBtn' type="button" onClick={sendVerificationCode}>인증</button>
+                    </span>
                     <span className='imgBtn'>
                         <input 
                                 type={passwordVisible ? "text" : "password"} 
@@ -186,30 +190,29 @@ const SignUpCom = () => {
                             </button>
                     </span>
                     <input type="text" className='input_text' placeholder="닉네임" value={userName} onChange={(e) => setUserName(e.target.value)} required />
+                    <input type="tel" className='input_text' placeholder="연락처" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} required />
                     
-                    <span className='imgBtn'>
-                        <input type="email" className='img_text' placeholder="이메일" value={email} onChange={(e) => setEmail(e.target.value)} required />
-                        <button className='emailBtn' type="button" onClick={sendVerificationCode}>인증</button>
-                    </span>
+                    
 
 
                 </div>
                 <div>
-                    <input type="tel" className='input_text' placeholder="연락처" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} required />
+                    <span className='imgBtn'>
+                        <input type="text" className='img_text' placeholder="인증번호 입력" value={verificationCode} onChange={(e) => setVerificationCode(e.target.value)} required />
+                        <button className='emailBtn' type="button" onClick={verifyCode}>확인</button>
+                    </span>
+                    
                     <span className='addrBtn'>
-                        <input type="text" className="addr_text" value={postcode} placeholder="주소" readOnly />
-                        <input type="text" className="addr_text" value={address} placeholder="" readOnly />
+                        <input type="text" className="addr_text" value={postcode} placeholder="우편번호 찾기" readOnly />
                         <button type="button" onClick={handlePostcodeSearch}><img src='../../img/search.png'/></button>
                     </span>
+                    <input type="text" className="input_text" value={address} placeholder="주소" readOnly />
                     
                     <input type="text" className="input_text" value={detailAddress} placeholder="상세주소" onChange={(e) => setDetailAddress(e.target.value)} />
                     <input type="text" className="input_text" value={userBirthday} placeholder="생년월일" onChange={(e) => setUserBirthday(e.target.value)} onFocus={(e) => (e.target.type = "date")} // 클릭 시 달력 표시
                     onBlur={(e) => (e.target.type = "text")}  // 포커스 해제 시 다시 placeholder 표시
                     required />
-                    <span className='imgBtn'>
-                            <input type="text" className='img_text' placeholder="인증번호 입력" value={verificationCode} onChange={(e) => setVerificationCode(e.target.value)} required />
-                            <button className='emailBtn' type="button" onClick={verifyCode}>확인</button>
-                    </span>
+                    
 
 
                 </div>
