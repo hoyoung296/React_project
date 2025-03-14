@@ -10,13 +10,13 @@ const MypageSidebar = ({ activeLink }) => {
     const userData = storedUser ? JSON.parse(storedUser) : null
     const username = userData?.username || "사용자"
     const userId = params.get("id")
-    const customLinks = location.pathname.includes("myReview")
+    const customLinks = location.pathname.includes("review")
         ? [
             { to: `/mypage/ticket?id=${userId}&start=`, text: "내 예매내역" },
             { to: "/mypage/review", text: "내 리뷰" },
             { to: `/mypage/info/confirm?id=${userId}`, text: "회원정보 수정" }
         ]
-        : location.pathname.includes("myTicekt") ? [
+        : location.pathname.includes("ticekt") ? [
             { to: "/mypage/ticket", text: "내 예매내역" },
             { to: `/mypage/review?id=${userId}&start=`, text: "내 리뷰" },
             { to: `/mypage/info/confirm?id=${userId}`, text: "회원정보 수정" }

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import MypageSidebar from "../common/MypageSidebar"
 import '../../css/mypage.css';
 import axios from 'axios';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 function InfoCom() {
     const [userInfo, setUserInfo] = useState({
@@ -18,8 +19,9 @@ function InfoCom() {
         userGrade: '',
         userBirthday: ''
     });
-    const user = JSON.parse(localStorage.getItem("user"));
-    const userId = user ? user.userId : null; // user가 null이 아니면 userId를 추출
+    const navigate = useNavigate();
+    const [params] = useSearchParams()
+    const userId = params.get("id")
 
     useEffect(() => {
         async function fetchUserData() {
@@ -63,6 +65,7 @@ function InfoCom() {
                 userId: userInfo.userId,
                 password: userInfo.password,
                 newPassword: userInfo.newPassword,
+                confirmPassword : userInfo.confirmPassword,
                 phoneNumber: userInfo.phoneNumber,
                 addr: userInfo.addr,
                 detailAddr: userInfo.detailAddr
@@ -73,12 +76,32 @@ function InfoCom() {
             if (response.status === 200) {
                 console.log("수정된 회원 정보:", response.data);
                 alert('회원 정보가 업데이트되었습니다.');
+                navigate("/login")
             } else {
                 alert('업데이트 실패');
             }
         } catch (error) {
             console.error('업데이트 중 오류 발생:', error);
             alert('업데이트 중 오류가 발생했습니다.');
+        }
+    };
+
+    const delId = async () => {
+        console.log("실행")
+        try {
+            const response = await axios.delete('http://localhost:8080/root/delete', {
+                data: {
+                    userId: userId,
+                    password: userInfo.password
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            alert(response.data.message)
+            navigate("/login")
+        } catch (error) {
+            console.error('회원 탈퇴 실패:', error);
         }
     };
 
@@ -156,7 +179,7 @@ function InfoCom() {
                             onChange={handleChange}
                         />
                     </span>
-                    <button>탈퇴하기</button>
+                    <button onClick={delId}>탈퇴하기</button>
                 </div>
                 <div>
                     <img src='../../img/img.png' />
