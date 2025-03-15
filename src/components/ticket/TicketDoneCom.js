@@ -59,6 +59,37 @@ function TicketDoneCom() {
         sessionStorage.removeItem("scheduleId");
     }
 
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const year = date.getFullYear();
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const day = date.getDate().toString().padStart(2, '0');
+        
+
+        return `${year}년 ${month}월 ${day}일`;
+    };
+    const formatTime = (timeString) => {
+        const [hours, minutes] = timeString.split(":").map(num => num.padStart(2, '0')); // 시간과 분을 분리하고 두 자리 유지
+
+        return `${hours}시 ${minutes}분`;
+    };
+
+    const getSortedSeatIds = (seatSet) => {
+        return [...seatSet].sort((a, b) => {
+            const rowA = a.charAt(0);
+            const rowB = b.charAt(0);
+            const numA = parseInt(a.slice(1), 10);
+            const numB = parseInt(b.slice(1), 10);
+    
+            return rowA === rowB ? numA - numB : rowA.localeCompare(rowB);
+        }).join(", ");
+    };
+    const formatReservationId = (id) => {
+        return id ? id.replace(/(\d{4})(?=\d)/g, "$1-") : "";
+    };    
+    
+    
+
     return (
     <div className='donePage'>
         <div>
@@ -83,11 +114,11 @@ function TicketDoneCom() {
                             <p>좌석번호 </p>
                         </div>
                         <div>
-                            <p>{reservationId}</p>
-                            <p>{selectedDate}</p>
-                            <p>{selectedStartTime}</p>
+                            <p>{formatReservationId(reservationId)}</p>
+                            <p>{formatDate(selectedDate)}</p>
+                            <p>{formatTime(selectedStartTime)}</p>
                             <p>{selectedCinema}</p>
-                            <p>{seatIds}</p>
+                            <p>{getSortedSeatIds(seatIds)}</p>
                         </div>
                     </div>
             </div>

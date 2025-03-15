@@ -5,7 +5,7 @@ import './css/main.css';
 
 function App() {
   const location = useLocation();
-  const hideHeaderFooterPaths = ['/login', '/signup', '/admin/main', '/admin/movie', '/admin/member', '/admin/schedule', '/admin/payment'];
+  const hideHeaderFooterPaths = ['/login', '/signup', '/admin/login', '/admin/movie', '/admin/member', '/admin/schedule', '/admin/payment'];
   const hideHeaderFooter = hideHeaderFooterPaths.includes(location.pathname);
   return (
     <div className="appBody">

@@ -122,6 +122,15 @@ const TicketDateCom = () => {
         return startTimeDate < currentTime;
     };
 
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const year = date.getFullYear();
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const day = date.getDate().toString().padStart(2, '0');
+    
+        return `${year}년 ${month}월 ${day}일`;
+    };
+
     return (
         <div className="ticketCon">
             <div className="ticketDate">
@@ -210,7 +219,7 @@ const TicketDateCom = () => {
                     </div>
                 </div>
                 <div className="buyTicketDate">
-                    관람일자 : {selectedDate ? `${selectedDate}` : ""}
+                    관람일자 : {selectedDate ? formatDate(selectedDate) : ""}
                 </div>
                 <div className="buyTicketCinema">
                     상영관 : {selectedCinema ? `${selectedCinema}` : ""} <br/>

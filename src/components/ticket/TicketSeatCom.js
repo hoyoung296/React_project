@@ -85,19 +85,19 @@ const TicketSeatCom = () => {
         console.log("✅ handleSubmit 함수 실행됨!");
 
          // JWT 토큰에서 userId 추출 함수 (jwt-decode 사용)
-         const getUserIdFromToken = () => {
+        const getUserIdFromToken = () => {
             const token = localStorage.getItem("jwtToken");
             if (token) {
-              try {
+                try {
                 const decoded = jwtDecode(token);
                 return decoded.sub;
-              } catch (error) {
+            } catch (error) {
                 console.error("JWT 디코딩 오류:", error);
-              }
+            }
             }
             return "aaa";
         };
-          
+        
          // JWT 토큰에서 userId 가져오기
         const userId = getUserIdFromToken();
         console.log("디코딩된 userId:", userId);
@@ -155,6 +155,27 @@ const TicketSeatCom = () => {
         }
     };
 
+    const formatDateTime = (dateString, timeString) => {
+        const date = new Date(dateString);
+        const year = date.getFullYear();
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const day = date.getDate().toString().padStart(2, '0');
+        const [hours, minutes] = timeString.split(":").map(num => num.padStart(2, '0')); // 시간과 분을 분리하고 두 자리 유지
+
+        return `${year}년 ${month}월 ${day}일 ${hours}시 ${minutes}분`;
+    };
+
+    const getSortedSeatIds = (seatSet) => {
+        return [...seatSet].sort((a, b) => {
+            const rowA = a.charAt(0);
+            const rowB = b.charAt(0);
+            const numA = parseInt(a.slice(1), 10);
+            const numB = parseInt(b.slice(1), 10);
+    
+            return rowA === rowB ? numA - numB : rowA.localeCompare(rowB);
+        }).join(", ");
+    };
+
     return (
         <div className="ticketSeat">
             <div className="ticketSeatBox">
@@ -210,11 +231,11 @@ const TicketSeatCom = () => {
                 </div>
                 <div className="selectDateInfo">
                     <div>
-                        일시 : <span>{selectedDateState || "정보 없음"}</span> <span>{selectedStartTimeState || "정보 없음"}</span><br />
+                        일시 : <span>{formatDateTime(selectedDateState, selectedStartTimeState)}</span><br />
                         상영관 : {selectedCinemaState || "정보 없음"}
                     </div>
                     <div>인원 : {seatIds.size > 0 ? `${seatIds.size}명` : ""}</div>
-                    <div>좌석번호 : {seatIds.size > 0 ? [...seatIds].join(", ") : ""}</div>
+                    <div>좌석번호 : {seatIds.size > 0 ? getSortedSeatIds(seatIds) : "정보 없음"}</div>
                     <div>총 금액 : <span className="amount">{seatIds.size > 0 ? `${totalAmount.toLocaleString()}원` : ""}</span></div>
                 </div>
 

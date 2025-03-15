@@ -17,13 +17,7 @@
     color: #7857bd;
 }
 
-.movieList {
-    display: grid;
-    grid-template-columns: repeat(7, minmax(180px, 1fr));
-    gap: 25px;
-    margin: 0 15px;
-    justify-content: start;
-}
+
 
 .poster {
     flex: 0 1 180px;

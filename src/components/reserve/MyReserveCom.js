@@ -50,6 +50,21 @@ const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showMo
                         const showReviewButton = now > endDateTime
                         const showCancelButton = now < new Date(startDateTime.getTime() - 30 * 60 * 1000)
                         const hasReview = data.reservationId in reviewStatus && reviewStatus[data.reservationId] === 0
+                        
+                        const getSortedSeatIds = (seatSet) => {
+                            return [...seatSet].sort((a, b) => {
+                                const rowA = a.charAt(0);
+                                const rowB = b.charAt(0);
+                                const numA = parseInt(a.slice(1), 10);
+                                const numB = parseInt(b.slice(1), 10);
+                        
+                                return rowA === rowB ? numA - numB : rowA.localeCompare(rowB);
+                            }).join(", ");
+                        };
+                        const formatReservationId = (id) => {
+                            return id ? id.replace(/(\d{4})(?=\d)/g, "$1-") : "";
+                        };                        
+
                         return (
                             <div className="myReserveBody" key={data.reservationId}>
                                 <div>
@@ -59,13 +74,13 @@ const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showMo
                                     <p>{data.title}</p>
                                 </div>
                                 <div>
-                                    <p>예매번호 : {data.reservationId}</p>
+                                    <p>예매번호 : {formatReservationId(data.reservationId)}</p>
                                     <p>예매일 : {formatDate(data.createdAt)}</p>
                                     <p>관람일 : {formatDate(data.startDateTime)}</p>
                                 </div>
                                 <div>
                                     <p>상영관 : {data.screenName}</p>
-                                    <p>좌석 : {data.seatIds.join(", ")}</p>
+                                    <p>좌석 : {getSortedSeatIds(data.seatIds)}</p>
                                 </div>
                                 <div>
                                     <div className="myReserveBodyTicketPay">
