@@ -29,7 +29,6 @@ const MypageSidebar = ({ activeLink }) => {
         const getList = async () => {
             try {
                 const res = await axios.get(`http://localhost:8080/root/info?userId=${userId}`)
-                console.log("data 확인 : ", res.data)
                 setUserData(res.data)
             } catch (error) {
                 console.error("유저 정보 불러오기 실패: ", error)

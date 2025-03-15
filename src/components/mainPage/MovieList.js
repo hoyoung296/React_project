@@ -4,16 +4,6 @@ import '../../css/main.css'
 
 const MovieList = ({ list, Infolist, infoId, showInfo, hideInfo, onClick, relatedList, isModalOpen, modalType }) => {
     const navigate = useNavigate()
-    // 나호영 주석 처리
-    // const [modalOpen, setModalOpen] = useState(false);
-    // const [modalType, setModalType] = useState('');
-
-    // const openModal = (type, title = '') => {
-    //     console.log('모달 열기', type, title);
-    //     setSelectedMovie(title);
-    //     setModalType(type);
-    //     setModalOpen(true);
-    // };
 
     return (
         <div className='moviePosterList'>
@@ -34,7 +24,7 @@ const MovieList = ({ list, Infolist, infoId, showInfo, hideInfo, onClick, relate
                 <Modal isOpen={isModalOpen} onClose={hideInfo} type={modalType} infoData={Infolist[0]} onClick={onClick} relatedList={relatedList} Infolist={Infolist} />
             )}
         </div>
-    );
+    )
 }
 
-export default MovieList;
+export default MovieList

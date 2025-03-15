@@ -4,22 +4,22 @@ import '../../css/modal.css'
 const Modal = ({ isOpen, onClose, type, infoData, onClick, Infolist, relatedList, modalData, mySubmit, onChange, setShowResult }) => {
     
     useEffect(() => {
-        console.log('모달 상태 변경:', isOpen);
+        console.log('모달 상태 변경:', isOpen)
 
         const handleKeyDown = (e) => {
             if (e.key === "Escape") {
-                onClose();
+                onClose()
             }
-        };
+        }
 
         if (isOpen) {
-            window.addEventListener("keydown", handleKeyDown);
+            window.addEventListener("keydown", handleKeyDown)
         }
 
         return () => {
-            window.removeEventListener("keydown", handleKeyDown);
-        };
-    }, [isOpen, onClose]);
+            window.removeEventListener("keydown", handleKeyDown)
+        }
+    }, [isOpen, onClose])
 
     if (!isOpen) return null
 
@@ -28,7 +28,7 @@ const Modal = ({ isOpen, onClose, type, infoData, onClick, Infolist, relatedList
         mySubmit(e); // 기존 기능 수행
         setShowResult(true); // 리뷰 작성 후 결과 모달을 띄우기 위해 showResult를 true로 설정
         onClose(); // 리뷰 모달 닫기
-    };
+    }
 
     const renderContent = () => {
         switch (type) {

@@ -15,10 +15,10 @@ const AdminScheduleCon = () => {
     })
     const [selectedTimes, setSelectedTimes] = useState([])
     const [timeOptions, setTimeOptions] = useState([])
-    const screenTimeOptions = ["09:00", "10:00", "11:00", "12:00", "13:00", "13:05", "14:00",  "15:00", "16:20", "16:30", "18:00", "21:00"]
+    const screenTimeOptions = ["09:00", "10:00", "11:00", "12:00", "13:00", "13:05", "14:00", "15:00", "16:20", "16:30", "18:00", "21:00"]
 
-    const [filterDate, setFilterDate] = useState("");  // 날짜 필터 상태
-    const [filterMovie, setFilterMovie] = useState("");  // 영화 필터 상태
+    const [filterDate, setFilterDate] = useState("") // 날짜 필터 상태
+    const [filterMovie, setFilterMovie] = useState("") // 영화 필터 상태
 
     useEffect(() => {
         const fetchData = async () => {
@@ -56,35 +56,35 @@ const AdminScheduleCon = () => {
         const newScreenId = e.target.value
         setInput(prev => ({ ...prev, screenId: newScreenId }))
         setTimeOptions(screenTimeOptions)
-    
+
         // 기존 선택된 시간 중에서 현재 선택된 상영관과 충돌하는 시간 제거
         setSelectedTimes(prevSelectedTimes =>
             prevSelectedTimes.filter(time => !isTimeDisabled(time, newScreenId))
         )
     }
-    
+
     const isTimeDisabled = (time, screenId = input.screenId) => {
         if (!screenId || !input.startDate || !input.endDate) return true
-    
+
         let isDisabled = false
         const start = new Date(input.startDate)
         const end = new Date(input.endDate)
-    
+
         while (start <= end) {
             const selectedStartDateTime = new Date(`${start.toISOString().split("T")[0]}T${time}:00`)
-    
+
             for (const schedule of list) {
                 if (String(schedule.screenId) !== String(screenId)) continue
-    
+
                 const existingStart = new Date(schedule.startDateTime)
                 const existingEnd = new Date(schedule.endDateTime)
-    
+
                 if (selectedStartDateTime >= existingStart && selectedStartDateTime < existingEnd) {
                     isDisabled = true
                     break
                 }
             }
-    
+
             start.setDate(start.getDate() + 1)
         }
         return isDisabled
@@ -139,11 +139,11 @@ const AdminScheduleCon = () => {
 
     return (
         <AdminScheduleCom list={list} show={show} hide={hide} screen={screen} onChange={onChange} mySubmit={mySubmit} delSubmit={delSubmit}
-            input={input} handleTimeChange={handleTimeChange} selectedTimes={selectedTimes} timeOptions={timeOptions} handleScreenChange={handleScreenChange} movie={movie} isTimeDisabled={isTimeDisabled} 
-            setFilterDate={setFilterDate} 
-        setFilterMovie={setFilterMovie}
-        filterDate={filterDate} 
-        filterMovie={filterMovie}  />
+            input={input} handleTimeChange={handleTimeChange} selectedTimes={selectedTimes} timeOptions={timeOptions} handleScreenChange={handleScreenChange} movie={movie} isTimeDisabled={isTimeDisabled}
+            setFilterDate={setFilterDate}
+            setFilterMovie={setFilterMovie}
+            filterDate={filterDate}
+            filterMovie={filterMovie} />
     )
 }
 

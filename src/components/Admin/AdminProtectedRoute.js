@@ -13,8 +13,7 @@ const AdminProtectedRoute = ({ element }) => {
         }
 
         checkAuth()
-
-        // 로그인 상태 변경 감지
+        
         window.addEventListener("storage", checkAuth)
 
         return () => {

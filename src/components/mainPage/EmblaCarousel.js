@@ -5,18 +5,6 @@ import Modal from './Modal'
 import '../../css/main.css'
 
 const EmblaCarouselComponent = ({ list, Infolist, infoId, showInfo, hideInfo, onClick, relatedList, isModalOpen, modalType }) => {
-    // 나호영 주석처리
-    // const [modalOpen, setModalOpen] = useState(false);
-    // const [modalType, setModalType] = useState('');
-    // const [selectedMovie, setSelectedMovie] = useState('');
-
-    // const openModal = (type, title = '') => {
-    //     console.log('모달 열기', type, title);
-    //     setSelectedMovie(title);
-    //     setModalType(type);
-    //     setModalOpen(true);
-    // };
-
     const emblaRef = useRef(null)
     const [selectedIndex, setSelectedIndex] = useState(0)
     const emblaApiRef = useRef(null)
@@ -32,7 +20,7 @@ const EmblaCarouselComponent = ({ list, Infolist, infoId, showInfo, hideInfo, on
         const onSelect = () => {
             const newIndex = emblaApi.selectedScrollSnap()
             setSelectedIndex(newIndex)
-        };
+        }
 
         emblaApi.on('select', onSelect)
         return () => emblaApi.destroy()
@@ -89,7 +77,7 @@ const EmblaCarouselComponent = ({ list, Infolist, infoId, showInfo, hideInfo, on
                 <Modal isOpen={isModalOpen} onClose={hideInfo} type={modalType} infoData={Infolist[0]} onClick={onClick} relatedList={relatedList} Infolist={Infolist} />
             )}
         </div>
-    );
-};
+    )
+}
 
-export default EmblaCarouselComponent;
+export default EmblaCarouselComponent

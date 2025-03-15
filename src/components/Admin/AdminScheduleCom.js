@@ -1,16 +1,11 @@
 import AdminSidebar from "./AdminSidebar"
 import "../../css/admin/admin.css"
-import { getSearchList } from "../../service/search"
-import { getSchedule, getScreen, delSchedule, updateSchedule } from "../../service/admin"
 
 const AdminScheduleCom = ({ list, show, hide, screen, onChange, mySubmit, delSubmit, input,
     handleTimeChange, selectedTimes, timeOptions, handleScreenChange, movie, isTimeDisabled, filterDate, filterMovie, setFilterDate, setFilterMovie }) => {
-
         const filteredList = list.filter((data) => {
-            // StartDateTime에서 년, 월, 일만 추출
-            const startDate = new Date(data.startDateTime);
-            const endDate = new Date(data.endDateTime);
-        
+            const startDate = new Date(data.startDateTime)
+            const endDate = new Date(data.endDateTime)
             const matchDate = filterDate
                 ? (startDate.getFullYear() === new Date(filterDate).getFullYear() &&
                     startDate.getMonth() === new Date(filterDate).getMonth() &&
@@ -18,18 +13,15 @@ const AdminScheduleCom = ({ list, show, hide, screen, onChange, mySubmit, delSub
                     (endDate.getFullYear() === new Date(filterDate).getFullYear() &&
                     endDate.getMonth() === new Date(filterDate).getMonth() &&
                     endDate.getDate() === new Date(filterDate).getDate())
-                : true;
-        
-            const matchMovie = filterMovie ? data.title === filterMovie : true;
-        
-            return matchDate && matchMovie;
-        });
+                : true
+            const matchMovie = filterMovie ? data.title === filterMovie : true
+            return matchDate && matchMovie
+        })
         const resetFilters = () => {
-            setFilterDate("");
-            setFilterMovie("");
-        };
+            setFilterDate("")
+            setFilterMovie("")
+        }
         
-
     return (
         <div className="admindiv">
             <AdminSidebar activeLink="상영관리" />

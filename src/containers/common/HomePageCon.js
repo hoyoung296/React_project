@@ -80,7 +80,7 @@ const HomePageCon = () => {
                 ...movie,
                 movieDate,
                 movieRank: parseInt(rank),
-            };
+            }
         })
         .filter(movie => movie.movieRank <= 5) // 순위 5 이하인 영화들만 필터링
         .sort((a, b) => {
@@ -116,4 +116,4 @@ const HomePageCon = () => {
     )
 }
 
-export default HomePageCon;
+export default HomePageCon
