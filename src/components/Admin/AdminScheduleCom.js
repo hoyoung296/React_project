@@ -1,14 +1,63 @@
 import AdminSidebar from "./AdminSidebar"
 import "../../css/admin/admin.css"
+import { getSearchList } from "../../service/search"
+import { getSchedule, getScreen, delSchedule, updateSchedule } from "../../service/admin"
 
 const AdminScheduleCom = ({ list, show, hide, screen, onChange, mySubmit, delSubmit, input,
-    handleTimeChange, selectedTimes, timeOptions, handleScreenChange, movie, isTimeDisabled }) => {
+    handleTimeChange, selectedTimes, timeOptions, handleScreenChange, movie, isTimeDisabled, filterDate, filterMovie, setFilterDate, setFilterMovie }) => {
+
+        const filteredList = list.filter((data) => {
+            // StartDateTime에서 년, 월, 일만 추출
+            const startDate = new Date(data.startDateTime);
+            const endDate = new Date(data.endDateTime);
+        
+            const matchDate = filterDate
+                ? (startDate.getFullYear() === new Date(filterDate).getFullYear() &&
+                    startDate.getMonth() === new Date(filterDate).getMonth() &&
+                    startDate.getDate() === new Date(filterDate).getDate()) ||
+                    (endDate.getFullYear() === new Date(filterDate).getFullYear() &&
+                    endDate.getMonth() === new Date(filterDate).getMonth() &&
+                    endDate.getDate() === new Date(filterDate).getDate())
+                : true;
+        
+            const matchMovie = filterMovie ? data.title === filterMovie : true;
+        
+            return matchDate && matchMovie;
+        });
+        const resetFilters = () => {
+            setFilterDate("");
+            setFilterMovie("");
+        };
+        
 
     return (
         <div className="admindiv">
             <AdminSidebar activeLink="상영관리" />
             <div className="admindiv-1">
                 <h1>상영관리</h1>
+                <div className="filter">
+                    <label>
+                        <input 
+                            type="date" 
+                            onChange={(e) => setFilterDate(e.target.value)} 
+                            value={filterDate || ""}
+                        />
+                    </label>
+                    <label>
+                        <select 
+                            onChange={(e) => setFilterMovie(e.target.value)} 
+                            value={filterMovie || ""}
+                        >
+                            <option value="">영화를 선택하세요</option>
+                            {movie.map((data) => (
+                                <option key={data.movieId} value={data.title}>
+                                    {data.title}
+                                </option>
+                            ))}
+                        </select>
+                    </label>
+                    <button type="button" onClick={resetFilters}>초기화</button>
+                </div>
                 <button className="movieBtn" onClick={() => show()}>추가</button>
                 <div className="table-wrapper">
                     <table className="movie-table">
@@ -24,8 +73,8 @@ const AdminScheduleCom = ({ list, show, hide, screen, onChange, mySubmit, delSub
                             </tr>
                         </thead>
                         <tbody>
-                            {list && list.length > 0 ? (
-                                list.map((data) => (
+                            {filteredList && filteredList.length > 0 ? (
+                                filteredList.map((data) => (
                                     <tr key={data.scheduleId}>
                                         <td>
                                             {data.scheduleId}
