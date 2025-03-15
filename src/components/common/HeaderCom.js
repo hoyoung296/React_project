@@ -56,6 +56,11 @@ function HeaderCom({ onChange, mySubmit, input}) {
     };
     // 로그아웃 처리
     const handleLogout = () => {
+
+        const kakaoAccessToken = localStorage.getItem('kakaoAccessToken');
+        const jwtToken = localStorage.getItem('jwtToken');
+
+        if (kakaoAccessToken) {
         // (1) 카카오 REST API 키
         const REST_API_KEY = process.env.REACT_APP_KAKAO_REST_API_KEY;
     
@@ -89,8 +94,13 @@ function HeaderCom({ onChange, mySubmit, input}) {
                 console.error("팝업에서 에러 발생:", error);
             }
         }, 1000);
-        };
-
+        } else if (jwtToken) {
+            completeLogout();
+        } else {
+            // 로그인이 되어 있지 않으면 그냥 새로 고침
+            window.location.reload();
+        }
+    };
 
     return (
         <header className={`header_body ${isHomePage ? 'homepage_header' : ''}`}>
