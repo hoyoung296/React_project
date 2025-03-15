@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 function InfoCom() {
+    const [errorMessage, setErrorMessage] = useState('');
     const [userInfo, setUserInfo] = useState({
         userId: '',
         username: '',
@@ -63,7 +64,34 @@ function InfoCom() {
         });
     };
 
+    const validateInputs = () => {
+        // 비밀번호 유효성 검사 (최소 8자 이상, 영문/숫자/특수문자 포함)
+        const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        
+        if (userInfo.newPassword && !passwordRegex.test(userInfo.newPassword)) {
+            setErrorMessage(<>비밀번호는 최소 8자 이상이며,<br/>영문/숫자/특수문자를 포함해야 합니다.</>);
+            return false;
+        }
+    
+        if (userInfo.newPassword !== userInfo.confirmPassword) {
+            setErrorMessage("비밀번호 확인이 일치하지 않습니다.");
+            return false;
+        }
+    
+        // 전화번호 유효성 검사 (숫자만 입력)
+        const phoneRegex = /^\d{10,11}$/; // 10~11자리 숫자만 허용 (예: 01012345678)
+    
+        if (!phoneRegex.test(userInfo.phoneNumber)) {
+            setErrorMessage("전화번호는 하이픈(-) 없이 숫자만 입력해야 합니다.");
+            return false;
+        }
+    
+        return true;
+    };
+
     const handleSave = async () => {
+        if (!validateInputs()) return; // 유효성 검사 실패 시 종료
+    
         try {
             const response = await axios.put('http://localhost:8080/root/update', {
                 userId: userInfo.userId,
@@ -164,15 +192,6 @@ function InfoCom() {
                             </button>
                         </div>
                     </span>
-                    <span><span>이메일</span>
-                        <input
-                            type="email"
-                            className='infodata'
-                            name="email"
-                            value={userInfo.email}
-                            onChange={handleChange}
-                        />
-                    </span>
                     <span><span>전화번호</span>
                         <input
                             type="text"
@@ -200,6 +219,10 @@ function InfoCom() {
                             onChange={handleChange}
                         />
                     </span>
+                    {errorMessage && 
+                    <div className="error_message" key={errorMessage}>
+                    {errorMessage}
+                    </div>}
                     <button className='saveBtn' onClick={handleSave}>저장하기</button>
                     <button className='delBtn' onClick={delId}>탈퇴하기</button>
                 </div>
