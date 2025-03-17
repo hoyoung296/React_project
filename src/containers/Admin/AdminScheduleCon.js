@@ -1,7 +1,7 @@
 import AdminScheduleCom from "../../components/Admin/AdminScheduleCom"
 import { delSchedule, getSchedule, getScreen, updateSchedule } from "../../service/admin"
 import { useEffect, useState } from "react"
-import { getSearchList } from "../../service/search"
+import { allList } from "../../service/search"
 
 const AdminScheduleCon = () => {
     const [movie, setMovie] = useState([])
@@ -23,7 +23,7 @@ const AdminScheduleCon = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                setMovie(await getSearchList(""))
+                setMovie(await allList())
                 setList(await getSchedule(""))
                 setScreen(await getScreen(""))
             } catch (error) {
@@ -90,11 +90,11 @@ const AdminScheduleCon = () => {
         return isDisabled
     }
 
-    const toKSTISOString = (date) => {
-        const localDate = new Date(date.getTime())
-        return `${localDate.getFullYear()}-${String(localDate.getMonth() + 1).padStart(2, "0")}-${String(localDate.getDate()).padStart(2, "0")} ${String(localDate.getHours()).padStart(2, "0")}:${String(localDate.getMinutes()).padStart(2, "0")}:00`
+    const toUTCISOString = (date) => {
+        const utcDate = new Date(date.getTime() - (9 * 60 * 60 * 1000)) // KST -> UTC 변환
+        return `${utcDate.getFullYear()}-${String(utcDate.getMonth() + 1).padStart(2, "0")}-${String(utcDate.getDate()).padStart(2, "0")} ${String(utcDate.getHours()).padStart(2, "0")}:${String(utcDate.getMinutes()).padStart(2, "0")}:00`
     }
-
+    
     const mySubmit = async (e) => {
         e.preventDefault()
         const { movieId, screenId, startDate, endDate } = input
@@ -107,8 +107,8 @@ const AdminScheduleCon = () => {
             const currentDate = start.toISOString().split("T")[0]
 
             selectedTimes.forEach(time => {
-                const startDateTime = toKSTISOString(new Date(`${currentDate}T${time}:00`))
-                const endDateTime = toKSTISOString(new Date(new Date(startDateTime).getTime() + runningTime * 60 * 1000))
+                const startDateTime = toUTCISOString(new Date(`${currentDate}T${time}:00`))
+                const endDateTime = toUTCISOString(new Date(new Date(startDateTime).getTime() + runningTime * 60 * 1000))
                 dtos.push({ movieId, screenId, startDateTime, endDateTime })
             })
             start.setDate(start.getDate() + 1)
