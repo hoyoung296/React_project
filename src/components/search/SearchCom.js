@@ -29,4 +29,4 @@ const SearchCom = ({ list, Infolist, relatedList = [], id, infoId, onClick, show
     )
 }
 
-export default SearchCom;
+export default SearchCom

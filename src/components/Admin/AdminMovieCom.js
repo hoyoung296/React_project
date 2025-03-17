@@ -95,4 +95,4 @@ const AdminMovieCom = ({ list, editMovie, InputChange, EditClick, Update, manual
     )
 }
 
-export default AdminMovieCom;
+export default AdminMovieCom

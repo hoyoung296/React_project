@@ -29,7 +29,7 @@ const SearchCon = () => {
         if (!infoId) return
         const getInfo = async () => {
             try {
-                const data = await getInfoList(infoId);
+                const data = await getInfoList(infoId)
                 setInfolist(data)
             } catch (error) {
                 console.error("데이터 가져오기 오류:", error)

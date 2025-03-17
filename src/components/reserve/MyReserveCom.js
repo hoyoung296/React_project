@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react"
 import MypageSidebar from "../common/MypageSidebar"
 import "../../css/review/MyReserve.css"
 import Pagination from "../common/Pagination"
@@ -12,18 +12,18 @@ const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showMo
     useEffect(() => {
         const handleKeyDown = (e) => {
             if (e.key === "Escape") {
-                setShowResult(false);
+                setShowResult(false)
             }
-        };
+        }
 
         if (showResult) {
-            window.addEventListener("keydown", handleKeyDown);
+            window.addEventListener("keydown", handleKeyDown)
         }
 
         return () => {
-            window.removeEventListener("keydown", handleKeyDown);
-        };
-    }, [showResult]);
+            window.removeEventListener("keydown", handleKeyDown)
+        }
+    }, [showResult])
 
     const hideResult = () => {
         setShowResult(false)
@@ -59,11 +59,11 @@ const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showMo
                                 const numB = parseInt(b.slice(1), 10);
                         
                                 return rowA === rowB ? numA - numB : rowA.localeCompare(rowB);
-                            }).join(", ");
-                        };
+                            }).join(", ")
+                        }
                         const formatReservationId = (id) => {
-                            return id ? id.replace(/(\d{4})(?=\d)/g, "$1-") : "";
-                        };                        
+                            return id ? id.replace(/(\d{4})(?=\d)/g, "$1-") : ""
+                        }                    
 
                         return (
                             <div className="myReserveBody" key={data.reservationId}>
