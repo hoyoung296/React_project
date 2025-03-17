@@ -2,6 +2,7 @@ import { useNavigate, useSearchParams } from "react-router-dom"
 import SearchCom from "../../components/search/SearchCom"
 import { useEffect, useState } from "react"
 import { getSearchList, getInfoList } from "../../service/search"
+import Axios from "axios";
 
 const SearchCon = () => {
     const navigate = useNavigate()
@@ -12,6 +13,32 @@ const SearchCon = () => {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [modalType, setModalType] = useState(null)
     const id = params.get("id")
+
+    useEffect(() => {
+    const getData = async () => {
+        try {
+            // 검색어 기반으로 영화 데이터 가져오기 (검색어 없으면 전체 데이터를 가져옴)
+            const data = await getSearchList(id || "");
+
+            // ✅ 상영일정이 있는 영화만 필터링하는 로직 추가
+            const moviesWithShowtimes = await Promise.all(
+                data.map(async (movie) => {
+                    const response = await Axios.get("http://localhost:8080/root/member/schedule/title", {
+                        params: { title: movie.title },
+                    });
+                    return response.data.data.length > 0 ? movie : null; // 일정 있으면 반환, 없으면 null
+                })
+            );
+
+            setList(moviesWithShowtimes.filter(Boolean)); // null 제거 후 상태 업데이트
+        } catch (error) {
+            console.error("데이터 가져오기 오류:", error);
+        }
+    };
+
+    getData();
+}, [id]); // 검색어(id)가 변경될 때마다 실행
+
 
     useEffect(() => {
         const getData = async () => {
