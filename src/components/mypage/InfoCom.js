@@ -8,7 +8,7 @@ function InfoCom() {
     const [errorMessage, setErrorMessage] = useState('');
     const [userInfo, setUserInfo] = useState({
         userId: '',
-        username: '',
+        userName: '',
         password: '',
         confirmPassword: '',
         newPassword: '',
@@ -95,7 +95,7 @@ function InfoCom() {
         try {
             const response = await axios.put('http://localhost:8080/root/update', {
                 userId: userInfo.userId,
-                username: userInfo.username,
+                userName: userInfo.username,
                 password: userInfo.password,
                 newPassword: userInfo.newPassword,
                 confirmPassword : userInfo.confirmPassword,
