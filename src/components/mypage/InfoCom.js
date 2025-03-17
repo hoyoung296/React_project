@@ -95,6 +95,7 @@ function InfoCom() {
         try {
             const response = await axios.put('http://localhost:8080/root/update', {
                 userId: userInfo.userId,
+                username: userInfo.username,
                 password: userInfo.password,
                 newPassword: userInfo.newPassword,
                 confirmPassword : userInfo.confirmPassword,
