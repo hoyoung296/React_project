@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import HomePageCom from "../../components/mainPage/HomePageCom"
-import { getInfoList, getSearchList} from "../../service/search"
+import { allList, getInfoList } from "../../service/search"
 import { useNavigate } from "react-router-dom"
 
 const HomePageCon = () => {
@@ -14,7 +14,7 @@ const HomePageCon = () => {
     useEffect(() => {
         const getData = async () => {
             try {
-                const data = await getSearchList("")
+                const data = await allList()
                 setList(data)
             } catch (error) {
                 console.error("데이터 가져오기 오류:", error)

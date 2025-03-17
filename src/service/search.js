@@ -2,6 +2,17 @@ import axios from "axios"
 
 const BASE_URL = "http://localhost:8080/root/review"
 
+// 모든 영화 리스트 가져오기
+const allList = async () => {
+    try {
+        const res = await axios.get(`${BASE_URL}/list`)
+        return res.data
+    } catch (error) {
+        console.error("모든 영화 리스트 가져오기 오류 : ", error)
+        throw error
+    }
+}
+
 // 검색 결과 가져오기
 const getSearchList = async (id) => {
     try {
@@ -28,4 +39,4 @@ const getInfoList = async (id) => {
     }
 }
 
-export { getSearchList, getInfoList}
+export { getSearchList, getInfoList, allList}
