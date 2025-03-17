@@ -7,6 +7,7 @@ const AdminMovieCom = ({ list, editMovie, InputChange, EditClick, Update, manual
             <AdminSidebar activeLink="영화관리" />
             <div className="admindiv-1">
                 <h1>영화관리</h1>
+                {console.log(list)}
                 <button onClick={show} className="movieBtn">추가</button>
                 <button className="movieBtn" onClick={() => manualUpdate()}>업데이트</button>
                 <div className="table-wrapper">

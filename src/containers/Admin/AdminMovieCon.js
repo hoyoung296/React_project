@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import AdminMovieCom from "../../components/Admin/AdminMovieCom"
-import { getSearchList } from "../../service/search"
 import { deleteMovie, insert, updateMovie, updateMovieManual } from "../../service/admin"
 import { useNavigate } from "react-router-dom"
+import { allList } from "../../service/search"
 
 const AdminMovieCon = () => {
     const [list, setList] = useState([])
@@ -24,7 +24,7 @@ const AdminMovieCon = () => {
     useEffect(() => {
         const getData = async () => {
             try {
-                const data = await getSearchList("")
+                const data = await allList()
                 setList(data)
             } catch (error) {
                 console.error("데이터 가져오기 오류:", error)
@@ -56,7 +56,7 @@ const AdminMovieCon = () => {
         try {
             const response = await insert(newMovie)
             alert(response.message)
-            const updatedData = await getSearchList("")
+            const updatedData = await list()
             setList(updatedData)
             setNewMovie({
                 movieId: "",
@@ -109,7 +109,7 @@ const AdminMovieCon = () => {
             alert("데이터 요청")
             await updateMovieManual() // 데이터 업데이트 요청
             alert("데이터 불러오기 완료")
-            const updatedData = await getSearchList("") // 업데이트된 데이터 다시 가져오기
+            const updatedData = await allList() // 업데이트된 데이터 다시 가져오기
             setList(updatedData) // 상태 업데이트
             navigate("/admin/movie") // 데이터 갱신 후 페이지 이동
         } catch (error) {
@@ -134,7 +134,7 @@ const AdminMovieCon = () => {
         try {
             const response = await deleteMovie(id)
             alert(response.message)
-            const updatedData = await getSearchList("")
+            const updatedData = await allList()
             setList(updatedData)
             navigate("/admin/movie")
         } catch (error) {

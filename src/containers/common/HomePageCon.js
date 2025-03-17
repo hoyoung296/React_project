@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import HomePageCom from "../../components/mainPage/HomePageCom"
-import { getInfoList, getSearchList} from "../../service/search"
+import { allList, getInfoList } from "../../service/search"
+import Axios from "axios";
 import { useNavigate } from "react-router-dom"
 
 const HomePageCon = () => {
@@ -14,7 +15,31 @@ const HomePageCon = () => {
     useEffect(() => {
         const getData = async () => {
             try {
-                const data = await getSearchList("")
+                const data = await allList()
+        
+                // 상영일정이 있는 영화만 필터링
+                const moviesWithShowtimes = await Promise.all(
+                    data.map(async (movie) => {
+                        const response = await Axios.get("http://localhost:8080/root/member/schedule/title", {
+                            params: { title: movie.title }
+                        });
+                        return response.data.data.length > 0 ? movie : null; // 상영일정이 있는 경우만 반환
+                    })
+                );
+    
+                setList(moviesWithShowtimes.filter(Boolean)); // null 값 제거
+            } catch (error) {
+                console.error("데이터 가져오기 오류:", error);
+            }
+        };
+        getData();
+    }, []);
+
+    
+    useEffect(() => {
+        const getData = async () => {
+            try {
+                const data = await allList()
                 setList(data)
             } catch (error) {
                 console.error("데이터 가져오기 오류:", error)

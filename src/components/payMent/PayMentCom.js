@@ -372,17 +372,6 @@ useEffect(() => {
                             <input
                                 type="radio"
                                 name="pay"
-                                value="네이버페이"
-                                onChange={() => {
-                                    setPaymentMethod("네이버페이");
-                                }}
-                            />
-                            네이버페이
-                        </label>
-                        <label>
-                            <input
-                                type="radio"
-                                name="pay"
                                 value="카카오페이"
                                 onChange={() => {
                                     setPaymentMethod("카카오페이");
