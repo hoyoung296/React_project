@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../../css/login.css';
-import { getSearchList } from '../../service/search';
+import { allList } from '../../service/search';
 
 const LoginPageCom = () => {
     const navigate = useNavigate();
@@ -20,7 +20,7 @@ const LoginPageCom = () => {
     useEffect(() => {
         const getData = async () => {
             try {
-                const data = await getSearchList("")
+                const data = await allList()
                 setList(data)
             } catch (error) {
                 console.error("데이터 가져오기 오류:", error)

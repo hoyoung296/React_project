@@ -52,11 +52,10 @@ const AdminMovieCon = () => {
     // 수동 영화 입력 결과 전송
     const manualinsert = async (e) => {
         e.preventDefault()
-        console.log("입력값 확인 : ", newMovie)
         try {
             const response = await insert(newMovie)
             alert(response.message)
-            const updatedData = await list()
+            const updatedData = await allList()
             setList(updatedData)
             setNewMovie({
                 movieId: "",
@@ -73,9 +72,7 @@ const AdminMovieCon = () => {
         } catch (error) {
             if (error.response && error.response.data && error.response.data.message) {
                 alert(error.response.data.message)
-            } else {
-                alert("영화 추가 중 오류 발생")
-            }
+            } 
         }
 
         hide()
