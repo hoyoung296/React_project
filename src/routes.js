@@ -22,6 +22,8 @@ import LoginHandler from './components/login/LoginHandler';
 import ProtectedRoute from './components/login/ProtectedRoute';
 import SetPassword from './components/login/SetPassword';
 import KakaoLogoutCallback from './components/login/KakaoLogoutCallback';
+import FindId from './pages/FindId';
+import FindPw from './pages/FindPw';
 
 const routes = [
     { path: '/', element: <HomePage /> },
@@ -31,6 +33,8 @@ const routes = [
     { path: '/logout-callback', element: <KakaoLogoutCallback/> },
     { path: '/search', element: <Search /> },
     { path: '/signup', element: <SignUp /> },
+    { path: '/find/id', element: <FindId /> },
+    { path: '/find/pw', element: <FindPw /> },
 
     { path: '/ticket/date', element: <ProtectedRoute element={<TicketDate />} /> },
     { path: '/ticket/seat', element: <ProtectedRoute element={<TicketSeat />} /> },
