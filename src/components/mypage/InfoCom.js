@@ -14,11 +14,10 @@ function InfoCom() {
         newPassword: '',
         email: '',
         phoneNumber: '',
-        postnum: '',
+        postNum: '',
         addr: '',
         detailAddr: '',
-        userGrade: '',
-        userBirthday: ''
+        userGrade: ''
     });
 
     const [passwordVisible, setPasswordVisible] = useState(false);
@@ -27,6 +26,19 @@ function InfoCom() {
     const navigate = useNavigate();
     const [params] = useSearchParams()
     const userId = params.get("id")
+
+    useEffect(() => {
+        // script 태그를 동적으로 추가
+        const script = document.createElement('script');
+        script.src = "//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
+        script.async = true;
+        document.body.appendChild(script);
+
+        // cleanup: 컴포넌트가 언마운트될 때 script 제거
+        return () => {
+            document.body.removeChild(script);
+        };
+    }, []);
 
     useEffect(() => {
         async function fetchUserData() {
@@ -43,11 +55,10 @@ function InfoCom() {
                     newPassword: data.data.newPassword || '',
                     email: data.data.email || '',
                     phoneNumber: data.data.phoneNumber || '',
-                    postnum: data.data.postnum || '',
+                    postNum: data.data.postNum || '',
                     addr: data.data.addr || '',
                     detailAddr: data.data.detailAddr || '',
-                    userGrade: data.data.userGrade || '',
-                    userBirthday: data.data.userBirthday || ''
+                    userGrade: data.data.userGrade || ''
                 });
                 console.log("불러온 회원정보 : ", data)
             } catch (error) {
@@ -62,6 +73,37 @@ function InfoCom() {
             ...userInfo,
             [e.target.name]: e.target.value
         });
+    };
+
+    // 주소 검색 기능
+    const handlePostcodeSearch = () => {
+        new window.daum.Postcode({
+            oncomplete: function(data) {
+                let addr = ''; // 주소 변수
+
+                if (data.userSelectedType === 'R') { // 도로명 주소
+                    addr = data.roadAddress;
+                } else { // 지번 주소
+                    addr = data.jibunAddress;
+                }
+                console.log("주소 검색 결과:", addr); // 검색된 주소 확인
+            console.log("우편번호:", data.zonecode); // 검색된 우편번호 확인
+
+                setUserInfo({
+                    ...userInfo,
+                    postNum: data.zonecode,
+                    addr: addr,
+                    detailAddr: '' // 상세주소는 빈 값으로 초기화
+                });
+                // 업데이트된 상태 확인
+                console.log("업데이트된 userInfo:", {
+                    ...userInfo,
+                    postNum: data.zonecode,
+                    addr: addr
+            });
+            }
+        }).open();
+        
     };
 
     const validateInputs = () => {
@@ -92,8 +134,7 @@ function InfoCom() {
     const handleSave = async () => {
         if (!validateInputs()) return; // 유효성 검사 실패 시 종료
 
-        // 생년월일을 yyyyMMdd 형식으로 변환
-    const birthdayNumber = userInfo.userBirthday.replace(/-/g, '');
+        console.log("저장하려는 데이터:", userInfo); // userInfo 전체 확인
     
         try {
             const response = await axios.put('http://localhost:8080/root/update', {
@@ -103,9 +144,9 @@ function InfoCom() {
                 newPassword: userInfo.newPassword,
                 confirmPassword : userInfo.confirmPassword,
                 phoneNumber: userInfo.phoneNumber,
+                postNum: userInfo.postNum,
                 addr: userInfo.addr,
-                detailAddr: userInfo.detailAddr,
-                userBirthday: birthdayNumber // 생년월일
+                detailAddr: userInfo.detailAddr
             }, {
                 headers: { 'Content-Type': 'application/json' }
             });
@@ -206,13 +247,21 @@ function InfoCom() {
                             onChange={handleChange}
                         />
                     </span>
+                    
+                    <span className='addrBtn'>
+                        <input type="text" className='infodata'
+                        name="postNum"
+                         value={userInfo.postcode} placeholder="우편번호 찾기" readOnly />
+                        <button type="button" onClick={handlePostcodeSearch}><img src='../../img/search.png'/></button>
+                    </span>
+
                     <span><span>주소</span>
                         <input
                             type="text"
                             className='infodata'
                             name="addr"
                             value={userInfo.addr}
-                            onChange={handleChange}
+                            onChange={handleChange} readOnly
                         />
                     </span>
                     <span><span>상세주소</span>
@@ -224,18 +273,7 @@ function InfoCom() {
                             onChange={handleChange}
                         />
                     </span>
-                    <span>생년월일</span>
-                        <input
-                            type="text"
-                            className="infodata"
-                            name="userBirthday"
-                            value={userInfo.userBirthday}
-                            placeholder="생년월일"
-                            onChange={handleChange}
-                            onFocus={(e) => (e.target.type = "date")}  // 클릭 시 날짜 선택
-                            onBlur={(e) => (e.target.type = "text")}  // 포커스 해제 시 다시 텍스트 입력
-                            required
-                        />
+                    
 
                     {errorMessage && 
                     <div className="error_message" key={errorMessage}>
