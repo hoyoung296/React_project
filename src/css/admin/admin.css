@@ -155,9 +155,13 @@
     height: 15px;
 }
 
+.movieBtnBody{
+    display: flex;
+}
 .filter{
-    margin-left: 75%;
+    margin-left: 65%;
     width: 400px;
+    display: flex;
 }
 .filter input{
     margin-right: 10px;
