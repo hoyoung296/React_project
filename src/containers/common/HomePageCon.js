@@ -136,7 +136,7 @@ const HomePageCon = () => {
     })
     
     return (
-        <HomePageCom TopMovies={TopMovies} RestMovies={RestMovies} Infolist={Infolist} infoId={infoId} showInfo={showInfo} hideInfo={hideInfo} onClick={onClick}
+        <HomePageCom TopMovies={TopMovies} RestMovies={list} Infolist={Infolist} infoId={infoId} showInfo={showInfo} hideInfo={hideInfo} onClick={onClick}
         relatedList={relatedList} isModalOpen={isModalOpen} modalType={modalType} />
     )
 }

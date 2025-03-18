@@ -90,9 +90,9 @@ const AdminScheduleCon = () => {
         return isDisabled
     }
 
-    const toUTCISOString = (date) => {
-        const utcDate = new Date(date.getTime() - (9 * 60 * 60 * 1000)) // KST -> UTC 변환
-        return `${utcDate.getFullYear()}-${String(utcDate.getMonth() + 1).padStart(2, "0")}-${String(utcDate.getDate()).padStart(2, "0")} ${String(utcDate.getHours()).padStart(2, "0")}:${String(utcDate.getMinutes()).padStart(2, "0")}:00`
+    const toKSTISOString = (date) => {
+        const localDate = new Date(date.getTime())
+        return `${localDate.getFullYear()}-${String(localDate.getMonth() + 1).padStart(2, "0")}-${String(localDate.getDate()).padStart(2, "0")} ${String(localDate.getHours()).padStart(2, "0")}:${String(localDate.getMinutes()).padStart(2, "0")}:00`
     }
     
     const mySubmit = async (e) => {
@@ -107,8 +107,8 @@ const AdminScheduleCon = () => {
             const currentDate = start.toISOString().split("T")[0]
 
             selectedTimes.forEach(time => {
-                const startDateTime = toUTCISOString(new Date(`${currentDate}T${time}:00`))
-                const endDateTime = toUTCISOString(new Date(new Date(startDateTime).getTime() + runningTime * 60 * 1000))
+                const startDateTime = toKSTISOString(new Date(`${currentDate}T${time}:00`))
+                const endDateTime = toKSTISOString(new Date(new Date(startDateTime).getTime() + runningTime * 60 * 1000))
                 dtos.push({ movieId, screenId, startDateTime, endDateTime })
             })
             start.setDate(start.getDate() + 1)
