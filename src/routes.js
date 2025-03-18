@@ -22,6 +22,8 @@ import LoginHandler from './components/login/LoginHandler';
 import ProtectedRoute from './components/login/ProtectedRoute';
 import SetPassword from './components/login/SetPassword';
 import KakaoLogoutCallback from './components/login/KakaoLogoutCallback';
+import ProfilePicUpload from './pages/Img';
+
 
 const routes = [
     { path: '/', element: <HomePage /> },
@@ -47,7 +49,9 @@ const routes = [
     { path: '/admin/movie', element: <AdminProtectedRoute element={<AdminMovie />} /> },
     { path: '/admin/member', element: <AdminProtectedRoute element={<AdminMember />} /> },
     { path: '/admin/schedule', element: <AdminProtectedRoute element={<AdminSchedule />} /> },
-    { path: '/admin/payment', element: <AdminProtectedRoute element={<AdminPayment />} /> }
+    { path: '/admin/payment', element: <AdminProtectedRoute element={<AdminPayment />} /> },
+
+    { path: 'test', element : <ProfilePicUpload />}
 ];
 
 export default routes;
