@@ -43,16 +43,24 @@ function HeaderCom({ onChange, mySubmit, input }) {
     window.location.reload();
   };
 
-  const handleLogout = () => {
+  // handleLogout를 async 함수로 변경하여 axios 호출을 기다립니다.
+  const handleLogout = async () => {
     const kakaoAccessToken = localStorage.getItem('kakaoAccessToken');
     const jwtToken = localStorage.getItem('jwtToken');
+    const REST_API_KEY = process.env.REACT_APP_KAKAO_REST_API_KEY;
+    const logoutRedirectUri = process.env.REACT_APP_LOGOUT_REDIRECT_URI;
 
     if (kakaoAccessToken) {
-      const popup = window.open(/* 카카오 로그아웃 URL */);
-      const interval = setInterval(() => {
+      // 카카오 로그아웃 URL을 팝업으로 열고, 팝업이 닫히면 백엔드 로그아웃 엔드포인트 호출
+      const popup = window.open(
+        `https://kauth.kakao.com/oauth/logout?client_id=${REST_API_KEY}&logout_redirect_uri=${logoutRedirectUri}`
+      );
+      const interval = setInterval(async () => {
         try {
           if (popup.closed) {
             clearInterval(interval);
+            // 백엔드 로그아웃 엔드포인트 호출하여 Refresh Token 쿠키 삭제
+            await axios.post(`${process.env.REACT_APP_BACKEND_URL}/root/member/logout`, {}, { withCredentials: true });
             completeLogout();
           }
         } catch (error) {
@@ -60,11 +68,19 @@ function HeaderCom({ onChange, mySubmit, input }) {
         }
       }, 1000);
     } else if (jwtToken) {
-      completeLogout();
+      // jwtToken이 있는 경우에도 로그아웃 엔드포인트를 호출하여 쿠키 삭제 후 로컬 스토리지 삭제
+      try {
+        await axios.post(`${process.env.REACT_APP_BACKEND_URL}/root/member/logout`, {}, { withCredentials: true });
+      } catch (error) {
+        console.error("서버 로그아웃 호출 에러:", error);
+      } finally {
+        completeLogout();
+      }
     } else {
       window.location.reload();
     }
   };
+
 
   return (
     <header className={`header_body ${isHomePage ? 'homepage_header' : ''}`}>
