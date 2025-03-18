@@ -66,7 +66,7 @@ function InfoCom() {
 
     const validateInputs = () => {
         // 비밀번호 유효성 검사 (최소 8자 이상, 영문/숫자/특수문자 포함)
-        const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
         
         if (userInfo.newPassword && !passwordRegex.test(userInfo.newPassword)) {
             setErrorMessage(<>비밀번호는 최소 8자 이상이며,<br/>영문/숫자/특수문자를 포함해야 합니다.</>);
@@ -91,6 +91,9 @@ function InfoCom() {
 
     const handleSave = async () => {
         if (!validateInputs()) return; // 유효성 검사 실패 시 종료
+
+        // 생년월일을 yyyyMMdd 형식으로 변환
+    const birthdayNumber = userInfo.userBirthday.replace(/-/g, '');
     
         try {
             const response = await axios.put('http://localhost:8080/root/update', {
@@ -101,7 +104,8 @@ function InfoCom() {
                 confirmPassword : userInfo.confirmPassword,
                 phoneNumber: userInfo.phoneNumber,
                 addr: userInfo.addr,
-                detailAddr: userInfo.detailAddr
+                detailAddr: userInfo.detailAddr,
+                userBirthday: birthdayNumber // 생년월일
             }, {
                 headers: { 'Content-Type': 'application/json' }
             });
@@ -220,6 +224,19 @@ function InfoCom() {
                             onChange={handleChange}
                         />
                     </span>
+                    <span>생년월일</span>
+                        <input
+                            type="text"
+                            className="infodata"
+                            name="userBirthday"
+                            value={userInfo.userBirthday}
+                            placeholder="생년월일"
+                            onChange={handleChange}
+                            onFocus={(e) => (e.target.type = "date")}  // 클릭 시 날짜 선택
+                            onBlur={(e) => (e.target.type = "text")}  // 포커스 해제 시 다시 텍스트 입력
+                            required
+                        />
+
                     {errorMessage && 
                     <div className="error_message" key={errorMessage}>
                     {errorMessage}
