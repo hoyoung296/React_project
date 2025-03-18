@@ -339,3 +339,35 @@ html, .login_body {
     background-color: #7857bd;
     cursor: pointer;
 }
+
+.findId_from {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* 세로 중앙 정렬 */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* 정확한 중앙 배치 */
+    width: 100%; /* 너비 조정 */
+    text-align: center;
+}
+
+.findId_btn {
+    width: 80px;
+    height: 30px;
+    background-color: #7757bd76;
+    border-style: none;
+    border-radius: 10px;
+    color: #ffffff;
+    margin-top: 300px;
+}
+.findId_btn:hover{
+    background-color: #7757bdcb;
+    cursor: pointer;
+    text-decoration: underline;
+}
+.findId_btn_container {
+    display: flex;
+    justify-content: center;
+}
