@@ -27,7 +27,9 @@ const AdminScheduleCom = ({ list, show, hide, screen, onChange, mySubmit, delSub
             <AdminSidebar activeLink="상영관리" />
             <div className="admindiv-1">
                 <h1>상영관리</h1>
-                <div className="filter">
+                <div className="movieBtnBody">
+                    <button className="movieBtn" onClick={() => show()}>추가</button>
+                    <div className="filter">
                     <label>
                         <input 
                             type="date" 
@@ -50,7 +52,7 @@ const AdminScheduleCom = ({ list, show, hide, screen, onChange, mySubmit, delSub
                     </label>
                     <button type="button" onClick={resetFilters}>초기화</button>
                 </div>
-                <button className="movieBtn" onClick={() => show()}>추가</button>
+                </div>
                 <div className="table-wrapper">
                     <table className="movie-table">
                         <thead>
