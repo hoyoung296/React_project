@@ -147,8 +147,11 @@ function InfoCom() {
     const handleSave = async () => {
         if (!validateInputs()) return; // 유효성 검사 실패 시 종료
 
-        // 생년월일을 yyyyMMdd 형식으로 변환
-        const formattedBirthday = userInfo.userBirthday ? userInfo.userBirthday.replace(/-/g, '') : '';
+        // userBirthday 값과 타입 확인
+    console.log("🔍 userInfo.userBirthday 값:", userInfo.userBirthday);
+    console.log("🔍 userInfo.userBirthday 타입:", typeof userInfo.userBirthday);
+    const formattedBirthday = userInfo.userBirthday ? String(userInfo.userBirthday).replace(/-/g, '') : '';
+
 
         console.log("저장하려는 데이터:", { ...userInfo, userBirthday: formattedBirthday }); // 변환된 값 확인
     
@@ -171,7 +174,7 @@ function InfoCom() {
             if (response.status === 200) {
                 console.log("수정된 회원 정보:", response.data);
                 alert('회원 정보가 업데이트되었습니다.');
-                navigate("/login")
+                navigate("/")
             } else {
                 alert('업데이트 실패');
             }
@@ -264,17 +267,20 @@ function InfoCom() {
                             onChange={handleChange}
                         />
                     </span>
-                    
-                    <span className='addrBtn'>
-                        <input type="text" className='infodata'
-                        name="postNum"
-                         value={userInfo.postNum}  readOnly
-                         onChange={handleChange} />
-                        <button type="button" onClick={handlePostcodeSearch}>
-                        <img src='../../img/search.png'/></button>
-                    </span>
-
                     <span><span>주소</span>
+                    <div className="pwdImgBtn">
+                        <input
+                            type="text"
+                            className='pwdImgBtnNew'
+                            name="postNum"
+                            value={userInfo.postNum}
+                            readOnly
+                            onChange={handleChange} />
+                            <button type="button" onClick={handlePostcodeSearch}>
+                            <img src='../../img/search.png'/></button>
+                            </div>
+                    </span>
+                    <span><span></span>
                         <input
                             type="text"
                             className='infodata'
