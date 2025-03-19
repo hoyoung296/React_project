@@ -103,7 +103,7 @@ const SignUpCom = () => {
     // 이메일 인증번호 요청
     const sendVerificationCode = async () => {
         try {
-            const response = await axios.post('http://localhost:8080/root/mail/send-auth-code', {
+            const response = await axios.post('http://43.203.54.252:8080/root/mail/send-auth-code', {
                 email: email
             }, {
                 headers: { "Content-Type": "application/json" }
@@ -181,7 +181,7 @@ const SignUpCom = () => {
             };
             console.log('회원가입 데이터:', memberData); // 데이터를 콘솔에 출력
 
-            const response = await axios.post('http://localhost:8080/root/register', memberData);
+            const response = await axios.post('http://43.203.54.252:8080/root/register', memberData);
             console.log("서버 응답:", response);
 
             if (response.status === 200) {

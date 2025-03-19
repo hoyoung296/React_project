@@ -56,7 +56,7 @@ function FindPwCom() {
         try {
             console.log("📤 요청 보냄: ", { userId });
     
-            const response = await axios.put('http://localhost:8080/root/mail/sendTempPassword', {
+            const response = await axios.put('http://43.203.54.252:8080/root/mail/sendTempPassword', {
                 userId
             });
             

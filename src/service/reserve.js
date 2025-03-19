@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const BASE_URL = "http://localhost:8080/root/review"
+const BASE_URL = "http://43.203.54.252:8080/root/review"
 
 // 예매 내역 가져오기
 const getReserveList = async (id) => {

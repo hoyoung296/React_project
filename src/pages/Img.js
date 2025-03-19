@@ -20,12 +20,12 @@ function ProfilePicUpload() {
             formData.append("file", file);
 
             try {
-                const response = await axios.post("http://localhost:8080/root/upload", formData, {
+                const response = await axios.post("http://43.203.54.252:8080/root/upload", formData, {
                     headers: { "Content-Type": "multipart/form-data" }, // 🔥 추가해야 함
                 });
 
                 // JSON 데이터에서 imageUrl 가져오기
-                setImageUrl(`http://localhost:8080${response.data.imageUrl}`);
+                setImageUrl(`http://43.203.54.252:8080${response.data.imageUrl}`);
             } catch (error) {
                 console.error("이미지 업로드 실패:", error);
             }

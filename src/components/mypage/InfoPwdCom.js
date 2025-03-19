@@ -14,7 +14,7 @@ function InfoPwdCom() {
 
     const handleInfoPwd = async () => {
         try {
-            const response = await axios.post('http://localhost:8080/root/check-password', {
+            const response = await axios.post('http://43.203.54.252:8080/root/check-password', {
                 userId,
                 password
             });

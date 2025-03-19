@@ -20,7 +20,7 @@ const HomePageCon = () => {
                 // 상영일정이 있는 영화만 필터링
                 const moviesWithShowtimes = await Promise.all(
                     data.map(async (movie) => {
-                        const response = await Axios.get("http://localhost:8080/root/member/schedule/title", {
+                        const response = await Axios.get("http://43.203.54.252:8080/root/member/schedule/title", {
                             params: { title: movie.title }
                         });
                         return response.data.data.length > 0 ? movie : null; // 상영일정이 있는 경우만 반환

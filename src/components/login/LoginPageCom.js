@@ -62,7 +62,7 @@ const LoginPageCom = () => {
     const handleLogin = async () => {
         try {
             // Axios를 이용한 서버 요청
-            const response = await axios.post('http://localhost:8080/root/login', {
+            const response = await axios.post('http://43.203.54.252:8080/root/login', {
                 userId,
                 password
             });

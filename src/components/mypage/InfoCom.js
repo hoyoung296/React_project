@@ -43,7 +43,7 @@ function InfoCom() {
     useEffect(() => {
         async function fetchUserData() {
             try {
-                const { data } = await axios.get(`http://localhost:8080/root/info?userId=${userId}`);
+                const { data } = await axios.get(`http://43.203.54.252:8080/root/info?userId=${userId}`);
                 if (data.data.username === undefined) {
                     data.data.username = data.data.userName
                 }
@@ -137,7 +137,7 @@ function InfoCom() {
         console.log("저장하려는 데이터:", userInfo); // userInfo 전체 확인
     
         try {
-            const response = await axios.put('http://localhost:8080/root/update', {
+            const response = await axios.put('http://43.203.54.252:8080/root/update', {
                 userId: userInfo.userId,
                 userName: userInfo.username,
                 password: userInfo.password,
@@ -170,7 +170,7 @@ function InfoCom() {
     
         console.log("실행")
         try {
-            const response = await axios.delete('http://localhost:8080/root/delete', {
+            const response = await axios.delete('http://43.203.54.252:8080/root/delete', {
                 data: {
                     userId: userId,
                     password: userInfo.password
