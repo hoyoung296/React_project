@@ -186,3 +186,11 @@
     cursor: pointer;
     background-color: #525252;
 }
+
+.scrollable-seats {
+    display: inline-block;
+    max-width: 200px;
+    overflow-x: auto;
+    white-space: nowrap;
+    border: none;
+}

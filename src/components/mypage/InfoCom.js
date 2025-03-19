@@ -17,7 +17,8 @@ function InfoCom() {
         postNum: '',
         addr: '',
         detailAddr: '',
-        userGrade: ''
+        userGrade: '',
+        userBirthday: ''
     });
 
     const [passwordVisible, setPasswordVisible] = useState(false);
@@ -45,8 +46,20 @@ function InfoCom() {
             try {
                 const { data } = await axios.get(`http://43.203.54.252:8080/root/info?userId=${userId}`);
                 if (data.data.username === undefined) {
-                    data.data.username = data.data.userName
+                    data.data.username = data.data.userName;
                 }
+    
+                //console.log("백엔드에서 받아온 생년월일:", data.data.userBirthday); // 🔥 확인용 로그
+    
+                let formattedBirthday = '';
+                if (data.data.userBirthday && data.data.userBirthday.length === 8) {
+                    formattedBirthday = `${data.data.userBirthday.slice(0, 4)}-${data.data.userBirthday.slice(4, 6)}-${data.data.userBirthday.slice(6, 8)}`;
+                } else {
+                    formattedBirthday = data.data.userBirthday || '';
+                }
+    
+                //console.log("변환된 생년월일:", formattedBirthday); // 🔥 변환된 값 확인
+    
                 setUserInfo({
                     userId: data.data.userId || '',
                     username: data.data.username || '',
@@ -58,9 +71,9 @@ function InfoCom() {
                     postNum: data.data.postNum || '',
                     addr: data.data.addr || '',
                     detailAddr: data.data.detailAddr || '',
-                    userGrade: data.data.userGrade || ''
+                    userGrade: data.data.userGrade || '',
+                    userBirthday: formattedBirthday // 👈 변환된 값 적용
                 });
-                console.log("불러온 회원정보 : ", data)
             } catch (error) {
                 console.error('사용자 정보를 불러오는 중 오류 발생:', error);
             }
@@ -87,7 +100,7 @@ function InfoCom() {
                     addr = data.jibunAddress;
                 }
                 console.log("주소 검색 결과:", addr); // 검색된 주소 확인
-            console.log("우편번호:", data.zonecode); // 검색된 우편번호 확인
+                console.log("우편번호:", data.zonecode); // 검색된 우편번호 확인
 
                 setUserInfo({
                     ...userInfo,
@@ -134,7 +147,13 @@ function InfoCom() {
     const handleSave = async () => {
         if (!validateInputs()) return; // 유효성 검사 실패 시 종료
 
-        console.log("저장하려는 데이터:", userInfo); // userInfo 전체 확인
+        // userBirthday 값과 타입 확인
+    console.log("🔍 userInfo.userBirthday 값:", userInfo.userBirthday);
+    console.log("🔍 userInfo.userBirthday 타입:", typeof userInfo.userBirthday);
+    const formattedBirthday = userInfo.userBirthday ? String(userInfo.userBirthday).replace(/-/g, '') : '';
+
+
+        console.log("저장하려는 데이터:", { ...userInfo, userBirthday: formattedBirthday }); // 변환된 값 확인
     
         try {
             const response = await axios.put('http://43.203.54.252:8080/root/update', {
@@ -146,7 +165,8 @@ function InfoCom() {
                 phoneNumber: userInfo.phoneNumber,
                 postNum: userInfo.postNum,
                 addr: userInfo.addr,
-                detailAddr: userInfo.detailAddr
+                detailAddr: userInfo.detailAddr,
+                userBirthday: formattedBirthday 
             }, {
                 headers: { 'Content-Type': 'application/json' }
             });
@@ -154,7 +174,7 @@ function InfoCom() {
             if (response.status === 200) {
                 console.log("수정된 회원 정보:", response.data);
                 alert('회원 정보가 업데이트되었습니다.');
-                navigate("/login")
+                navigate("/")
             } else {
                 alert('업데이트 실패');
             }
@@ -247,17 +267,20 @@ function InfoCom() {
                             onChange={handleChange}
                         />
                     </span>
-                    
-                    <span className='addrBtn'>
-                        <input type="text" className='infodata'
-                        name="postNum"
-                         value={userInfo.postNum}  readOnly
-                         onChange={handleChange} />
-                        <button type="button" onClick={handlePostcodeSearch}>
-                        <img src='../../img/search.png'/></button>
-                    </span>
-
                     <span><span>주소</span>
+                    <div className="pwdImgBtn">
+                        <input
+                            type="text"
+                            className='pwdImgBtnNew'
+                            name="postNum"
+                            value={userInfo.postNum}
+                            readOnly
+                            onChange={handleChange} />
+                            <button type="button" onClick={handlePostcodeSearch}>
+                            <img src='../../img/search.png'/></button>
+                            </div>
+                    </span>
+                    <span><span></span>
                         <input
                             type="text"
                             className='infodata'
@@ -275,7 +298,19 @@ function InfoCom() {
                             onChange={handleChange}
                         />
                     </span>
-                    
+                    <span><span>생년월일</span>
+                        <input 
+                            type="text" 
+                            className="infodata"
+                            name="userBirthday"
+                            value={userInfo.userBirthday || ''}
+                            onChange={handleChange}
+                            onFocus={(e) => (e.target.type = "date")}  // 클릭 시 달력 표시
+                            onBlur={(e) => (e.target.type = "text")}  // 포커스 해제 시 다시 placeholder 표시
+                            required 
+                        />
+                    </span>
+
 
                     {errorMessage && 
                     <div className="error_message" key={errorMessage}>

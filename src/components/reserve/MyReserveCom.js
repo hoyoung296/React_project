@@ -80,7 +80,10 @@ const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showMo
                                 </div>
                                 <div>
                                     <p>상영관 : {data.screenName}</p>
-                                    <p>좌석 : {getSortedSeatIds(data.seatIds)}</p>
+                                    <p className={data.seatIds.length > 6 ? "scrollable-seats" : ""}>
+                                        좌석 : {getSortedSeatIds(data.seatIds)}
+                                    </p>
+
                                 </div>
                                 <div>
                                     <div className="myReserveBodyTicketPay">

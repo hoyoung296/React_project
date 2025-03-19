@@ -349,7 +349,9 @@ useEffect(() => {
                             <p>{formatTime(selectedStartTime) || "정보 없음"}</p>
                             <p>{selectedCinema || "정보 없음"}</p>
                             <p>{seatIds.length > 0 ? `${seatIds.length}명` : "정보 없음"}</p>
-                            <p>{sortedSeatIds}</p>
+                            <p className={seatIds.length > 6 ? "scrollable-seats" : ""}>
+                                {sortedSeatIds}
+                            </p>
 
                         </div>
                     </div>
