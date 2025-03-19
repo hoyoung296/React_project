@@ -51,10 +51,14 @@ function HeaderCom({ onChange, mySubmit, input }) {
     const logoutRedirectUri = process.env.REACT_APP_LOGOUT_REDIRECT_URI;
 
     if (kakaoAccessToken) {
+      const width = 500;
+      const height = 600;
       // 카카오 로그아웃 URL을 팝업으로 열고, 팝업이 닫히면 백엔드 로그아웃 엔드포인트 호출
       const popup = window.open(
-        `https://kauth.kakao.com/oauth/logout?client_id=${REST_API_KEY}&logout_redirect_uri=${logoutRedirectUri}`
-      );
+        `https://kauth.kakao.com/oauth/logout?client_id=${REST_API_KEY}&logout_redirect_uri=${logoutRedirectUri}`,
+      "KakaoLogoutPopup",
+      `width=${width},height=${height},resizable=no,scrollbars=no`
+    );
       const interval = setInterval(async () => {
         try {
           if (popup.closed) {
