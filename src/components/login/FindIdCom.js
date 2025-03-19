@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../../css/login.css';
+import { useNavigate } from 'react-router-dom';
 import { allList } from '../../service/search';
 import axios from 'axios';
 
@@ -9,6 +10,7 @@ function FindIdCom() {
     const [errorMessage, setErrorMessage] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [userId, setUserId] = useState(''); // 아이디 저장 상태 추가
+    const navigate = useNavigate();
 
     useEffect(() => {
         const getData = async () => {
@@ -52,28 +54,47 @@ function FindIdCom() {
 
     const handleFindId = async () => {
         try {
+            console.log("📤 요청 보냄: ", { phoneNumber });
             const response = await axios.post('http://localhost:8080/root/findId', {
                 phoneNumber: phoneNumber, // 서버로 전달할 값
             });
-
-            if (response.data.code === 200 && response.data.data?.userId) {
-                setUserId(response.data.data.userId); // 아이디 저장
+            console.log("📥 서버 응답 전체:", response);
+            console.log("📥 서버 응답 데이터:", response.data);
+            if (response.data !== null) { // 서버에서 아이디를 문자열로 반환하면 성공
+                setUserId(response.data); 
                 setErrorMessage('');
-            } else {
+                console.log("✅ 아이디 찾기 성공:", response.data);
+            } else { // data가 null이면 실패
                 setUserId('');
                 setErrorMessage('해당 번호로 등록된 아이디가 없습니다.');
+                console.log("⚠️ 아이디 찾기 실패: 일치하는 아이디 없음");
             }
         } catch (error) {
-            console.error('아이디 찾기 중 오류 발생:', error);
-            setUserId('');
-            setErrorMessage('서버와 연결할 수 없습니다. 나중에 다시 시도해 주세요.');
+            if (error.response && error.response.status === 400) {
+                console.log("📥 서버 응답: ", error.response.data);
+                
+                // error.response.data 내부를 확인하여 판단
+                if (error.response.data.data === null) {  
+                    setUserId('');
+                    setErrorMessage('해당 번호로 등록된 아이디가 없습니다.');
+                    console.log("⚠️ 아이디 찾기 실패: 400 Bad Request (일치하는 아이디 없음)");
+                } else {
+                    console.error("❌ 예기치 않은 400 응답 데이터:", error.response.data);
+                    setUserId('');
+                    setErrorMessage('서버에서 예상치 못한 응답을 받았습니다.');
+                }
+            } else {
+                console.error('❌ 아이디 찾기 중 오류 발생:', error);
+                setUserId('');
+                setErrorMessage('서버와 연결할 수 없습니다. 나중에 다시 시도해 주세요.');
+            }
         }
     };
 
     return (
         <div className='login_body'>
-            <div className='sign'>
-                <div className='title_movie'>THEFILLM</div>
+            <div className='login'>
+                <div className='title_movie' onClick={() => navigate("/")}>THEFILLM</div>
                 <div className='findId_from'>
                     <p>회원가입 시 등록한 연락처를 입력해주세요.</p>
                     <input
@@ -84,7 +105,7 @@ function FindIdCom() {
                         onChange={(e) => setPhoneNumber(e.target.value)}
                         required
                     />
-                    {userId && <div className="success_message">회원님의 아이디는 "{userId}" 입니다.</div>}
+                    {userId && <div className="success_message">회원님의 아이디는 <div>{userId}</div> 입니다.</div>}
                     {errorMessage && <div className="error_message">{errorMessage}</div>}
                 </div>
                 {backgroundImage && <img className='backgroundImg' src={backgroundImage} alt="background" />}

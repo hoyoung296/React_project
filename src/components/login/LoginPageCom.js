@@ -118,7 +118,7 @@ const LoginPageCom = () => {
     return (
     <div className='login_body'>
         <div className='login'>
-            <div className='title_movie'>THEFILLM</div>
+            <div className='title_movie' onClick={() => navigate("/")}>THEFILLM</div>
             <div className='login_from'>
                 <input
                     type="text"
@@ -156,8 +156,8 @@ const LoginPageCom = () => {
                     <button onClick={kakaoLogin}><img src='img/kakao_login_large.png' alt='kakaoLogin'/></button>
                 </div>
                 <div className='userBtn'>
-                    <button>아이디찾기</button>|
-                    <button>비밀번호찾기</button>|
+                    <button onClick={() => navigate("/find/id")}>아이디찾기</button>|
+                    <button onClick={() => navigate("/find/pw")}>비밀번호찾기</button>|
                     <button onClick={goToSignPage}>회원가입</button>
                 </div>
                 

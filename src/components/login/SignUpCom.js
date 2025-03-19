@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../css/login.css';
 import axios from 'axios';
-import { getSearchList } from '../../service/search';
+import { allList } from '../../service/search';
 
 const SignUpCom = () => {
-    const [userId, setUserId] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -26,10 +25,11 @@ const SignUpCom = () => {
 
     const navigate = useNavigate();
 
+
     useEffect(() => {
         const getData = async () => {
             try {
-                const data = await getSearchList("")
+                const data = await allList()
                 setList(data)
             } catch (error) {
                 console.error("데이터 가져오기 오류:", error)
@@ -38,7 +38,7 @@ const SignUpCom = () => {
         getData()
     }, [])
 
-    // rank를 기준으로 필터링 및 날짜와 순위를 분리하여 처리
+       // rank를 기준으로 필터링 및 날짜와 순위를 분리하여 처리
     const today = new Date()
     const TopMovies = list
         .map(movie => {
@@ -54,18 +54,19 @@ const SignUpCom = () => {
         .sort((a, b) => {
             const diffA = Math.abs(today - a.movieDate)
             const diffB = Math.abs(today - b.movieDate)
-            return diffA - diffB; // 날짜가 오늘에 가장 가까운 영화부터 정렬
+               return diffA - diffB; // 날짜가 오늘에 가장 가까운 영화부터 정렬
         })
-        .slice(0, 5) // 상위 5개의 영화만 선택
-        
-        const stillUrls = TopMovies.length > 0 ? TopMovies.map(movie => movie.stillUrl) : [];
+           .slice(0, 5) // 상위 5개의 영화만 선택
 
-        useEffect(() => {
-            if (stillUrls.length > 0 && !backgroundImage) {  // 배경이 없을 때만 랜덤 이미지를 설정
-                const randomIndex = Math.floor(Math.random() * stillUrls.length);
+    const stillUrls = TopMovies.length > 0 ? TopMovies.map(movie => movie.stillUrl) : [];
+
+    useEffect(() => {
+        if (stillUrls.length > 0 && !backgroundImage) {  // 배경이 없을 때만 랜덤 이미지를 설정
+            const randomIndex = Math.floor(Math.random() * stillUrls.length);
                 setBackgroundImage(stillUrls[randomIndex]);
-            }
-        }, [stillUrls, backgroundImage]);  // backgroundImage가 변경되지 않으면 다시 실행되지 않도록 조건 추가
+        }
+    }, [stillUrls, backgroundImage]);  // backgroundImage가 변경되지 않으면 다시 실행되지 않도록 조건 추가
+
 
 
     useEffect(() => {
@@ -201,7 +202,7 @@ const SignUpCom = () => {
     return(
         <div className='login_body'>
         <div className='sign'>
-            <div className='title_movie'>THEFILLM</div>
+            <div className='title_movie' onClick={() => navigate("/")}>THEFILLM</div>
             <div className='sign_from'>
                 <div>
                     <span className='imgBtn'>

@@ -56,7 +56,7 @@ html, .login_body {
     font-weight: bold;
     font-size: 80px;
     color: #7857bd;
-    cursor: default;
+    cursor: pointer;
 }
 .login_from {
     display: flex;
@@ -370,4 +370,27 @@ html, .login_body {
 .findId_btn_container {
     display: flex;
     justify-content: center;
+    gap: 15px;
+}
+.success_message{
+    font-size: 15px;
+    margin-top: 30px;
+}
+.success_message div{
+    font-weight: bold;
+    font-size: 17px;
+}
+.findPw_btn {
+    width: 120px;
+    height: 30px;
+    background-color: #7757bd76;
+    border-style: none;
+    border-radius: 10px;
+    color: #ffffff;
+    margin-top: 300px;
+}
+.findPw_btn:hover{
+    background-color: #7757bdcb;
+    cursor: pointer;
+    text-decoration: underline;
 }
