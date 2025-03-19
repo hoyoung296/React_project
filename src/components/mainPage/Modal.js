@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import '../../css/modal.css'
 
 const Modal = ({ isOpen, onClose, type, infoData, onClick, Infolist, relatedList, modalData, mySubmit, onChange, setShowResult }) => {
-    
     useEffect(() => {
         console.log('모달 상태 변경:', isOpen)
 
@@ -29,6 +28,8 @@ const Modal = ({ isOpen, onClose, type, infoData, onClick, Infolist, relatedList
         setShowResult(true); // 리뷰 작성 후 결과 모달을 띄우기 위해 showResult를 true로 설정
         onClose(); // 리뷰 모달 닫기
     }
+
+    
 
     const renderContent = () => {
         switch (type) {
@@ -69,7 +70,7 @@ const Modal = ({ isOpen, onClose, type, infoData, onClick, Infolist, relatedList
                                                                 <div className='reviewHeader'>
                                                                     <img className='reviewImg' src="/img/movie1.jpg" alt="프로필사진" />
                                                                     <div>
-                                                                        <p className='reviewUser'>{data.userId}</p>
+                                                                        <p className='reviewUser'>{data.userName}</p>
                                                                         <p className='reviewDate'>{data.reviewDate}</p>
                                                                     </div>
                                                                 </div>

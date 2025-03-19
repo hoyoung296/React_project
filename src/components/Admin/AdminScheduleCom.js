@@ -3,25 +3,33 @@ import "../../css/admin/admin.css"
 
 const AdminScheduleCom = ({ list, show, hide, screen, onChange, mySubmit, delSubmit, input,
     handleTimeChange, selectedTimes, timeOptions, handleScreenChange, movie, isTimeDisabled, filterDate, filterMovie, setFilterDate, setFilterMovie }) => {
+    
         const filteredList = list.filter((data) => {
-            const startDate = new Date(data.startDateTime)
-            const endDate = new Date(data.endDateTime)
-            const matchDate = filterDate
-                ? (startDate.getFullYear() === new Date(filterDate).getFullYear() &&
-                    startDate.getMonth() === new Date(filterDate).getMonth() &&
-                    startDate.getDate() === new Date(filterDate).getDate()) ||
-                    (endDate.getFullYear() === new Date(filterDate).getFullYear() &&
-                    endDate.getMonth() === new Date(filterDate).getMonth() &&
-                    endDate.getDate() === new Date(filterDate).getDate())
-                : true
-            const matchMovie = filterMovie ? data.title === filterMovie : true
-            return matchDate && matchMovie
-        })
-        const resetFilters = () => {
-            setFilterDate("")
-            setFilterMovie("")
-        }
-        
+        const startDate = new Date(data.startDateTime)
+        const endDate = new Date(data.endDateTime)
+        const matchDate = filterDate
+            ? (startDate.getFullYear() === new Date(filterDate).getFullYear() &&
+                startDate.getMonth() === new Date(filterDate).getMonth() &&
+                startDate.getDate() === new Date(filterDate).getDate()) ||
+            (endDate.getFullYear() === new Date(filterDate).getFullYear() &&
+                endDate.getMonth() === new Date(filterDate).getMonth() &&
+                endDate.getDate() === new Date(filterDate).getDate())
+            : true
+        const matchMovie = filterMovie ? data.title === filterMovie : true
+        return matchDate && matchMovie
+    })
+
+    const resetFilters = () => {
+        setFilterDate("")
+        setFilterMovie("")
+    }
+
+    const today = new Date()
+    const year = today.getFullYear()
+    const month = String(today.getMonth() + 1).padStart(2, "0") // 월은 0부터 시작하므로 +1 필요
+    const day = String(today.getDate()).padStart(2, "0") // 두 자리 숫자로 변환
+    const formattedDate = `${year}-${month}-${day}`
+
     return (
         <div className="admindiv">
             <AdminSidebar activeLink="상영관리" />
@@ -30,28 +38,28 @@ const AdminScheduleCom = ({ list, show, hide, screen, onChange, mySubmit, delSub
                 <div className="movieBtnBody">
                     <button className="movieBtn" onClick={() => show()}>추가</button>
                     <div className="filter">
-                    <label>
-                        <input 
-                            type="date" 
-                            onChange={(e) => setFilterDate(e.target.value)} 
-                            value={filterDate || ""}
-                        />
-                    </label>
-                    <label>
-                        <select 
-                            onChange={(e) => setFilterMovie(e.target.value)} 
-                            value={filterMovie || ""}
-                        >
-                            <option value="">영화를 선택하세요</option>
-                            {movie.map((data) => (
-                                <option key={data.movieId} value={data.title}>
-                                    {data.title}
-                                </option>
-                            ))}
-                        </select>
-                    </label>
-                    <button type="button" onClick={resetFilters}>초기화</button>
-                </div>
+                        <label>
+                            <input
+                                type="date"
+                                onChange={(e) => setFilterDate(e.target.value)}
+                                value={filterDate || ""}
+                            />
+                        </label>
+                        <label>
+                            <select
+                                onChange={(e) => setFilterMovie(e.target.value)}
+                                value={filterMovie || ""}
+                            >
+                                <option value="">영화를 선택하세요</option>
+                                {movie.map((data) => (
+                                    <option key={data.movieId} value={data.title}>
+                                        {data.title}
+                                    </option>
+                                ))}
+                            </select>
+                        </label>
+                        <button type="button" onClick={resetFilters}>초기화</button>
+                    </div>
                 </div>
                 <div className="table-wrapper">
                     <table className="movie-table">
@@ -73,8 +81,8 @@ const AdminScheduleCom = ({ list, show, hide, screen, onChange, mySubmit, delSub
                                         <td>
                                             {data.scheduleId}
                                         </td>
-                                        <td>{new Date(data.startDateTime).toLocaleString()}</td>
-                                        <td>{new Date(data.endDateTime).toLocaleString()}</td>
+                                        <td>{new Date(data.startDateTime).toLocaleString("ko-KR")}</td>
+                                        <td>{new Date(data.endDateTime).toLocaleString("ko-KR")}</td>
                                         <td>
                                             {data.movieId}
                                         </td>
@@ -114,9 +122,9 @@ const AdminScheduleCom = ({ list, show, hide, screen, onChange, mySubmit, delSub
                         </select>
                         <br />
                         <p>상영 기간</p>
-                        <input type="date" name="startDate" onChange={onChange} min={new Date(new Date().getTime()).toISOString().split("T")[0]} />
+                        <input type="date" name="startDate" onChange={onChange} min={formattedDate} />
                         ~
-                        <input type="date" name="endDate" onChange={onChange} min={new Date(new Date().getTime()).toISOString().split("T")[0]} /><br />
+                        <input type="date" name="endDate" onChange={onChange} min={formattedDate} /><br />
                         <p>상영관 선택</p>
                         <div>
                             {screen.map((data) => (

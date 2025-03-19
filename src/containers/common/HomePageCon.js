@@ -16,7 +16,7 @@ const HomePageCon = () => {
         const getData = async () => {
             try {
                 const data = await allList()
-        
+
                 // 상영일정이 있는 영화만 필터링
                 const moviesWithShowtimes = await Promise.all(
                     data.map(async (movie) => {
@@ -26,7 +26,7 @@ const HomePageCon = () => {
                         return response.data.data.length > 0 ? movie : null; // 상영일정이 있는 경우만 반환
                     })
                 );
-    
+
                 setList(moviesWithShowtimes.filter(Boolean)); // null 값 제거
             } catch (error) {
                 console.error("데이터 가져오기 오류:", error);
@@ -35,7 +35,7 @@ const HomePageCon = () => {
         getData();
     }, []);
 
-    
+
     useEffect(() => {
         const getData = async () => {
             try {
@@ -96,48 +96,29 @@ const HomePageCon = () => {
         : []
 
     // rank를 기준으로 필터링 및 날짜와 순위를 분리하여 처리
-    const today = new Date()
+    const today = new Date();
     const TopMovies = list
         .map(movie => {
-            const [date, rank] = movie.movieRank.split("-") // 날짜-순위 분리 
-            const movieDate = new Date(date)
+            const [date, rank] = movie.movieRank.split("-"); // 날짜-순위 분리
+            const movieDate = new Date(date);
             return {
                 ...movie,
                 movieDate,
                 movieRank: parseInt(rank),
-            }
+            };
         })
-        .filter(movie => movie.movieRank <= 5) // 순위 5 이하인 영화들만 필터링
         .sort((a, b) => {
-            const diffA = Math.abs(today - a.movieDate)
-            const diffB = Math.abs(today - b.movieDate)
-            return diffA - diffB; // 날짜가 오늘에 가장 가까운 영화부터 정렬
+            const diffA = Math.abs(today - a.movieDate);
+            const diffB = Math.abs(today - b.movieDate);
+            return diffA - diffB || a.movieRank - b.movieRank; // 날짜가 같다면 순위 비교
         })
-        .slice(0, 5) // 상위 5개의 영화만 선택
+        .filter(movie => movie.movieRank <= 5) // 순위 5 이하 필터링
+        .slice(0, 5); // 상위 5개 선택
 
-    // Top5Movies를 제외한 나머지 영화들
-    const topMovieIds = new Set(TopMovies.map(movie => movie.movieId))
 
-    const RestMovies = list
-    .filter(movie => !topMovieIds.has(movie.movieId)) // TopMovies에 없는 영화만 남김
-    .map(movie => {
-        const [date, rank] = movie.movieRank.split("-")
-        const movieDate = new Date(date);
-        return {
-            ...movie,
-            movieDate,
-            movieRank: parseInt(rank),
-        }
-    })
-    .sort((a, b) => {
-        const diffA = Math.abs(today - a.movieDate)
-        const diffB = Math.abs(today - b.movieDate)
-        return diffA - diffB; // 날짜가 오늘에 가장 가까운 영화부터 정렬
-    })
-    
     return (
-        <HomePageCom TopMovies={TopMovies} RestMovies={list} Infolist={Infolist} infoId={infoId} showInfo={showInfo} hideInfo={hideInfo} onClick={onClick}
-        relatedList={relatedList} isModalOpen={isModalOpen} modalType={modalType} />
+        <HomePageCom TopMovies={TopMovies} list={list} Infolist={Infolist} infoId={infoId} showInfo={showInfo} hideInfo={hideInfo} onClick={onClick}
+            relatedList={relatedList} isModalOpen={isModalOpen} modalType={modalType} />
     )
 }
 
