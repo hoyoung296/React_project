@@ -401,6 +401,14 @@
     height: 100%;
     margin-right: 40px;
 }
+.scrollable-seats {
+    display: inline-block; /* 가로 스크롤이 적용될 수 있도록 설정 */
+    max-width: 200px; /* 좌석번호가 길어지면 스크롤 표시 */
+    overflow-x: auto; /* 가로 스크롤 활성화 */
+    white-space: nowrap; /* 줄바꿈 방지 */
+    border: none;
+}
+
 .movieInfo{
     display: flex;
     justify-content: space-between;
