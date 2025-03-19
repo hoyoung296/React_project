@@ -6,12 +6,30 @@
     text-align: center;
     width: 100%;
     z-index: 1;
+    margin-bottom: 30px;
+    margin-left: 100px;
 }
-
 .PagingButton {
-    color: white;
+    color: #ffffff;
     margin: 0 5px;
     cursor: pointer;
     border: none;
     background: none;
+    font-size: 12px;
+}
+.PagingButton.active {
+    color: #7857bd;
+    font-weight: bold;
+    cursor: default;
+}
+.ArrowButton {
+    color: #ffffff;
+    margin: 0 10px;
+    cursor: pointer;
+    border: none;
+    background: none;
+    
+}
+.PagingButton:hover {
+    text-decoration: underline;
 }
