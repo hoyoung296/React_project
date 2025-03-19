@@ -251,8 +251,10 @@ function InfoCom() {
                     <span className='addrBtn'>
                         <input type="text" className='infodata'
                         name="postNum"
-                         value={userInfo.postcode} placeholder="우편번호 찾기" readOnly />
-                        <button type="button" onClick={handlePostcodeSearch}><img src='../../img/search.png'/></button>
+                         value={userInfo.postNum}  readOnly
+                         onChange={handleChange} />
+                        <button type="button" onClick={handlePostcodeSearch}>
+                        <img src='../../img/search.png'/></button>
                     </span>
 
                     <span><span>주소</span>
