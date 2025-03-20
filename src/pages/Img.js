@@ -25,7 +25,9 @@ function ProfilePicUpload() {
                 });
 
                 console.log("파일 이름 : " , response.data.imagename)
-                setData(response.data.imagename)
+                const filename = response.data.imagename.replace(/ /g, "%20")
+                console.log("변경된 파일이름 : ", filename)
+                setData(filename)
             } catch (error) {
                 console.error("이미지 업로드 실패:", error);
             }
