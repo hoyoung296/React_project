@@ -23,7 +23,7 @@ const SearchCon = () => {
             // ✅ 상영일정이 있는 영화만 필터링하는 로직 추가
             const moviesWithShowtimes = await Promise.all(
                 data.map(async (movie) => {
-                    const response = await Axios.get("http://43.203.54.252:8080/root/member/schedule/title", {
+                    const response = await Axios.get("http://localhost:8080/root/member/schedule/title", {
                         params: { title: movie.title },
                     });
                     return response.data.data.length > 0 ? movie : null; // 일정 있으면 반환, 없으면 null

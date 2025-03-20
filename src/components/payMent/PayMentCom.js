@@ -181,7 +181,7 @@ useEffect(() => {
         if (!response.code) {
             const { txId, paymentId } = response;
             // 백엔드에 결제 정보 전달 (필요에 따라 전송하는 데이터 항목 조정)
-            const createRes = await Axios.post('http://43.203.54.252:8080/root/member/payment/create', {
+            const createRes = await Axios.post('http://localhost:8080/root/member/payment/create', {
               reservationId: String(reservationId), // 예시 값
               paymentMethodId: paymentMethodId, // 예시 값
               amount: totalAmount, // 실제 결제 금액 사용
@@ -196,7 +196,7 @@ useEffect(() => {
 
             // 결제 완료 검증: 포트원 API 조회 후 DB 업데이트 수행
             const confirmRes  = await Axios.post(
-                "http://43.203.54.252:8080/root/member/payment/confirm",
+                "http://localhost:8080/root/member/payment/confirm",
                 {   portonePaymentId: paymentId,
                     amount : totalAmount,
                     scheduleId: scheduleId,
@@ -244,7 +244,7 @@ useEffect(() => {
                     try {
                         // 예매 취소 요청을 백엔드로 보내는 부분
                         console.log("뒤로가기 YES -> axios 실행!!");
-                        await Axios.delete("http://43.203.54.252:8080/root/member/reserve/cancel", {
+                        await Axios.delete("http://localhost:8080/root/member/reserve/cancel", {
                             data: {
                                 reservationId: reservationId,
                                 scheduleId: scheduleId,

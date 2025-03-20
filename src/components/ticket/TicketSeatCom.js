@@ -35,7 +35,7 @@ const TicketSeatCom = () => {
             console.log("📡 서버 요청 시작");
             const fetchMovieData = async () => {
                 try {
-                    const response = await Axios.get("http://43.203.54.252:8080/root/member/schedule/seatselect", {
+                    const response = await Axios.get("http://localhost:8080/root/member/schedule/seatselect", {
                         params: { scheduleId }
                     });
 
@@ -112,7 +112,7 @@ const TicketSeatCom = () => {
         console.log("totalAmount:", totalAmount);
         // 예매 정보를 서버에 제출하는 API 호출 (예시)
         try {
-            const response = await Axios.post("http://43.203.54.252:8080/root/member/reserve/reservation", {
+            const response = await Axios.post("http://localhost:8080/root/member/reserve/reservation", {
                 scheduleId,
                 seatIds: [...seatIds],
                 totalAmount: totalAmount, //서버 연결해서 스케쥴id, 선택좌석, 총 금액 전달함
