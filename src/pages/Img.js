@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 function ProfilePicUpload() {
     const [imagePreview, setImagePreview] = useState(null);
-    const [imageUrl, setImageUrl] = useState(null);
+    const [data, setData] = useState(null);
 
     const handleFileChange = async (e) => {
         const file = e.target.files[0];
@@ -24,8 +24,8 @@ function ProfilePicUpload() {
                     headers: { "Content-Type": "multipart/form-data" }, // 🔥 추가해야 함
                 });
 
-                // JSON 데이터에서 imageUrl 가져오기
-                setImageUrl(`http://localhost:8080${response.data.imageUrl}`);
+                console.log("파일 이름 : " , response.data.imagename)
+                setData(response.data.imagename)
             } catch (error) {
                 console.error("이미지 업로드 실패:", error);
             }
@@ -37,8 +37,9 @@ function ProfilePicUpload() {
             <h2>프로필 사진 업로드</h2>
             <input type="file" onChange={handleFileChange} accept="image/*" />
             {imagePreview && <img src={imagePreview} alt="Preview" style={{ width: '150px', height: '150px', borderRadius: '50%' }} />}
-            {imageUrl && <p>업로드된 이미지: <a href={imageUrl} target="_blank" rel="noopener noreferrer">{imageUrl}</a></p>}
+            <img src={`http://localhost:8080/root/upload/image?image=${data}`} alt="프사이미지"/>
         </div>
+      
     );
 }
 
