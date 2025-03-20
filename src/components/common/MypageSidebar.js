@@ -30,6 +30,7 @@ const MypageSidebar = ({ activeLink }) => {
             try {
                 const res = await axios.get(`http://localhost:8080/root/info?userId=${userId}`)
                 setUserData(res.data)
+                console.log("data확인 : " , res.data)
             } catch (error) {
                 console.error("유저 정보 불러오기 실패: ", error)
             }
@@ -40,7 +41,7 @@ const MypageSidebar = ({ activeLink }) => {
 
     return <>
         <div className="SidebarDiv">
-            <img src="/img/movie1.jpg" alt="프사" /><br />
+            {userData &&  <img src={`http://localhost:8080/root/upload/image?image=${userData.data.profileImage}`} alt="프사" />}<br />
             {userData &&  <b>{userData.data.userName}</b>}
             {customLinks.map((link, index) => (
                 <p key={index}>
