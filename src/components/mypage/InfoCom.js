@@ -18,8 +18,40 @@ function InfoCom() {
         addr: '',
         detailAddr: '',
         userGrade: '',
-        userBirthday: ''
+        userBirthday: '',
+        profileImage:''
     });
+
+    const [imagePreview, setImagePreview] = useState(null);
+    const [imagefile, setImagefile] = useState(null);
+
+    const handleFileChange = async (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            // 미리보기 표시
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImagePreview(reader.result);
+            };
+            reader.readAsDataURL(file);
+
+            // FormData 생성
+            const formData = new FormData();
+            formData.append("file", file);
+
+            try {
+                const response = await axios.post("http://localhost:8080/root/upload", formData, {
+                    headers: { "Content-Type": "multipart/form-data" }, // 🔥 추가해야 함
+                });
+
+                console.log("파일 이름 : ", response.data.imagename)
+                setImagefile(response.data.imagename)
+            } catch (error) {
+                console.error("이미지 업로드 실패:", error);
+            }
+        }
+    };
+
 
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
@@ -48,18 +80,18 @@ function InfoCom() {
                 if (data.data.username === undefined) {
                     data.data.username = data.data.userName;
                 }
-    
+
                 //console.log("백엔드에서 받아온 생년월일:", data.data.userBirthday); // 🔥 확인용 로그
-    
+
                 let formattedBirthday = '';
                 if (data.data.userBirthday && data.data.userBirthday.length === 8) {
                     formattedBirthday = `${data.data.userBirthday.slice(0, 4)}-${data.data.userBirthday.slice(4, 6)}-${data.data.userBirthday.slice(6, 8)}`;
                 } else {
                     formattedBirthday = data.data.userBirthday || '';
                 }
-    
+
                 //console.log("변환된 생년월일:", formattedBirthday); // 🔥 변환된 값 확인
-    
+
                 setUserInfo({
                     userId: data.data.userId || '',
                     username: data.data.username || '',
@@ -72,7 +104,8 @@ function InfoCom() {
                     addr: data.data.addr || '',
                     detailAddr: data.data.detailAddr || '',
                     userGrade: data.data.userGrade || '',
-                    userBirthday: formattedBirthday // 👈 변환된 값 적용
+                    userBirthday: formattedBirthday, // 👈 변환된 값 적용
+                    profileImage : data.data.profileImage
                 });
             } catch (error) {
                 console.error('사용자 정보를 불러오는 중 오류 발생:', error);
@@ -91,7 +124,7 @@ function InfoCom() {
     // 주소 검색 기능
     const handlePostcodeSearch = () => {
         new window.daum.Postcode({
-            oncomplete: function(data) {
+            oncomplete: function (data) {
                 let addr = ''; // 주소 변수
 
                 if (data.userSelectedType === 'R') { // 도로명 주소
@@ -113,34 +146,34 @@ function InfoCom() {
                     ...userInfo,
                     postNum: data.zonecode,
                     addr: addr
-            });
+                });
             }
         }).open();
-        
+
     };
 
     const validateInputs = () => {
         // 비밀번호 유효성 검사 (최소 8자 이상, 영문/숫자/특수문자 포함)
         const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
-        
+
         if (userInfo.newPassword && !passwordRegex.test(userInfo.newPassword)) {
-            setErrorMessage(<>비밀번호는 최소 8자 이상이며,<br/>영문/숫자/특수문자를 포함해야 합니다.</>);
+            setErrorMessage(<>비밀번호는 최소 8자 이상이며,<br />영문/숫자/특수문자를 포함해야 합니다.</>);
             return false;
         }
-    
+
         if (userInfo.newPassword !== userInfo.confirmPassword) {
             setErrorMessage("비밀번호 확인이 일치하지 않습니다.");
             return false;
         }
-    
+
         // 전화번호 유효성 검사 (숫자만 입력)
         const phoneRegex = /^\d{10,11}$/; // 10~11자리 숫자만 허용 (예: 01012345678)
-    
+
         if (!phoneRegex.test(userInfo.phoneNumber)) {
             setErrorMessage("전화번호는 하이픈(-) 없이 숫자만 입력해야 합니다.");
             return false;
         }
-    
+
         return true;
     };
 
@@ -148,25 +181,27 @@ function InfoCom() {
         if (!validateInputs()) return; // 유효성 검사 실패 시 종료
 
         // userBirthday 값과 타입 확인
-    console.log("🔍 userInfo.userBirthday 값:", userInfo.userBirthday);
-    console.log("🔍 userInfo.userBirthday 타입:", typeof userInfo.userBirthday);
-    const formattedBirthday = userInfo.userBirthday ? String(userInfo.userBirthday).replace(/-/g, '') : '';
+        console.log("🔍 userInfo.userBirthday 값:", userInfo.userBirthday);
+        console.log("🔍 userInfo.userBirthday 타입:", typeof userInfo.userBirthday);
+        const formattedBirthday = userInfo.userBirthday ? String(userInfo.userBirthday).replace(/-/g, '') : '';
 
 
         console.log("저장하려는 데이터:", { ...userInfo, userBirthday: formattedBirthday }); // 변환된 값 확인
-    
+        console.log("프사 확인 : ", imagefile)
+
         try {
             const response = await axios.put('http://localhost:8080/root/update', {
                 userId: userInfo.userId,
                 userName: userInfo.username,
                 password: userInfo.password,
                 newPassword: userInfo.newPassword,
-                confirmPassword : userInfo.confirmPassword,
+                confirmPassword: userInfo.confirmPassword,
                 phoneNumber: userInfo.phoneNumber,
                 postNum: userInfo.postNum,
                 addr: userInfo.addr,
                 detailAddr: userInfo.detailAddr,
-                userBirthday: formattedBirthday 
+                userBirthday: formattedBirthday,
+                profileImage: imagefile
             }, {
                 headers: { 'Content-Type': 'application/json' }
             });
@@ -187,7 +222,7 @@ function InfoCom() {
     const delId = async () => {
         const isConfirmed = window.confirm("정말로 탈퇴하시겠습니까? 탈퇴 후에는 복구할 수 없습니다.");
         if (!isConfirmed) return;
-    
+
         console.log("실행")
         try {
             const response = await axios.delete('http://localhost:8080/root/delete', {
@@ -268,17 +303,17 @@ function InfoCom() {
                         />
                     </span>
                     <span><span>주소</span>
-                    <div className="pwdImgBtn">
-                        <input
-                            type="text"
-                            className='pwdImgBtnNew'
-                            name="postNum"
-                            value={userInfo.postNum}
-                            readOnly
-                            onChange={handleChange} />
+                        <div className="pwdImgBtn">
+                            <input
+                                type="text"
+                                className='pwdImgBtnNew'
+                                name="postNum"
+                                value={userInfo.postNum}
+                                readOnly
+                                onChange={handleChange} />
                             <button type="button" onClick={handlePostcodeSearch}>
-                            <img src='../../img/search.png'/></button>
-                            </div>
+                                <img src='../../img/search.png' /></button>
+                        </div>
                     </span>
                     <span><span></span>
                         <input
@@ -299,30 +334,37 @@ function InfoCom() {
                         />
                     </span>
                     <span><span>생년월일</span>
-                        <input 
-                            type="text" 
+                        <input
+                            type="text"
                             className="infodata"
                             name="userBirthday"
                             value={userInfo.userBirthday || ''}
                             onChange={handleChange}
                             onFocus={(e) => (e.target.type = "date")}  // 클릭 시 달력 표시
                             onBlur={(e) => (e.target.type = "text")}  // 포커스 해제 시 다시 placeholder 표시
-                            required 
+                            required
                         />
                     </span>
 
 
-                    {errorMessage && 
-                    <div className="error_message" key={errorMessage}>
-                    {errorMessage}
-                    </div>}
+                    {errorMessage &&
+                        <div className="error_message" key={errorMessage}>
+                            {errorMessage}
+                        </div>}
                     <button className='saveBtn' onClick={handleSave}>저장하기</button>
                     <button className='delBtn' onClick={delId}>탈퇴하기</button>
                 </div>
                 <div>
-                    <img src='../../img/img.png' />
+                    {console.log("기존 이미지 확인 : " ,userInfo.profileImage)}
+                    {console.log("새 이미지 확인 : " ,imagefile)}
+                    {imagefile === null
+                        ? <img src={`http://localhost:8080/root/upload/image?image=${userInfo.profileImage}`} alt="profile" />
+                        : <img src={`http://localhost:8080/root/upload/image?image=${imagefile}`} alt="profile" />
+                    }
+
                     <input
                         type='file'
+                        onChange={handleFileChange}
                         accept='image/*'
                     />
                 </div>
