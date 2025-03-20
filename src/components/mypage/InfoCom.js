@@ -51,7 +51,30 @@ function InfoCom() {
             }
         }
     };
-
+    const handleDeleteImage = async () => {
+        if (window.confirm("정말로 이미지를 삭제하시겠습니까?")) {
+            try {
+                const response = await axios.delete('http://localhost:8080/root/upload/del', {
+                    params: { image: userInfo.profileImage }, // URL 파라미터로 전달
+                    headers: { 'Content-Type': 'application/json' }
+                });
+    
+                if (response.status === 200) {
+                    alert("이미지가 삭제되었습니다.");
+                    setImagefile(null); // 로컬 상태에서 이미지 파일 초기화
+                    setUserInfo({
+                        ...userInfo,
+                        profileImage: 'default.png' // 프로필 이미지 초기화
+                    });
+                } else {
+                    alert("이미지 삭제 실패");
+                }
+            } catch (error) {
+                console.error("이미지 삭제 오류:", error);
+                alert("이미지 삭제 중 오류가 발생했습니다.");
+            }
+        }
+    };
 
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
@@ -367,6 +390,11 @@ function InfoCom() {
                         onChange={handleFileChange}
                         accept='image/*'
                     />
+                    {userInfo.profileImage && (
+                        <button className='deleteBtn' onClick={handleDeleteImage}>
+                            이미지 삭제
+                        </button>
+                    )}
                 </div>
             </div>
         </div>
