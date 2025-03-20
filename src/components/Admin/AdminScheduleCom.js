@@ -4,6 +4,8 @@ import "../../css/admin/admin.css"
 const AdminScheduleCom = ({ list, show, hide, screen, onChange, mySubmit, delSubmit, input,
     handleTimeChange, selectedTimes, timeOptions, handleScreenChange, movie, isTimeDisabled, filterDate, filterMovie, setFilterDate, setFilterMovie }) => {
     
+        const scheduledMovieIds = new Set(list.map(data => data.movieId)); // 상영 일정이 있는 영화 ID 목록
+        const unScheduledMovies = movie.filter(data => !scheduledMovieIds.has(data.movieId)); // 상영 일정이 없는 영화만 필터링
         const filteredList = list.filter((data) => {
         const startDate = new Date(data.startDateTime)
         const endDate = new Date(data.endDateTime)
@@ -37,6 +39,20 @@ const AdminScheduleCom = ({ list, show, hide, screen, onChange, mySubmit, delSub
                 <h1>상영관리</h1>
                 <div className="movieBtnBody">
                     <button className="movieBtn" onClick={() => show()}>추가</button>
+                    <div className="unscheduled-movies">
+                        <select>
+                            <option value="">상영일정이 없는 영화</option>
+                            {unScheduledMovies.length > 0 ? (
+                                unScheduledMovies.map((data) => (
+                                    <option key={data.movieId} value={data.movieId} disabled>
+                                        {data.title}
+                                    </option>
+                                ))
+                            ) : (
+                                <option value="" disabled>모든 영화가 일정에 포함됨</option>
+                            )}
+                        </select>
+                    </div>
                     <div className="filter">
                         <label>
                             <input
