@@ -28,9 +28,7 @@ const Modal = ({ isOpen, onClose, type, infoData, onClick, Infolist, relatedList
         setShowResult(true); // 리뷰 작성 후 결과 모달을 띄우기 위해 showResult를 true로 설정
         onClose(); // 리뷰 모달 닫기
     }
-
     
-
     const renderContent = () => {
         switch (type) {
             case 'detail':

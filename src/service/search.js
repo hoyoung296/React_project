@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const BASE_URL = "http://43.203.54.252:8080/root/review"
+const BASE_URL = "http://localhost:8080/root/review"
 
 // 모든 영화 리스트 가져오기
 const allList = async () => {
