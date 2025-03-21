@@ -12,6 +12,8 @@ function HeaderCom({ onChange, mySubmit, input }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
   const [userId, setUserId] = useState(null);
+  const [profileImage, setProfileImage] = useState(null);
+
 
   useEffect(() => {
     const token = localStorage.getItem('jwtToken');
@@ -27,6 +29,15 @@ function HeaderCom({ onChange, mySubmit, input }) {
         setUserId(userId);
         setUsername(username);
         setIsLoggedIn(true);
+
+        axios.get(`${process.env.REACT_APP_BACKEND_URL}/root/info?userId=${userId}`)
+        .then((res2) => {
+          setProfileImage(res2.data.data.profileImage);
+        })
+        .catch((err2) => {
+          console.error('프로필 이미지 가져오기 실패:', err2);
+        });
+
         localStorage.setItem("LoginSuccess", JSON.stringify(true));
       })
       .catch((err) => {
@@ -97,7 +108,9 @@ function HeaderCom({ onChange, mySubmit, input }) {
       </form>
       {isLoggedIn ? (
         <div className='dropDownMenu'>
-          <div className='profile_img'><img src='/img/img.png' alt='profile'/></div>
+          <div className='profile_img'>
+            <img src={`${process.env.REACT_APP_BACKEND_URL}/root/upload/image?image=${profileImage}`} alt='profile'/>
+          </div>
           <ul className='dropDown'>
             <li className='userName'>{username}</li>
             <li/>

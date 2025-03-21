@@ -41,7 +41,7 @@ const MypageSidebar = ({ activeLink }) => {
 
     return <>
         <div className="SidebarDiv">
-            {userData &&  <img src={`http://localhost:8080/root/upload/image?image=${userData.data.profileImage}`} alt="프사" />}<br />
+            {userData &&  <img src={`http://localhost:8080/root/upload/image?image=${userData.data.profileImage}`} alt="profileImg" />}<br />
             {userData &&  <b>{userData.data.userName}</b>}
             {customLinks.map((link, index) => (
                 <p key={index}>
