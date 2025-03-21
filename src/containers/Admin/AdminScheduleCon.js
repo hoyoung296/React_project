@@ -15,7 +15,7 @@ const AdminScheduleCon = () => {
     })
     const [selectedTimes, setSelectedTimes] = useState([])
     const [timeOptions, setTimeOptions] = useState([])
-    const screenTimeOptions = ["09:00", "10:00", "11:00", "12:00", "13:00", "13:05", "14:00", "15:00", "16:20", "16:30", "18:00", "21:00"]
+    const screenTimeOptions = ["03:15","09:00", "10:00", "11:00", "12:00", "13:00", "13:05", "14:00", "15:00", "16:20", "16:30", "18:00", "21:00"]
 
     const [filterDate, setFilterDate] = useState("") // 날짜 필터 상태
     const [filterMovie, setFilterMovie] = useState("") // 영화 필터 상태
