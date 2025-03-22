@@ -52,6 +52,11 @@ function FindIdCom() {
         }
     }, [stillUrls, backgroundImage]);
 
+    const maskUserId = (id) => {
+        if (id.length <= 3) return id;
+        return id.slice(0, 3) + '***' + id.slice(6);
+    };
+
     const handleFindId = async () => {
         try {
             console.log("📤 요청 보냄: ", { phoneNumber });
@@ -60,15 +65,17 @@ function FindIdCom() {
             });
             console.log("📥 서버 응답 전체:", response);
             console.log("📥 서버 응답 데이터:", response.data);
-            if (response.data !== null) { // 서버에서 아이디를 문자열로 반환하면 성공
-                setUserId(response.data); 
-                setErrorMessage('');
-                console.log("✅ 아이디 찾기 성공:", response.data);
-            } else { // data가 null이면 실패
-                setUserId('');
-                setErrorMessage('해당 번호로 등록된 아이디가 없습니다.');
-                console.log("⚠️ 아이디 찾기 실패: 일치하는 아이디 없음");
-            }
+
+            if (response.data !== null) { // 서버에서 아이디 반환 시
+            const maskedId = maskUserId(response.data);
+            setUserId(maskedId); // 마스킹된 아이디 저장
+            setErrorMessage('');
+            console.log("✅ 아이디 찾기 성공 (마스킹 적용):", maskedId);
+        } else { 
+            setUserId('');
+            setErrorMessage('해당 번호로 등록된 아이디가 없습니다.');
+            console.log("⚠️ 아이디 찾기 실패: 일치하는 아이디 없음");
+        }
         } catch (error) {
             if (error.response && error.response.status === 400) {
                 console.log("📥 서버 응답: ", error.response.data);

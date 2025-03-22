@@ -266,11 +266,12 @@ const SignUpCom = () => {
             <div className="sign_btn_container">
                 <button className="sign_btn" onClick={handleSignUp}>Sign up</button>
             </div>
-            <div className="sign_btn_container">
             {errorMessage && 
                 <div className="error_message" key={errorMessage}>
                     {errorMessage}
                 </div>}
+            <div className="sign_btn_container">
+            
             </div>
         </div>
         {backgroundImage && <img className='backgroundImg' src={backgroundImage} alt="background" />}

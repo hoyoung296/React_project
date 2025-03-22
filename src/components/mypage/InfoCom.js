@@ -232,7 +232,8 @@ function InfoCom() {
             if (response.status === 200) {
                 console.log("수정된 회원 정보:", response.data);
                 alert('회원 정보가 업데이트되었습니다.');
-                navigate("/")
+                navigate("/");
+                window.location.reload();
             } else {
                 alert('업데이트 실패');
             }
