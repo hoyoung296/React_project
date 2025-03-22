@@ -232,7 +232,7 @@ function InfoCom() {
                 addr: userInfo.addr,
                 detailAddr: userInfo.detailAddr,
                 userBirthday: formattedBirthday,
-                profileImage: imagefile
+                profileImage: imagefile || userInfo.profileImage // 새로 업로드된 이미지가 없다면 기존 이미지 사용
             }, {
                 headers: { 'Content-Type': 'application/json' }
             });
