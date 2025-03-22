@@ -45,14 +45,22 @@ function InfoCom() {
                 });
 
                 console.log("파일 이름 : ", response.data.imagename)
-                setImagefile(response.data.imagename)
+                setImagefile(response.data.imagename);
+                setUserInfo((prev) => ({
+                    ...prev,
+                    profileImage: response.data.imagename, // 🔥 userInfo도 업데이트
+                }));
             } catch (error) {
-                console.error("이미지 업로드 실패:", error);
+                console.error("프로필 업로드 실패:", error);
             }
         }
     };
     const handleDeleteImage = async () => {
-        if (window.confirm("정말로 이미지를 삭제하시겠습니까?")) {
+        if (!userInfo.profileImage || userInfo.profileImage === "default.png") {
+            alert("기본 프로필입니다.");
+            return; // 요청을 보내지 않음
+        }
+        if (window.confirm("프로필을 삭제하시겠습니까?")) {
             try {
                 const response = await axios.delete('http://localhost:8080/root/upload/del', {
                     params: { image: userInfo.profileImage }, // URL 파라미터로 전달
@@ -60,18 +68,18 @@ function InfoCom() {
                 });
     
                 if (response.status === 200) {
-                    alert("이미지가 삭제되었습니다.");
+                    alert("프로필이 삭제되었습니다.");
                     setImagefile(null); // 로컬 상태에서 이미지 파일 초기화
                     setUserInfo({
                         ...userInfo,
                         profileImage: 'default.png' // 프로필 이미지 초기화
                     });
                 } else {
-                    alert("이미지 삭제 실패");
+                    alert("프로필 삭제 실패");
                 }
             } catch (error) {
-                console.error("이미지 삭제 오류:", error);
-                alert("이미지 삭제 중 오류가 발생했습니다.");
+                console.error("프로필 삭제 오류:", error);
+                alert("프로필 삭제 중 오류가 발생했습니다.");
             }
         }
     };
@@ -392,7 +400,7 @@ function InfoCom() {
                     />
                     {userInfo.profileImage && (
                         <button className='deleteBtn' onClick={handleDeleteImage}>
-                            이미지 삭제
+                            프로필 삭제
                         </button>
                     )}
                 </div>
