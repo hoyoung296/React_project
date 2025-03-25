@@ -29,7 +29,7 @@ html, .login_body {
 
 .login{
     width: 500px;
-    height: 500px;
+    height: auto;
     border-style: none; 
     border-radius: 30px;
     margin: auto;

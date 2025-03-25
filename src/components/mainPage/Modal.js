@@ -80,7 +80,7 @@ const Modal = ({ isOpen, onClose, type, infoData, onClick, Infolist, relatedList
                                             </div>
                                         </div>
 
-                                        <div className='nextMovie'>
+                                        {/* <div className='nextMovie'>
                                             {console.log(relatedList)}
                                             {relatedList.length > 1 && (
                                                 <div>
@@ -94,7 +94,7 @@ const Modal = ({ isOpen, onClose, type, infoData, onClick, Infolist, relatedList
                                                         ))}
                                                 </div>
                                             )}
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </div>
                             </div>

@@ -41,12 +41,13 @@ const LoginPageCom = () => {
                 movieRank: parseInt(rank),
             };
         })
-        .filter(movie => movie.movieRank <= 5) // 순위 5 이하인 영화들만 필터링
+        
         .sort((a, b) => {
             const diffA = Math.abs(today - a.movieDate)
             const diffB = Math.abs(today - b.movieDate)
-            return diffA - diffB; // 날짜가 오늘에 가장 가까운 영화부터 정렬
+            return diffA - diffB || a.movieRank - b.movieRank; // 날짜가 같다면 순위 비교
         })
+        .filter(movie => movie.movieRank <= 5) // 순위 5 이하인 영화들만 필터링
         .slice(0, 5) // 상위 5개의 영화만 선택
         
         const stillUrls = TopMovies.length > 0 ? TopMovies.map(movie => movie.stillUrl) : [];

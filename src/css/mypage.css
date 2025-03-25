@@ -115,6 +115,9 @@
     background-color: #4f4f4f;
     text-decoration: underline;
 }
+.deleteBtn{
+    width: 100px;
+}
 .infoMain > div:last-child{
     width: 300px;
     margin-top: 80px;
@@ -133,7 +136,7 @@
 }
 
 .infoMain > div:last-child button{
-    width: 70px;
+    width: 100px;
     height: 30px;
     padding: 4px;
     border-radius: 5px;

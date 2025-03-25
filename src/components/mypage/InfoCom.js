@@ -401,7 +401,7 @@ function InfoCom() {
                     />
                     {userInfo.profileImage && (
                         <button className='deleteBtn' onClick={handleDeleteImage}>
-                            프로필 삭제
+                            이미지 삭제
                         </button>
                     )}
                 </div>
