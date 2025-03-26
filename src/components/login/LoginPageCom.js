@@ -30,35 +30,36 @@ const LoginPageCom = () => {
     }, [])
 
     // rank를 기준으로 필터링 및 날짜와 순위를 분리하여 처리
-    const today = new Date()
+    const today = new Date();
     const TopMovies = list
         .map(movie => {
-            const [date, rank] = movie.movieRank.split("-") // 날짜-순위 분리 
-            const movieDate = new Date(date)
+            const [date, rank] = movie.movieRank.split("-"); // 날짜-순위 분리
+            const formattedDate = `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6, 8)}`; // '20250325' -> '2025-03-25'로 변환
+            const movieDate = new Date(formattedDate);
             return {
                 ...movie,
                 movieDate,
                 movieRank: parseInt(rank),
             };
         })
-        
         .sort((a, b) => {
-            const diffA = Math.abs(today - a.movieDate)
-            const diffB = Math.abs(today - b.movieDate)
-            return diffA - diffB || a.movieRank - b.movieRank; // 날짜가 같다면 순위 비교
+            const diffA = Math.abs(today - a.movieDate);
+            const diffB = Math.abs(today - b.movieDate);
+            return diffA - diffB; // 날짜가 같다면 순위 비교
         })
-        .filter(movie => movie.movieRank <= 5) // 순위 5 이하인 영화들만 필터링
-        .slice(0, 5) // 상위 5개의 영화만 선택
-        
-        const stillUrls = TopMovies.length > 0 ? TopMovies.map(movie => movie.stillUrl) : [];
+        .filter(movie => movie.movieRank <= 5) // 순위 5 이하 필터링
+        .slice(0, 5); // 상위 5개 선택
 
-        useEffect(() => {
-            if (stillUrls.length > 0 && !backgroundImage) {  // 배경이 없을 때만 랜덤 이미지를 설정
-                const randomIndex = Math.floor(Math.random() * stillUrls.length);
-                setBackgroundImage(stillUrls[randomIndex]);
-            }
-        }, [stillUrls, backgroundImage]);  // backgroundImage가 변경되지 않으면 다시 실행되지 않도록 조건 추가
-        
+
+    const stillUrls = TopMovies.length > 0 ? TopMovies.map(movie => movie.stillUrl) : [];
+
+    useEffect(() => {
+        if (stillUrls.length > 0 && !backgroundImage) {  // 배경이 없을 때만 랜덤 이미지를 설정
+            const randomIndex = Math.floor(Math.random() * stillUrls.length);
+            setBackgroundImage(stillUrls[randomIndex]);
+        }
+    }, [stillUrls, backgroundImage]);  // backgroundImage가 변경되지 않으면 다시 실행되지 않도록 조건 추가
+
 
     const handleLogin = async () => {
         try {
@@ -72,7 +73,7 @@ const LoginPageCom = () => {
             if (response.data.code === 200 && response.data.data) {
                 // 로그인 성공 시, 서버에서 받은 데이터로 처리
                 const { data } = response.data;
-                console.log("로그인 data",data);
+                console.log("로그인 data", data);
 
                 localStorage.setItem("jwtToken", data.jwtToken);
                 localStorage.setItem("refreshToken", data.refreshToken);
@@ -87,7 +88,7 @@ const LoginPageCom = () => {
         }
     };
 
-     // 카카오 로그인 버튼 클릭 시 호출되는 함수
+    // 카카오 로그인 버튼 클릭 시 호출되는 함수
     const kakaoLogin = (e) => {
         e.preventDefault();
         const popup = window.open(
@@ -95,7 +96,7 @@ const LoginPageCom = () => {
             "kakaoLoginPopup",  // 팝업 이름
             "width=500,height=600,scrollbars=yes"  // 팝업 창 크기와 설정
         );
-    
+
         // 팝업 창이 닫히면 부모 창을 새로 고침하고, 팝업 창을 닫음
         const interval = setInterval(() => {
             if (popup.closed) {
@@ -115,22 +116,22 @@ const LoginPageCom = () => {
             handleLogin();
         }
     };
-    
+
     return (
-    <div className='login_body'>
-        <div className='login'>
-            <div className='title_movie' onClick={() => navigate("/")}>THEFILLM</div>
-            <div className='login_from'>
-                <input
-                    type="text"
-                    className='input_id'
-                    required
-                    placeholder="ID"
-                    value={userId}
-                    onChange={(e) => setUserId(e.target.value)}
-                    onKeyDown={handleKeyDown}
+        <div className='login_body'>
+            <div className='login'>
+                <div className='title_movie' onClick={() => navigate("/")}>THEFILLM</div>
+                <div className='login_from'>
+                    <input
+                        type="text"
+                        className='input_id'
+                        required
+                        placeholder="ID"
+                        value={userId}
+                        onChange={(e) => setUserId(e.target.value)}
+                        onKeyDown={handleKeyDown}
                     />
-                
+
                     <span className='loginpwdBtn'>
                         <input
                             type={passwordVisible ? "text" : "password"}
@@ -141,31 +142,31 @@ const LoginPageCom = () => {
                             onChange={(e) => setPassword(e.target.value)}
                             onKeyDown={handleKeyDown}
                         />
-                        <button 
-                            type="button" 
+                        <button
+                            type="button"
                             onClick={() => setPasswordVisible(!passwordVisible)}
                         >
-                            <img 
-                                src={passwordVisible ? '../../img/pwdHide.png' : '../../img/pwdOpen.png'} 
-                                alt="toggle visibility" 
+                            <img
+                                src={passwordVisible ? '../../img/pwdHide.png' : '../../img/pwdOpen.png'}
+                                alt="toggle visibility"
                             />
                         </button>
                     </span>
-                <button className='login_btn' onClick={handleLogin}>Login</button>
-                {errorMessage && <div className="error_message">{errorMessage}</div>}
-                <div className='slmpleBtn'>
-                    <button onClick={kakaoLogin}><img src='img/kakao_login_large.png' alt='kakaoLogin'/></button>
+                    <button className='login_btn' onClick={handleLogin}>Login</button>
+                    {errorMessage && <div className="error_message">{errorMessage}</div>}
+                    <div className='slmpleBtn'>
+                        <button onClick={kakaoLogin}><img src='img/kakao_login_large.png' alt='kakaoLogin' /></button>
+                    </div>
+                    <div className='userBtn'>
+                        <button onClick={() => navigate("/find/id")}>아이디찾기</button>|
+                        <button onClick={() => navigate("/find/pw")}>비밀번호찾기</button>|
+                        <button onClick={goToSignPage}>회원가입</button>
+                    </div>
+
                 </div>
-                <div className='userBtn'>
-                    <button onClick={() => navigate("/find/id")}>아이디찾기</button>|
-                    <button onClick={() => navigate("/find/pw")}>비밀번호찾기</button>|
-                    <button onClick={goToSignPage}>회원가입</button>
-                </div>
-                
             </div>
+            {backgroundImage && <img className='backgroundImg' src={backgroundImage} alt="background" />}
         </div>
-        {backgroundImage && <img className='backgroundImg' src={backgroundImage} alt="background" />}
-    </div>
     )
 };
 
