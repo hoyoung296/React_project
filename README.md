@@ -39,9 +39,8 @@ Oracle DB: 데이터 저장 및 관리
 MyBatis: 데이터베이스 연동
 
 Deployment & Tools
-AWS (EC2, S3): 서버 배포 및 클라우드 인프라 관리
 
-Linux 환경
+AWS (EC2, S3): 서버 배포 및 클라우드 인프라 관리
 
 Git, GitHub: 버전 관리 및 협업
 
