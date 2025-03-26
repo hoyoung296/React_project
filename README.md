@@ -29,7 +29,7 @@ React: UI 컴포넌트 및 상태 관리
 JavaScript, HTML5, CSS3: 마크업 및 스타일링
 
 Axios: 백엔드 API 호출
-
+<br><br />
 Backend
 
 Spring Framework: RESTful API 설계 및 데이터 처리
@@ -37,7 +37,7 @@ Spring Framework: RESTful API 설계 및 데이터 처리
 Oracle DB: 데이터 저장 및 관리
 
 MyBatis: 데이터베이스 연동
-
+<br><br />
 Deployment & Tools
 
 AWS (EC2, S3): 서버 배포 및 클라우드 인프라 관리
