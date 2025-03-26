@@ -23,54 +23,55 @@ function FindPwCom() {
         getData()
     }, [])
 
-       // rank를 기준으로 필터링 및 날짜와 순위를 분리하여 처리
-    const today = new Date()
+    // rank를 기준으로 필터링 및 날짜와 순위를 분리하여 처리
+    const today = new Date();
     const TopMovies = list
         .map(movie => {
-            const [date, rank] = movie.movieRank.split("-") // 날짜-순위 분리 
-            const movieDate = new Date(date)
+            const [date, rank] = movie.movieRank.split("-"); // 날짜-순위 분리
+            const formattedDate = `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6, 8)}`; // '20250325' -> '2025-03-25'로 변환
+            const movieDate = new Date(formattedDate);
             return {
                 ...movie,
                 movieDate,
                 movieRank: parseInt(rank),
             };
         })
-        .filter(movie => movie.movieRank <= 5) // 순위 5 이하인 영화들만 필터링
         .sort((a, b) => {
-            const diffA = Math.abs(today - a.movieDate)
-            const diffB = Math.abs(today - b.movieDate)
-               return diffA - diffB; // 날짜가 오늘에 가장 가까운 영화부터 정렬
+            const diffA = Math.abs(today - a.movieDate);
+            const diffB = Math.abs(today - b.movieDate);
+            return diffA - diffB; // 날짜가 같다면 순위 비교
         })
-           .slice(0, 5) // 상위 5개의 영화만 선택
+        .filter(movie => movie.movieRank <= 5) // 순위 5 이하 필터링
+        .slice(0, 5); // 상위 5개 선택
 
     const stillUrls = TopMovies.length > 0 ? TopMovies.map(movie => movie.stillUrl) : [];
 
     useEffect(() => {
         if (stillUrls.length > 0 && !backgroundImage) {  // 배경이 없을 때만 랜덤 이미지를 설정
             const randomIndex = Math.floor(Math.random() * stillUrls.length);
-                setBackgroundImage(stillUrls[randomIndex]);
+            setBackgroundImage(stillUrls[randomIndex]);
         }
     }, [stillUrls, backgroundImage]);  // backgroundImage가 변경되지 않으면 다시 실행되지 않도록 조건 추가
 
     const handleFindPw = async () => {
         try {
             console.log("📤 요청 보냄: ", { userId });
-    
+
             const response = await axios.put('http://localhost:8080/root/mail/sendTempPassword', {
                 userId
             });
-            
-    
+
+
             console.log("📥 서버 응답 전체:", response);
             console.log("📥 서버 응답 데이터:", response.data);
-    
+
             // ✅ 서버 응답의 "status" 값이 "success"인지 확인
             if (response.data.status === "success") {
                 setErrorMessage('');
                 console.log("✅ 임시비밀번호 전송 성공:", response.data);
                 alert("임시비밀번호가 입력하신 메일 주소로 전송되었습니다.");
                 navigate("/");
-            } else { 
+            } else {
                 setErrorMessage('해당 이메일(ID)로 등록된 회원이 없습니다.');
                 console.log("⚠️ 비밀번호 찾기 실패: ", response.data.message);
             }
@@ -78,7 +79,7 @@ function FindPwCom() {
             // ✅ 서버에서 400 응답을 보냈을 때의 처리
             if (error.response && error.response.status === 400) {
                 console.log("📥 서버 응답 (400 오류):", error.response.data);
-    
+
                 if (error.response.data.status === "error") {
                     setErrorMessage(error.response.data.message || '해당 이메일(ID)로 등록된 회원이 없습니다.');
                     console.log("⚠️ 비밀번호 찾기 실패: ", error.response.data.message);
@@ -93,7 +94,7 @@ function FindPwCom() {
             }
         }
     };
-    
+
 
 
     return (
@@ -111,7 +112,7 @@ function FindPwCom() {
                     />
                     {errorMessage && <div className="error_message">{errorMessage}</div>}
                 </div>
-                {backgroundImage && <img className='backgroundImg' src={backgroundImage} alt="background"/>}
+                {backgroundImage && <img className='backgroundImg' src={backgroundImage} alt="background" />}
                 <div className="findId_btn_container">
                     <button className="findPw_btn" onClick={handleFindPw}>임시 비밀번호 전송</button>
                 </div>
