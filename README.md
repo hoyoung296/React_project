@@ -1,70 +1,64 @@
-# Getting Started with Create React App
+🎬 THEFILM - 영화 예매 사이트
+<br><br />
+📌 프로젝트 개요
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+THEFILM은 사용자가 영화를 검색하고, 예매하며, 리뷰를 작성할 수 있는 영화 예매 플랫폼입니다. 직관적인 UI/UX를 제공하여 사용자가 원하는 정보를 빠르게 찾고 편리하게 예매할 수 있도록 설계되었습니다.
 
-## Available Scripts
+프로젝트 기간: 2025.01.21 ~ 2025.03.14
 
-In the project directory, you can run:
+참여 인원: 5명
+<br><br />
+🔥 주요 기능
 
-### `npm start`
+✅ 영화 검색: 사용자가 입력한 검색어와 관련된 영화 포스터를 표시
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+✅ 영화 상세 보기: 영화의 줄거리, 감독, 출연 배우 등의 정보를 제공
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+✅ 예매 기능: 원하는 시간대와 좌석을 선택하여 영화 예매 가능
 
-### `npm test`
+✅ 예매 취소 및 리뷰 작성: 예매 내역을 확인하고 취소 가능, 영화 리뷰 작성 기능 제공
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+✅ 반응형 UI/UX: 다양한 디바이스에서 최적화된 화면 제공
+<br><br />
+🛠 기술 스택
 
-### `npm run build`
+Frontend
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+React: UI 컴포넌트 및 상태 관리
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+JavaScript, HTML5, CSS3: 마크업 및 스타일링
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Axios: 백엔드 API 호출
 
-### `npm run eject`
+Backend
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Spring Framework: RESTful API 설계 및 데이터 처리
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Oracle DB: 데이터 저장 및 관리
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+MyBatis: 데이터베이스 연동
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Deployment & Tools
+AWS (EC2, S3): 서버 배포 및 클라우드 인프라 관리
 
-## Learn More
+Linux 환경
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Git, GitHub: 버전 관리 및 협업
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Notion: 문서화 및 작업 관리
+<br><br />
+📌 프로젝트 설계 및 목표
 
-### Code Splitting
+1️⃣ 검색 기능: 검색어 입력 시 관련 영화 포스터 표시 및 상세보기/예매 버튼 제공
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+2️⃣ 예매 기능: 영화 예매 페이지에서 시간대와 좌석을 선택하여 예매 가능
 
-### Analyzing the Bundle Size
+3️⃣ 리뷰 기능: 사용자 리뷰 작성 및 조회 기능 제공
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+4️⃣ 반응형 디자인: 모바일, 태블릿, 데스크톱 환경 최적화
+<br><br />
+📝 프로젝트 진행 과정 & 후기
 
-### Making a Progressive Web App
+본 프로젝트는 KMDB API와 영화진흥위원회 API를 활용하여 영화 데이터를 가져오는 방식으로 진행되었습니다. 처음에는 한 API만 사용하려 했지만, 데이터 부족 문제로 인해 두 개의 API를 조합하는 방식으로 수정하였습니다.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+또한, 팀원들과 협업하면서 스프링 백엔드에 대한 이해도를 높이고 API 사용법에 대한 인사이트를 얻을 수 있었습니다. 프로젝트를 통해 RESTful API 설계, 데이터 처리, UI/UX 개선 등을 경험하며 실력을 향상시킬 수 있었습니다.
