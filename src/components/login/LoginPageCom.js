@@ -64,7 +64,7 @@ const LoginPageCom = () => {
     const handleLogin = async () => {
         try {
             // Axios를 이용한 서버 요청
-            const response = await axios.post('http://localhost:8080/root/login', {
+            const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/root/login`, {
                 userId,
                 password
             });

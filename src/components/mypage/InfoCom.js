@@ -40,7 +40,7 @@ function InfoCom() {
             formData.append("file", file);
 
             try {
-                const response = await axios.post("http://localhost:8080/root/upload", formData, {
+                const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/root/upload`, formData, {
                     headers: { "Content-Type": "multipart/form-data" }, // 🔥 추가해야 함
                 });
 
@@ -62,7 +62,7 @@ function InfoCom() {
         }
         if (window.confirm("프로필을 삭제하시겠습니까?")) {
             try {
-                const response = await axios.delete('http://localhost:8080/root/upload/del', {
+                const response = await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/root/upload/del`, {
                     params: { image: userInfo.profileImage }, // URL 파라미터로 전달
                     headers: { 'Content-Type': 'application/json' }
                 });
@@ -107,7 +107,7 @@ function InfoCom() {
     useEffect(() => {
         async function fetchUserData() {
             try {
-                const { data } = await axios.get(`http://localhost:8080/root/info?userId=${userId}`);
+                const { data } = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/root/info?userId=${userId}`);
                 if (data.data.username === undefined) {
                     data.data.username = data.data.userName;
                 }
@@ -221,7 +221,7 @@ function InfoCom() {
         console.log("프사 확인 : ", imagefile)
 
         try {
-            const response = await axios.put('http://localhost:8080/root/update', {
+            const response = await axios.put(`${process.env.REACT_APP_BACKEND_URL}/root/update`, {
                 userId: userInfo.userId,
                 userName: userInfo.username,
                 password: userInfo.password,
@@ -257,7 +257,7 @@ function InfoCom() {
 
         console.log("실행")
         try {
-            const response = await axios.delete('http://localhost:8080/root/delete', {
+            const response = await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/root/delete`, {
                 data: {
                     userId: userId,
                     password: userInfo.password
@@ -390,8 +390,8 @@ function InfoCom() {
                     {console.log("기존 이미지 확인 : " ,userInfo.profileImage)}
                     {console.log("새 이미지 확인 : " ,imagefile)}
                     {imagefile === null
-                        ? <img src={`http://localhost:8080/root/upload/image?image=${userInfo.profileImage}`} alt="profile" />
-                        : <img src={`http://localhost:8080/root/upload/image?image=${imagefile}`} alt="profile" />
+                        ? <img src={`${process.env.REACT_APP_BACKEND_URL}/root/upload/image?image=${userInfo.profileImage}`} alt="profile" />
+                        : <img src={`${process.env.REACT_APP_BACKEND_URL}/root/upload/image?image=${imagefile}`} alt="profile" />
                     }
 
                     <input

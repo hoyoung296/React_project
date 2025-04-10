@@ -66,7 +66,7 @@ const Modal = ({ isOpen, onClose, type, infoData, onClick, Infolist, relatedList
                                                         {data.content != null && (
                                                             <>
                                                                 <div className='reviewHeader'>
-                                                                    <img className='reviewImg' src={`http://localhost:8080/root/upload/image?image=${data.profileImage}`} alt="프로필사진" />
+                                                                    <img className='reviewImg' src={`${process.env.REACT_APP_BACKEND_URL}/root/upload/image?image=${data.profileImage}`} alt="프로필사진" />
                                                                     <div>
                                                                         <p className='reviewUser'>{data.userName}</p>
                                                                         <p className='reviewDate'>{data.reviewDate}</p>

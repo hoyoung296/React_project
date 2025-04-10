@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const BASE_URL = "http://localhost:8080/root/review"
+const BASE_URL = `${process.env.REACT_APP_BACKEND_URL}/root/review`
 
 // 예매 내역 가져오기
 const getReserveList = async (id) => {

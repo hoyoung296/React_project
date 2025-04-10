@@ -17,7 +17,6 @@ import AdminPayment from './pages/AdminPayment';
 import AdminSchedule from './pages/AdminSchedule';
 import AdminMain from './pages/AdminMain';
 import AdminProtectedRoute from './components/Admin/AdminProtectedRoute';
-import OAuthCallback from './components/login/OAuthCallback';
 import LoginHandler from './components/login/LoginHandler';
 import ProtectedRoute from './components/login/ProtectedRoute';
 import SetPassword from './components/login/SetPassword';

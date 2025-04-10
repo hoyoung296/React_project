@@ -62,7 +62,7 @@ function FindIdCom() {
     const handleFindId = async () => {
         try {
             console.log("📤 요청 보냄: ", { phoneNumber });
-            const response = await axios.post('http://localhost:8080/root/findId', {
+            const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/root/findId`, {
                 phoneNumber: phoneNumber, // 서버로 전달할 값
             });
             console.log("📥 서버 응답 전체:", response);

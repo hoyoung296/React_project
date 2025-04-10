@@ -28,7 +28,7 @@ const MypageSidebar = ({ activeLink }) => {
     useEffect(() => {
         const getList = async () => {
             try {
-                const res = await axios.get(`http://localhost:8080/root/info?userId=${userId}`)
+                const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/root/info?userId=${userId}`)
                 setUserData(res.data)
                 console.log("data확인 : " , res.data)
             } catch (error) {
@@ -41,7 +41,7 @@ const MypageSidebar = ({ activeLink }) => {
 
     return <>
         <div className="SidebarDiv">
-            {userData &&  <img src={`http://localhost:8080/root/upload/image?image=${userData.data.profileImage}`} alt="profileImg" />}<br />
+            {userData &&  <img src={`${process.env.REACT_APP_BACKEND_URL}/root/upload/image?image=${userData.data.profileImage}`} alt="profileImg" />}<br />
             {userData &&  <b>{userData.data.userName}</b>}
             {customLinks.map((link, index) => (
                 <p key={index}>

@@ -25,7 +25,7 @@ const TicketDateCom = () => {
 
         const fetchShowtimes = async () => {
             try {
-                const response = await Axios.get("http://localhost:8080/root/member/schedule/title", {
+                const response = await Axios.get(`${process.env.REACT_APP_BACKEND_URL}/root/member/schedule/title`, {
                     params: { title }
                 });
                 console.log("✅ 상영 날짜 데이터:", response.data);
@@ -57,7 +57,7 @@ const TicketDateCom = () => {
 
         if (newSelectedDate) {
             try {
-                const response = await Axios.get("http://localhost:8080/root/member/schedule/startdate", {
+                const response = await Axios.get(`${process.env.REACT_APP_BACKEND_URL}/root/member/schedule/startdate`, {
                     params: { startdate: newSelectedDate,title }
                 });
                 console.log("✅ 상영관 정보:", response.data.data);

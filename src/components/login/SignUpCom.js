@@ -38,32 +38,33 @@ const SignUpCom = () => {
         getData()
     }, [])
 
-       // rank를 기준으로 필터링 및 날짜와 순위를 분리하여 처리
-    const today = new Date()
+    // rank를 기준으로 필터링 및 날짜와 순위를 분리하여 처리
+    const today = new Date();
     const TopMovies = list
         .map(movie => {
-            const [date, rank] = movie.movieRank.split("-") // 날짜-순위 분리 
-            const movieDate = new Date(date)
+            const [date, rank] = movie.movieRank.split("-"); // 날짜-순위 분리
+            const formattedDate = `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6, 8)}`; // '20250325' -> '2025-03-25'로 변환
+            const movieDate = new Date(formattedDate);
             return {
                 ...movie,
                 movieDate,
                 movieRank: parseInt(rank),
             };
         })
-        .filter(movie => movie.movieRank <= 5) // 순위 5 이하인 영화들만 필터링
         .sort((a, b) => {
-            const diffA = Math.abs(today - a.movieDate)
-            const diffB = Math.abs(today - b.movieDate)
-               return diffA - diffB; // 날짜가 오늘에 가장 가까운 영화부터 정렬
+            const diffA = Math.abs(today - a.movieDate);
+            const diffB = Math.abs(today - b.movieDate);
+            return diffA - diffB; // 날짜가 같다면 순위 비교
         })
-           .slice(0, 5) // 상위 5개의 영화만 선택
+        .filter(movie => movie.movieRank <= 5) // 순위 5 이하 필터링
+        .slice(0, 5); // 상위 5개 선택
 
     const stillUrls = TopMovies.length > 0 ? TopMovies.map(movie => movie.stillUrl) : [];
-
+    
     useEffect(() => {
         if (stillUrls.length > 0 && !backgroundImage) {  // 배경이 없을 때만 랜덤 이미지를 설정
             const randomIndex = Math.floor(Math.random() * stillUrls.length);
-                setBackgroundImage(stillUrls[randomIndex]);
+            setBackgroundImage(stillUrls[randomIndex]);
         }
     }, [stillUrls, backgroundImage]);  // backgroundImage가 변경되지 않으면 다시 실행되지 않도록 조건 추가
 
@@ -84,7 +85,7 @@ const SignUpCom = () => {
     // 주소 검색 기능
     const handlePostcodeSearch = () => {
         new window.daum.Postcode({
-            oncomplete: function(data) {
+            oncomplete: function (data) {
                 let addr = ''; // 주소 변수
 
                 if (data.userSelectedType === 'R') { // 도로명 주소
@@ -103,7 +104,7 @@ const SignUpCom = () => {
     // 이메일 인증번호 요청
     const sendVerificationCode = async () => {
         try {
-            const response = await axios.post('http://localhost:8080/root/mail/send-auth-code', {
+            const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/root/mail/send-auth-code`, {
                 email: email
             }, {
                 headers: { "Content-Type": "application/json" }
@@ -181,7 +182,7 @@ const SignUpCom = () => {
             };
             console.log('회원가입 데이터:', memberData); // 데이터를 콘솔에 출력
 
-            const response = await axios.post('http://localhost:8080/root/register', memberData);
+            const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/root/register`, memberData);
             console.log("서버 응답:", response);
 
             if (response.status === 200) {
@@ -199,83 +200,83 @@ const SignUpCom = () => {
         }
     };
 
-    return(
+    return (
         <div className='login_body'>
-        <div className='sign'>
-            <div className='title_movie' onClick={() => navigate("/")}>THEFILLM</div>
-            <div className='sign_from'>
-                <div>
-                    <span className='imgBtn'>
-                        <input type="email" className='img_text' placeholder="아이디 (이메일)" value={email} onChange={(e) => setEmail(e.target.value)} required />
-                        <button className='emailBtn' type="button" onClick={sendVerificationCode}>인증</button>
-                    </span>
-                    <span className='imgBtn'>
-                        <input 
-                                type={passwordVisible ? "text" : "password"} 
-                                className='img_text' 
-                                placeholder="비밀번호" 
-                                value={password} 
-                                onChange={(e) => setPassword(e.target.value)} 
-                                required 
+            <div className='sign'>
+                <div className='title_movie' onClick={() => navigate("/")}>THEFILLM</div>
+                <div className='sign_from'>
+                    <div>
+                        <span className='imgBtn'>
+                            <input type="email" className='img_text' placeholder="아이디 (이메일)" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                            <button className='emailBtn' type="button" onClick={sendVerificationCode}>인증</button>
+                        </span>
+                        <span className='imgBtn'>
+                            <input
+                                type={passwordVisible ? "text" : "password"}
+                                className='img_text'
+                                placeholder="비밀번호"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
                             />
-                        <button type="button" onClick={() => setPasswordVisible(!passwordVisible)}>
+                            <button type="button" onClick={() => setPasswordVisible(!passwordVisible)}>
                                 <img src={passwordVisible ? '../../img/pwdHide.png' : '../../img/pwdOpen.png'} alt="toggle visibility" />
                             </button>
-                    </span>
-                    <span className='imgBtn'>
-                            <input 
-                                type={confirmPasswordVisible ? "text" : "password"} 
-                                className='img_text' 
-                                placeholder="비밀번호 확인" 
-                                value={confirmPassword} 
-                                onChange={(e) => setConfirmPassword(e.target.value)} 
-                                required 
+                        </span>
+                        <span className='imgBtn'>
+                            <input
+                                type={confirmPasswordVisible ? "text" : "password"}
+                                className='img_text'
+                                placeholder="비밀번호 확인"
+                                value={confirmPassword}
+                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                required
                             />
                             <button type="button" onClick={() => setConfirmPasswordVisible(!confirmPasswordVisible)}>
                                 <img src={confirmPasswordVisible ? '../../img/pwdHide.png' : '../../img/pwdOpen.png'} alt="toggle visibility" />
                             </button>
-                    </span>
-                    <input type="text" className='input_text' placeholder="닉네임" value={userName} onChange={(e) => setUserName(e.target.value)} required />
-                    <input type="tel" className='input_text' placeholder="연락처" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} required />
-                    
-                    
+                        </span>
+                        <input type="text" className='input_text' placeholder="닉네임" value={userName} onChange={(e) => setUserName(e.target.value)} required />
+                        <input type="tel" className='input_text' placeholder="연락처" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} required />
 
+
+
+
+                    </div>
+                    <div>
+                        <span className='imgBtn'>
+                            <input type="text" className='img_text' placeholder="인증번호 입력" value={verificationCode} onChange={(e) => setVerificationCode(e.target.value)} required />
+                            <button className='emailBtn' type="button" onClick={verifyCode}>확인</button>
+                        </span>
+
+                        <span className='addrBtn'>
+                            <input type="text" className="addr_text" value={postcode} placeholder="우편번호 찾기" readOnly />
+                            <button type="button" onClick={handlePostcodeSearch}><img src='../../img/search.png' /></button>
+                        </span>
+                        <input type="text" className="input_text" value={address} placeholder="주소" readOnly />
+
+                        <input type="text" className="input_text" value={detailAddress} placeholder="상세주소" onChange={(e) => setDetailAddress(e.target.value)} />
+                        <input type="text" className="input_text" value={userBirthday} placeholder="생년월일" onChange={(e) => setUserBirthday(e.target.value)} onFocus={(e) => (e.target.type = "date")} // 클릭 시 달력 표시
+                            onBlur={(e) => (e.target.type = "text")}  // 포커스 해제 시 다시 placeholder 표시
+                            required />
+
+
+
+                    </div>
+                </div>
+                <div className="sign_btn_container">
+                    <button className="sign_btn" onClick={handleSignUp}>Sign up</button>
+                </div>
+                {errorMessage &&
+                    <div className="error_message" key={errorMessage}>
+                        {errorMessage}
+                    </div>}
+                <div className="sign_btn_container">
 
                 </div>
-                <div>
-                    <span className='imgBtn'>
-                        <input type="text" className='img_text' placeholder="인증번호 입력" value={verificationCode} onChange={(e) => setVerificationCode(e.target.value)} required />
-                        <button className='emailBtn' type="button" onClick={verifyCode}>확인</button>
-                    </span>
-                    
-                    <span className='addrBtn'>
-                        <input type="text" className="addr_text" value={postcode} placeholder="우편번호 찾기" readOnly />
-                        <button type="button" onClick={handlePostcodeSearch}><img src='../../img/search.png'/></button>
-                    </span>
-                    <input type="text" className="input_text" value={address} placeholder="주소" readOnly />
-                    
-                    <input type="text" className="input_text" value={detailAddress} placeholder="상세주소" onChange={(e) => setDetailAddress(e.target.value)} />
-                    <input type="text" className="input_text" value={userBirthday} placeholder="생년월일" onChange={(e) => setUserBirthday(e.target.value)} onFocus={(e) => (e.target.type = "date")} // 클릭 시 달력 표시
-                    onBlur={(e) => (e.target.type = "text")}  // 포커스 해제 시 다시 placeholder 표시
-                    required />
-                    
-
-
-                </div>
             </div>
-            <div className="sign_btn_container">
-                <button className="sign_btn" onClick={handleSignUp}>Sign up</button>
-            </div>
-            {errorMessage && 
-                <div className="error_message" key={errorMessage}>
-                    {errorMessage}
-                </div>}
-            <div className="sign_btn_container">
-            
-            </div>
+            {backgroundImage && <img className='backgroundImg' src={backgroundImage} alt="background" />}
         </div>
-        {backgroundImage && <img className='backgroundImg' src={backgroundImage} alt="background" />}
-    </div>
     );
 };
 

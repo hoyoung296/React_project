@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const BASE_URL = "http://localhost:8080/root/admin"
+const BASE_URL = `${process.env.REACT_APP_BACKEND_URL}/root/admin`
 
 // 영화 정보 업데이트
 const updateMovie = async (movieData) => {
