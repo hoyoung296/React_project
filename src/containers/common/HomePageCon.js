@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react"
 import HomePageCom from "../../components/mainPage/HomePageCom"
 import { allList, getInfoList } from "../../service/search"
-import Axios from "axios";
+import Axios from "axios"
 import { useNavigate } from "react-router-dom"
 
 const HomePageCon = () => {
     const navigate = useNavigate()
-    const [list, setList] = useState([]);
+    const [list, setList] = useState([])
     const [Infolist, setInfolist] = useState([])
     const [infoId, setInfoId] = useState()
     const [isModalOpen, setIsModalOpen] = useState(false)
@@ -22,18 +22,18 @@ const HomePageCon = () => {
                     data.map(async (movie) => {
                         const response = await Axios.get(`${process.env.REACT_APP_BACKEND_URL}/root/member/schedule/title`, {
                             params: { title: movie.title }
-                        });
-                        return response.data.data.length > 0 ? movie : null; // 상영일정이 있는 경우만 반환
+                        })
+                        return response.data.data.length > 0 ? movie : null // 상영일정이 있는 경우만 반환
                     })
-                );
+                )
 
-                setList(moviesWithShowtimes.filter(Boolean)); // null 값 제거
+                setList(moviesWithShowtimes.filter(Boolean)) // null 값 제거
             } catch (error) {
-                console.error("데이터 가져오기 오류:", error);
+                console.error("데이터 가져오기 오류:", error)
             }
-        };
-        getData();
-    }, []);
+        }
+        getData()
+    }, [])
 
 
     useEffect(() => {
@@ -52,7 +52,7 @@ const HomePageCon = () => {
         if (!infoId) return
         const getInfo = async () => {
             try {
-                const data = await getInfoList(infoId);
+                const data = await getInfoList(infoId)
                 setInfolist(data)
             } catch (error) {
                 console.error("데이터 가져오기 오류:", error)
@@ -96,25 +96,25 @@ const HomePageCon = () => {
         : []
 
     // rank를 기준으로 필터링 및 날짜와 순위를 분리하여 처리
-    const today = new Date();
+    const today = new Date()
     const TopMovies = list
     .map(movie => {
-        const [date, rank] = movie.movieRank.split("-"); // 날짜-순위 분리
-        const formattedDate = `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6, 8)}`; // '20250325' -> '2025-03-25'로 변환
-        const movieDate = new Date(formattedDate);
+        const [date, rank] = movie.movieRank.split("-") // 날짜-순위 분리
+        const formattedDate = `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6, 8)}` // '20250325' -> '2025-03-25'로 변환
+        const movieDate = new Date(formattedDate)
         return {
             ...movie,
             movieDate,
             movieRank: parseInt(rank),
-        };
+        }
     })
     .sort((a, b) => {
-        const diffA = Math.abs(today - a.movieDate);
-        const diffB = Math.abs(today - b.movieDate);
-        return diffA - diffB; // 날짜가 같다면 순위 비교
+        const diffA = Math.abs(today - a.movieDate)
+        const diffB = Math.abs(today - b.movieDate)
+        return diffA - diffB // 날짜가 같다면 순위 비교
     })
     .filter(movie => movie.movieRank <= 5) // 순위 5 이하 필터링
-    .slice(0, 5); // 상위 5개 선택
+    .slice(0, 5) // 상위 5개 선택
 
     return (
         <HomePageCom TopMovies={TopMovies} list={list} Infolist={Infolist} infoId={infoId} showInfo={showInfo} hideInfo={hideInfo} onClick={onClick}

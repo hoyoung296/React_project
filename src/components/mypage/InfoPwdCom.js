@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import MypageSidebar from "../common/MypageSidebar"
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import axios from 'axios';
-import '../../css/mypage.css';
+import { useNavigate, useSearchParams } from 'react-router-dom'
+import axios from 'axios'
+import '../../css/mypage.css'
 
 function InfoPwdCom() {
-    const navigate = useNavigate();
+    const navigate = useNavigate()
     const [params] = useSearchParams()
-    const [password, setPassword] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
-    const [passwordVisible, setPasswordVisible] = useState(false);
+    const [password, setPassword] = useState('')
+    const [errorMessage, setErrorMessage] = useState('')
+    const [passwordVisible, setPasswordVisible] = useState(false)
     const userId = params.get("id")
 
     const handleInfoPwd = async () => {
@@ -17,26 +17,26 @@ function InfoPwdCom() {
             const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/root/check-password`, {
                 userId,
                 password
-            });
-            console.log('서버 응답:', response);
+            })
+            console.log('서버 응답:', response)
 
             // 서버로부터 받은 응답 처리
             if (response.data.code === 1) {
-                navigate(`/mypage/info?id=${userId}`);
+                navigate(`/mypage/info?id=${userId}`)
             } else {
-                setErrorMessage('아이디 또는 비밀번호가 일치하지 않습니다.');
+                setErrorMessage('아이디 또는 비밀번호가 일치하지 않습니다.')
             }
         } catch (error) {
-            console.error('로그인 중 오류 발생:', error);
-            setErrorMessage('서버와 연결할 수 없습니다. 나중에 다시 시도해 주세요.');
+            console.error('로그인 중 오류 발생:', error)
+            setErrorMessage('서버와 연결할 수 없습니다. 나중에 다시 시도해 주세요.')
         }
-    };
+    }
 
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
-            handleInfoPwd();
+            handleInfoPwd()
         }
-    };
+    }
 
     return (
     <div className='mypagePwd'>
@@ -69,6 +69,6 @@ function InfoPwdCom() {
         </div>
     </div>
 )
-};
+}
 
-export default InfoPwdCom;
+export default InfoPwdCom

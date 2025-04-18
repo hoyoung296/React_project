@@ -23,10 +23,10 @@ const Modal = ({ isOpen, onClose, type, infoData, onClick, Infolist, relatedList
     if (!isOpen) return null
 
     const handleSubmit = (e) => {
-        e.preventDefault();
-        mySubmit(e); // 기존 기능 수행
-        setShowResult(true); // 리뷰 작성 후 결과 모달을 띄우기 위해 showResult를 true로 설정
-        onClose(); // 리뷰 모달 닫기
+        e.preventDefault()
+        mySubmit(e) // 기존 기능 수행
+        setShowResult(true) // 리뷰 작성 후 결과 모달을 띄우기 위해 showResult를 true로 설정
+        onClose() // 리뷰 모달 닫기
     }
     
     const renderContent = () => {
@@ -79,22 +79,6 @@ const Modal = ({ isOpen, onClose, type, infoData, onClick, Infolist, relatedList
                                                 ))}
                                             </div>
                                         </div>
-
-                                        {/* <div className='nextMovie'>
-                                            {console.log(relatedList)}
-                                            {relatedList.length > 1 && (
-                                                <div>
-                                                    <h1>관련컨텐츠</h1>
-                                                    {relatedList
-                                                        .filter(movie => movie.movieId !== Infolist[0].movieId)
-                                                        .map((data, index) => (
-                                                            <div key={`related-${data.movieId}-${index}`} className="SearchImgDiv">
-                                                                <img src={data.posterUrl} alt='포스터이미지' />
-                                                            </div>
-                                                        ))}
-                                                </div>
-                                            )}
-                                        </div> */}
                                     </div>
                                 </div>
                             </div>

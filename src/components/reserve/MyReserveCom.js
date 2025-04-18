@@ -53,12 +53,12 @@ const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showMo
                         
                         const getSortedSeatIds = (seatSet) => {
                             return [...seatSet].sort((a, b) => {
-                                const rowA = a.charAt(0);
-                                const rowB = b.charAt(0);
-                                const numA = parseInt(a.slice(1), 10);
-                                const numB = parseInt(b.slice(1), 10);
+                                const rowA = a.charAt(0)
+                                const rowB = b.charAt(0)
+                                const numA = parseInt(a.slice(1), 10)
+                                const numB = parseInt(b.slice(1), 10)
                         
-                                return rowA === rowB ? numA - numB : rowA.localeCompare(rowB);
+                                return rowA === rowB ? numA - numB : rowA.localeCompare(rowB)
                             }).join(", ")
                         }
                         const formatReservationId = (id) => {
@@ -109,8 +109,8 @@ const MyReserveCom = ({ list, start, reviewStatus, handlePageChange, del, showMo
             {modalData && (
                 <Modal isOpen={isModalOpen} onClose={hideModal} type={modalType} modalData={modalData}
                     mySubmit={(e) => {
-                        mySubmit(e); // 기존 기능 수행
-                        hideModal(); // 리뷰 모달 닫기
+                        mySubmit(e) // 기존 기능 수행
+                        hideModal() // 리뷰 모달 닫기
                     }} onChange={onChange}
                     setShowResult={setShowResult} /> // 상태 변경 함수 전달
             )}

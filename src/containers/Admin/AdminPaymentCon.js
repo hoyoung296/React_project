@@ -22,7 +22,7 @@ const AdminPaymentCon = () => {
         try {
             const response = await delReserve(id)
             alert(response.message)
-            window.location.reload();
+            window.location.reload()
         } catch (error) {
             alert("오류 발생: " + (error.response?.data?.message || "알 수 없는 오류"))
         }

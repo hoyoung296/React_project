@@ -1,110 +1,103 @@
-import { useLocation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import PortOne from '@portone/browser-sdk/v2'; // 포트원 V2 SDK 임포트
-import Axios from "axios";
-import "../../css/ticket.css";
+import { useLocation } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react"
+import PortOne from '@portone/browser-sdk/v2' // 포트원 V2 SDK 임포트
+import Axios from "axios"
+import "../../css/ticket.css"
 
-
-const STORE_ID = process.env.REACT_APP_PORTONE_STORE_ID;       // 포트원 상점 식별자
-const CHANNEL_KEY = process.env.REACT_APP_PORTONE_CHANNEL_KEY; // 포트원 채널 키
+const STORE_ID = process.env.REACT_APP_PORTONE_STORE_ID       // 포트원 상점 식별자
+const CHANNEL_KEY = process.env.REACT_APP_PORTONE_CHANNEL_KEY // 포트원 채널 키
 
 console.log("키값1",STORE_ID)
-
 console.log("키값2",CHANNEL_KEY)
 
-
-
-
 const PayMentCom = () => {
-    const [paymentMethod, setPaymentMethod] = useState(""); // 결제 수단
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const location = useLocation();
-    const navigate = useNavigate();
+    const [paymentMethod, setPaymentMethod] = useState("") // 결제 수단
+    const [isSubmitting, setIsSubmitting] = useState(false)
+    const location = useLocation()
+    const navigate = useNavigate()
 
 // reservationId 상태로 관리
 const [reservationId, setReservationId] = useState(() => {
-    const storedReservationId = location.state?.reservationId || sessionStorage.getItem('reservationId');
-    return storedReservationId ? String(storedReservationId) : null;
-});
+    const storedReservationId = location.state?.reservationId || sessionStorage.getItem('reservationId')
+    return storedReservationId ? String(storedReservationId) : null
+})
 
 // reservationId가 변경될 때마다 로컬스토리지에 저장
 useEffect(() => {
     if (location.state && location.state.reservationId) {
-        const newReservationId = String(location.state.reservationId);
-        setReservationId(newReservationId);
-        sessionStorage.setItem('reservationId', newReservationId); // 상태 변경 시 로컬스토리지에 저장
+        const newReservationId = String(location.state.reservationId)
+        setReservationId(newReservationId)
+        sessionStorage.setItem('reservationId', newReservationId) // 상태 변경 시 로컬스토리지에 저장
     } else if (!reservationId) {
-        alert("예매 번호가 없습니다.");
+        alert("예매 번호가 없습니다.")
     }
-}, [location.state, reservationId]);
+}, [location.state, reservationId])
 
 // 좌석 정보 변경 시 로컬스토리지에 저장 및 상태 업데이트
 const [seatIds, setSeatIds] = useState(() => {
-    const storedSeatIds = location.state?.seatIds || JSON.parse(sessionStorage.getItem("seatIds")) || [];
+    const storedSeatIds = location.state?.seatIds || JSON.parse(sessionStorage.getItem("seatIds")) || []
 
      // 로컬스토리지에서 불러온 좌석 정보가 비어있다면 빈 배열로 초기화
     if (storedSeatIds.length === 0) {
-        console.log("storedSeatIds가 없음! 추가하겠음");
-        seatIds = sessionStorage.getItem('seatIds');
-        console.log("seatIds : ", seatIds);
-
+        console.log("storedSeatIds가 없음! 추가하겠음")
+        let seatIds = sessionStorage.getItem('seatIds')
+        console.log("seatIds : ", seatIds)
     }
-    
-    return storedSeatIds;
-});
+    return storedSeatIds
+})
 
 useEffect(() => {
     if (location.state && location.state.seatIds) {
-        sessionStorage.setItem("seatIds", JSON.stringify(location.state.seatIds));
-        setSeatIds(location.state.seatIds); // 💡 UI 반영을 위해 상태 업데이트
+        sessionStorage.setItem("seatIds", JSON.stringify(location.state.seatIds))
+        setSeatIds(location.state.seatIds) // 💡 UI 반영을 위해 상태 업데이트
     }
-}, [location.state]);
+}, [location.state])
 
 useEffect(() => {
     const handleStorageChange = () => {
-        const updatedSeatIds = sessionStorage.getItem("seatIds");
-        setSeatIds(updatedSeatIds ? JSON.parse(updatedSeatIds) : []);
-    };
+        const updatedSeatIds = sessionStorage.getItem("seatIds")
+        setSeatIds(updatedSeatIds ? JSON.parse(updatedSeatIds) : [])
+    }
 
-    window.addEventListener("storage", handleStorageChange);
+    window.addEventListener("storage", handleStorageChange)
 
     return () => {
-        window.removeEventListener("storage", handleStorageChange);
-    };
-}, []);
+        window.removeEventListener("storage", handleStorageChange)
+    }
+}, [])
 
-const moviePosterUrl = sessionStorage.getItem("moviePosterUrl");
-const movieDirector = sessionStorage.getItem("movieDirector");
-const movieActors = sessionStorage.getItem("movieActors");
-const movieTitle = sessionStorage.getItem("movieTitle");
-const selectedDate = sessionStorage.getItem("selectedDate");
-const selectedCinema = sessionStorage.getItem("selectedCinema");
-const selectedStartTime = sessionStorage.getItem("selectedStartTime");
-const totalAmount = JSON.parse(sessionStorage.getItem("totalAmount") || "0");
+const moviePosterUrl = sessionStorage.getItem("moviePosterUrl")
+const movieDirector = sessionStorage.getItem("movieDirector")
+const movieActors = sessionStorage.getItem("movieActors")
+const movieTitle = sessionStorage.getItem("movieTitle")
+const selectedDate = sessionStorage.getItem("selectedDate")
+const selectedCinema = sessionStorage.getItem("selectedCinema")
+const selectedStartTime = sessionStorage.getItem("selectedStartTime")
+const totalAmount = JSON.parse(sessionStorage.getItem("totalAmount") || "0")
 
 
 const [scheduleId, setScheduleId] = useState(() => {
-    const storedScheduleId = location.state?.scheduleId || JSON.parse(sessionStorage.getItem('scheduleId')) || null;
-    return storedScheduleId;  // 바로 초기화
-});
+    const storedScheduleId = location.state?.scheduleId || JSON.parse(sessionStorage.getItem('scheduleId')) || null
+    return storedScheduleId  // 바로 초기화
+})
 useEffect(() => {
     if (scheduleId === "0" || scheduleId === null) {
-        console.log("scheduleId가 없음! 추가하겠음");
-        const storedScheduleId = sessionStorage.getItem('scheduleId');
+        console.log("scheduleId가 없음! 추가하겠음")
+        const storedScheduleId = sessionStorage.getItem('scheduleId')
         if (storedScheduleId) {
-            setScheduleId(storedScheduleId);  // 로컬스토리지에서 가져온 값으로 상태 업데이트
-            console.log("scheduleId : ", storedScheduleId);
+            setScheduleId(storedScheduleId)  // 로컬스토리지에서 가져온 값으로 상태 업데이트
+            console.log("scheduleId : ", storedScheduleId)
         }
     }
-}, [scheduleId]);  // scheduleId가 변경될 때마다 실행
+}, [scheduleId])  // scheduleId가 변경될 때마다 실행
 
 // scheduleId가 변경되면 로컬스토리지에 저장
 useEffect(() => {
     if (scheduleId) {
-        sessionStorage.setItem('scheduleId', scheduleId);
+        sessionStorage.setItem('scheduleId', scheduleId)
     }
-}, [scheduleId]);
+}, [scheduleId])
 
 
     const renderPaymentNotice = () => {
@@ -114,7 +107,7 @@ useEffect(() => {
                     예매내역을 확인하신 후 우측 하단에 있는 '결제하기' 버튼을 클릭해주세요.<br/>
                     버튼 클릭 시 신용카드 카드사 선택 창이 뜹니다.<br/>
                     결제 인증창에서 정보를 입력하신 후 결제해주세요.
-            </p>;
+            </p>
         }
         if (paymentMethod === "네이버페이") {
             return <p className="paymentNotice">
@@ -122,7 +115,7 @@ useEffect(() => {
                     예매내역을 확인하신 후 우측 하단에 있는 '결제하기' 버튼을 클릭해주세요.<br/>
                     버튼 클릭 시 '네이버페이' 결제 인증창이 뜹니다.<br/>
                     '네이버페이' 결제 인증창에서 정보를 입력하신 후 결제해주세요.
-            </p>;
+            </p>
         }
         if (paymentMethod === "카카오페이") {
             return (
@@ -132,29 +125,29 @@ useEffect(() => {
                     버튼 클릭 시 '카카오페이' 결제 인증창이 뜹니다.<br/>
                     ‘카카오페이’ 결제 인증창에서 정보를 입력하신 후 결제해주세요.
                 </p>
-            );
+            )
         }
-        return <p className="paymentNotice">결제 방식을 선택해주세요.</p>;
-    };
+        return <p className="paymentNotice">결제 방식을 선택해주세요.</p>
+    }
 
     // 기존 handleSubmit 대신 PortOne 결제 위젯을 호출하는 triggerPayment 함수 추가 (수정된 부분)
     const triggerPayment = async () => {
         if (!paymentMethod) {
-            alert("결제수단을 선택해주세요.");
-            return;
+            alert("결제수단을 선택해주세요.")
+            return
         }
-        setIsSubmitting(true);
-        // const paymentIdForMerchant = reservationId;
+        setIsSubmitting(true)
+        // const paymentIdForMerchant = reservationId
 
          // 선택된 결제 수단에 따라 paymentMethodId 값을 결정
-        let paymentMethodId;
+        let paymentMethodId
         if (paymentMethod === "신용카드") {
-            paymentMethodId = 1;
+            paymentMethodId = 1
         } else if (paymentMethod === "네이버페이" || paymentMethod === "카카오페이") {
-            paymentMethodId = 2;
+            paymentMethodId = 2
         } else {
             // 기본값 처리 (필요에 따라 조정)
-            paymentMethodId = 1;
+            paymentMethodId = 1
         }
 
         try {
@@ -175,11 +168,11 @@ useEffect(() => {
             ...(paymentMethod === "네이버페이" && {
             easyPay: { easyPayProvider: "EASY_PAY_PROVIDER_NAVERPAY" }
             })
-        });
-        console.log("response code: ", response.code);
+        })
+        console.log("response code: ", response.code)
 
         if (!response.code) {
-            const { txId, paymentId } = response;
+            const { txId, paymentId } = response
             // 백엔드에 결제 정보 전달 (필요에 따라 전송하는 데이터 항목 조정)
             const createRes = await Axios.post(`${process.env.REACT_APP_BACKEND_URL}/root/member/payment/create`, {
               reservationId: String(reservationId), // 예시 값
@@ -187,10 +180,10 @@ useEffect(() => {
               amount: totalAmount, // 실제 결제 금액 사용
               //amount: totalAmount, // 실제 결제 금액 사용
               portonePaymentId: txId, // 결제 시도 고유 번호 사용
-            });
+            })
             // 생성된 Payment의 paymentId를 응답으로 받는다고 가정
             console.log("@@@data : ",createRes.data)
-            const dbPaymentId = createRes.data.data.paymentId;
+            const dbPaymentId = createRes.data.data.paymentId
             console.log("@@@dbPaymentId : ",dbPaymentId)
             console.log("@@@paymentId : ",paymentId)
 
@@ -202,48 +195,42 @@ useEffect(() => {
                     scheduleId: scheduleId,
                     seatIds: [...seatIds]
                 }
-                // {
-                //     headers: {
-                //         Authorization: `Bearer ${process.env.REACT_APP_PORTONE_CHANNEL_KEY}` // ✅ Bearer 추가
-                //     },
-                //     withCredentials: true // ✅ CORS 인증 정보 포함
-                // }
-            );
+            )
             console.log("confirmRes@@@@@:",confirmRes.data.data.rs)
             if (confirmRes.data.data.rs === '성공') {
-                alert("결제가 성공적으로 완료되었습니다.");
-                navigate("/ticket/done");
+                alert("결제가 성공적으로 완료되었습니다.")
+                navigate("/ticket/done")
             } else {
-                alert("결제 확인 실패.");
-                navigate("/");
+                alert("결제 확인 실패.")
+                navigate("/")
             }
         } else {
-            alert(`결제 실패: ${response.message || "알 수 없는 오류"}`);
+            alert(`결제 실패: ${response.message || "알 수 없는 오류"}`)
         }
         } catch (error) {
-            console.error("결제 처리 중 오류 발생:", error);
-            alert("결제 처리 중 오류가 발생했습니다.");
-            navigate("/");
+            console.error("결제 처리 중 오류 발생:", error)
+            alert("결제 처리 중 오류가 발생했습니다.")
+            navigate("/")
         } finally {
-            setIsSubmitting(false);
+            setIsSubmitting(false)
         }
-    };
+    }
 
     useEffect(() => {
         const handlePopState = async () => {
             if (!isSubmitting) {
-                console.log("뒤로가기 감지!!");
-                console.log("🚀 전송할 데이터:");
-                console.log("reservationId:", reservationId);
-                console.log("scheduleId:", scheduleId);
-                console.log("seatIds:", seatIds);
+                console.log("뒤로가기 감지!!")
+                console.log("🚀 전송할 데이터:")
+                console.log("reservationId:", reservationId)
+                console.log("scheduleId:", scheduleId)
+                console.log("seatIds:", seatIds)
     
                 // 사용자가 뒤로 가기를 누를 때 예매 취소 여부 확인
-                const userConfirmed = window.confirm("페이지를 벗어날 시 변경사항이 저장되지 않을 수 있습니다. 이동하시겠습니까?");
+                const userConfirmed = window.confirm("페이지를 벗어날 시 변경사항이 저장되지 않을 수 있습니다. 이동하시겠습니까?")
                 if (userConfirmed) {
                     try {
                         // 예매 취소 요청을 백엔드로 보내는 부분
-                        console.log("뒤로가기 YES -> axios 실행!!");
+                        console.log("뒤로가기 YES -> axios 실행!!")
                         await Axios.delete(`${process.env.REACT_APP_BACKEND_URL}/root/member/reserve/cancel`, {
                             data: {
                                 reservationId: reservationId,
@@ -254,74 +241,69 @@ useEffect(() => {
                                 'Content-Type': 'application/json',
                                 'Accept': 'application/json'
                             }
-                        });
-                        console.log("✅ 예매가 정상적으로 취소되었습니다.");
-                        navigate('/'); // 뒤로가기 후 홈으로 이동
-                        sessionStorage.removeItem("moviePosterUrl");
-                        sessionStorage.removeItem("movieDirector");
-                        sessionStorage.removeItem("movieActors");
-                        sessionStorage.removeItem("movieTitle");
-                        sessionStorage.removeItem("selectedDate");
-                        sessionStorage.removeItem("selectedCinema");
-                        sessionStorage.removeItem("selectedStartTime");
-                        sessionStorage.removeItem("totalAmount");
-                        sessionStorage.removeItem("reservationId");
-                        sessionStorage.removeItem("seatIds");
-                        sessionStorage.removeItem("scheduleId");
+                        })
+                        console.log("✅ 예매가 정상적으로 취소되었습니다.")
+                        navigate('/') // 뒤로가기 후 홈으로 이동
+                        sessionStorage.removeItem("moviePosterUrl")
+                        sessionStorage.removeItem("movieDirector")
+                        sessionStorage.removeItem("movieActors")
+                        sessionStorage.removeItem("movieTitle")
+                        sessionStorage.removeItem("selectedDate")
+                        sessionStorage.removeItem("selectedCinema")
+                        sessionStorage.removeItem("selectedStartTime")
+                        sessionStorage.removeItem("totalAmount")
+                        sessionStorage.removeItem("reservationId")
+                        sessionStorage.removeItem("seatIds")
+                        sessionStorage.removeItem("scheduleId")
                     } catch (error) {
-                        console.error("❌ 예매 취소 실패:", error);
+                        console.error("❌ 예매 취소 실패:", error)
                     }
                 }
             }
-        };
+        }
     
         // 페이지 상태를 history에 추가 (이 부분은 이미 존재하므로 변경이 필요 없음)
-        window.history.replaceState(null, document.title);
+        window.history.replaceState(null, document.title)
         // popstate 이벤트 리스너 설정
-        window.addEventListener("popstate", handlePopState);
+        window.addEventListener("popstate", handlePopState)
     
         // clean-up
-        return () => {
-            
-        };
-    }, [isSubmitting, reservationId, seatIds, scheduleId, navigate]);
+        return () => {}
+    }, [isSubmitting, reservationId, seatIds, scheduleId, navigate])
 
     const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        const year = date.getFullYear();
-        const month = (date.getMonth() + 1).toString().padStart(2, '0');
-        const day = date.getDate().toString().padStart(2, '0');
-        
-
-        return `${year}년 ${month}월 ${day}일`;
-    };
+        const date = new Date(dateString)
+        const year = date.getFullYear()
+        const month = (date.getMonth() + 1).toString().padStart(2, '0')
+        const day = date.getDate().toString().padStart(2, '0')
+        return `${year}년 ${month}월 ${day}일`
+    }
     const formatTime = (timeString) => {
-        const [hours, minutes] = timeString.split(":").map(num => num.padStart(2, '0')); // 시간과 분을 분리하고 두 자리 유지
+        const [hours, minutes] = timeString.split(":").map(num => num.padStart(2, '0')) // 시간과 분을 분리하고 두 자리 유지
 
-        return `${hours}시 ${minutes}분`;
-    };
+        return `${hours}시 ${minutes}분`
+    }
 
-    const [sortedSeatIds, setSortedSeatIds] = useState("정보 없음");
+    const [sortedSeatIds, setSortedSeatIds] = useState("정보 없음")
 
     useEffect(() => {
-        const seatArray = [...seatIds]; // Set -> 배열 변환
-        console.log("좌석배열 기본 :", seatArray); // 여기서 확인
+        const seatArray = [...seatIds] // Set -> 배열 변환
+        console.log("좌석배열 기본 :", seatArray) // 여기서 확인
 
         if (seatArray.length > 0) {
             setSortedSeatIds(seatArray.sort((a, b) => {
-                const rowA = a.charAt(0);
-                const rowB = b.charAt(0);
-                const numA = parseInt(a.slice(1), 10);
-                const numB = parseInt(b.slice(1), 10);
-                return rowA === rowB ? numA - numB : rowA.localeCompare(rowB);
-            }).join(", "));
+                const rowA = a.charAt(0)
+                const rowB = b.charAt(0)
+                const numA = parseInt(a.slice(1), 10)
+                const numB = parseInt(b.slice(1), 10)
+                return rowA === rowB ? numA - numB : rowA.localeCompare(rowB)
+            }).join(", "))
         } else {
-            setSortedSeatIds("정보 없음");
+            setSortedSeatIds("정보 없음")
         }
-    }, [[...seatIds]]); // Set 대신 배열을 의존성으로 사용
+    }, [seatIds])
 
-    console.log("정렬한 좌석배열 :", sortedSeatIds);
-    
+    console.log("정렬한 좌석배열 :", sortedSeatIds)
     
     return (
         <div className="payMentPage">
@@ -365,7 +347,7 @@ useEffect(() => {
                                 name="pay"
                                 value="신용카드"
                                 onChange={() => {
-                                    setPaymentMethod("신용카드");
+                                    setPaymentMethod("신용카드")
                                 }}
                             />
                             신용카드
@@ -376,7 +358,7 @@ useEffect(() => {
                                 name="pay"
                                 value="카카오페이"
                                 onChange={() => {
-                                    setPaymentMethod("카카오페이");
+                                    setPaymentMethod("카카오페이")
                                 }}
                             />
                             카카오페이
@@ -397,10 +379,8 @@ useEffect(() => {
                     {isSubmitting ? "결제 진행 중..." : "결제하기"}
                 </button>
             </div>
-            
-            
         </div>
-    );
-};
+    )
+}
 
-export default PayMentCom;
+export default PayMentCom

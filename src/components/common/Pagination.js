@@ -1,27 +1,27 @@
-import React from "react";
-import "../../css/review/Pagination.css";
+import React from "react"
+import "../../css/review/Pagination.css"
 
 const Pagination = ({ start, list, handlePageChange }) => {
     const renderPageNumbers = () => {
-        const pageNumbers = [];
-        let pageStart = start - 1;
-        let pageEnd = start + 1;
+        const pageNumbers = []
+        let pageStart = start - 1
+        let pageEnd = start + 1
 
         if (list.page <= 3) {
             // 2. 3페이지 이하일 경우, 양 옆에 이전, 다음 버튼 안보이도록
-            pageStart = 1;
-            pageEnd = list.page;
+            pageStart = 1
+            pageEnd = list.page
         }
 
         if (list.page > 3) {
             if (start === 1) {
-                pageEnd = 3;
+                pageEnd = 3
             } else if (start === list.page) {
-                pageStart = list.page - 2;
+                pageStart = list.page - 2
             }
         }
 
-        pageStart = Math.max(1, pageStart);
+        pageStart = Math.max(1, pageStart)
 
         // 페이지 번호 생성
         for (let i = pageStart; i <= pageEnd; i++) {
@@ -33,14 +33,14 @@ const Pagination = ({ start, list, handlePageChange }) => {
                 >
                     {i}
                 </button>
-            );
+            )
         }
-        return pageNumbers;
-    };
+        return pageNumbers
+    }
 
     // 1페이지 밖에 없을 경우 페이지네이션이 안보이도록
     if (list.page === 1) {
-        return null; // 페이지네이션을 아예 렌더링 하지 않음
+        return null // 페이지네이션을 아예 렌더링 하지 않음
     }
 
     return (
@@ -55,7 +55,7 @@ const Pagination = ({ start, list, handlePageChange }) => {
                 <button className="ArrowButton" onClick={() => handlePageChange(start + 1)}>{'>'}</button> // 다음 버튼
             )}
         </div>
-    );
-};
+    )
+}
 
-export default Pagination;
+export default Pagination
