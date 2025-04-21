@@ -55,6 +55,7 @@ function InfoCom() {
             }
         }
     }
+
     const handleDeleteImage = async () => {
         if (!userInfo.profileImage || userInfo.profileImage === "default.png") {
             alert("기본 프로필입니다.")
@@ -86,7 +87,6 @@ function InfoCom() {
 
     const [passwordVisible, setPasswordVisible] = useState(false)
     const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false)
-
     const navigate = useNavigate()
     const [params] = useSearchParams()
     const userId = params.get("id")
@@ -175,9 +175,7 @@ function InfoCom() {
                     addr: addr
                 })
             }
-        }).open()
-
-    }
+        }).open()}
 
     const validateInputs = () => {
         // 비밀번호 유효성 검사 (최소 8자 이상, 영문/숫자/특수문자 포함)
@@ -206,15 +204,7 @@ function InfoCom() {
 
     const handleSave = async () => {
         if (!validateInputs()) return // 유효성 검사 실패 시 종료
-
-        // userBirthday 값과 타입 확인
-        console.log("🔍 userInfo.userBirthday 값:", userInfo.userBirthday)
-        console.log("🔍 userInfo.userBirthday 타입:", typeof userInfo.userBirthday)
         const formattedBirthday = userInfo.userBirthday ? String(userInfo.userBirthday).replace(/-/g, '') : ''
-
-
-        console.log("저장하려는 데이터:", { ...userInfo, userBirthday: formattedBirthday }) // 변환된 값 확인
-        console.log("프사 확인 : ", imagefile)
 
         try {
             const response = await axios.put(`${process.env.REACT_APP_BACKEND_URL}/root/update`, {
@@ -229,9 +219,7 @@ function InfoCom() {
                 detailAddr: userInfo.detailAddr,
                 userBirthday: formattedBirthday,
                 profileImage: imagefile || userInfo.profileImage // 새로 업로드된 이미지가 없다면 기존 이미지 사용
-            }, {
-                headers: { 'Content-Type': 'application/json' }
-            })
+            }, {headers: { 'Content-Type': 'application/json' }})
 
             if (response.status === 200) {
                 console.log("수정된 회원 정보:", response.data)
@@ -251,7 +239,6 @@ function InfoCom() {
         const isConfirmed = window.confirm("정말로 탈퇴하시겠습니까? 탈퇴 후에는 복구할 수 없습니다.")
         if (!isConfirmed) return
 
-        console.log("실행")
         try {
             const response = await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/root/delete`, {
                 data: {
@@ -374,7 +361,6 @@ function InfoCom() {
                         />
                     </span>
 
-
                     {errorMessage &&
                         <div className="error_message" key={errorMessage}>
                             {errorMessage}
@@ -383,8 +369,6 @@ function InfoCom() {
                     <button className='delBtn' onClick={delId}>탈퇴하기</button>
                 </div>
                 <div>
-                    {console.log("기존 이미지 확인 : " ,userInfo.profileImage)}
-                    {console.log("새 이미지 확인 : " ,imagefile)}
                     {imagefile === null
                         ? <img src={`${process.env.REACT_APP_BACKEND_URL}/root/upload/image?image=${userInfo.profileImage}`} alt="profile" />
                         : <img src={`${process.env.REACT_APP_BACKEND_URL}/root/upload/image?image=${imagefile}`} alt="profile" />
@@ -395,11 +379,8 @@ function InfoCom() {
                         onChange={handleFileChange}
                         accept='image/*'
                     />
-                    {userInfo.profileImage && (
-                        <button className='deleteBtn' onClick={handleDeleteImage}>
-                            이미지 삭제
-                        </button>
-                    )}
+
+                    {userInfo.profileImage && (<button className='deleteBtn' onClick={handleDeleteImage}>이미지 삭제</button>)}
                 </div>
             </div>
         </div>
